@@ -28,9 +28,9 @@ export default [
     target: "_blank",
   },
   {
-    title: "المنازل",
+    title: "النماذج",
     icon: "home",
-    to: "/admin-buying-offers",
+    to: "/admin-forms",
     type: "admin",
   },
   {
@@ -97,6 +97,12 @@ export default [
         to: "admin-services",
         type: "admin",
       },
+      {
+        title: "المنازل",
+        icon: "home",
+        to: "/admin-buying-offers",
+        type: "admin",
+      },
     ],
   },
   {
@@ -138,10 +144,10 @@ export default [
     type: "assistance",
   },
   {
-    title: "المنازل",
+    title: "النماذج",
     icon: "home",
-    to: "/admin-buying-offers",
-    type: "assistance",
+    to: "/admin-forms",
+    type: "admin",
   },
   {
     title: "الملاك",
@@ -207,6 +213,12 @@ export default [
         to: "admin-services",
         type: "assistance",
       },
+      {
+        title: "المنازل",
+        icon: "home",
+        to: "/admin-buying-offers",
+        type: "assistance",
+      },    
     ],
   },
   {

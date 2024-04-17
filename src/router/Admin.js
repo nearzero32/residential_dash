@@ -17,6 +17,7 @@ import application_form from "@/views/admin/application_form/application_form.vu
 import call_center from "@/views/admin/call_center/call_center.vue";
 import Print from "@/views/admin/application_form/Print.vue";
 import profile from "@/views/admin/owners/profile.vue";
+import forms from "@/views/admin/forms/forms.vue";
 
 const Admin = {
   path: "/",
@@ -119,6 +120,11 @@ const Admin = {
       path: "/admin-sells-employee",
       name: "admin-sells-employee",
       component: sellsEmployee,
+    },
+    {
+      path: "/admin-forms",
+      name: "admin-forms",
+      component: forms,
     },
 
   ],

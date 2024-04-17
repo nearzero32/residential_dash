@@ -388,9 +388,7 @@ class Api {
     return response;
   }
   async getOneOwner(id) {
-    const response = await axiosInstance.get(
-      `/owners/owner_id/${id}`
-    );
+    const response = await axiosInstance.get(`/owners/owner_id/${id}`);
     return response;
   }
   async getHouses() {
@@ -578,7 +576,6 @@ class Api {
       receiver_type,
       receivers,
     };
-    console.log(requestData);
     const response = await axiosInstance.post(`/notifications`, requestData);
     return response;
   }
@@ -619,6 +616,21 @@ class Api {
     return response;
   }
   // Reservations
+
+  // Forms
+  async getForms() {
+    const response = await axiosInstance.get(`/center/forms`);
+    return response;
+  }
+  async addForms({ name, total_space, images, houses, floors, building_space }) {
+    const requestData = {
+      name, total_space, images, houses, floors, building_space
+    };
+    const response = await axiosInstance.post(`/center/forms`, requestData);
+    return response;
+  }
+
+  // Forms
 }
 
 export default new Api();
