@@ -8,7 +8,7 @@
     <v-card class="mx-auto">
       <v-container>
         <v-row>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="4">
             <v-label class="mb-2 font-weight-medium">الأسم</v-label>
             <v-text-field
               v-if="results && results.name !== null && results.name !== undefined"
@@ -19,7 +19,7 @@
               outlined
             ></v-text-field>
           </v-col>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="4">
             <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
             <v-text-field
               v-if="results && results.phone !== null && results.phone !== undefined"
@@ -30,13 +30,73 @@
               outlined
             ></v-text-field>
           </v-col>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="4">
             <v-label class="mb-2 font-weight-medium">العنوان</v-label>
             <v-text-field
               v-if="results && results.address !== null && results.address !== undefined"
               variant="outlined"
               v-model="results.address"
               :rules="Rules.address"
+              color="primary"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-label class="mb-2 font-weight-medium">فيس بوك</v-label>
+            <v-text-field
+              v-if="results && results.facebook !== null && results.facebook !== undefined"
+              variant="outlined"
+              v-model="results.facebook"
+              color="primary"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-label class="mb-2 font-weight-medium">انستغرام</v-label>
+            <v-text-field
+              v-if="results && results.instagram !== null && results.instagram !== undefined"
+              variant="outlined"
+              v-model="results.instagram"
+              color="primary"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-label class="mb-2 font-weight-medium">سناب جات</v-label>
+            <v-text-field
+              v-if="results && results.snapchat !== null && results.snapchat !== undefined"
+              variant="outlined"
+              v-model="results.snapchat"
+              color="primary"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-label class="mb-2 font-weight-medium">تيك توك</v-label>
+            <v-text-field
+              v-if="results && results.tiktok !== null && results.tiktok !== undefined"
+              variant="outlined"
+              v-model="results.tiktok"
+              color="primary"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-label class="mb-2 font-weight-medium">واتساب</v-label>
+            <v-text-field
+              v-if="results && results.whatsapp !== null && results.whatsapp !== undefined"
+              variant="outlined"
+              v-model="results.whatsapp"
+              color="primary"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="12">
+            <v-label class="mb-2 font-weight-medium">الوكو</v-label>
+            <v-text-field
+              v-if="results && results.logo !== null && results.logo !== undefined"
+              variant="outlined"
+              v-model="results.logo"
               color="primary"
               outlined
             ></v-text-field>
