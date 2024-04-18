@@ -147,7 +147,7 @@ export default [
     title: "النماذج",
     icon: "home",
     to: "/admin-forms",
-    type: "admin",
+    type: "assistance",
   },
   {
     title: "الملاك",
