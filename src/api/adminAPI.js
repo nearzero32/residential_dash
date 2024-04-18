@@ -629,6 +629,17 @@ class Api {
     const response = await axiosInstance.post(`/center/forms`, requestData);
     return response;
   }
+  async editForms({ id, name, total_space, images, houses, floors, building_space }) {
+    const requestData = {
+      name, total_space, images, houses, floors, building_space
+    };
+    const response = await axiosInstance.put(`center/forms/${id}`, requestData);
+    return response;
+  }
+  async deleteForms(id) {
+    const response = await axiosInstance.delete(`center/forms/${id}`);
+    return response;
+  }
 
   // Forms
 }

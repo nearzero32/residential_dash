@@ -12,7 +12,7 @@
           text
           class="ml-auto"
           v-if="userData.includes('add')"
-          @click="dialog = true"
+          @click="add()"
         >
           <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة نموذج جديد
         </v-btn>
@@ -34,6 +34,12 @@
               style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </template>
+          <template v-slot:item.name="{ item }">
+            <v-btn @click="showP(item)" text color="primary">
+              {{ item.name }}
+            </v-btn>
+          </template>
+
           <template v-slot:item.ac="{ item }">
             <VTooltip bottom v-if="userData.includes('edit')">
               <template #activator="{ attrs }">
@@ -41,7 +47,7 @@
                   color="rgb(243 216 1)"
                   v-bind="attrs"
                   size="20"
-                  @click="editItem(item)"
+                  @click="editP(item)"
                 >
                   mdi-note-edit
                 </v-icon>
@@ -65,487 +71,6 @@
         </v-data-table>
       </v-container>
     </v-card>
-
-    <!-- add -->
-    <v-dialog v-model="dialog" max-width="1000px">
-      <v-card>
-        <v-card>
-          <v-card-title class="text-h5">اٍضافة نموذج جديد</v-card-title>
-          <v-divider></v-divider>
-          <!----Account Details---->
-          <v-card-text class="pb-0">
-            <v-form v-model="isFormvalid">
-              <v-row>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">أسم النموذج</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    v-model="data.name"
-                    :rules="Rules.name"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">المساحة</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    v-model="data.building_space"
-                    :rules="Rules.building_space"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">المساحة الكلية</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    v-model="data.total_space"
-                    :rules="Rules.total_space"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">ارقام المنازل</v-label>
-                  <vue-tags-input
-                    v-model="houses"
-                    :tags="tags"
-                    @tags-changed="(newTags) => (tags = newTags)"
-                    variant="outlined"
-                    :rules="Rules.houses"
-                    placeholder=" الرجاء إضافة رقم المنزل ثم الضغط على زر الإدخال Entr"
-                    color="primary"
-                    outlined
-                  />
-                </v-col>
-                <v-col cols="12" md="12" style="padding: 10px">
-                  <vue-dropzone
-                    :options="dropzoneOptions"
-                    id="dropzone"
-                    @vdropzone-success="handleFileUploadSuccess"
-                    @vdropzone-removed-file="handleFileRemoved"
-                  >
-                  </vue-dropzone>
-                </v-col>
-
-                <v-col v-for="(dataa, ind) in data.floors" :key="ind" cols="12" md="12">
-                  <v-container>
-                    <v-card variant="outlined" class="cardNam">
-                      <v-row style="padding: 10px">
-                        <v-col cols="12" md="12" style="padding: 10px">
-                          <p style="padding: 10px; margin: 0px">تفاصيل النموذج</p>
-                        </v-col>
-                        <v-col cols="12" md="12" style="padding: 10px">
-                          <v-btn @click="deletItme(ind)" color="error">حذف الطابق</v-btn>
-                        </v-col>
-                        <v-col cols="12" md="6" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium">أسم الطابق</v-label>
-                          <v-text-field
-                            variant="outlined"
-                            v-model="dataa.name"
-                            :rules="Rules.details.title"
-                            color="primary"
-                            outlined
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium">صور الطابق</v-label>
-                          <vue-dropzone
-                            :options="dropzoneOptionsFloors"
-                            id="dropzone"
-                            @vdropzone-success="
-                              handleFileUploadSuccessFloors($event, ind)
-                            "
-                            @vdropzone-removed-file="handleFileRemovedFloors($event, ind)"
-                          >
-                          </vue-dropzone>
-                        </v-col>
-                        <v-col cols="12" md="12" style="padding: 10px">
-                          <v-container style="border: solid 2px #e5e5e5">
-                            <v-row v-for="(dat, i) in data.floors[ind].rooms" :key="i">
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <p style="padding: 10px; margin: 0px">
-                                  تفاصيل النموذج الفرعية
-                                </p>
-                              </v-col>
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <v-btn @click="deletItm(ind, i)" color="error"
-                                  >حذف تفاصيل الطابق</v-btn
-                                >
-                              </v-col>
-
-                              <v-col cols="12" md="6" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium">الاسم</v-label>
-                                <v-text-field
-                                  variant="outlined"
-                                  v-model="dat.name"
-                                  :rules="Rules.details.sub_details.name"
-                                  color="primary"
-                                  outlined
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium">المساحة</v-label>
-                                <v-text-field
-                                  variant="outlined"
-                                  v-model="dat.space"
-                                  color="primary"
-                                  outlined
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12" md="12">
-                                <v-row>
-                                  <v-col
-                                    cols="12"
-                                    md="12"
-                                    style="border: solid 2px #e5e5e5"
-                                  >
-                                    <v-label class="mb-2 font-weight-medium"
-                                      >صورة
-                                    </v-label>
-                                    <v-row>
-                                      <v-col cols="6" md="6">
-                                        <input
-                                          type="file"
-                                          accept="image/png, image/jpeg, image/bmp"
-                                          @change="handleFileChange($event, ind, i)"
-                                          ref="fileInput"
-                                        />
-                                      </v-col>
-                                      <v-col
-                                        cols="6"
-                                        md="6"
-                                        style="text-align: center"
-                                        v-if="dat.image"
-                                      >
-                                        <div
-                                          style="
-                                            position: relative;
-                                            display: inline-block;
-                                          "
-                                        >
-                                          <img
-                                            :src="dat.image"
-                                            style="
-                                              width: 120px;
-                                              border: solid 1px rebeccapurple;
-                                            "
-                                          />
-                                          <v-icon
-                                            class="mr-2"
-                                            color="error"
-                                            style="
-                                              position: absolute;
-                                              top: 0;
-                                              right: 0;
-                                              cursor: pointer;
-                                            "
-                                            @click="removeImage(ind, i)"
-                                          >
-                                            mdi-close
-                                          </v-icon>
-                                        </div>
-                                      </v-col>
-                                    </v-row>
-                                  </v-col>
-                                </v-row>
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-col>
-                        <v-col cols="12" md="6" style="padding: 10px">
-                          <v-btn @click="addNewItem(ind)" color="success"
-                            >إضافة غرفة جديدة</v-btn
-                          >
-                        </v-col>
-                      </v-row>
-                    </v-card>
-                  </v-container>
-                </v-col>
-                <v-col cols="12" md="12" style="padding: 10px">
-                  <v-row>
-                    <v-col cols="12" md="6" style="padding: 10px">
-                      <v-btn @click="addNewItems" color="success">إضافة طابق جديد</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-              <v-divider></v-divider>
-              <!----Personal Info---->
-              <v-card-actions>
-                <v-btn
-                  size="large"
-                  @click="addCenter"
-                  color="primary"
-                  :loading="addLoading"
-                  :disabled="!isFormvalid"
-                  text
-                  >إضافة</v-btn
-                >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
-                  >أغلاق</v-btn
-                >
-              </v-card-actions>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-card>
-    </v-dialog>
-    <!-- add -->
-
-    <!-- dialogEdit -->
-    <v-dialog v-model="dialogEdit" max-width="1000px">
-      <v-card>
-        <v-card>
-          <v-card-title class="text-h5">اٍضافة نموذج جديد</v-card-title>
-          <v-divider></v-divider>
-          <!----Account Details---->
-          <v-card-text class="pb-0">
-            <v-form v-model="isFormvalid">
-              <v-row v-if="editdItem && editdItem.name !== undefined">
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">أسم النموذج</v-label>
-                  <v-text-field
-                    v-if="editdItem && editdItem.name !== undefined"
-                    variant="outlined"
-                    v-model="editdItem.name"
-                    :rules="Rules.name"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">المساحة</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    v-if="editdItem && editdItem.building_space !== undefined"
-                    v-model="editdItem.building_space"
-                    :rules="Rules.building_space"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">المساحة الكلية</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    v-if="editdItem && editdItem.total_space !== undefined"
-                    v-model="editdItem.total_space"
-                    :rules="Rules.total_space"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">ارقام المنازل</v-label>
-                  <vue-tags-input
-                    v-model="housesE"
-                    :tags="tagsE"
-                    @tags-changed="(newTagsE) => (tagsE = newTagsE)"
-                    variant="outlined"
-                    :rules="Rules.houses"
-                    placeholder=" الرجاء إضافة رقم المنزل ثم الضغط على زر الإدخال Entr"
-                    color="primary"
-                    outlined
-                  />
-                </v-col>
-                <v-col cols="12" md="12" style="padding: 10px">
-                  <vue-dropzone
-                    ref="myVueDropzoneE"
-                    id="dropzoneE"
-                    :options="dropzoneOptionsE"
-                  >
-                  </vue-dropzone>
-                </v-col>
-                <v-col
-                  v-for="(dataa, ind) in editdItem.floors"
-                  :key="ind"
-                  cols="12"
-                  md="12"
-                >
-                  <v-container>
-                    <v-card variant="outlined" class="cardNam">
-                      <v-row style="padding: 10px">
-                        <v-col cols="12" md="12" style="padding: 10px">
-                          <p style="padding: 10px; margin: 0px">تفاصيل النموذج</p>
-                        </v-col>
-                        <v-col cols="12" md="12" style="padding: 10px">
-                          <v-btn @click="deletItme(ind)" color="error">حذف الطابق</v-btn>
-                        </v-col>
-                        <v-col cols="12" md="6" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium">أسم الطابق</v-label>
-                          <v-text-field
-                            variant="outlined"
-                            v-model="dataa.name"
-                            :rules="Rules.details.title"
-                            color="primary"
-                            outlined
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium">صور الطابق</v-label>
-                          <vue-dropzone
-                            id="dropzoneEF"
-                            ref="myVueDropzoneFloors"
-                            :options="dropzoneOptionsEFloors"
-                            @vdropzone-file-added-manually="
-                              myVueDropzoneFloors(ind, $event)
-                            "
-                            use-custom-slot
-                          >
-                            <template v-slot:file="{ meta, removeFile }">
-                              <div class="d-flex flex-column align-center">
-                                <img
-                                  :src="meta.upload.dataURL"
-                                  height="100"
-                                  alt="Uploaded image"
-                                />
-                                <v-btn text color="error" @click="removeFile(meta.file)"
-                                  >Remove</v-btn
-                                >
-                              </div>
-                            </template>
-                          </vue-dropzone>
-                        </v-col>
-                        <v-col cols="12" md="12" style="padding: 10px">
-                          <v-container style="border: solid 2px #e5e5e5">
-                            <v-row
-                              v-for="(dat, i) in editdItem.floors[ind].rooms"
-                              :key="i"
-                            >
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <p style="padding: 10px; margin: 0px">
-                                  تفاصيل النموذج الفرعية
-                                </p>
-                              </v-col>
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <v-btn @click="deletItm(ind, i)" color="error"
-                                  >حذف تفاصيل الطابق</v-btn
-                                >
-                              </v-col>
-
-                              <v-col cols="12" md="6" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium">الاسم</v-label>
-                                <v-text-field
-                                  variant="outlined"
-                                  v-model="dat.name"
-                                  :rules="Rules.details.sub_details.name"
-                                  color="primary"
-                                  outlined
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium">المساحة</v-label>
-                                <v-text-field
-                                  variant="outlined"
-                                  v-model="dat.space"
-                                  color="primary"
-                                  outlined
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12" md="12">
-                                <v-row>
-                                  <v-col
-                                    cols="12"
-                                    md="12"
-                                    style="border: solid 2px #e5e5e5"
-                                  >
-                                    <v-label class="mb-2 font-weight-medium"
-                                      >صورة
-                                    </v-label>
-                                    <v-row>
-                                      <v-col cols="6" md="6">
-                                        <input
-                                          type="file"
-                                          accept="image/png, image/jpeg, image/bmp"
-                                          @change="handleFileChange($event, ind, i)"
-                                          ref="fileInput"
-                                        />
-                                      </v-col>
-                                      <v-col
-                                        cols="6"
-                                        md="6"
-                                        style="text-align: center"
-                                        v-if="dat.image"
-                                      >
-                                        <div
-                                          style="
-                                            position: relative;
-                                            display: inline-block;
-                                          "
-                                        >
-                                          <img
-                                            :src="dat.image"
-                                            style="
-                                              width: 120px;
-                                              border: solid 1px rebeccapurple;
-                                            "
-                                          />
-                                          <v-icon
-                                            class="mr-2"
-                                            color="error"
-                                            style="
-                                              position: absolute;
-                                              top: 0;
-                                              right: 0;
-                                              cursor: pointer;
-                                            "
-                                            @click="removeImage(ind, i)"
-                                          >
-                                            mdi-close
-                                          </v-icon>
-                                        </div>
-                                      </v-col>
-                                    </v-row>
-                                  </v-col>
-                                </v-row>
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-col>
-                        <v-col cols="12" md="6" style="padding: 10px">
-                          <v-btn @click="addNewItem(ind)" color="success"
-                            >إضافة غرفة جديدة</v-btn
-                          >
-                        </v-col>
-                      </v-row>
-                    </v-card>
-                  </v-container>
-                </v-col>
-                <v-col cols="12" md="12" style="padding: 10px">
-                  <v-row>
-                    <v-col cols="12" md="6" style="padding: 10px">
-                      <v-btn @click="addNewItems" color="success">إضافة طابق جديد</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-              <v-divider></v-divider>
-              <!----Personal Info---->
-              <v-card-actions>
-                <v-btn
-                  size="large"
-                  @click="addCenter"
-                  color="primary"
-                  :loading="editItemLoading"
-                  :disabled="!isFormvalid"
-                  text
-                  >إضافة</v-btn
-                >
-                <v-btn
-                  class="bg-lighterror text-error ml-4"
-                  @click="dialogEdit = false"
-                  text
-                  >أغلاق</v-btn
-                >
-              </v-card-actions>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-card>
-    </v-dialog>
-    <!-- dialogEdit -->
 
     <!-- - Dailog for show info to user -->
     <v-dialog v-model="dialogData.open" max-width="500px">
@@ -579,20 +104,36 @@
       </v-card>
     </v-dialog>
     <!-- - showImg -->
+
+    <!-- delete dialog -->
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="headline justify-center">
+          هل انت متأكد من حذف هذا النموذج ؟
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn
+            color="primary white--text"
+            :loading="deleteItemLoading"
+            @click="deleteItemConfirm"
+          >
+            حذف
+          </v-btn>
+          <v-spacer />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End delete dailog -->
+
   </v-container>
 </template>
 
 <script>
 import API from "@/api/adminAPI";
-import VueTagsInput from "@johmun/vue-tags-input";
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
-  components: {
-    VueTagsInput,
-    vueDropzone: vue2Dropzone,
-  },
   data() {
     return {
       userDataString: null,
@@ -619,74 +160,6 @@ export default {
         bodyText: "test",
       },
       // message
-      // add
-      selectedFiles: [],
-      tags: [],
-      houses: "",
-      results: null,
-      content_url: null,
-      addLoading: false,
-      is_available: true,
-      isFormvalid: false,
-      addBtnLoading: false,
-      dialog: false,
-      receiver_type: null,
-      existing_type: "بيع",
-      showAdditionalFields: false,
-      uploadedFiles: [],
-      data: {
-        name: null,
-        images: [],
-        houses: [],
-        total_space: null,
-        building_space: null,
-        floors: [
-          {
-            name: "",
-            images: [],
-            rooms: [
-              {
-                name: "",
-                image: null,
-                space: null,
-              },
-            ],
-          },
-        ],
-      },
-      selectedFile: null,
-      Rules: {
-        name: [(value) => !!value || "يرجى أضافة أسم"],
-        price: [(value) => !!value || "يرجى أضافة سعر"],
-        image: [(value) => !!value || "يرجى أضافة صورة"],
-        is_available: [
-          (value) => (value !== null && value !== undefined) || "يرجى أضافة الحالة",
-        ],
-        type: [(value) => !!value || "يرجى أدخال نوع الخدمة"],
-        houses: [(value) => !!value || "يرجى أدخال ارقام المنازل"],
-        details: {
-          title: [(value) => !!value || "يرجى أدخال أسم الطابق"],
-          sub_details: {
-            name: [(value) => !!value || "يرجى أدخال أسم الغرفة"],
-            value: [(value) => !!value || "يرجى أدخال مساحة الغرفة"],
-          },
-        },
-      },
-      dropzoneOptions: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 100,
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>إضافة صور المنزل",
-        dictRemoveFile: "<i class='fa fa-trash-alt'></i>",
-      },
-      dropzoneOptionsFloors: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 100,
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>إضافة صور الطابق",
-        dictRemoveFile: "<i class='fa fa-trash-alt'></i>",
-      },
-      // add
       // edit
       editItemLoading: false,
       dialogEdit: false,
@@ -695,6 +168,7 @@ export default {
       tagsE: [],
       editedImages: [],
       housesE: "",
+      file: { size: 123, name: "Icon", type: "image/png" },
       dropzoneOptionsE: {
         url: "https://httpbin.org/post",
         thumbnailWidth: 150,
@@ -798,6 +272,17 @@ export default {
     },
   },
   methods: {
+    showP(item) {
+      localStorage.setItem("itemForm", JSON.stringify(item));
+      this.$router.push("/forms/Show");
+    },
+    editP(item) {
+      localStorage.setItem("itemForm", JSON.stringify(item));
+      this.$router.push("/forms/Edit");
+    },
+    add() {
+      this.$router.push("/admin-add-forms");
+    },
     addHoE() {
       this.editdItem.houses = [];
       this.tagsE.forEach((tag) => {
@@ -808,7 +293,6 @@ export default {
     },
     addHo() {
       this.data.houses = [];
-      console.log(this.tags);
       this.tags.forEach((tag) => {
         if ("text" in tag) {
           this.data.houses.push(tag.text);
@@ -1004,37 +488,14 @@ export default {
         var newImages = this.editdItem.images.map((image) => {
           var file = { size: 123, name: "Icon", type: "image/png" };
           var url = this.content_url + image;
+
           return { file, url };
         });
 
         newImages.forEach(({ file, url }) => {
           this.$refs.myVueDropzoneE.manuallyAddFile(file, url);
         });
-        
-        const floorImages = this.editdItem.floors.map((floor) => {
-          console.log("floor", floor);
-          floor.images.map((image) => {
-            console.log("image", image);
-            var file = { size: 123, name: "Icon", type: "image/png" };
-            var url = this.content_url + image;
-            return { file, url };
-          });
-
-          return floor;
-        });
-
-        console.log("floorImages", floorImages);
-
-
-        newImages.forEach(({ file, url }) => {
-          this.$refs.myVueDropzoneFloors.manuallyAddFile(file, url);
-        });
       });
-    },
-    myVueDropzoneFloors(ind, url) {
-      console.log("vdropzone-succeeded triggered");
-      const dataa = this.editdItem.floors[ind];
-      dataa.images.push(url);
     },
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;
@@ -1049,7 +510,7 @@ export default {
       this.deleteItemLoading = true;
 
       try {
-        const response = await API.removeServices(this.deletedItem._id);
+        const response = await API.deleteForms(this.deletedItem._id);
 
         this.deleteItemLoading = false;
         this.dialogDelete = false;

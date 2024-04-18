@@ -18,6 +18,8 @@ import call_center from "@/views/admin/call_center/call_center.vue";
 import Print from "@/views/admin/application_form/Print.vue";
 import profile from "@/views/admin/owners/profile.vue";
 import forms from "@/views/admin/forms/forms.vue";
+import add from "@/views/admin/forms/add.vue";
+import formShow from "@/views/admin/forms/profile/index.vue";
 
 const Admin = {
   path: "/",
@@ -125,6 +127,16 @@ const Admin = {
       path: "/admin-forms",
       name: "admin-forms",
       component: forms,
+    },
+    {
+      path: "/admin-add-forms",
+      name: "admin-add-forms",
+      component: add,
+    },
+    {
+      path: "/forms/:ac",
+      name: "admin-ac-forms",
+      component: formShow,
     },
 
   ],
