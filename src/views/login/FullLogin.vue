@@ -132,7 +132,7 @@ export default {
         this.loading = false;
       } catch (error) {
         this.showDialogfunction(
-          "فشل, أسم المستخدم أو كلمة المرور خطاء",
+          "فشل, أسم المستخدم أو كلمة المرور خطأ",
           "#FF5252"
         );
         this.loading = false;

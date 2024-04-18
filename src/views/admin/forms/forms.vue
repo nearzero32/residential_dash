@@ -81,7 +81,7 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="clossMess"> تم </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -126,7 +126,6 @@
       </v-card>
     </v-dialog>
     <!-- End delete dailog -->
-
   </v-container>
 </template>
 
@@ -231,6 +230,11 @@ export default {
     };
   },
   created() {
+    var FormMass = localStorage.getItem("itemFormMass");
+    if (FormMass) {
+      this.showDialogfunction(FormMass, "primary");
+    }
+
     var userDataString = JSON.parse(localStorage.getItem("user"));
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
@@ -263,15 +267,16 @@ export default {
       }
     },
   },
-  computed: {
-    editdItemHouses() {
-      if (this.editdItem && this.editdItem.houses) {
-        return this.editdItem.houses.map((house) => house.name);
-      }
-      return [];
-    },
-  },
   methods: {
+    clossMess() {
+      var FormMass = localStorage.getItem("itemFormMass");
+      if (FormMass) {
+        localStorage.removeItem("itemFormMass");
+        this.dialogData.open = false
+      } else {
+        this.dialogData.open = false
+      }
+    },
     showP(item) {
       localStorage.setItem("itemForm", JSON.stringify(item));
       this.$router.push("/forms/Show");

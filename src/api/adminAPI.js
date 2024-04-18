@@ -543,14 +543,14 @@ class Api {
     return response;
   }
 
-  async editCenter({ name, phone, address, description, video, forms }) {
+  async editCenter({ name, phone, address, description, video, facebook, instagram, snapchat, tiktok, whatsapp, logo }) {
     const requestData = {
       name,
       phone,
       address,
       description,
       video,
-      forms,
+      facebook, instagram, snapchat, tiktok, whatsapp, logo
     };
     const response = await axiosInstance.put(`/center`, requestData);
     return response;
@@ -620,6 +620,10 @@ class Api {
   // Forms
   async getForms() {
     const response = await axiosInstance.get(`/center/forms`);
+    return response;
+  }
+  async housesRoomNames() {
+    const response = await axiosInstance.get(`/houses_room_names`);
     return response;
   }
   async addForms({ name, total_space, images, houses, floors, building_space }) {

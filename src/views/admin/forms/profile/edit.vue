@@ -3,8 +3,11 @@
     <v-container fluid class="down-top-padding">
       <v-card class="mx-auto">
         <v-container>
-          <v-card-title class="text-h5 text-center"  style="display: grid;
-    place-items: center;"><strong>تعديل النموذج ( {{ data.name }} )</strong></v-card-title>
+          <v-card-title
+            class="text-h5 text-center"
+            style="display: grid; place-items: center"
+            ><strong>تعديل النموذج ( {{ data.name }} )</strong></v-card-title
+          >
           <v-divider></v-divider>
           <v-card-text class="pb-0">
             <v-form v-model="isFormvalid">
@@ -70,7 +73,7 @@
                     <div
                       class="showImg"
                       v-if="data.images && data.images.length > 0"
-                      style="z-index: 99999999; width: 100%"
+                      style=" width: 100%"
                     >
                       <v-row>
                         <v-col
@@ -152,7 +155,7 @@
                             <div
                               class="showImg"
                               v-if="dataa.images && dataa.images.length > 0"
-                              style="z-index: 99999999; width: 100%"
+                              style=" width: 100%"
                             >
                               <v-row>
                                 <v-col
@@ -165,7 +168,9 @@
                                   <div style="position: relative" class="imgI">
                                     <img
                                       style="height: 100px; width: 100%"
-                                      :src="isBase64(imageF) ? imageF : content_url + imageF"
+                                      :src="
+                                        isBase64(imageF) ? imageF : content_url + imageF
+                                      "
                                       alt="Image"
                                       @click.stop
                                     />
@@ -211,14 +216,20 @@
                               </v-col>
 
                               <v-col cols="12" md="6" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium">الاسم</v-label>
-                                <v-text-field
+                                <v-label class="mb-2 font-weight-medium"
+                                  >اسم الغرفة</v-label
+                                >
+                                <v-autocomplete
+                                  label="اسم الغرفة"
+                                  :items="housesRoomNames"
+                                  item-text="name"
+                                  item-value="name"
                                   variant="outlined"
                                   v-model="dat.name"
                                   :rules="Rules.details.sub_details.name"
                                   color="primary"
                                   outlined
-                                ></v-text-field>
+                                ></v-autocomplete>
                               </v-col>
                               <v-col cols="12" md="6" style="padding: 10px">
                                 <v-label class="mb-2 font-weight-medium"
@@ -252,14 +263,18 @@
                                       <div
                                         class="showImg"
                                         v-if="dat.image"
-                                        style="z-index: 99999999; width: 100%"
+                                        style=" width: 100%"
                                       >
                                         <v-row>
                                           <v-col cols="12" md="2" style="padding: 10px">
                                             <div style="position: relative" class="imgI">
                                               <img
                                                 style="height: 100px; width: 100%"
-                                                :src="isBase64(dat.image) ? dat.image : content_url + dat.image"
+                                                :src="
+                                                  isBase64(dat.image)
+                                                    ? dat.image
+                                                    : content_url + dat.image
+                                                "
                                                 alt="Image"
                                                 @click.stop
                                               />
@@ -383,6 +398,8 @@ export default {
       tagsE: [],
       housesE: "",
       content_url: "",
+      housesRoomNames: [],
+
       // message
       dialogData: {
         open: false,
@@ -403,7 +420,7 @@ export default {
   created() {
     const itemForm = localStorage.getItem("itemForm");
     const user = JSON.parse(localStorage.getItem("user"));
-    this.content_url = user.content_url
+    this.content_url = user.content_url;
     if (itemForm) {
       const itemFormData = JSON.parse(itemForm);
       this.data = itemFormData;
@@ -415,8 +432,23 @@ export default {
     } else {
       console.log("لا توجد بيانات في الجلسة المحلية.");
     }
+    this.getCenter();
   },
   methods: {
+    async getCenter() {
+      try {
+        const response = await API.housesRoomNames();
+        this.housesRoomNames = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
     backPage() {
       this.dialogData.open = false;
       this.$router.push("/admin-forms");
@@ -509,7 +541,6 @@ export default {
         };
         reader.readAsDataURL(file);
       }
-      console.log("floors", this.data.floors);
     },
     deleteImageF(index, ind) {
       this.data.floors[ind].images.splice(index, 1);
@@ -583,29 +614,9 @@ export default {
                 floors: this.data.floors,
                 building_space: this.data.building_space,
               });
-              this.data.name = null;
-              this.data.total_space = null;
-              this.data.images = [];
-              this.data.houses = [];
-              this.tags = [];
-              this.data.floors = [
-                {
-                  name: "",
-                  images: [],
-                  rooms: [
-                    {
-                      name: "",
-                      image: null,
-                      space: null,
-                    },
-                  ],
-                },
-              ];
-              this.data.building_space = null;
-              this.dialog = false;
               this.addLoading = false;
-              this.getCenter();
-              this.showDialogfunction(response.data.message, "primary");
+              localStorage.setItem("itemFormMass", response.data.message);
+              this.$router.push("/admin-forms");
             } catch (error) {
               if (error.response && error.response.status === 401) {
                 this.$router.push("/login");

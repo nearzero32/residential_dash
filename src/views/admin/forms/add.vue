@@ -74,7 +74,7 @@
                     <div
                       class="showImg"
                       v-if="data.images && data.images.length > 0"
-                      style="z-index: 99999999; width: 100%"
+                      style=" width: 100%"
                     >
                       <v-row>
                         <v-col
@@ -156,7 +156,7 @@
                             <div
                               class="showImg"
                               v-if="dataa.images && dataa.images.length > 0"
-                              style="z-index: 99999999; width: 100%"
+                              style=" width: 100%"
                             >
                               <v-row>
                                 <v-col
@@ -215,14 +215,20 @@
                               </v-col>
 
                               <v-col cols="12" md="6" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium">الاسم</v-label>
-                                <v-text-field
+                                <v-label class="mb-2 font-weight-medium"
+                                  >اسم الغرفة</v-label
+                                >
+                                <v-autocomplete
+                                  label="اسم الغرفة"
+                                  :items="housesRoomNames"
+                                  item-text="name"
+                                  item-value="name"
                                   variant="outlined"
                                   v-model="dat.name"
                                   :rules="Rules.details.sub_details.name"
                                   color="primary"
                                   outlined
-                                ></v-text-field>
+                                ></v-autocomplete>
                               </v-col>
                               <v-col cols="12" md="12" style="padding: 10px">
                                 <v-label class="mb-2 font-weight-medium"
@@ -256,7 +262,7 @@
                                       <div
                                         class="showImg"
                                         v-if="dat.image"
-                                        style="z-index: 99999999; width: 100%"
+                                        style=" width: 100%"
                                       >
                                         <v-row>
                                           <v-col cols="12" md="2" style="padding: 10px">
@@ -447,6 +453,7 @@ export default {
           },
         ],
       },
+      housesRoomNames: [],
       // addData
 
       // message
@@ -466,6 +473,15 @@ export default {
       // message
     };
   },
+  created() {
+    var userDataString = JSON.parse(localStorage.getItem("user"));
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
+    }
+    this.getCenter();
+  },
   watch: {
     tags: {
       handler: function () {
@@ -475,6 +491,21 @@ export default {
     },
   },
   methods: {
+    async getCenter() {
+      try {
+        const response = await API.housesRoomNames();
+        console.log(response);
+        this.housesRoomNames = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
     addHo() {
       this.data.houses = [];
       console.log(this.tags);
