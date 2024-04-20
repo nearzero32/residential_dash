@@ -626,16 +626,16 @@ class Api {
     const response = await axiosInstance.get(`/houses_room_names`);
     return response;
   }
-  async addForms({ name, total_space, images, houses, floors, building_space }) {
+  async addForms({ name, total_space, images, houses, floors, building_space, category, block_number, street_number }) {
     const requestData = {
-      name, total_space, images, houses, floors, building_space
+      name, total_space, images, houses, floors, building_space, category, block_number, street_number
     };
     const response = await axiosInstance.post(`/center/forms`, requestData);
     return response;
   }
-  async editForms({ id, name, total_space, images, houses, floors, building_space }) {
+  async editForms({ id, name, total_space, images, houses, floors, building_space, category, block_number, street_number }) {
     const requestData = {
-      name, total_space, images, houses, floors, building_space
+      name, total_space, images, houses, floors, building_space, category, block_number, street_number
     };
     const response = await axiosInstance.put(`center/forms/${id}`, requestData);
     return response;

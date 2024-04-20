@@ -185,7 +185,7 @@
           :ripple="false"
         >
           <v-avatar size="35">
-            <img src="@/assets/images/users/Lamassu---Logo-SS.png" alt="Julia" />
+            <img :src="content_url + logo" alt="Julia" />
           </v-avatar>
         </v-btn>
       </template>
@@ -219,13 +219,18 @@ export default {
     showSearch: false,
     drawer: false,
     group: null,
+    content_url: null,
+    user: null,
     href() {
       return undefined;
     },
   }),
-
+  created() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    this.content_url = user.content_url;
+  },
   computed: {
-    ...mapState(["navbarColor", "Sidebar_drawer"]),
+    ...mapState(["navbarColor", "Sidebar_drawer", "logo"]),
   },
 
   methods: {

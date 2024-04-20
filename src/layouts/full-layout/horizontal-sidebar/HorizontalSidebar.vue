@@ -23,7 +23,7 @@
           v-if="SidebarColor !== 'white'"
         >
           <!-- <span class="logo-icon"> -->
-          <img src="../../../assets/images/logos/logo-white.svg" />
+          <img src="" />
           <!-- </span> -->
           <!-- <span class="logo-text ml-2" :class="`${showLogo ? '' : 'hidelogo'}`">
           <img src="../../../assets/images/logo-light-text.png" class="mt-2" />
@@ -38,7 +38,7 @@
           v-else
         >
           <!-- <span class="logo-icon"> -->
-          <img src="../../../assets/images/logos/logo-dark.svg" />
+          <img src="" />
           <!-- </span>
         <span class="logo-text ml-2" :class="`${showLogo ? '' : 'hidelogo'}`">
           <img src="../../../assets/images/logo-text.png" class="mt-2" />

@@ -42,6 +42,48 @@
                 </v-card-text>
               </v-card>
             </v-col>
+            <v-col cols="12" md="4" style="padding: 10px">
+              <v-card>
+                <v-card-text class="pb-0" style="display: grid; place-items: center">
+                  <h3>
+                    <strong>التصنيف ( {{ data.category }} )</strong>
+                  </h3>
+                  <img
+                    style="width: 70px; margin-block: 12px"
+                    :src="data_classification"
+                    alt=""
+                  />
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols="12" md="4" style="padding: 10px">
+              <v-card>
+                <v-card-text class="pb-0" style="display: grid; place-items: center">
+                  <h3>
+                    <strong>البلوك ( {{ data.block_number }} )</strong>
+                  </h3>
+                  <img
+                    style="width: 70px; margin-block: 12px"
+                    :src="street"
+                    alt=""
+                  />
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols="12" md="4" style="padding: 10px">
+              <v-card>
+                <v-card-text class="pb-0" style="display: grid; place-items: center">
+                  <h3>
+                    <strong>رقم الشارع ( {{ data.street_number }} )</strong>
+                  </h3>
+                  <img
+                    style="width: 70px; margin-block: 12px"
+                    :src="location"
+                    alt=""
+                  />
+                </v-card-text>
+              </v-card>
+            </v-col>
           </v-row>
         </v-container>
         <v-container>
@@ -139,6 +181,9 @@
 import space from "@/assets/images/icons/space.png";
 import spaceUtilization from "@/assets/images/icons/space-utilization.png";
 import domain from "@/assets/images/icons/domain.png";
+import location from "@/assets/images/icons/location.png";
+import street from "@/assets/images/icons/street.png";
+import data_classification from "@/assets/images/icons/data_classification.png";
 
 export default {
   data() {
@@ -147,6 +192,9 @@ export default {
       space,
       spaceUtilization,
       domain,
+      street,
+      location,
+      data_classification,
       content_url: "",
     };
   },
@@ -158,9 +206,6 @@ export default {
     if (itemForm) {
       const itemFormData = JSON.parse(itemForm);
       this.data = itemFormData;
-      console.log(itemFormData);
-    } else {
-      console.log("لا توجد بيانات في الجلسة المحلية.");
     }
   },
 };

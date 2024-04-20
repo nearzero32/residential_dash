@@ -221,7 +221,10 @@ export default {
           { text: "مساحة البناء", value: "building_space" },
           { text: "المساحة الكلية", value: "total_space" },
           { text: "عدد المنازل", value: "houses.length" },
-          { text: "عرض", value: "ac" },
+          { text: "التصنيف", value: "category" },
+          { text: "البلوك", value: "block_number" },
+          { text: "رقم الشارع", value: "street_number" },
+          { text: "العمليات", value: "ac" },
         ],
         centers: [],
         loading: true,
@@ -375,7 +378,6 @@ export default {
         };
         reader.readAsDataURL(file);
       }
-      console.log("floors", this.data.floors);
     },
     removeImage(floor, roomIndex) {
       this.data.floors[floor].rooms[roomIndex].image = null;

@@ -1532,7 +1532,6 @@ if (userDataString.type !== "admin") {
         this.data.address = null;
         this.data.house_id = null;
         this.getCenter();
-        console.log(response)
         this.showDialogfunction(response.data.message, "primary");
         this.dialog = false;
       } catch (error) {

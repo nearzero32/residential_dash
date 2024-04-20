@@ -16,13 +16,13 @@
           class="align-center d-flex"
           v-if="navbarColor == '#fafafa' && !$vuetify.theme.dark"
         >
-          <img src="../../../assets/images/logos/logo-dark.svg" />
+          <img src="" />
         </v-toolbar-title>
         <!-- ---------------------------------- -->
         <!---  dark Logo part -->
         <!-- ---------------------------------- -->
         <v-toolbar-title class="align-center d-flex" v-else>
-          <img src="../../../assets/images/logos/logo-white.svg" />
+          <img src="" />
         </v-toolbar-title>
       </div>
       <!-- ---------------------------------- -->

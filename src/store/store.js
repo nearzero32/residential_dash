@@ -16,6 +16,7 @@ export default new Vuex.Store({
     SidebarBg: "",
     navbarColor: "#fafafa",
     setHorizontalLayout: false,
+    logo: localStorage.getItem("logo"),
     user: JSON.parse(localStorage.getItem("user")),
     isAuthenticated: false,
   },
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     SET_AUTHENTICATED(state, payload) {
       state.isAuthenticated = payload;
+    },
+    SET_LOGO(state, logo) {
+      state.logo = logo;
     },
   },
   actions: {
@@ -75,8 +79,10 @@ export default new Vuex.Store({
         }
 
         commit("SET_AUTHENTICATED", true);
+        commit("SET_LOGO", response.data.results.center_id.logo);
 
         localStorage.setItem("user", JSON.stringify(response.data.results));
+        localStorage.setItem("logo", response.data.results.center_id.logo);
         localStorage.setItem(
           "token",
           JSON.stringify(response.data.results.token)
@@ -104,6 +110,18 @@ export default new Vuex.Store({
         }
       } catch (error) {
         commit("SET_AUTHENTICATED", false);
+        throw error;
+      }
+    },
+    async getCenterP({ commit }) {
+      try {
+        const response = await axiosInstance.get(`/center`);
+        if (response) {
+          localStorage.setItem("logo", response.data.results.logo);
+          commit("SET_LOGO", response.data.results.logo);
+        }
+      } catch (error) {
+        commit("SET_LOGO", null);
         throw error;
       }
     },

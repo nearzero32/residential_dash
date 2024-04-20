@@ -337,6 +337,9 @@ export default {
         this.loading = false;
       }
     },
+    getDataCenter() {
+      this.$store.dispatch("getCenterP");
+    },
     async addCenter() {
       if (this.results.logo == null) {
         this.showDialogfunction("يرجى إضافة صوره الى النموذج", "#FF5252");
@@ -360,6 +363,7 @@ export default {
 
         this.addLoading = false;
         this.getCenter();
+        this.getDataCenter();
         this.showDialogfunction(response.data.message, "primary");
       } catch (error) {
         if (error.response && error.response.status === 401) {

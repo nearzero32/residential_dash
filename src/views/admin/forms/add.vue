@@ -43,7 +43,7 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" md="4" style="padding: 10px">
+                <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium">ارقام المنازل</v-label>
                   <vue-tags-input
                     v-model="houses"
@@ -55,6 +55,62 @@
                     color="primary"
                     outlined
                   />
+                  <v-checkbox label="الملء التلقائي" v-model="automatic"></v-checkbox>
+                  <v-row v-if="automatic == true">
+                    <v-col cols="12" md="5" style="padding: 10px">
+                      <v-label class="mb-2 font-weight-medium">من</v-label>
+                      <v-text-field
+                        variant="outlined"
+                        v-model="from"
+                        color="primary"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="5" style="padding: 10px">
+                      <v-label class="mb-2 font-weight-medium">الى</v-label>
+                      <v-text-field
+                        variant="outlined"
+                        v-model="to"
+                        color="primary"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="2" style="padding: 10px">
+                      <v-btn size="large" @click="addAutomatic" color="primary" text
+                        >إضافة</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-col cols="12" md="3" style="padding: 10px">
+                  <v-label class="mb-2 font-weight-medium">التصنيف</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.category"
+                    :rules="Rules.category"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="3" style="padding: 10px">
+                  <v-label class="mb-2 font-weight-medium">البلوك</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.block_number"
+                    :rules="Rules.block_number"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="3" style="padding: 10px">
+                  <v-label class="mb-2 font-weight-medium">رقم الشارع</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.street_number"
+                    :rules="Rules.street_number"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="12" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium">صور النموذج</v-label>
@@ -74,7 +130,7 @@
                     <div
                       class="showImg"
                       v-if="data.images && data.images.length > 0"
-                      style=" width: 100%"
+                      style="width: 100%"
                     >
                       <v-row>
                         <v-col
@@ -156,7 +212,7 @@
                             <div
                               class="showImg"
                               v-if="dataa.images && dataa.images.length > 0"
-                              style=" width: 100%"
+                              style="width: 100%"
                             >
                               <v-row>
                                 <v-col
@@ -205,21 +261,19 @@
                             <v-row v-for="(dat, i) in data.floors[ind].rooms" :key="i">
                               <v-col cols="12" md="12" style="padding: 10px">
                                 <p style="padding: 10px; margin: 0px">
-                                  تفاصيل {{ dataa.name }}
+                                  محتويات {{ dataa.name }}
                                 </p>
                               </v-col>
                               <v-col cols="12" md="12" style="padding: 10px">
                                 <v-btn @click="deletItm(ind, i)" color="error"
-                                  >حذف تفاصيل الطابق</v-btn
+                                  >حذف محتويات الطابق</v-btn
                                 >
                               </v-col>
 
                               <v-col cols="12" md="6" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium"
-                                  >اسم الغرفة</v-label
-                                >
+                                <v-label class="mb-2 font-weight-medium">الأسم </v-label>
                                 <v-autocomplete
-                                  label="اسم الغرفة"
+                                  label="الأسم "
                                   :items="housesRoomNames"
                                   item-text="name"
                                   item-value="name"
@@ -232,7 +286,7 @@
                               </v-col>
                               <v-col cols="12" md="12" style="padding: 10px">
                                 <v-label class="mb-2 font-weight-medium"
-                                  >المساحة الغرفة ( {{ dat.name }} )</v-label
+                                  >المساحة ( {{ dat.name }} )</v-label
                                 >
                                 <v-text-field
                                   variant="outlined"
@@ -245,7 +299,7 @@
                                 <v-row>
                                   <v-col cols="12" md="12" style="padding: 10px">
                                     <v-label class="mb-2 font-weight-medium"
-                                      >صورة الغرفة ( {{ dat.name }} )</v-label
+                                      >صورة ( {{ dat.name }} )</v-label
                                     >
                                     <div
                                       @click="openFileInputR(ind, i)"
@@ -262,7 +316,7 @@
                                       <div
                                         class="showImg"
                                         v-if="dat.image"
-                                        style=" width: 100%"
+                                        style="width: 100%"
                                       >
                                         <v-row>
                                           <v-col cols="12" md="2" style="padding: 10px">
@@ -306,7 +360,7 @@
                         </v-col>
                         <v-col cols="12" md="6" style="padding: 10px">
                           <v-btn @click="addNewItem(ind)" color="success"
-                            >إضافة غرفة جديدة</v-btn
+                            >إضافة محتوى جديد للطابق</v-btn
                           >
                         </v-col>
                       </v-row>
@@ -413,6 +467,9 @@ export default {
 
       // addData
       isFormvalid: false,
+      automatic: false,
+      from: null,
+      to: null,
       addLoading: false,
       Rules: {
         name: [(value) => !!value || "يرجى أضافة أسم"],
@@ -423,6 +480,9 @@ export default {
         ],
         type: [(value) => !!value || "يرجى أدخال نوع الخدمة"],
         houses: [(value) => !!value || "يرجى أدخال ارقام المنازل"],
+        category: [(value) => !!value || "الحقل مطلوب"],
+        block_number: [(value) => !!value || "الحقل مطلوب"],
+        street_number: [(value) => !!value || "الحقل مطلوب"],
         details: {
           title: [(value) => !!value || "يرجى أدخال أسم الطابق"],
           sub_details: {
@@ -439,6 +499,9 @@ export default {
         houses: [],
         total_space: null,
         building_space: null,
+        category: null,
+        block_number: null,
+        street_number: null,
         floors: [
           {
             name: "",
@@ -494,7 +557,6 @@ export default {
     async getCenter() {
       try {
         const response = await API.housesRoomNames();
-        console.log(response);
         this.housesRoomNames = response.data.results;
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -508,12 +570,37 @@ export default {
     },
     addHo() {
       this.data.houses = [];
-      console.log(this.tags);
       this.tags.forEach((tag) => {
         if ("text" in tag) {
           this.data.houses.push(tag.text);
         }
       });
+    },
+    addAutomatic() {
+      if (this.from && this.to) {
+        let fromNumber = parseInt(this.from);
+        let toNumber = parseInt(this.to);
+
+        if (fromNumber <= toNumber) {
+          let tempTags = [];
+
+          for (let i = fromNumber; i <= toNumber; i++) {
+            let numberString = i.toString();
+            if (!this.tags.includes(numberString)) {
+              tempTags.push(numberString);
+            }
+          }
+
+          this.tags = this.tags.concat(tempTags);
+        } else {
+          this.showDialogfunctionadd(
+            'قيمة "من" يجب أن تكون أقل من أو تساوي قيمة "إلى"',
+            "#FF5252"
+          );
+        }
+      } else {
+        this.showDialogfunctionadd('يرجى إدخال قيمة لـ "من" و "إلى"', "#FF5252");
+      }
     },
     backPage() {
       this.dialogData.open = false;
@@ -628,7 +715,6 @@ export default {
         };
         reader.readAsDataURL(file);
       }
-      console.log("floors", this.data.floors);
     },
     deleteImageF(index, ind) {
       this.data.floors[ind].images.splice(index, 1);
@@ -700,6 +786,9 @@ export default {
                 houses: this.data.houses,
                 floors: this.data.floors,
                 building_space: this.data.building_space,
+                category: this.data.category,
+                block_number: this.data.block_number,
+                street_number: this.data.street_number,
               });
               this.addLoading = false;
               this.showDialogfunction(response.data.message, "primary");

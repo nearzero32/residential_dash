@@ -42,7 +42,7 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" md="12" style="padding: 10px">
+                <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium">ارقام المنازل</v-label>
                   <vue-tags-input
                     v-model="housesE"
@@ -54,6 +54,62 @@
                     color="primary"
                     outlined
                   />
+                  <v-checkbox label="الملء التلقائي" v-model="automatic"></v-checkbox>
+                  <v-row v-if="automatic == true">
+                    <v-col cols="12" md="5" style="padding: 10px">
+                      <v-label class="mb-2 font-weight-medium">من</v-label>
+                      <v-text-field
+                        variant="outlined"
+                        v-model="from"
+                        color="primary"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="5" style="padding: 10px">
+                      <v-label class="mb-2 font-weight-medium">الى</v-label>
+                      <v-text-field
+                        variant="outlined"
+                        v-model="to"
+                        color="primary"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="2" style="padding: 10px">
+                      <v-btn size="large" @click="addAutomatic" color="primary" text
+                        >إضافة</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-col cols="12" md="3" style="padding: 10px">
+                  <v-label class="mb-2 font-weight-medium">التصنيف</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.category"
+                    :rules="Rules.category"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="3" style="padding: 10px">
+                  <v-label class="mb-2 font-weight-medium">البلوك</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.block_number"
+                    :rules="Rules.block_number"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="3" style="padding: 10px">
+                  <v-label class="mb-2 font-weight-medium">رقم الشارع</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.street_number"
+                    :rules="Rules.street_number"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="12" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium">صور النموذج</v-label>
@@ -73,7 +129,7 @@
                     <div
                       class="showImg"
                       v-if="data.images && data.images.length > 0"
-                      style=" width: 100%"
+                      style="width: 100%"
                     >
                       <v-row>
                         <v-col
@@ -155,7 +211,7 @@
                             <div
                               class="showImg"
                               v-if="dataa.images && dataa.images.length > 0"
-                              style=" width: 100%"
+                              style="width: 100%"
                             >
                               <v-row>
                                 <v-col
@@ -206,21 +262,19 @@
                             <v-row v-for="(dat, i) in data.floors[ind].rooms" :key="i">
                               <v-col cols="12" md="12" style="padding: 10px">
                                 <p style="padding: 10px; margin: 0px">
-                                  تفاصيل {{ dataa.name }}
+                                  محتويات {{ dataa.name }}
                                 </p>
                               </v-col>
                               <v-col cols="12" md="12" style="padding: 10px">
                                 <v-btn @click="deletItm(ind, i)" color="error"
-                                  >حذف تفاصيل الطابق</v-btn
+                                  >حذف محتويات الطابق</v-btn
                                 >
                               </v-col>
 
                               <v-col cols="12" md="6" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium"
-                                  >اسم الغرفة</v-label
-                                >
+                                <v-label class="mb-2 font-weight-medium">الأسم</v-label>
                                 <v-autocomplete
-                                  label="اسم الغرفة"
+                                  label="الأسم"
                                   :items="housesRoomNames"
                                   item-text="name"
                                   item-value="name"
@@ -233,7 +287,7 @@
                               </v-col>
                               <v-col cols="12" md="6" style="padding: 10px">
                                 <v-label class="mb-2 font-weight-medium"
-                                  >المساحة الغرفة ( {{ dat.name }} )</v-label
+                                  >المساحة ( {{ dat.name }} )</v-label
                                 >
                                 <v-text-field
                                   variant="outlined"
@@ -246,7 +300,7 @@
                                 <v-row>
                                   <v-col cols="12" md="12" style="padding: 10px">
                                     <v-label class="mb-2 font-weight-medium"
-                                      >صورة الغرفة ( {{ dat.name }} )</v-label
+                                      >صورة ( {{ dat.name }} )</v-label
                                     >
                                     <div
                                       @click="openFileInputR(ind, i)"
@@ -263,7 +317,7 @@
                                       <div
                                         class="showImg"
                                         v-if="dat.image"
-                                        style=" width: 100%"
+                                        style="width: 100%"
                                       >
                                         <v-row>
                                           <v-col cols="12" md="2" style="padding: 10px">
@@ -311,7 +365,7 @@
                         </v-col>
                         <v-col cols="12" md="6" style="padding: 10px">
                           <v-btn @click="addNewItem(ind)" color="success"
-                            >إضافة غرفة جديدة</v-btn
+                            >إضافة محتوى جديد للطابق</v-btn
                           >
                         </v-col>
                       </v-row>
@@ -376,6 +430,9 @@ export default {
   data() {
     return {
       data: null,
+      automatic: false,
+      from: null,
+      to: null,
       isFormvalid: false,
       addLoading: false,
       Rules: {
@@ -387,6 +444,9 @@ export default {
         ],
         type: [(value) => !!value || "يرجى أدخال نوع الخدمة"],
         houses: [(value) => !!value || "يرجى أدخال ارقام المنازل"],
+        category: [(value) => !!value || "الحقل مطلوب"],
+        block_number: [(value) => !!value || "الحقل مطلوب"],
+        street_number: [(value) => !!value || "الحقل مطلوب"],
         details: {
           title: [(value) => !!value || "يرجى أدخال أسم الطابق"],
           sub_details: {
@@ -429,8 +489,6 @@ export default {
         var newData = { text: this.data.houses[i].name, tiClasses: ["ti-valid"] };
         this.tagsE.push(newData);
       }
-    } else {
-      console.log("لا توجد بيانات في الجلسة المحلية.");
     }
     this.getCenter();
   },
@@ -447,6 +505,35 @@ export default {
         }
       } finally {
         this.loading = false;
+      }
+    },
+    addAutomatic() {
+      if (this.from && this.to) {
+        let fromNumber = parseInt(this.from);
+        let toNumber = parseInt(this.to);
+
+        if (fromNumber <= toNumber) {
+          let tempTagsSet = new Set();
+
+          for (let i = fromNumber; i <= toNumber; i++) {
+            let numberString = i.toString();
+            var newData = { text: numberString, tiClasses: ["ti-valid"] };
+            var newDataString = JSON.stringify(newData); // تحويل البيانات إلى سلسلة نصية
+
+            if (!this.tagsE.some((item) => JSON.stringify(item) === newDataString)) {
+              tempTagsSet.add(newData);
+            }
+          }
+
+          this.$set(this, "tagsE", this.tagsE.concat(Array.from(tempTagsSet)));
+        } else {
+          this.showDialogfunction(
+            'قيمة "من" يجب أن تكون أقل من أو تساوي قيمة "إلى"',
+            "#FF5252"
+          );
+        }
+      } else {
+        this.showDialogfunction('يرجى إدخال قيمة لـ "من" و "إلى"', "#FF5252");
       }
     },
     backPage() {
@@ -613,14 +700,19 @@ export default {
                 houses: this.data.houses,
                 floors: this.data.floors,
                 building_space: this.data.building_space,
+                category: this.data.category,
+                block_number: this.data.block_number,
+                street_number: this.data.street_number,
               });
               this.addLoading = false;
               localStorage.setItem("itemFormMass", response.data.message);
               this.$router.push("/admin-forms");
             } catch (error) {
               if (error.response && error.response.status === 401) {
+                this.addLoading = false;
                 this.$router.push("/login");
               } else if (error.response && error.response.status === 500) {
+                this.addLoading = false;
                 this.showDialogfunction(error.response.data.message, "#FF5252");
               }
             }
