@@ -9,14 +9,24 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
+            <v-btn
+              color="primary"
+              v-if="userData.includes('add')"
+              text
+              class="ml-auto"
+              @click="dialog = true"
+            >
+              <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة 
+            </v-btn>
+
             <v-spacer></v-spacer>
             <v-text-field
               v-model="table.search"
               @input="getCenter"
               append-icon="mdi-magnify"
               label="بحث"
-              outlined
               single-line
+              outlined
               hide-details
             ></v-text-field>
           </v-card-title>
@@ -34,18 +44,6 @@
             <template v-slot:item.num="{ item }">
               {{ table.centers.indexOf(item) + 1 }}
             </template>
-            <template v-slot:item.details="{ item }">
-              <div>
-                <span v-if="!item.showFullDetails">
-                  {{ item.details.substring(0, 40) }}...
-                  <p @click="showFullDetails(item)" class="pointer-cursor">عرض المزيد</p>
-                </span>
-                <span v-else>
-                  {{ item.details }}
-                  <p @click="hideFullDetails(item)" class="pointer-cursor"> إخفاء </p>
-                </span>
-              </div>
-            </template>
             <template v-slot:item.actions="{ item }">
               <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
@@ -60,19 +58,56 @@
                 </template>
                 <span>حذف</span>
               </VTooltip>
-              <VTooltip bottom>
-                <template #activator="{ attrs }">
-                  <v-icon color="#fffc00" v-bind="attrs" size="20" @click="Print(item)">
-                    mdi-printer
-                  </v-icon>
-                </template>
-                <span>طباعه</span>
-              </VTooltip>
             </template>
           </v-data-table>
         </v-card>
       </div>
     </div>
+
+    <!-- add -->
+    <v-dialog v-model="dialog" max-width="800px">
+      <v-card>
+        <v-card>
+          <v-card-title class="text-h5">اٍضافة </v-card-title>
+          <v-divider></v-divider>
+          <!----Account Details---->
+          <v-card-text class="pb-0">
+            <v-form v-model="isFormvalid">
+              <v-row>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">العنوان</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.name"
+                    :rules="Rules.name"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-divider></v-divider>
+              <!----Personal Info---->
+              <v-card-actions>
+                <v-btn
+                  size="large"
+                  @click="addCenter"
+                  :loading="addBtnLoading"
+                  color="primary"
+                  :disabled="!isFormvalid"
+                  type="submit"
+                  text
+                  >اٍضافة</v-btn
+                >
+                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
+                  >أغلاق</v-btn
+                >
+              </v-card-actions>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-card>
+    </v-dialog>
+    <!-- add -->
 
     <!-- - Dailog for show info to user -->
     <v-dialog v-model="dialogData.open" max-width="500px">
@@ -93,7 +128,7 @@
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
         <v-card-title class="headline justify-center">
-          هل انت متأكد من حذف هذه الأستمارة ؟
+          هل انت متأكد من الحذف ؟
         </v-card-title>
         <v-card-actions>
           <v-spacer />
@@ -123,7 +158,7 @@ export default {
 
       // nav
       page: {
-        title: "أستماراة طلب حجز",
+        title: "كيف سمع عنا",
       },
       breadcrumbs: [
         {
@@ -132,13 +167,14 @@ export default {
           to: "/Index",
         },
         {
-          text: "أستماراة طلب حجز",
+          text: "كيف سمع عنا",
           disabled: true,
         },
       ],
       // nav
       // table
       table: {
+        content_url: null,
         search: "",
         itemsPerPage: 5,
         headers: [
@@ -146,16 +182,7 @@ export default {
             text: "#",
             value: "num",
           },
-          { text: "اسم الزبون", value: "customer_name" },
-          { text: "رقم الهاتف", value: "customer_phone" },
-          { text: "اسم المنزل", value: "house" },
-          { text: "نوع المنزل", value: "type" },
-          { text: "الشقة", value: "apartment" },
-          { text: "المبنى", value: "building" },
-          { text: "الارضية", value: "floor" },
-          { text: "التفاصيل", value: "details" },
-          { text: "أسم موظف المبيعات", value: "inserted_by.name" },
-          { text: "تاريخ الأستمارة", value: "createdAt" },
+          { text: "العنوان", value: "name" },
           { text: "العمليات", value: "actions" },
         ],
         centers: [],
@@ -174,6 +201,18 @@ export default {
         bodyText: "test",
       },
       // message
+      // add
+      isFormvalid: false,
+      addBtnLoading: false,
+      dialog: false,
+      data: {
+        name: null,
+      },
+      selectedFile: null,
+      Rules: {
+        name: [(v) => !!v || "يرجى أضافة عنوان"],
+      },
+      // add
       // delete
       deleteItemLoading: false,
       dialogDelete: false,
@@ -183,44 +222,25 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
   methods: {
-    showFullDetails(item) {
-      this.$set(item, "showFullDetails", true); // تحديث قيمة showFullDetails لعنصر
-    },
-    hideFullDetails(item) {
-      this.$set(item, "showFullDetails", false); // تحديث قيمة showFullDetails لعنصر
-    },
     async getCenter() {
       try {
         this.table.loading = true;
-        const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
-        const order =
-          this.tableOptions.sortDesc.length > 0
-            ? this.tableOptions.sortDesc[0]
-              ? "desc"
-              : "asc"
-            : "desc";
-
-        const sortByJSON = JSON.stringify({ key, order });
 
         var { page, itemsPerPage } = this.tableOptions;
         if (itemsPerPage == -1) {
           itemsPerPage = this.table.totalItems;
         }
-        const response = await API.getApplicationForm({
+        const response = await API.getHowUHearAboutUs({
           page,
           limit: itemsPerPage,
-          sortBy: sortByJSON,
-          search: this.table.search,
-          is_deleted: false,
         });
 
         this.table.centers = response.data.results.data;
@@ -235,14 +255,33 @@ if (userDataString.type !== "admin") {
         this.table.loading = false;
       }
     },
+    async addCenter(event) {
+      event.preventDefault();
+      this.addBtnLoading = true;
+
+      try {
+        const response = await API.addHowUHearAboutUs({
+          name: this.data.name,
+        });
+
+        this.addBtnLoading = false;
+        this.getCenter();
+
+        this.showDialogfunction(response.data.message, "primary");
+        this.dialog = false;
+      } catch (error) {
+        if (error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response.status === 500) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;
       this.dialogData.bodyText = bodyText;
       this.dialogData.color = color;
-    },
-    Print(item) {
-      localStorage.setItem("PrintForm", JSON.stringify(item));
-      this.$router.push("/Print");
     },
     deleteItem(item) {
       this.deletedItem = { ...item };
@@ -252,7 +291,7 @@ if (userDataString.type !== "admin") {
       this.deleteItemLoading = true;
 
       try {
-        const response = await API.removeApplicationForm(this.deletedItem._id);
+        const response = await API.removeHowUHearAboutUs(this.deletedItem._id);
 
         this.deleteItemLoading = false;
         this.dialogDelete = false;
@@ -269,9 +308,3 @@ if (userDataString.type !== "admin") {
   },
 };
 </script>
-
-<style>
-.pointer-cursor {
-  cursor: pointer;
-}
-</style>

@@ -518,7 +518,7 @@ export default {
           for (let i = fromNumber; i <= toNumber; i++) {
             let numberString = i.toString();
             var newData = { text: numberString, tiClasses: ["ti-valid"] };
-            var newDataString = JSON.stringify(newData); // تحويل البيانات إلى سلسلة نصية
+            var newDataString = JSON.stringify(newData);
 
             if (!this.tagsE.some((item) => JSON.stringify(item) === newDataString)) {
               tempTagsSet.add(newData);

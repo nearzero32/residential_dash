@@ -20,7 +20,7 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn tile color="success" :block="isScreenXs" @click="handleDownload">
-              تحميل اكسل <v-icon right> fa-download </v-icon>
+              تحميل اكسل <v-icon right> mdi-download </v-icon>
             </v-btn>
           </v-card-title>
           <v-data-table
@@ -37,6 +37,12 @@
             <template v-slot:item.num="{ item }">
               {{ table.centers.indexOf(item) + 1 }}
             </template>
+            <template v-slot:item.caller_name="{ item }">
+              <router-link :to="`/admin-call_center_one/${item._id}/${item.caller_name}`">{{
+                item.caller_name
+              }}</router-link>
+            </template>
+
             <template v-slot:item.actions="{ item }">
               <VTooltip bottom v-if="userData.includes('edit')">
                 <template #activator="{ attrs }">
@@ -81,22 +87,93 @@
             <v-form v-model="isFormvalid">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">الموظف الذي تبعه</v-label>
+                  <v-label class="mb-2 font-weight-medium">أسم المتصل</v-label>
                   <v-text-field
                     variant="outlined"
-                    v-model="editdItem.employee_that_followed"
+                    v-model="editdItem.caller_name"
                     color="primary"
                     outlined
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">نتائج المكالمة</v-label>
+                  <v-label class="mb-2 font-weight-medium">هاتف المتصل</v-label>
                   <v-text-field
                     variant="outlined"
-                    v-model="editdItem.results_of_call"
+                    v-model="editdItem.caller_phone"
                     color="primary"
                     outlined
                   ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">وظيفة المتصل</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="editdItem.caller_job"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">عنوان المتصل</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="editdItem.caller_address"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">أفراد عائلة المتصل</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="editdItem.caller_family_members"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">كيف يسمع عنا</v-label>
+                  <v-autocomplete
+                    label="كيف يسمع عنا"
+                    variant="outlined"
+                    v-model="editdItem.how_he_hear_about_us"
+                    color="primary"
+                    outlined
+                    :items="how_u_hear_about_us"
+                    item-text="name"
+                    item-value="name"
+                  ></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">المساحة المطلوبة</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="editdItem.space_required"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">سبب المكالمة</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="editdItem.call_reason"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">النموذج</v-label>
+                  <v-autocomplete
+                    label="كيف يسمع عنا"
+                    variant="outlined"
+                    v-model="editdItem.form_id"
+                    color="primary"
+                    outlined
+                    :items="forms"
+                    item-text="name"
+                    item-value="_id"
+                  ></v-autocomplete>
                 </v-col>
               </v-row>
               <br />
@@ -171,7 +248,7 @@ export default {
 
       // nav
       page: {
-        title: "مركز الأتصال",
+        title: "أستفسارات الزبائن",
       },
 
       breadcrumbs: [
@@ -181,20 +258,20 @@ export default {
           to: "/Index",
         },
         {
-          text: "مركز الأتصال",
+          text: "أستفسارات الزبائن",
           disabled: true,
         },
       ],
       // nav
-      
+
       // xlsx
       xlsxData: {
         list: null,
         listLoading: true,
         downloadLoading: false,
-        filename: 'مركز الاتصال',
+        filename: "مركز الاتصال",
         autoWidth: true,
-        bookType: 'xlsx',
+        bookType: "xlsx",
       },
       isScreenXs: false,
       // xlsx
@@ -217,10 +294,8 @@ export default {
           { text: "أفراد عائلة المتصل", value: "caller_family_members" },
           { text: "كيف يسمع عنا", value: "how_he_hear_about_us" },
           { text: "المساحة المطلوبة", value: "space_required" },
-          { text: "سبب المكالمة", value: "call_reason" },
-          { text: "نتائج المكالمة", value: "results_of_call" },
-          { text: "الموظف الذي تبعه", value: "employee_that_followed" },
-          { text: "إدراج بواسطة", value: "inserted_by.name" },
+          { text: "اسم النموذج", value: "form_name" },
+          { text: "الموظف الذي تبعه", value: "current_employee.name" },
           { text: "تاريخ المكالمة", value: "createdAt" },
           { text: "العمليات", value: "actions" },
         ],
@@ -242,6 +317,8 @@ export default {
       // message
       // edit
       editItemLoading: false,
+      how_u_hear_about_us: [],
+      forms: [],
       dialogEdit: false,
       old_image: null,
       editdItem: {},
@@ -255,12 +332,14 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
+    this.getHowUHearAboutUs();
+    this.getForms();
   },
   methods: {
     handleDownload() {
@@ -275,6 +354,8 @@ if (userDataString.type !== "admin") {
           "كيف سمع عنا",
           "المساحة المطلوبة",
           "سبب المكالمة",
+          "اسم النموذج",
+          "الموظف الذي تبعه",
           "نتائج المكالمة",
         ];
         const filterVal = [
@@ -287,6 +368,8 @@ if (userDataString.type !== "admin") {
           "how_he_hear_about_us",
           "space_required",
           "call_reason",
+          "form_name",
+          "current_employee.name",
           "results_of_call",
         ];
 
@@ -302,7 +385,7 @@ if (userDataString.type !== "admin") {
       });
     },
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
     exportToExcel() {
       this.$refs.excel.saveExcelData(this.table.centers, "centers", "centers.xlsx");
@@ -348,6 +431,41 @@ if (userDataString.type !== "admin") {
         this.table.loading = false;
       }
     },
+    async getHowUHearAboutUs() {
+      try {
+        this.table.loading = true;
+        const response = await API.getHowUHearAboutUs({
+          page: 1,
+          limit: 10000000000,
+        });
+
+        this.how_u_hear_about_us = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
+    async getForms() {
+      try {
+        this.table.loading = true;
+        const response = await API.getForms();
+
+        this.forms = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     editItem(item) {
       this.$nextTick(() => {
         this.editdItem = { ...item };
@@ -362,8 +480,15 @@ if (userDataString.type !== "admin") {
       try {
         const response = await API.editCallCenter({
           id: this.editdItem._id,
-          employee_that_followed: this.editdItem.employee_that_followed,
-          results_of_call: this.editdItem.results_of_call,
+          caller_name: this.editdItem.caller_name,
+          caller_phone: this.editdItem.caller_phone,
+          caller_job: this.editdItem.caller_job,
+          caller_address: this.editdItem.caller_address,
+          caller_family_members: this.editdItem.caller_family_members,
+          how_he_hear_about_us: this.editdItem.how_he_hear_about_us,
+          space_required: this.editdItem.space_required,
+          call_reason: this.editdItem.call_reason,
+          form_id: this.editdItem.form_id,
         });
         this.editItemLoading = false;
         this.getCenter();

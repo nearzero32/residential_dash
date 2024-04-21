@@ -571,7 +571,7 @@ export default {
     addHo() {
       this.data.houses = [];
       this.tags.forEach((tag) => {
-        if ("text" in tag) {
+        if (tag.text) {
           this.data.houses.push(tag.text);
         }
       });
@@ -586,8 +586,10 @@ export default {
 
           for (let i = fromNumber; i <= toNumber; i++) {
             let numberString = i.toString();
-            if (!this.tags.includes(numberString)) {
-              tempTags.push(numberString);
+            let newData = { text: numberString, tiClasses: ["ti-valid"] };
+
+            if (!this.tags.some((item) => item.text === numberString)) {
+              tempTags.push(newData);
             }
           }
 
@@ -601,6 +603,10 @@ export default {
       } else {
         this.showDialogfunctionadd('يرجى إدخال قيمة لـ "من" و "إلى"', "#FF5252");
       }
+    },
+
+    equals(obj1, obj2) {
+      return JSON.stringify(obj1) === JSON.stringify(obj2);
     },
     backPage() {
       this.dialogData.open = false;

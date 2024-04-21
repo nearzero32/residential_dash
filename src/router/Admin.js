@@ -15,11 +15,13 @@ import guards from "@/views/admin/guards/guards.vue";
 import sellsEmployee from "@/views/admin/sellsEmployee/sellsEmployee.vue";
 import application_form from "@/views/admin/application_form/application_form.vue";
 import call_center from "@/views/admin/call_center/call_center.vue";
+import call_center_one from "@/views/admin/call_center/call_center_one.vue";
 import Print from "@/views/admin/application_form/Print.vue";
 import profile from "@/views/admin/owners/profile.vue";
 import forms from "@/views/admin/forms/forms.vue";
 import add from "@/views/admin/forms/add.vue";
 import formShow from "@/views/admin/forms/profile/index.vue";
+import how_u_hear_about_us from "@/views/admin/how_u_hear_about_us/how_u_hear_about_us.vue";
 
 const Admin = {
   path: "/",
@@ -137,6 +139,16 @@ const Admin = {
       path: "/forms/:ac",
       name: "admin-ac-forms",
       component: formShow,
+    },
+    {
+      path: "/admin-how_u_hear_about_us",
+      name: "admin-how_u_hear_about_us",
+      component: how_u_hear_about_us,
+    },
+    {
+      path: "/admin-call_center_one/:id/:name",
+      name: "admin-call_center_one",
+      component: call_center_one,
     },
 
   ],

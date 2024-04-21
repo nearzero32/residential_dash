@@ -53,13 +53,13 @@ export default [
         type: "admin",
       },
       {
-        title: "مركز الاتصال",
+        title: "أستفسارات الزبائن",
         icon: "phone",
         to: "admin-call-center",
         type: "admin",
       },
       {
-        title: "أستماراة الشراء",
+        title: "أستماراة طلب حجز",
         icon: "pen-tool",
         to: "admin-application-form",
         type: "admin",
@@ -135,6 +135,12 @@ export default [
     to: "/admin-advantages",
     type: "admin",
   },
+  {
+    title: "كيف سمع عنا",
+    icon: "codesandbox",
+    to: "/admin-how_u_hear_about_us",
+    type: "admin",
+  },
   // admin
   // assistance
   {
@@ -169,13 +175,13 @@ export default [
         type: "assistance",
       },
       {
-        title: "مركز الاتصال",
+        title: "أستفسارات الزبائن",
         icon: "phone",
         to: "admin-call-center",
         type: "assistance",
       },
       {
-        title: "أستماراة الشراء",
+        title: "أستماراة طلب حجز",
         icon: "pen-tool",
         to: "admin-application-form",
         type: "assistance",
@@ -243,6 +249,12 @@ export default [
     title: "المميزات",
     icon: "codesandbox",
     to: "/admin-advantages",
+    type: "assistance",
+  },
+  {
+    title: "كيف سمع عنا",
+    icon: "codesandbox",
+    to: "/admin-how_u_hear_about_us",
     type: "assistance",
   },
   // assistance

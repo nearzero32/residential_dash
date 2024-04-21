@@ -196,13 +196,42 @@ class Api {
         return error.response;
       });
   }
-  async editCallCenter({ id, employee_that_followed, results_of_call }) {
+  async getCallCenterOne({ id }) {
+    return axiosInstance
+      .get(
+        `/call_center/${id}`
+      )
+      .then((Response) => Response)
+      .catch((error) => {
+        console.log("error", error);
+
+        return error.response;
+      });
+  }
+  async editCallCenter({
+    id,
+    caller_name,
+    caller_phone,
+    caller_job,
+    caller_address,
+    caller_family_members,
+    how_he_hear_about_us,
+    space_required,
+    call_reason,
+    form_id,
+  }) {
     const requestData = {
-      id,
-      employee_that_followed,
-      results_of_call,
+      caller_name,
+      caller_phone,
+      caller_job,
+      caller_address,
+      caller_family_members,
+      how_he_hear_about_us,
+      space_required,
+      call_reason,
+      form_id,
     };
-    const response = await axiosInstance.put(`/call_center`, requestData);
+    const response = await axiosInstance.put(`/call_center/${id}`, requestData);
     return response;
   }
   async removeCallCenter(id) {
@@ -543,14 +572,31 @@ class Api {
     return response;
   }
 
-  async editCenter({ name, phone, address, description, video, facebook, instagram, snapchat, tiktok, whatsapp, logo }) {
+  async editCenter({
+    name,
+    phone,
+    address,
+    description,
+    video,
+    facebook,
+    instagram,
+    snapchat,
+    tiktok,
+    whatsapp,
+    logo,
+  }) {
     const requestData = {
       name,
       phone,
       address,
       description,
       video,
-      facebook, instagram, snapchat, tiktok, whatsapp, logo
+      facebook,
+      instagram,
+      snapchat,
+      tiktok,
+      whatsapp,
+      logo,
     };
     const response = await axiosInstance.put(`/center`, requestData);
     return response;
@@ -626,16 +672,53 @@ class Api {
     const response = await axiosInstance.get(`/houses_room_names`);
     return response;
   }
-  async addForms({ name, total_space, images, houses, floors, building_space, category, block_number, street_number }) {
+  async addForms({
+    name,
+    total_space,
+    images,
+    houses,
+    floors,
+    building_space,
+    category,
+    block_number,
+    street_number,
+  }) {
     const requestData = {
-      name, total_space, images, houses, floors, building_space, category, block_number, street_number
+      name,
+      total_space,
+      images,
+      houses,
+      floors,
+      building_space,
+      category,
+      block_number,
+      street_number,
     };
     const response = await axiosInstance.post(`/center/forms`, requestData);
     return response;
   }
-  async editForms({ id, name, total_space, images, houses, floors, building_space, category, block_number, street_number }) {
+  async editForms({
+    id,
+    name,
+    total_space,
+    images,
+    houses,
+    floors,
+    building_space,
+    category,
+    block_number,
+    street_number,
+  }) {
     const requestData = {
-      name, total_space, images, houses, floors, building_space, category, block_number, street_number
+      name,
+      total_space,
+      images,
+      houses,
+      floors,
+      building_space,
+      category,
+      block_number,
+      street_number,
     };
     const response = await axiosInstance.put(`center/forms/${id}`, requestData);
     return response;
@@ -644,8 +727,30 @@ class Api {
     const response = await axiosInstance.delete(`center/forms/${id}`);
     return response;
   }
-
   // Forms
+
+  // getHowUHearAboutUs
+  async getHowUHearAboutUs({ page, limit }) {
+    const response = await axiosInstance.get(
+      `/how_u_hear_about_us?page=${page}&limit=${limit}`
+    );
+    return response;
+  }
+  async addHowUHearAboutUs({ name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.post(
+      `/how_u_hear_about_us`,
+      requestData
+    );
+    return response;
+  }
+  async removeHowUHearAboutUs(id) {
+    const response = await axiosInstance.delete(`/how_u_hear_about_us/${id}`);
+    return response;
+  }
+  // getHowUHearAboutUs
 }
 
 export default new Api();
