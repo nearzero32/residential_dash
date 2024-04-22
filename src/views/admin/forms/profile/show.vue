@@ -111,14 +111,8 @@
           <v-card class="mx-auto" v-for="(floor, ind) in data.floors" :key="ind">
             <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
               <strong
-                >أسم الطابق
-                <span style="color: rgb(207 104 73)">( {{ floor.name }} )</span></strong
-              >
-              <strong
-                >عدد الغرف
-                <span style="color: rgb(207 104 73)"
-                  >( {{ floor.rooms.length }} )</span
-                ></strong
+                >
+                <span style="color: rgb(207 104 73)">{{ floor.name }}</span></strong
               >
             </h3>
             <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
@@ -134,7 +128,7 @@
               </v-carousel-item>
             </v-carousel>
             <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
-              <strong>غرف الطابق ( {{ floor.name }} )</strong>
+              <strong>مكونات ( {{ floor.name }} )</strong>
             </h3>
             <v-container>
               <v-row v-for="(room, indR) in floor.rooms" :key="indR">
@@ -142,21 +136,21 @@
                   <v-card
                     class="mx-auto"
                     style="height: 100%; display: grid; place-items: center"
-                    ># ( {{ indR + 1 }} )</v-card
+                    > {{ indR + 1 }}</v-card
                   >
                 </v-col>
                 <v-col cols="12" md="3" style="padding: 10px">
                   <v-card
                     class="mx-auto"
                     style="height: 100%; display: grid; place-items: center"
-                    >أسم الغرفة ( {{ room.name }} )</v-card
+                    >{{ room.name }}</v-card
                   >
                 </v-col>
                 <v-col cols="12" md="3" style="padding: 10px">
                   <v-card
                     class="mx-auto"
                     style="height: 100%; display: grid; place-items: center"
-                    >مساحة الغرفة ( {{ room.space }} )</v-card
+                    >مساحة {{ room.space }}</v-card
                   >
                 </v-col>
                 <v-col cols="12" md="4" style="padding: 10px">
@@ -166,7 +160,7 @@
                   >
                     <img style="padding-block: 10px;width: 100px" v-if="room.image" :src="content_url + room.image" alt="" />
                     
-                    <p v-else>صورة الغرفة  ( لا توجد صوره ) </p>
+                    <p v-else>صورة  ( لا توجد صوره ) </p>
                   </v-card>
                 </v-col>
               </v-row>
