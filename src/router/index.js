@@ -3,6 +3,7 @@ import Router from "vue-router";
 import goTo from "vuetify/es5/services/goto";
 import SuperAdmin from "./SuperAdmin";
 import Admin from "./Admin.js";
+// import Blanklayout from "@/layouts/blank-layout/Blanklayout";
 
 Vue.use(Router);
 
@@ -26,6 +27,13 @@ const router = new Router({
       path: "/login",
       component: () => import("@/views/login/FullLogin"),
     },
+    {
+      path: "/Print",
+      name: "Print",
+      component: () => import("@/views/admin/application_form/Print.vue"),
+      meta: { target: "_blank" }
+    },
+
     {
       name: "/",
       path: "/",

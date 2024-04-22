@@ -16,7 +16,7 @@ import sellsEmployee from "@/views/admin/sellsEmployee/sellsEmployee.vue";
 import application_form from "@/views/admin/application_form/application_form.vue";
 import call_center from "@/views/admin/call_center/call_center.vue";
 import call_center_one from "@/views/admin/call_center/call_center_one.vue";
-import Print from "@/views/admin/application_form/Print.vue";
+// import Print from "@/views/admin/application_form/Print.vue";
 import profile from "@/views/admin/owners/profile.vue";
 import forms from "@/views/admin/forms/forms.vue";
 import add from "@/views/admin/forms/add.vue";
@@ -84,11 +84,6 @@ const Admin = {
       path: "/profile/:id",
       name: "profile",
       component: profile,
-    },
-    {
-      path: "/Print",
-      name: "Print",
-      component: Print,
     },
     {
       path: "/admin-application-form",

@@ -34,17 +34,8 @@
             <template v-slot:item.num="{ item }">
               {{ table.centers.indexOf(item) + 1 }}
             </template>
-            <template v-slot:item.details="{ item }">
-              <div>
-                <span v-if="!item.showFullDetails">
-                  {{ item.details.substring(0, 40) }}...
-                  <p @click="showFullDetails(item)" class="pointer-cursor">عرض المزيد</p>
-                </span>
-                <span v-else>
-                  {{ item.details }}
-                  <p @click="hideFullDetails(item)" class="pointer-cursor"> إخفاء </p>
-                </span>
-              </div>
+            <template v-slot:item.price="{ item }">
+              {{ $func(item.house_info.price) }}
             </template>
             <template v-slot:item.actions="{ item }">
               <VTooltip bottom v-if="userData.includes('remove')">
@@ -146,15 +137,14 @@ export default {
             text: "#",
             value: "num",
           },
-          { text: "اسم الزبون", value: "customer_name" },
-          { text: "رقم الهاتف", value: "customer_phone" },
-          { text: "اسم المنزل", value: "house" },
-          { text: "نوع المنزل", value: "type" },
-          { text: "الشقة", value: "apartment" },
-          { text: "المبنى", value: "building" },
-          { text: "الارضية", value: "floor" },
-          { text: "التفاصيل", value: "details" },
-          { text: "أسم موظف المبيعات", value: "inserted_by.name" },
+          { text: "اسم الزبون", value: "buyer_info.customer_name" },
+          { text: "رقم الهاتف", value: "buyer_info.customer_phone" },
+          { text: "اسم النموذج", value: "form_name" },
+          { text: "اسم المنزل", value: "house_name" },
+          { text: "المساحة الكلية", value: "form_total_space" },
+          { text: "مساحة البناء", value: "form_building_space" },
+          { text: "السعر", value: "price" },
+          { text: "أسم موظف المبيعات", value: "employee_name" },
           { text: "تاريخ الأستمارة", value: "createdAt" },
           { text: "العمليات", value: "actions" },
         ],
@@ -183,19 +173,19 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
   methods: {
     showFullDetails(item) {
-      this.$set(item, "showFullDetails", true); // تحديث قيمة showFullDetails لعنصر
+      this.$set(item, "showFullDetails", true);
     },
     hideFullDetails(item) {
-      this.$set(item, "showFullDetails", false); // تحديث قيمة showFullDetails لعنصر
+      this.$set(item, "showFullDetails", false);
     },
     async getCenter() {
       try {
@@ -242,7 +232,8 @@ if (userDataString.type !== "admin") {
     },
     Print(item) {
       localStorage.setItem("PrintForm", JSON.stringify(item));
-      this.$router.push("/Print");
+      // this.$router.push("/Print");
+      window.open("/Print", "_blank");
     },
     deleteItem(item) {
       this.deletedItem = { ...item };
