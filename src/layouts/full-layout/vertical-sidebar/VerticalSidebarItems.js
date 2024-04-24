@@ -59,9 +59,15 @@ export default [
         type: "admin",
       },
       {
-        title: "أستماراة طلب حجز",
+        title: "أستماراة طلب حجز وحدة سكنية",
         icon: "pen-tool",
         to: "admin-application-form",
+        type: "admin",
+      },
+      {
+        title: "أستماراة طلب موافقة",
+        icon: "pen-tool",
+        to: "admin-confirmations_form",
         type: "admin",
       },
       {
@@ -100,7 +106,7 @@ export default [
       {
         title: "المنازل",
         icon: "home",
-        to: "/admin-buying-offers",
+        to: "admin-buying-offers",
         type: "admin",
       },
     ],
@@ -181,9 +187,15 @@ export default [
         type: "assistance",
       },
       {
-        title: "أستماراة طلب حجز",
+        title: "أستماراة طلب حجز وحدة سكنية",
         icon: "pen-tool",
         to: "admin-application-form",
+        type: "assistance",
+      },
+      {
+        title: "أستماراة طلب موافقة",
+        icon: "pen-tool",
+        to: "admin-confirmations_form",
         type: "assistance",
       },
       {
@@ -222,7 +234,7 @@ export default [
       {
         title: "المنازل",
         icon: "home",
-        to: "/admin-buying-offers",
+        to: "admin-buying-offers",
         type: "assistance",
       },    
     ],

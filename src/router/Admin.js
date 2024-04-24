@@ -22,6 +22,7 @@ import forms from "@/views/admin/forms/forms.vue";
 import add from "@/views/admin/forms/add.vue";
 import formShow from "@/views/admin/forms/profile/index.vue";
 import how_u_hear_about_us from "@/views/admin/how_u_hear_about_us/how_u_hear_about_us.vue";
+import confirmations_form from "@/views/admin/confirmations_form/confirmations_form.vue";
 
 const Admin = {
   path: "/",
@@ -144,6 +145,11 @@ const Admin = {
       path: "/admin-call_center_one/:id/:name",
       name: "admin-call_center_one",
       component: call_center_one,
+    },
+    {
+      path: "/admin-confirmations_form",
+      name: "admin-confirmations_form",
+      component: confirmations_form,
     },
 
   ],

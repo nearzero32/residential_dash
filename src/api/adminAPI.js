@@ -430,6 +430,7 @@ class Api {
     password_show,
     email,
     address,
+    form_id,
     house_id,
     contract_imgs,
     id_img_front,
@@ -444,6 +445,7 @@ class Api {
       password_show,
       email,
       address,
+      form_id,
       house_id,
       contract_imgs,
       id_img_front,
@@ -462,6 +464,7 @@ class Api {
     password_show,
     email,
     address,
+    form_id,
     house_id,
     contract_imgs,
     id_img_front,
@@ -477,6 +480,7 @@ class Api {
       password_show,
       email,
       address,
+      form_id,
       house_id,
       contract_imgs,
       id_img_front,
@@ -751,6 +755,15 @@ class Api {
     return response;
   }
   // getHowUHearAboutUs
+
+  // confirmations_form
+  async getConfirmationsForm({ page, limit, search, sortBy }) {
+    const response = await axiosInstance.get(
+      `/confirmations_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  // confirmations_form
 }
 
 export default new Api();

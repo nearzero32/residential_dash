@@ -1,10 +1,6 @@
 <template>
   <v-container fluid class="down-top-padding">
-    <BaseBreadcrumb
-      :title="page.title"
-      :icon="page.icon"
-      :breadcrumbs="breadcrumbs"
-    ></BaseBreadcrumb>
+    <BaseBreadcrumb :title="page.title" :icon="page.icon" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
     <div>
       <div class="mt-4">
         <v-card>
@@ -14,27 +10,12 @@
             </v-btn>
 
             <v-spacer></v-spacer>
-            <v-text-field
-              v-model="table.search"
-              @input="getCenter"
-              append-icon="mdi-magnify"
-              label="بحث"
-              outlined
-              single-line
-              hide-details
-            ></v-text-field>
+            <v-text-field v-model="table.search" @input="getCenter" append-icon="mdi-magnify" label="بحث" outlined
+              single-line hide-details></v-text-field>
           </v-card-title>
-          <v-data-table
-            :headers="table.headers"
-            loading-text="جاري التحميل ... الرجاء الانتظار"
-            :items="table.centers"
-            :options.sync="tableOptions"
-            :server-items-length="table.totalItems"
-            :loading="table.loading"
-            class="elevation-1"
-            no-results-text="لا توجد بيانات !"
-            @update:options="getCenter"
-          >
+          <v-data-table :headers="table.headers" loading-text="جاري التحميل ... الرجاء الانتظار" :items="table.centers"
+            :options.sync="tableOptions" :server-items-length="table.totalItems" :loading="table.loading"
+            class="elevation-1" no-results-text="لا توجد بيانات !" @update:options="getCenter">
             <template v-slot:item.num="{ item }">
               {{ table.centers.indexOf(item) + 1 }}
             </template>
@@ -49,11 +30,7 @@
               <strong v-if="item.privileges.actions.includes('remove')"> حذف </strong>
             </template>
             <template v-slot:item.image="{ item }">
-              <img
-                v-if="item.image"
-                @click="showImgs(item.image)"
-                :src="table.content_url + item.image"
-                alt="Image"
+              <img v-if="item.image" @click="showImgs(item.image)" :src="table.content_url + item.image" alt="Image"
                 style="
                   max-width: 100%;
                   max-height: 100%;
@@ -62,18 +39,12 @@
                   border: solid 1px rebeccapurple;
                   width: 60px;
                   height: 60px;
-                "
-              />
+                " />
             </template>
             <template v-slot:item.actions="{ item }">
               <VTooltip bottom v-if="userData.includes('edit')">
                 <template #activator="{ attrs }">
-                  <v-icon
-                    color="rgb(243 216 1)"
-                    v-bind="attrs"
-                    size="20"
-                    @click="editItem(item)"
-                  >
+                  <v-icon color="rgb(243 216 1)" v-bind="attrs" size="20" @click="editItem(item)">
                     mdi-note-edit
                   </v-icon>
                 </template>
@@ -81,12 +52,7 @@
               </VTooltip>
               <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
-                  <v-icon
-                    color="#FF5252"
-                    v-bind="attrs"
-                    size="20"
-                    @click="deleteItem(item)"
-                  >
+                  <v-icon color="#FF5252" v-bind="attrs" size="20" @click="deleteItem(item)">
                     mdi-delete-restore
                   </v-icon>
                 </template>
@@ -110,105 +76,57 @@
               <v-row>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">أسم المستخدم</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    outlined
-                    :rules="Rules.nameRules"
-                    v-model="data.name"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" outlined :rules="Rules.nameRules" v-model="data.name"
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">البريد الألكتروني</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.emailRules"
-                    outlined
-                    v-model="data.email"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" :rules="Rules.emailRules" outlined v-model="data.email"
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    outlined
-                    :rules="Rules.phoneRules"
-                    v-model="data.phone"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" outlined :rules="Rules.phoneRules" v-model="data.phone"
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">كلمة المرور</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    outlined
-                    :rules="Rules.password_showRules"
-                    v-model="data.password_show"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" outlined :rules="Rules.password_showRules"
+                    v-model="data.password_show" color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">العنوان</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.addressRules"
-                    v-model="data.address"
-                    outlined
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" :rules="Rules.addressRules" v-model="data.address" outlined
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">النموذج</v-label>
+                  <v-autocomplete label="النموذج" :items="Forms" v-model="data.form" :rules="Rules.form_id" item-text="name"
+                    item-value="_id" return-object variant="outlined"></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6" v-if="HousesShow">
                   <v-label class="mb-2 font-weight-medium">المنزل</v-label>
-                  <v-autocomplete
-                    label="المنزل"
-                    :items="Houses"
-                    v-model="data.house_id"
-                    item-text="name"
-                    item-value="_id"
-                    variant="outlined"
-                  ></v-autocomplete>
+                  <v-autocomplete label="المنزل" :items="Houses" v-model="data.house_id" item-text="name"
+                    item-value="_id" variant="outlined"></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
                       <v-label class="mb-2 font-weight-medium">صور العقد </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChange"
-                        style="display: none"
-                        ref="fileInputContract"
-                        multiple
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        :rules="Rules.image"
-                        label="الصور"
-                        outlined
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChange"
+                        style="display: none" ref="fileInputContract" multiple />
+                      <v-text-field type="text" prepend-icon="mdi-camera" :rules="Rules.image" label="الصور" outlined
                         :value="selectedFiles.map((file) => file.file.name).join(', ')"
-                        @click="$refs.fileInputContract.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      >
+                        @click="$refs.fileInputContract.click()" variant="outlined" color="primary" readonly>
                       </v-text-field>
                     </v-col>
 
                     <v-col cols="6" md="6">
                       <v-row>
-                        <v-col
-                          v-for="(file, index) in selectedFiles"
-                          :key="index"
-                          cols="3"
-                          md="3"
-                          style="text-align: center"
-                        >
+                        <v-col v-for="(file, index) in selectedFiles" :key="index" cols="3" md="3"
+                          style="text-align: center">
                           <div style="position: relative; display: inline-block">
-                            <img
-                              :src="file.base64"
-                              style="
+                            <img :src="file.base64" style="
                                 max-width: 100%;
                                 max-height: 100%;
                                 display: block;
@@ -216,19 +134,13 @@
                                 border: solid 1px rebeccapurple;
                                 width: 60px;
                                 height: 60px;
-                              "
-                            />
-                            <v-icon
-                              class="mr-2"
-                              color="error"
-                              style="
+                              " />
+                            <v-icon class="mr-2" color="error" style="
                                 position: absolute;
                                 top: 0;
                                 right: 0;
                                 cursor: pointer;
-                              "
-                              @click="removeImage(index)"
-                            >
+                              " @click="removeImage(index)">
                               mdi-close
                             </v-icon>
                           </div>
@@ -241,45 +153,19 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة الهوية الأمامية
+                      <v-label class="mb-2 font-weight-medium">صورة الهوية الأمامية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeIDO"
-                        style="display: none"
-                        ref="fileInputIDO"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة الهوية الأمامية"
-                        outlined
-                        v-model="selectedFile"
-                        @click="$refs.fileInputIDO.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeIDO"
+                        style="display: none" ref="fileInputIDO" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة الهوية الأمامية" outlined
+                        v-model="selectedFile" @click="$refs.fileInputIDO.click()" variant="outlined" color="primary"
+                        readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="data.id_img_front"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="data.id_img_front">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          :src="data.id_img_front"
-                          style="width: 120px; border: solid 1px rebeccapurple"
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageIDO"
-                        >
+                        <img :src="data.id_img_front" style="width: 120px; border: solid 1px rebeccapurple" />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageIDO">
                           mdi-close
                         </v-icon>
                       </div>
@@ -290,45 +176,19 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة الهوية الخلفية
+                      <v-label class="mb-2 font-weight-medium">صورة الهوية الخلفية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeIDT"
-                        style="display: none"
-                        ref="fileInputIDT"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة الهوية الأمامية"
-                        outlined
-                        v-model="selectedFileT"
-                        @click="$refs.fileInputIDT.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeIDT"
+                        style="display: none" ref="fileInputIDT" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة الهوية الأمامية" outlined
+                        v-model="selectedFileT" @click="$refs.fileInputIDT.click()" variant="outlined" color="primary"
+                        readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="data.id_img_back"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="data.id_img_back">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          :src="data.id_img_back"
-                          style="width: 120px; border: solid 1px rebeccapurple"
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageIDT"
-                        >
+                        <img :src="data.id_img_back" style="width: 120px; border: solid 1px rebeccapurple" />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageIDT">
                           mdi-close
                         </v-icon>
                       </div>
@@ -339,45 +199,19 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة بطاقة السكن الامامية
+                      <v-label class="mb-2 font-weight-medium">صورة بطاقة السكن الامامية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeL"
-                        style="display: none"
-                        ref="fileInputL"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة بطاقة السكن الامامية"
-                        outlined
-                        v-model="selectedFileL"
-                        @click="$refs.fileInputL.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeL"
+                        style="display: none" ref="fileInputL" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة بطاقة السكن الامامية" outlined
+                        v-model="selectedFileL" @click="$refs.fileInputL.click()" variant="outlined" color="primary"
+                        readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="data.location_img_front"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="data.location_img_front">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          :src="data.location_img_front"
-                          style="width: 120px; border: solid 1px rebeccapurple"
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageL"
-                        >
+                        <img :src="data.location_img_front" style="width: 120px; border: solid 1px rebeccapurple" />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageL">
                           mdi-close
                         </v-icon>
                       </div>
@@ -388,45 +222,19 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة بطاقة السكن الخلفية
+                      <v-label class="mb-2 font-weight-medium">صورة بطاقة السكن الخلفية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeLT"
-                        style="display: none"
-                        ref="fileInputLT"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة بطاقة السكن الخلفية"
-                        outlined
-                        v-model="selectedFileLT"
-                        @click="$refs.fileInputLT.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeLT"
+                        style="display: none" ref="fileInputLT" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة بطاقة السكن الخلفية" outlined
+                        v-model="selectedFileLT" @click="$refs.fileInputLT.click()" variant="outlined" color="primary"
+                        readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="data.location_img_back"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="data.location_img_back">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          :src="data.location_img_back"
-                          style="width: 120px; border: solid 1px rebeccapurple"
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageLT"
-                        >
+                        <img :src="data.location_img_back" style="width: 120px; border: solid 1px rebeccapurple" />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageLT">
                           mdi-close
                         </v-icon>
                       </div>
@@ -438,42 +246,17 @@
                   <v-row>
                     <v-col cols="6" md="6">
                       <v-label class="mb-2 font-weight-medium">صورة الجواز </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeP"
-                        style="display: none"
-                        ref="fileInputP"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة الجواز"
-                        outlined
-                        v-model="selectedFileP"
-                        @click="$refs.fileInputP.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeP"
+                        style="display: none" ref="fileInputP" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة الجواز" outlined
+                        v-model="selectedFileP" @click="$refs.fileInputP.click()" variant="outlined" color="primary"
+                        readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="data.passport_img"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="data.passport_img">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          :src="data.passport_img"
-                          style="width: 120px; border: solid 1px rebeccapurple"
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageP"
-                        >
+                        <img :src="data.passport_img" style="width: 120px; border: solid 1px rebeccapurple" />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageP">
                           mdi-close
                         </v-icon>
                       </div>
@@ -484,19 +267,9 @@
               <v-divider></v-divider>
               <!----Personal Info---->
               <v-card-actions>
-                <v-btn
-                  size="large"
-                  @click="addCenter"
-                  :loading="addBtnLoading"
-                  color="primary"
-                  :disabled="!isFormvalid"
-                  type="submit"
-                  text
-                  >اٍضافة</v-btn
-                >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
-                  >أغلاق</v-btn
-                >
+                <v-btn size="large" @click="addCenter" :loading="addBtnLoading" color="primary" :disabled="!isFormvalid"
+                  type="submit" text>اٍضافة</v-btn>
+                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text>أغلاق</v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -531,112 +304,62 @@
               <v-row>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">أسم المستخدم</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    outlined
-                    :rules="Rules.nameRules"
-                    v-model="editdItem.name"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" outlined :rules="Rules.nameRules" v-model="editdItem.name"
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">البريد الألكتروني</v-label>
-                  <v-text-field
-                    outlined
-                    variant="outlined"
-                    :rules="Rules.emailRules"
-                    v-model="editdItem.email"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field outlined variant="outlined" :rules="Rules.emailRules" v-model="editdItem.email"
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.phoneRules"
-                    outlined
-                    v-model="editdItem.phone"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" :rules="Rules.phoneRules" outlined v-model="editdItem.phone"
+                    color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">كلمة المرور</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.password_showRules"
-                    outlined
-                    v-model="editdItem.password_show"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" :rules="Rules.password_showRules" outlined
+                    v-model="editdItem.password_show" color="primary"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">العنوان</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.addressRules"
-                    outlined
-                    v-model="editdItem.address"
-                    color="primary"
-                  ></v-text-field>
+                  <v-text-field variant="outlined" :rules="Rules.addressRules" outlined v-model="editdItem.address"
+                    color="primary"></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">النموذج</v-label>
+                  <v-autocomplete label="النموذج" :items="Forms" @change="getHousesEdit" v-model="editdItem.form_id" :rules="Rules.form_id" item-text="name"
+                    item-value="_id" return-object variant="outlined"></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">المنزل</v-label>
-                  <v-autocomplete
-                    label="المنزل"
-                    :items="Houses"
-                    v-model="editdItem.house_id"
-                    item-text="name"
-                    item-value="_id"
-                    variant="outlined"
-                  ></v-autocomplete>
+                  <v-autocomplete label="المنزل" :items="Houses" v-model="editdItem.house_id" :rules="Rules.house_id_rules" item-text="name"
+                    item-value="_id" variant="outlined"></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
                       <v-label class="mb-2 font-weight-medium">صور العقد </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeEdit"
-                        style="display: none"
-                        ref="fileInput"
-                        multiple
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صور العقد "
-                        outlined
-                        :value="selectedFiles.map((file) => file.file.name).join(', ')"
-                        @click="$refs.fileInput.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      >
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeEdit"
+                        style="display: none" ref="fileInput" multiple />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صور العقد " outlined
+                        :value="selectedFiles.map((file) => file.file.name).join(', ')" @click="$refs.fileInput.click()"
+                        variant="outlined" color="primary" readonly>
                       </v-text-field>
                     </v-col>
 
                     <v-col cols="6" md="6" v-if="editdItem.contract_imgs">
                       <v-row>
-                        <v-col
-                          v-for="(file, index) in editdItem.contract_imgs"
-                          :key="index"
-                          cols="3"
-                          md="3"
-                          style="text-align: center"
-                        >
-                          <div
-                            style="
+                        <v-col v-for="(file, index) in editdItem.contract_imgs" :key="index" cols="3" md="3"
+                          style="text-align: center">
+                          <div style="
                               position: relative;
                               display: inline-block;
                               text-align: center;
-                            "
-                          >
+                            ">
                             <div style="display: inline-block; position: relative">
-                              <img
-                                v-if="!file.startsWith('data:image')"
-                                :src="table.content_url + file"
-                                alt="Image"
+                              <img v-if="!file.startsWith('data:image')" :src="table.content_url + file" alt="Image"
                                 style="
                                   max-width: 100%;
                                   max-height: 100%;
@@ -645,13 +368,8 @@
                                   border: solid 1px rebeccapurple;
                                   width: 60px;
                                   height: 60px;
-                                "
-                              />
-                              <img
-                                v-else
-                                :src="file"
-                                alt="Image"
-                                style="
+                                " />
+                              <img v-else :src="file" alt="Image" style="
                                   max-width: 100%;
                                   max-height: 100%;
                                   display: block;
@@ -659,19 +377,13 @@
                                   border: solid 1px rebeccapurple;
                                   width: 60px;
                                   height: 60px;
-                                "
-                              />
-                              <v-icon
-                                class="mr-2"
-                                color="error"
-                                style="
+                                " />
+                              <v-icon class="mr-2" color="error" style="
                                   position: absolute;
                                   top: 0;
                                   right: 0;
                                   cursor: pointer;
-                                "
-                                @click="removeImageEdit(index)"
-                              >
+                                " @click="removeImageEdit(index)">
                                 mdi-close
                               </v-icon>
                             </div>
@@ -684,59 +396,30 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة الهوية الأمامية</v-label
-                      >
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeEditIDO"
-                        style="display: none"
-                        ref="fileInputEditIDO"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة الهوية الأمامية"
-                        v-model="selectedFile"
-                        outlined
-                        @click="$refs.fileInputEditIDO.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <v-label class="mb-2 font-weight-medium">صورة الهوية الأمامية</v-label>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeEditIDO"
+                        style="display: none" ref="fileInputEditIDO" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة الهوية الأمامية"
+                        v-model="selectedFile" outlined @click="$refs.fileInputEditIDO.click()" variant="outlined"
+                        color="primary" readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="editdItem.id_img_front"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="editdItem.id_img_front">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          id="oldL"
-                          :src="`${
-                            editdItem.id_img_front.startsWith(
-                              'data:image/jpeg;base64,'
-                            ) ||
-                            editdItem.id_img_front.startsWith('data:image/png;base64,') ||
-                            editdItem.id_img_front.startsWith('data:image/gif;base64,') ||
-                            editdItem.id_img_front.startsWith('data:image/bmp;base64,')
+                        <img id="oldL" :src="`${editdItem.id_img_front.startsWith(
+                            'data:image/jpeg;base64,'
+                          ) ||
+                              editdItem.id_img_front.startsWith('data:image/png;base64,') ||
+                              editdItem.id_img_front.startsWith('data:image/gif;base64,') ||
+                              editdItem.id_img_front.startsWith('data:image/bmp;base64,')
                               ? editdItem.id_img_front
                               : table.content_url + editdItem.id_img_front
-                          }`"
-                          style="
+                            }`" style="
                             display: block;
                             width: 120px;
                             border: solid 1px rebeccapurple;
-                          "
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageEditIDO"
-                        >
+                          " />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageEditIDO">
                           mdi-close
                         </v-icon>
                       </div>
@@ -746,57 +429,29 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة الهوية الخلفية
+                      <v-label class="mb-2 font-weight-medium">صورة الهوية الخلفية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeEditIDT"
-                        style="display: none"
-                        ref="fileInputEditIDT"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة الهوية الخلفية"
-                        v-model="selectedFileT"
-                        outlined
-                        @click="$refs.fileInputEditIDT.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeEditIDT"
+                        style="display: none" ref="fileInputEditIDT" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة الهوية الخلفية"
+                        v-model="selectedFileT" outlined @click="$refs.fileInputEditIDT.click()" variant="outlined"
+                        color="primary" readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="editdItem.id_img_back"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="editdItem.id_img_back">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          id="oldL"
-                          :src="`${
-                            editdItem.id_img_back.startsWith('data:image/jpeg;base64,') ||
-                            editdItem.id_img_back.startsWith('data:image/png;base64,') ||
-                            editdItem.id_img_back.startsWith('data:image/gif;base64,') ||
-                            editdItem.id_img_back.startsWith('data:image/bmp;base64,')
+                        <img id="oldL" :src="`${editdItem.id_img_back.startsWith('data:image/jpeg;base64,') ||
+                              editdItem.id_img_back.startsWith('data:image/png;base64,') ||
+                              editdItem.id_img_back.startsWith('data:image/gif;base64,') ||
+                              editdItem.id_img_back.startsWith('data:image/bmp;base64,')
                               ? editdItem.id_img_back
                               : table.content_url + editdItem.id_img_back
-                          }`"
-                          style="
+                            }`" style="
                             display: block;
                             width: 120px;
                             border: solid 1px rebeccapurple;
-                          "
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageEditIDT"
-                        >
+                          " />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageEditIDT">
                           mdi-close
                         </v-icon>
                       </div>
@@ -806,65 +461,37 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة بطاقة السكن الامامية
+                      <v-label class="mb-2 font-weight-medium">صورة بطاقة السكن الامامية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeEditL"
-                        style="display: none"
-                        ref="fileInputEditL"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة بطاقة السكن الامامية"
-                        v-model="selectedFileL"
-                        outlined
-                        @click="$refs.fileInputEditL.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeEditL"
+                        style="display: none" ref="fileInputEditL" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة بطاقة السكن الامامية"
+                        v-model="selectedFileL" outlined @click="$refs.fileInputEditL.click()" variant="outlined"
+                        color="primary" readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="editdItem.location_img_front"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="editdItem.location_img_front">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          id="oldL"
-                          :src="`${
-                            editdItem.location_img_front.startsWith(
-                              'data:image/jpeg;base64,'
-                            ) ||
-                            editdItem.location_img_front.startsWith(
-                              'data:image/png;base64,'
-                            ) ||
-                            editdItem.location_img_front.startsWith(
-                              'data:image/gif;base64,'
-                            ) ||
-                            editdItem.location_img_front.startsWith(
-                              'data:image/bmp;base64,'
-                            )
-                              ? editdItem.location_img_front
-                              : table.content_url + editdItem.location_img_front
-                          }`"
-                          style="
+                        <img id="oldL" :src="`${editdItem.location_img_front.startsWith(
+      'data:image/jpeg;base64,'
+    ) ||
+        editdItem.location_img_front.startsWith(
+          'data:image/png;base64,'
+        ) ||
+        editdItem.location_img_front.startsWith(
+          'data:image/gif;base64,'
+        ) ||
+        editdItem.location_img_front.startsWith(
+          'data:image/bmp;base64,'
+        )
+        ? editdItem.location_img_front
+        : table.content_url + editdItem.location_img_front
+      }`" style="
                             display: block;
                             width: 120px;
                             border: solid 1px rebeccapurple;
-                          "
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageEditL"
-                        >
+                          " />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageEditL">
                           mdi-close
                         </v-icon>
                       </div>
@@ -874,65 +501,37 @@
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">
-                      <v-label class="mb-2 font-weight-medium"
-                        >صورة بطاقة السكن الخلفية
+                      <v-label class="mb-2 font-weight-medium">صورة بطاقة السكن الخلفية
                       </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeEditLT"
-                        style="display: none"
-                        ref="fileInputEditLT"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة بطاقة السكن الخلفية"
-                        v-model="selectedFileLT"
-                        outlined
-                        @click="$refs.fileInputEditLT.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeEditLT"
+                        style="display: none" ref="fileInputEditLT" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة بطاقة السكن الخلفية"
+                        v-model="selectedFileLT" outlined @click="$refs.fileInputEditLT.click()" variant="outlined"
+                        color="primary" readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="editdItem.location_img_back"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="editdItem.location_img_back">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          id="oldL"
-                          :src="`${
-                            editdItem.location_img_back.startsWith(
-                              'data:image/jpeg;base64,'
-                            ) ||
-                            editdItem.location_img_back.startsWith(
-                              'data:image/png;base64,'
-                            ) ||
-                            editdItem.location_img_back.startsWith(
-                              'data:image/gif;base64,'
-                            ) ||
-                            editdItem.location_img_back.startsWith(
-                              'data:image/bmp;base64,'
-                            )
-                              ? editdItem.location_img_back
-                              : table.content_url + editdItem.location_img_back
-                          }`"
-                          style="
+                        <img id="oldL" :src="`${editdItem.location_img_back.startsWith(
+      'data:image/jpeg;base64,'
+    ) ||
+        editdItem.location_img_back.startsWith(
+          'data:image/png;base64,'
+        ) ||
+        editdItem.location_img_back.startsWith(
+          'data:image/gif;base64,'
+        ) ||
+        editdItem.location_img_back.startsWith(
+          'data:image/bmp;base64,'
+        )
+        ? editdItem.location_img_back
+        : table.content_url + editdItem.location_img_back
+      }`" style="
                             display: block;
                             width: 120px;
                             border: solid 1px rebeccapurple;
-                          "
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageEditLT"
-                        >
+                          " />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageEditLT">
                           mdi-close
                         </v-icon>
                       </div>
@@ -943,56 +542,29 @@
                   <v-row>
                     <v-col cols="6" md="6">
                       <v-label class="mb-2 font-weight-medium">صورة الجواز </v-label>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg, image/bmp"
-                        @change="handleFileChangeEditP"
-                        style="display: none"
-                        ref="fileInputEditP"
-                      />
-                      <v-text-field
-                        type="text"
-                        prepend-icon="mdi-camera"
-                        label="صورة الجواز"
-                        v-model="selectedFileP"
-                        outlined
-                        @click="$refs.fileInputEditP.click()"
-                        variant="outlined"
-                        color="primary"
-                        readonly
-                      ></v-text-field>
+                      <input type="file" accept="image/png, image/jpeg, image/bmp" @change="handleFileChangeEditP"
+                        style="display: none" ref="fileInputEditP" />
+                      <v-text-field type="text" prepend-icon="mdi-camera" label="صورة الجواز" v-model="selectedFileP"
+                        outlined @click="$refs.fileInputEditP.click()" variant="outlined" color="primary"
+                        readonly></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="6"
-                      md="6"
-                      style="text-align: center"
-                      v-if="editdItem.passport_img"
-                    >
+                    <v-col cols="6" md="6" style="text-align: center" v-if="editdItem.passport_img">
                       <div style="position: relative; display: inline-block">
-                        <img
-                          id="oldL"
-                          :src="
-                            editdItem.passport_img.startsWith(
-                              'data:image/jpeg;base64,'
-                            ) ||
-                            editdItem.passport_img.startsWith('data:image/png;base64,') ||
-                            editdItem.passport_img.startsWith('data:image/gif;base64,') ||
-                            editdItem.passport_img.startsWith('data:image/bmp;base64,')
-                              ? editdItem.passport_img
-                              : table.content_url + editdItem.passport_img
-                          "
-                          style="
+                        <img id="oldL" :src="editdItem.passport_img.startsWith(
+      'data:image/jpeg;base64,'
+    ) ||
+        editdItem.passport_img.startsWith('data:image/png;base64,') ||
+        editdItem.passport_img.startsWith('data:image/gif;base64,') ||
+        editdItem.passport_img.startsWith('data:image/bmp;base64,')
+        ? editdItem.passport_img
+        : table.content_url + editdItem.passport_img
+      " style="
                             display: block;
                             width: 120px;
                             border: solid 1px rebeccapurple;
-                          "
-                        />
-                        <v-icon
-                          class="mr-2"
-                          color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
-                          @click="removeImageEditP"
-                        >
+                          " />
+                        <v-icon class="mr-2" color="error" style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          @click="removeImageEditP">
                           mdi-close
                         </v-icon>
                       </div>
@@ -1004,16 +576,8 @@
               <v-divider></v-divider>
               <!----Personal Info---->
               <v-card-actions>
-                <v-btn
-                  size="large"
-                  @click="editItemConfirm"
-                  :loading="editItemLoading"
-                  :disabled="!isFormvalid"
-                  color="primary"
-                  type="submit"
-                  text
-                  >تعديل</v-btn
-                >
+                <v-btn size="large" @click="editItemConfirm" :loading="editItemLoading" :disabled="!isFormvalid"
+                  color="primary" type="submit" text>تعديل</v-btn>
                 <v-btn color="primary" text @click="dialogEdit = false"> الغاء </v-btn>
               </v-card-actions>
             </v-form>
@@ -1047,11 +611,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
-          <v-btn
-            color="primary white--text"
-            :loading="deleteItemLoading"
-            @click="deleteItemConfirm"
-          >
+          <v-btn color="primary white--text" :loading="deleteItemLoading" @click="deleteItemConfirm">
             حذف
           </v-btn>
           <v-spacer />
@@ -1110,7 +670,8 @@ export default {
           { text: "رقم الهاتف", value: "phone" },
           { text: "العنوان", value: "address" },
           { text: "الصورة الشخصية", value: "image" },
-          { text: "اسم المنزل", value: "house.name" },
+          { text: "أسم النموذج", value: "form_name" },
+          { text: "رقم المنزل", value: "house_name" },
           { text: "العمليات", value: "actions" },
         ],
         centers: [],
@@ -1133,6 +694,8 @@ export default {
       isFormvalid: false,
       addBtnLoading: false,
       dialog: false,
+      HousesShow: false,
+      Forms: [],
       Houses: [],
       selectedFile: null,
       selectedFileT: null,
@@ -1147,6 +710,8 @@ export default {
         phone: null,
         password_show: null,
         address: null,
+        form: null,
+        form_id: null,
         house_id: null,
         id_img_front: null,
         id_img_back: null,
@@ -1156,6 +721,8 @@ export default {
       },
       Rules: {
         nameRules: [(v) => !!v || "يرجى إدخال اسم المستخدم"],
+        form_id: [(v) => !!v || "الحقل مطلوب"],
+        house_id_rules: [(v) => !!v || "الحقل مطلوب"],
         emailRules: [
           (v) => !!v || "يرجى إدخال عنوان البريد الإلكتروني",
           (v) => /.+@.+\..+/.test(v) || "يرجى إدخال عنوان بريد إلكتروني صحيح",
@@ -1176,6 +743,7 @@ export default {
       // add
       // edit
       old_image: null,
+      dataEdit: null,
       editItemLoading: false,
       dialogEdit: false,
       editdItem: {},
@@ -1189,15 +757,59 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
-    this.getHouses();
+    this.getForms();
+  },
+   watch: {
+    "data.form": {
+      handler: function () {
+        this.getHouses();
+      },
+      deep: true,
+    },
+    "editdItem.form_id": {
+      handler: function (newVal) {
+        this.getHousesEdit(newVal);
+      },
+      deep: true,
+    },
   },
   methods: {
+    getHousesEdit() {
+      if (this.dataEdit && Object.keys(this.editdItem).length !== 0) {
+        this.editdItem.form_id = this.dataEdit._id;
+        this.Houses = this.dataEdit.houses;
+      }
+      for(var i =0; i < this.Forms.length; i++) {
+        if(this.Forms[i]._id == this.editdItem.form_id) {
+          this.Houses = this.Forms[i].houses
+        }
+      }
+    },
+    async getForms() {
+      try {
+        const response = await API.getForms();
+
+        this.Forms = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
+    getHouses() {
+      this.data.form_id = this.data.form._id
+      this.Houses = this.data.form.houses
+      this.HousesShow = true
+    },
+
     showImgs(item) {
       this.showImg.open = true;
       this.showImg.dataImg = item;
@@ -1267,7 +879,6 @@ if (userDataString.type !== "admin") {
       }
     },
     handleFileChangeEditIDO(event) {
-
       const file = event.target.files[0];
 
       if (file) {
@@ -1491,19 +1102,6 @@ if (userDataString.type !== "admin") {
         this.table.loading = false;
       }
     },
-    async getHouses() {
-      try {
-        const response = await API.getHouses();
-
-        this.Houses = response.data.results;
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          this.$router.push("/login");
-        } else if (error.response && error.response.status === 500) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
-        }
-      }
-    },
     async addCenter(event) {
       event.preventDefault();
 
@@ -1515,6 +1113,7 @@ if (userDataString.type !== "admin") {
           password_show: this.data.password_show,
           email: this.data.email,
           address: this.data.address,
+          form_id: this.data.form_id,
           house_id: this.data.house_id,
           contract_imgs: this.data.contract_imgs,
           id_img_front: this.data.id_img_front,

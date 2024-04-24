@@ -29,6 +29,7 @@
           </template>
           <template v-slot:item.images="{ item }">
             <img
+            v-if="item.images[0]"
               @click="showImgs(item)"
               :src="content_url + item.images[0]"
               style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
