@@ -9,7 +9,13 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
-            <v-btn color="primary" v-if="userData.includes('add')" text class="ml-auto" @click="dialog = true">
+            <v-btn
+              color="primary"
+              v-if="userData.includes('add')"
+              text
+              class="ml-auto"
+              @click="dialog = true"
+            >
               <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة مستخدم جديد
             </v-btn>
 
@@ -39,15 +45,15 @@
               {{ table.centers.indexOf(item) + 1 }}
             </template>
             <template v-slot:item.privileges.actions="{ item }">
-                <strong v-if="item.privileges.actions.includes('add')">
-                    أضافة
-                </strong>
-                <strong v-if="item.privileges.actions.includes('edit')">
-                    تعديل
-                </strong>
-                <strong v-if="item.privileges.actions.includes('remove')">
-                    حذف
-                </strong>
+              <strong v-if="item.privileges.actions.includes('add')">
+                أضافة
+              </strong>
+              <strong v-if="item.privileges.actions.includes('edit')">
+                تعديل
+              </strong>
+              <strong v-if="item.privileges.actions.includes('remove')">
+                حذف
+              </strong>
             </template>
             <template v-slot:item.actions="{ item }">
               <VTooltip bottom v-if="userData.includes('edit')">
@@ -62,6 +68,19 @@
                   </v-icon>
                 </template>
                 <span>تعديل</span>
+              </VTooltip>
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="Print(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
+                </template>
+                <span>طباعه</span>
               </VTooltip>
               <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
@@ -457,14 +476,19 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
   methods: {
+    Print(item) {
+      localStorage.setItem("PrintUser", JSON.stringify(item));
+      window.open("/Print-User", "_blank");
+    },
+
     async getCenter() {
       try {
         this.table.loading = true;
@@ -539,7 +563,7 @@ if (userDataString.type !== "admin") {
       }
     },
     editItem(item) {
-      this.editdItem = {...item};
+      this.editdItem = { ...item };
       this.dialogEdit = true;
     },
 

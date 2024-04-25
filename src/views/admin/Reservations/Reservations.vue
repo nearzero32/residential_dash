@@ -48,6 +48,19 @@
                 </template>
                 <span>حذف</span>
               </VTooltip>
+               <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="Print(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
+                </template>
+                <span>طباعه</span>
+              </VTooltip>
             </template>
           </v-data-table>
         </v-card>
@@ -63,7 +76,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,7 +92,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -171,22 +188,28 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
   methods: {
+    Print(item) {
+      localStorage.setItem("PrintReservations", JSON.stringify(item));
+      window.open("/Print-Reservations", "_blank");
+    },
     updateMessage() {
-      this.$store.commit('updateMessage', false);
+      this.$store.commit("updateMessage", false);
     },
     async getCenter() {
       try {
         this.table.loading = true;
         const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
         const order =
           this.tableOptions.sortDesc.length > 0
             ? this.tableOptions.sortDesc[0]

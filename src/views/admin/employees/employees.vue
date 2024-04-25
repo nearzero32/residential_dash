@@ -9,7 +9,13 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
-            <v-btn color="primary" v-if="userData.includes('add')" text class="ml-auto" @click="dialog = true">
+            <v-btn
+              color="primary"
+              v-if="userData.includes('add')"
+              text
+              class="ml-auto"
+              @click="dialog = true"
+            >
               <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة موظف جديد
             </v-btn>
 
@@ -39,9 +45,15 @@
               {{ table.centers.indexOf(item) + 1 }}
             </template>
             <template v-slot:item.privileges.actions="{ item }">
-              <strong v-if="item.privileges.actions.includes('add')"> أضافة </strong>
-              <strong v-if="item.privileges.actions.includes('edit')"> تعديل </strong>
-              <strong v-if="item.privileges.actions.includes('remove')"> حذف </strong>
+              <strong v-if="item.privileges.actions.includes('add')">
+                أضافة
+              </strong>
+              <strong v-if="item.privileges.actions.includes('edit')">
+                تعديل
+              </strong>
+              <strong v-if="item.privileges.actions.includes('remove')">
+                حذف
+              </strong>
             </template>
             <template v-slot:item.salary="{ item }">
               {{ $func(item.salary) }}
@@ -59,6 +71,19 @@
                   </v-icon>
                 </template>
                 <span>تعديل</span>
+              </VTooltip>
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="Print(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
+                </template>
+                <span>طباعه</span>
               </VTooltip>
               <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
@@ -90,7 +115,9 @@
             <v-form v-model="isFormvalid">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">أسم المستخدم</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >أسم المستخدم</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     outlined
@@ -120,7 +147,9 @@
                   />
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">العنوان الوظيفي</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >العنوان الوظيفي</v-label
+                  >
                   <v-autocomplete
                     v-model="data.title_jop"
                     :rules="Rules.title_jop"
@@ -156,7 +185,10 @@
                   text
                   >اٍضافة</v-btn
                 >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
+                <v-btn
+                  class="bg-lighterror text-error ml-4"
+                  @click="dialog = false"
+                  text
                   >أغلاق</v-btn
                 >
               </v-card-actions>
@@ -178,7 +210,9 @@
             <v-form v-model="isFormvalid">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">أسم المستخدم</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >أسم المستخدم</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     outlined
@@ -200,7 +234,7 @@
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">الراتب</v-label>
                   <v-currency-field
-                  :rules="Rules.salary"
+                    :rules="Rules.salary"
                     v-model="editdItem.salary"
                     dense
                     label="الراتب"
@@ -208,7 +242,9 @@
                   />
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">العنوان الوظيفي</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >العنوان الوظيفي</v-label
+                  >
                   <v-autocomplete
                     v-model="editdItem.title_jop"
                     :rules="Rules.title_jop"
@@ -245,7 +281,9 @@
                   text
                   >تعديل</v-btn
                 >
-                <v-btn color="primary" text @click="dialogEdit = false"> الغاء </v-btn>
+                <v-btn color="primary" text @click="dialogEdit = false">
+                  الغاء
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -263,7 +301,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -277,7 +317,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -373,7 +415,9 @@ export default {
         salary: [(v) => !!v || "يرجى تحديد الراتب"],
         phoneRules: [
           (v) => !!v || "يرجى إدخال رقم الهاتف",
-          (v) => (v && /^[0-9]{11}$/.test(v)) || "يرجى إدخال رقم هاتف صحيح (11 أرقام)",
+          (v) =>
+            (v && /^[0-9]{11}$/.test(v)) ||
+            "يرجى إدخال رقم هاتف صحيح (11 أرقام)",
         ],
         addressRules: [(v) => !!v || "يرجى إدخال عنوان المستخدم"],
       },
@@ -392,19 +436,26 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
   methods: {
+    Print(item) {
+      localStorage.setItem("PrintEmployees", JSON.stringify(item));
+      window.open("/Print-Employees", "_blank");
+    },
+
     async getCenter() {
       try {
         this.table.loading = true;
         const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
         const order =
           this.tableOptions.sortDesc.length > 0
             ? this.tableOptions.sortDesc[0]

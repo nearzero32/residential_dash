@@ -19,7 +19,12 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn tile color="success" :block="isScreenXs" @click="handleDownload">
+            <v-btn
+              tile
+              color="success"
+              :block="isScreenXs"
+              @click="handleDownload"
+            >
               تحميل اكسل <v-icon right> mdi-download </v-icon>
             </v-btn>
           </v-card-title>
@@ -38,9 +43,10 @@
               {{ table.centers.indexOf(item) + 1 }}
             </template>
             <template v-slot:item.caller_name="{ item }">
-              <router-link :to="`/admin-call_center_one/${item._id}/${item.caller_name}`">{{
-                item.caller_name
-              }}</router-link>
+              <router-link
+                :to="`/admin-call_center_one/${item._id}/${item.caller_name}`"
+                >{{ item.caller_name }}</router-link
+              >
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -56,6 +62,19 @@
                   </v-icon>
                 </template>
                 <span>تعديل</span>
+              </VTooltip>
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="Print(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
+                </template>
+                <span>طباعه</span>
               </VTooltip>
               <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
@@ -105,7 +124,9 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">وظيفة المتصل</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >وظيفة المتصل</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.caller_job"
@@ -114,7 +135,9 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">عنوان المتصل</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >عنوان المتصل</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.caller_address"
@@ -123,7 +146,9 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">أفراد عائلة المتصل</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >أفراد عائلة المتصل</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.caller_family_members"
@@ -132,9 +157,10 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">كيف يسمع عنا</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >كيف يسمع عنا</v-label
+                  >
                   <v-autocomplete
-                    label="كيف يسمع عنا"
                     variant="outlined"
                     v-model="editdItem.how_he_hear_about_us"
                     color="primary"
@@ -145,7 +171,9 @@
                   ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">المساحة المطلوبة</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >المساحة المطلوبة</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.space_required"
@@ -154,7 +182,9 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">سبب المكالمة</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >سبب المكالمة</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.call_reason"
@@ -165,7 +195,6 @@
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">النموذج</v-label>
                   <v-autocomplete
-                    label="كيف يسمع عنا"
                     variant="outlined"
                     v-model="editdItem.form_id"
                     color="primary"
@@ -190,7 +219,9 @@
                   text
                   >تعديل</v-btn
                 >
-                <v-btn color="primary" text @click="dialogEdit = false"> الغاء </v-btn>
+                <v-btn color="primary" text @click="dialogEdit = false">
+                  الغاء
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -208,7 +239,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -222,7 +255,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -342,6 +377,10 @@ export default {
     this.getForms();
   },
   methods: {
+    Print(item) {
+      localStorage.setItem("PrintCallCenter", JSON.stringify(item));
+      window.open("/Print-Call-Center", "_blank");
+    },
     handleDownload() {
       import("@/vendor/Export2Excel").then((excel) => {
         const tHeader = [
@@ -388,14 +427,20 @@ export default {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
     exportToExcel() {
-      this.$refs.excel.saveExcelData(this.table.centers, "centers", "centers.xlsx");
+      this.$refs.excel.saveExcelData(
+        this.table.centers,
+        "centers",
+        "centers.xlsx"
+      );
     },
     async getCenter() {
       try {
         this.table.loading = true;
 
         const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
         const order =
           this.tableOptions.sortDesc.length > 0
             ? this.tableOptions.sortDesc[0]

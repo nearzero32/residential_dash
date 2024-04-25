@@ -32,6 +32,21 @@
           <template v-slot:item.num="{ item }">
             {{ table.centers.indexOf(item) + 1 }}
           </template>
+          <template v-slot:item.ac="{ item }">
+            <VTooltip bottom>
+              <template #activator="{ attrs }">
+                <v-icon
+                  color="#fffc00"
+                  v-bind="attrs"
+                  size="20"
+                  @click="Print(item)"
+                >
+                  mdi-printer
+                </v-icon>
+              </template>
+              <span>طباعه</span>
+            </VTooltip>
+          </template>
         </v-data-table>
       </v-container>
     </v-card>
@@ -109,6 +124,7 @@ export default {
           { text: "كود النموذج", value: "form_code" },
           { text: "رقم المنزل", value: "house_name" },
           { text: "التاريخ", value: "createdAt" },
+          { text: "العمليات", value: "ac" },
         ],
         centers: [],
         loading: true,
@@ -131,6 +147,10 @@ export default {
     this.getCenter();
   },
   methods: {
+    Print(item) {
+      localStorage.setItem("PrintConfirmationsForm", JSON.stringify(item));
+      window.open("/Print-Confirmations-Form", "_blank");
+    },
     async getCenter() {
       try {
         this.table.loading = true;

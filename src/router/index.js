@@ -33,6 +33,54 @@ const router = new Router({
       component: () => import("@/views/admin/application_form/Print.vue"),
       meta: { target: "_blank" }
     },
+    {
+      path: "/Print-Owner",
+      name: "Print-Owner",
+      component: () => import("@/views/admin/owners/PrintOwner.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-Sells-Employee",
+      name: "Print-Sells-Employee",
+      component: () => import("@/views/admin/sellsEmployee/PrintSellsEmployee.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-Call-Center",
+      name: "Print-Call-Center",
+      component: () => import("@/views/admin/call_center/PrintCallCenter.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-Confirmations-Form",
+      name: "Print-Confirmations-Form",
+      component: () => import("@/views/admin/confirmations_form/PrintConfirmationsForm.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-Reservations",
+      name: "Print-Reservations",
+      component: () => import("@/views/admin/Reservations/PrintReservations.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-Guards",
+      name: "Print-Guards",
+      component: () => import("@/views/admin/guards/PrintGuards.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-Employees",
+      name: "Print-Employees",
+      component: () => import("@/views/admin/employees/PrintEmployees.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/Print-User",
+      name: "Print-User",
+      component: () => import("@/views/admin/users/PrintUser.vue"),
+      meta: { target: "_blank" }
+    },
 
     {
       name: "/",
