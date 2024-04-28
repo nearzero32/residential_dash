@@ -2,49 +2,44 @@
   <div>
     <v-container id="pri">
       <v-card>
-        <v-card-title>
-          <v-row
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: space-around;
-              align-items: center;
-            "
+        <v-row
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+          "
+        >
+          <v-col
+            cols="3"
+            md="3"
+            style="padding: 10px; text-align: center; white-space: pre-wrap"
           >
-            <v-col
-              cols="3"
-              md="3"
-              style="padding: 10px; text-align: right; white-space: pre-wrap"
+            <p style="font-size: 14px">
+              <strong>شركة صناع النهضة <br />للأستثمار والتجارة العامة</strong>
+            </p>
+          </v-col>
+          <v-col
+            cols="6"
+            md="6"
+            style="padding: 10px; text-align: center; white-space: pre-wrap"
+          >
+            <div
+              style="
+                background-color: #ffd147;
+                padding: 10px;
+                border-radius: 10px;
+              "
             >
-              <p style="font-size: 14px">
-                <strong
-                  >شركة صناع النهضة للأستثمار <br />
-                  والتجارة العامة</strong
-                >
-              </p>
-            </v-col>
-            <v-col
-              cols="6"
-              md="6"
-              style="padding: 10px; text-align: center; white-space: pre-wrap"
-            >
-              <div
-                style="
-                  background-color: #ffd147;
-                  padding: 10px;
-                  border-radius: 10px;
-                "
+              <strong style="font-size: 14px"
+                >أستمارة حجز وحدة سكنية في مجمع النهضة <br />السكني</strong
               >
-                <strong style="font-size: 14px"
-                  >أستمارة حجز وحدة سكنية في مجمع النهضة السكني</strong
-                >
-              </div>
-            </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
-              <img :src="logoPrint" style="width: 200px" alt="" />
-            </v-col>
-          </v-row>
-        </v-card-title>
+            </div>
+          </v-col>
+          <v-col cols="3" md="3" style="text-align: center">
+            <img :src="logoPrint" style="width: 160px" alt="" />
+          </v-col>
+        </v-row>
         <v-container>
           <div>
             <p>رقم الأستمارة : {{ data.application_code }}</p>
@@ -58,11 +53,9 @@
               الموجودة تفاصيلها ادناه واوافق على كافة الفقرات والتعليمات والشروط
               الموجودة في العقد الخاص بشراء الوحدة السكنية وملحقاتها .
             </p>
-            <br />
             <div style="text-align: center">
               <strong>معلومات المشتري</strong>
             </div>
-            <br />
             <div>
               <p>
                 الأسم الرباعي واللقب :
@@ -119,11 +112,9 @@
                 }}</span>
               </p>
             </div>
-            <br />
             <div style="text-align: center">
               <strong>تفاصيل الوحدة السكنية</strong>
             </div>
-            <br />
             <div>
               <p>
                 النموذج :
@@ -223,7 +214,6 @@
               </tr>
             </tbody>
           </table>
-          <br />
           <p>
             اقرار : اقر انا ..................................... بأن جميع
             المعلومات الواردة في هذة الأستمارة هي معلومات صحيحة واذا ظهر خلاف
@@ -231,9 +221,14 @@
           </p>
           <p>
             اسم وتوقيع موظف المبيعات
-            <span style="border-bottom: dashed 1px;">{{ data.employee_name }}</span>:
+            <span style="border-bottom: dashed 1px">{{
+              data.employee_name
+            }}</span
+            >:
           </p>
-          <p>التاريخ : <span style="border-bottom: dashed 1px;">{{ date }}</span></p>
+          <p>
+            التاريخ : <span style="border-bottom: dashed 1px">{{ date }}</span>
+          </p>
           <br />
 
           <hr />
@@ -262,98 +257,93 @@
             >
           </v-row>
         </v-container>
+        <br>
       </v-card>
       <v-card>
-        <v-card-title>
-          <v-row
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: space-around;
-              align-items: center;
-            "
+        <v-row
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+          "
+        >
+          <v-col
+            cols="3"
+            md="3"
+            style="padding: 10px; text-align: center; white-space: pre-wrap"
           >
-            <v-col
-              cols="3"
-              md="3"
-              style="padding: 10px; text-align: right; white-space: pre-wrap"
+            <p style="font-size: 14px">
+              <strong>شركة صناع النهضة <br />للأستثمار والتجارة العامة</strong>
+            </p>
+          </v-col>
+          <v-col
+            cols="6"
+            md="6"
+            style="padding: 10px; text-align: center; white-space: pre-wrap"
+          >
+            <div
+              style="
+                background-color: #ffd147;
+                padding: 10px;
+                border-radius: 10px;
+              "
             >
-              <p style="font-size: 14px">
-                <strong
-                  >شركة صناع النهضة للأستثمار <br />
-                  والتجارة العامة</strong
-                >
-              </p>
-            </v-col>
-            <v-col
-              cols="6"
-              md="6"
-              style="padding: 10px; text-align: center; white-space: pre-wrap"
-            >
-              <div
-                style="
-                  background-color: #ffd147;
-                  padding: 10px;
-                  border-radius: 10px;
-                "
+              <strong style="font-size: 14px"
+                >أستمارة حجز وحدة سكنية في مجمع النهضة <br />السكني</strong
               >
-                <strong style="font-size: 14px"
-                  >أستمارة حجز وحدة سكنية في مجمع النهضة السكني</strong
-                >
-              </div>
-            </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
-              <img :src="logoPrint" style="width: 200px" alt="" />
-            </v-col>
-          </v-row>
-        </v-card-title>
+            </div>
+          </v-col>
+          <v-col cols="3" md="3" style="text-align: center">
+            <img :src="logoPrint" style="width: 160px" alt="" />
+          </v-col>
+        </v-row>
         <v-container>
           <div>
             <p>
               اني الموقع ادناه أقر باني قد قرأت جميع بنود هذه الأستمارة
               وتفاصيلها وبنود عقد البيع لتملك الوحدة السكنية في مجمع النهضة
               السكني وتفاصيلها واتعهد بااللتزام بكافة الشروط واتحمل كافة التبعات
-              الماليه والقانونية .<br /><br />
+              الماليه والقانونية .<br />
               الحجز ساري لمدة شهر واحد فقط من تاريخ الحجز اعلاه وبعدها سيتم
-              الغاء الحجز تلقائيا في حال لم يتم التسديد .<br /><br />
+              الغاء الحجز تلقائيا في حال لم يتم التسديد .<br />
               - في حال التاخير او الأمتناع عن توقيع العقد خلال ( 30 ) يوم من
               تاريخ سداد دفعة التسجيل يحق للشركه التصرف بالوحده للغير دون انذار
               على ان يتم توفير وحدة بديلة ولمرة واحده فقط وبنفس مواصفات الوحدة
               الموصوفة اعلاه وبنفس المرحلة التسويقيه على ان يتم توقيع العقد
               خلال( 30 ) يوم وفي حال امتناع توقيع العقد ورغم توفير وحده بديلة
               ويعتبر ذلك عدوال نهائيا عن الحجز فتكون الأستمارة كان لم تكن دون
-              الحاجة للتنبيه واالنذار .<br /><br />
+              الحاجة للتنبيه واالنذار .<br />
               - يحظر على المشتري التنازل عن استمارة حجز الوحدة للغير ويعد
-              التنازل باطلاً" .<br /><br />
+              التنازل باطلاً" .<br />
               - يحق للشركة خصم مبلغ بواقع ( %15 ) كمصروفات ادارية من قيمه دفعه
               التسجيل في حال التراجع عن الشراء قبل التعاقد على ان يتم ارجاع
               المبلغ بعد استقطاع تكلفة الغاء الحجز بعد حلول مشتري اخر بنفس
-              الوحدة السكنيه او مرور ( 12 ) شهر على الغاء الحجز .<br /><br />
+              الوحدة السكنيه او مرور ( 12 ) شهر على الغاء الحجز .<br />
               - في حال التعاقد بالوكالة يقر الوكيل بان البيانات الواردة بالنسبه
               له والمشتري صحيحه وان وكالته ساريه المفعول ويكون هو المسؤول عن
-              البيانات .<br /><br />
-              - لا تعتبر هذه الأستمارة بمثابة عقد ولا يترتب اي التزامات على الشركه
-              ألا في حال اتمام التعاقد بسداد النسبه المقرره والمشار اليها اعلاه ب
-              ( دفعة التسجيل )
+              البيانات .<br />
+              - لا تعتبر هذه الأستمارة بمثابة عقد ولا يترتب اي التزامات على
+              الشركه ألا في حال اتمام التعاقد بسداد النسبه المقرره والمشار اليها
+              اعلاه ب ( دفعة التسجيل )
             </p>
-            <br />
-            <br />
             <p>
-              أسم المشتري : <span style="border-bottom: dashed 1px; margin-left: 60px">{{
-                  data.buyer_info.customer_name
-                }}</span>  اسم
-              وتوقيع موظف المبيعات : <span style="border-bottom: dashed 1px;">{{ data.employee_name }}</span>
+              أسم المشتري :
+              <span style="border-bottom: dashed 1px; margin-left: 60px">{{
+                data.buyer_info.customer_name
+              }}</span>
+              اسم وتوقيع موظف المبيعات : ............................
             </p>
-            <br />
             <p>
               توقيع المشتري .......................................... : اسم
-              وتوقيع موظف الحجز : ....................................
+              وتوقيع موظف الحجز : {{ data.employee_name }}
             </p>
             <br />
-          <p>التاريخ : <span style="border-bottom: dashed 1px;">{{ date }}</span></p>
+            <p>
+              التاريخ :
+              <span style="border-bottom: dashed 1px">{{ date }}</span>
+            </p>
           </div>
-          <br />
-          <br />
           <hr />
           <v-row
             style="
@@ -386,7 +376,7 @@
 </template>
 
 <script>
-import logoPrint from "@/assets/images/icons/logoPrint.png"
+import logoPrint from "@/assets/images/icons/logoPrint.png";
 import { getCurrentDateInString } from "@/utils/date";
 
 export default {
@@ -437,6 +427,9 @@ export default {
   @media print {
     body {
       direction: rtl;
+    }
+    .v-application p {
+      margin-bottom: 5px;
     }
     #pri span {
       border-bottom: dashed 1px;

@@ -16,12 +16,10 @@
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
             >
-              <p style="font-size: 14px">
-                <strong
-                  >شركة صناع النهضة للأستثمار <br />
-                  والتجارة العامة</strong
-                >
-              </p>
+              <p style="font-size: 14px;"><strong
+                >شركة صناع النهضة
+                 <br />للأستثمار  والتجارة العامة</strong
+              ></p>
             </v-col>
             <v-col
               cols="6"
@@ -40,33 +38,23 @@
                 >
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
-              <img :src="logoPrint" style="width: 200px" alt="" />
+            <v-col cols="3" md="3" style="text-align: center; ">
+              <img :src="logoPrint" style="width: 160px" alt="" />
             </v-col>
           </v-row>
         </v-card-title>
         <v-container>
           <div>
             <p><strong>أسم المتصل : </strong> {{ data.caller_name }}</p>
-            <br />
             <p><strong>رقم الهاتف : </strong> {{ data.caller_phone }}</p>
-            <br />
             <p><strong>العنوان الوظيفي : </strong> {{ data.caller_job }}</p>
-            <br />
             <p><strong>هاتف المتصل : </strong> {{ data.caller_address }}</p>
-            <br />
             <p><strong>عدد افراد الأسرة : </strong> {{ data.caller_family_members }}</p>
-            <br />
             <p><strong>كيف سمع عنا : </strong> {{ data.how_he_hear_about_us }}</p>
-            <br />
             <p><strong>المساحة المطلوبة : </strong> {{ data.space_required }}</p>
-            <br />
             <p><strong>أسم النموذج : </strong> {{ data.form_name }}</p>
-            <br />
             <p><strong>الموظف الحالي : </strong> {{ data.current_employee.name }}</p>
-            <br />
             <p><strong>نتائج المكالمة : </strong> {{ data.results_of_call }}</p>
-            <br />
             <p>
               <strong>موظفين المبيعات السابقين  : </strong>
               <span

@@ -6,7 +6,6 @@
       :breadcrumbs="breadcrumbs"
     ></BaseBreadcrumb>
     <v-card class="mx-auto">
-      <v-container>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="table.search"
@@ -48,7 +47,6 @@
             </VTooltip>
           </template>
         </v-data-table>
-      </v-container>
     </v-card>
 
     <!-- - Dailog for show info to user -->

@@ -38,8 +38,8 @@
                 <strong style="font-size: 14px">أستماراة طلب موافقة</strong>
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
-              <img :src="logoPrint" style="width: 200px" alt="" />
+            <v-col cols="3" md="3" style="text-align: center; ">
+              <img :src="logoPrint" style="width: 160px" alt="" />
             </v-col>
           </v-row>
         </v-card-title>
@@ -99,7 +99,7 @@
             <br />
             <div style="width: 100%; padding: 15px; border: solid 1px black">
               <br />
-              <strong>اختياري</strong>
+              <strong>{{data.details}}</strong>
               <br />
               <br />
               <br />

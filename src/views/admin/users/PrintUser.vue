@@ -16,12 +16,10 @@
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
             >
-              <p style="font-size: 14px">
-                <strong
-                  >شركة صناع النهضة للأستثمار <br />
-                  والتجارة العامة</strong
-                >
-              </p>
+              <p style="font-size: 14px;"><strong
+                >شركة صناع النهضة <br />
+                للأستثمار والتجارة العامة </strong
+              ></p>
             </v-col>
             <v-col
               cols="6"
@@ -40,8 +38,8 @@
                 >
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
-              <img :src="logoPrint" style="width: 200px" alt="" />
+            <v-col cols="3" md="3" style="text-align: center; ">
+              <img :src="logoPrint" style="width: 160px" alt="" />
             </v-col>
           </v-row>
         </v-card-title>

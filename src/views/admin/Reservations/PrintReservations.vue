@@ -17,8 +17,8 @@
               style="padding: 10px; text-align: right; white-space: pre-wrap"
             >
               <p style="font-size: 14px;"><strong
-                >شركة صناع النهضة
-                للأستثمار <br /> والتجارة العامة</strong
+                >شركة صناع النهضة <br />
+                للأستثمار والتجارة العامة </strong
               ></p>
             </v-col>
             <v-col
@@ -30,10 +30,10 @@
                 <strong style="font-size: 14px;">الزبون ( {{ data.name }} )</strong>
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
+            <v-col cols="3" md="3" style="text-align: center; ">
               <img
                 :src="logoPrint"
-                style="width: 200px"
+                style="width: 160px"
                 alt=""
               />
             </v-col>

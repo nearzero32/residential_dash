@@ -30,10 +30,10 @@
                 <strong style="font-size: 14px;">الموظف ( {{ data.name }} )</strong>
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; padding: 10px">
+            <v-col cols="3" md="3" style="text-align: center; ">
               <img
                 :src="logoPrint"
-                style="width: 200px"
+                style="width: 160px"
                 alt=""
               />
             </v-col>
