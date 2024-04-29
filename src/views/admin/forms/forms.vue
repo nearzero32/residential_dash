@@ -29,15 +29,28 @@
           </template>
           <template v-slot:item.images="{ item }">
             <img
-            v-if="item.images[0]"
+              v-if="item.images[0]"
               @click="showImgs(item)"
               :src="content_url + item.images[0]"
-              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
             />
           </template>
           <template v-slot:item.name="{ item }">
             <v-btn @click="showP(item)" text color="primary">
               {{ item.name }}
+            </v-btn>
+          </template>
+          <template v-slot:item.buttonHouses="{ item }">
+            <v-btn :loading="showHouseLoading" @click="showHouse(item)">
+              عرض المنازل
+
+              <template v-slot:loader>
+                <v-progress-linear indeterminate></v-progress-linear>
+              </template>
             </v-btn>
           </template>
 
@@ -72,6 +85,130 @@
         </v-data-table>
       </v-container>
     </v-card>
+    <br />
+    <v-card class="mx-auto" v-if="dialogshowHouse == true">
+      <v-btn variant="outlined" color="#FF5252" @click="closeShowHouse">
+        <v-icon color="white" size="20">
+          mdi-close-circle-outline
+        </v-icon>
+      </v-btn>
+
+      <v-card-title class="headline justify-center" style="color: #fb9778">
+        منازل النموذج ( {{ showHouseItem.name }} )
+      </v-card-title>
+      <v-container>
+        <v-row>
+          <v-col class="col" style="padding: 10px">
+            <v-card
+              shaped
+              color="#fb9778"
+              style="
+                height: 80px;
+                display: grid;
+                place-items: center;
+                text-align: center;
+              "
+            >
+              عدد المنازل الأجمالي <br />( {{ showHouseItem.houses.length }} )
+            </v-card>
+          </v-col>
+          <v-col class="col" style="padding: 10px">
+            <v-card
+              shaped
+              color="#00ff99"
+              style="
+                height: 80px;
+                display: grid;
+                place-items: center;
+                text-align: center;
+              "
+            >
+              عدد المنازل الغير محجوزة <br />( {{ statusNotReserved }} )
+            </v-card>
+          </v-col>
+          <v-col class="col" style="padding: 10px">
+            <v-card
+              shaped
+              color="#ffff00"
+              style="
+                height: 80px;
+                display: grid;
+                place-items: center;
+                text-align: center;
+              "
+            >
+              عدد المنازل المحجوزة <br />( {{ statusBookedUp }} )
+            </v-card>
+          </v-col>
+          <v-col class="col" style="padding: 10px">
+            <v-card
+              shaped
+              color="#d9d9d9"
+              style="
+                height: 80px;
+                display: grid;
+                place-items: center;
+                text-align: center;
+              "
+            >
+              عدد المنازل المحجوزة مبدئياً <br />(
+              {{ statusInitialReservation }} )
+            </v-card>
+          </v-col>
+          <v-col class="col" style="padding: 10px">
+            <v-card
+              shaped
+              color="#fe0000"
+              style="
+                height: 80px;
+                display: grid;
+                place-items: center;
+                text-align: center;
+                color: white;
+              "
+            >
+              عدد المنازل التي تم بيعها <br />( {{ statusSold }} )
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container>
+        <v-item-group
+          class="d-flex justify-sm-space-between px-6 pt-2 pb-6"
+          style="flex-wrap: wrap; justify-content: flex-start !important"
+        >
+          <v-item v-for="(item, index) in showHouseItem.houses" :key="index">
+            <VTooltip top>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  style="margin: 5px"
+                  :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
+                  :height="40"
+                  :color="
+                    item.status === 'حجز مبدئي'
+                      ? '#d9d9d9'
+                      : item.status === 'محجوز'
+                      ? '#ffff00'
+                      : item.status === 'تم البيع'
+                      ? '#fe0000'
+                      : item.status === 'غير محجوز'
+                      ? '#00ff99'
+                      : ''
+                  "
+                  :width="40"
+                  :border="true"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ item.name }}
+                </v-btn>
+              </template>
+              <span>{{ item.status }}</span>
+            </VTooltip>
+          </v-item>
+        </v-item-group>
+      </v-container>
+    </v-card>
 
     <!-- - Dailog for show info to user -->
     <v-dialog v-model="dialogData.open" max-width="500px">
@@ -91,7 +228,10 @@
     <!-- - showImg -->
     <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <v-card style="padding-top: 20px">
-        <v-card-text class="headline justify-center" v-if="showImg.dataImg !== null">
+        <v-card-text
+          class="headline justify-center"
+          v-if="showImg.dataImg !== null"
+        >
           <v-carousel>
             <v-carousel-item v-for="(img, i) in showImg.dataImg" :key="i">
               <img :src="content_url + img" style="width: 100%" />
@@ -100,7 +240,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="showImg.open = false"> إغلاق </v-btn>
+          <v-btn color="primary" text @click="showImg.open = false">
+            إغلاق
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -114,7 +256,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -169,36 +313,23 @@ export default {
       editedImages: [],
       housesE: "",
       file: { size: 123, name: "Icon", type: "image/png" },
-      dropzoneOptionsE: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 150,
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>إضافة صور الطابق",
-        dictRemoveFile: "<i class='fa fa-trash-alt'></i>",
-        headers: {
-          "My-Awesome-Header": "header value",
-        },
-        files: [],
-      },
-      dropzoneOptionsEFloors: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 150,
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>إضافة صور الطابق",
-        dictRemoveFile: "<i class='fa fa-trash-alt'></i>",
-        headers: {
-          "My-Awesome-Header": "header value",
-        },
-      },
-
       // edit
       // delete
       deleteItemLoading: false,
       dialogDelete: false,
       deletedItem: {},
       // delete
+
+      // showHouse
+      showHouseLoading: false,
+      dialogshowHouse: false,
+      statusNotReserved: null,
+      statusInitialReservation: null,
+      statusBookedUp: null,
+      statusSold: null,
+      showHouseItem: [],
+      // showHouse
+
       // showImg
       showImg: {
         open: false,
@@ -225,6 +356,7 @@ export default {
           { text: "التصنيف", value: "category" },
           { text: "البلوك", value: "block_number" },
           { text: "رقم الشارع", value: "street_number" },
+          { text: "عرض المنازل", value: "buttonHouses" },
           { text: "العمليات", value: "ac" },
         ],
         centers: [],
@@ -272,13 +404,53 @@ export default {
     },
   },
   methods: {
+    showHouse(item) {
+      this.showHouseLoading = true;
+      this.showHouseItem = item;
+      var filteredStatusNotReserved = item.houses.filter(function (ite) {
+        return ite.status === "غير محجوز";
+      });
+      this.statusNotReserved = filteredStatusNotReserved.length;
+
+      var filteredStatusInitialReservation = item.houses.filter(function (ite) {
+        return ite.status === "حجز مبدئي";
+      });
+      this.statusInitialReservation = filteredStatusInitialReservation.length;
+
+      var filteredStatusBookedUp = item.houses.filter(function (ite) {
+        return ite.status === "محجوز";
+      });
+      this.statusBookedUp = filteredStatusBookedUp.length;
+
+      var filteredStatusSold = item.houses.filter(function (ite) {
+        return ite.status === "تم البيع";
+      });
+      this.statusSold = filteredStatusSold.length;
+
+      this.dialogshowHouse = true;
+      this.showHouseLoading = false;
+      // console.log(this.showHouseItem);
+    },
+    closeShowHouse() {
+      this.showHouseItem = [];
+      this.statusNotReserved = null;
+
+      this.statusInitialReservation = null;
+
+      this.statusBookedUp = null;
+
+      this.statusSold = null;
+
+      this.dialogshowHouse = false;
+      // console.log(this.showHouseItem);
+    },
     clossMess() {
       var FormMass = localStorage.getItem("itemFormMass");
       if (FormMass) {
         localStorage.removeItem("itemFormMass");
-        this.dialogData.open = false
+        this.dialogData.open = false;
       } else {
-        this.dialogData.open = false
+        this.dialogData.open = false;
       }
     },
     showP(item) {
@@ -336,7 +508,8 @@ export default {
     },
     handleFileRemovedFloors(file, ind) {
       const dataURLToRemove = file.dataURL;
-      const indexToRemove = this.data.floors[ind].images.indexOf(dataURLToRemove);
+      const indexToRemove =
+        this.data.floors[ind].images.indexOf(dataURLToRemove);
       if (indexToRemove !== -1) {
         this.data.floors[ind].images.splice(indexToRemove, 1);
       }
@@ -424,7 +597,10 @@ export default {
           }
         }
         if (!hasSubDetails) {
-          this.showDialogfunction("يرجى إضافة تفاصيل النموذج الفرعية", "#FF5252");
+          this.showDialogfunction(
+            "يرجى إضافة تفاصيل النموذج الفرعية",
+            "#FF5252"
+          );
         } else {
           let allFloorsHaveImages = true;
           for (let i = 0; i < this.data.floors.length; i++) {
@@ -486,7 +662,10 @@ export default {
       this.dialogEdit = true;
       this.tagsE = [];
       for (var i = 0; i < this.editdItem.houses.length; i++) {
-        var newData = { text: this.editdItem.houses[i].name, tiClasses: ["ti-valid"] };
+        var newData = {
+          text: this.editdItem.houses[i].name,
+          tiClasses: ["ti-valid"],
+        };
         this.tagsE.push(newData);
       }
 
