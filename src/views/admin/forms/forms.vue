@@ -115,7 +115,7 @@
           <v-col class="col" style="padding: 10px">
             <v-card
               shaped
-              color="#00ff99"
+              color="rgb(255 255 255)"
               style="
                 height: 80px;
                 display: grid;
@@ -184,6 +184,7 @@
                   style="margin: 5px"
                   :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
                   :height="40"
+                  @click="goHouse(item._id, item.name)"
                   :color="
                     item.status === 'حجز مبدئي'
                       ? '#d9d9d9'
@@ -192,7 +193,7 @@
                       : item.status === 'تم البيع'
                       ? '#fe0000'
                       : item.status === 'غير محجوز'
-                      ? '#00ff99'
+                      ? 'rgb(255 255 255)'
                       : ''
                   "
                   :width="40"
@@ -443,6 +444,9 @@ export default {
 
       this.dialogshowHouse = false;
       // console.log(this.showHouseItem);
+    },
+    goHouse(id, name) {
+      this.$router.push(`/admin-profileHouse/${id}/${name}`);
     },
     clossMess() {
       var FormMass = localStorage.getItem("itemFormMass");

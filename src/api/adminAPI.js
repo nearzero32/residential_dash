@@ -764,6 +764,24 @@ class Api {
     return response;
   }
   // confirmations_form
+
+  // getProfileHouse
+  async getProfileHouse(id) {
+    const response = await axiosInstance.get(
+      `/center/forms/form_id/662e48b231374339528fb74f/house_id/${id}`
+    );
+    return response;
+  }
+  // getProfileHouse
+
+  // visits
+  async getVisits({ page, limit }) {
+    const response = await axiosInstance.get(
+      `/visits?page=${page}&limit=${limit}`
+    );
+    return response;
+  }
+  // visits
 }
 
 export default new Api();

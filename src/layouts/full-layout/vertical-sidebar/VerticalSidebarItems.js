@@ -40,6 +40,12 @@ export default [
     type: "admin",
   },
   {
+    title: "زيارات الملاك",
+    icon: "users",
+    to: "/admin-visits",
+    type: "admin",
+  },
+  {
     group: "",
     model: false,
     icon: "mdi-apps",
@@ -165,6 +171,12 @@ export default [
     title: "الملاك",
     icon: "users",
     to: "/admin-owners",
+    type: "assistance",
+  },
+  {
+    title: "زيارات الملاك",
+    icon: "users",
+    to: "/admin-visits",
     type: "assistance",
   },
   {
