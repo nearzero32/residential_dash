@@ -22,6 +22,7 @@ import add from "@/views/admin/forms/add.vue";
 import formShow from "@/views/admin/forms/profile/index.vue";
 import how_u_hear_about_us from "@/views/admin/how_u_hear_about_us/how_u_hear_about_us.vue";
 import confirmations_form from "@/views/admin/confirmations_form/confirmations_form.vue";
+import profileConfirmations_form from "@/views/admin/confirmations_form/profileConfirmations_form.vue";
 import profileHouse from "@/views/admin/forms/profileHouse.vue";
 import visits from "@/views/admin/visits/visits.vue";
 
@@ -108,8 +109,8 @@ const Admin = {
       component: employees,
     },
     {
-      path: "/admin-reservations-service",
-      name: "admin-reservations-service",
+      path: "/admin-reservation-service",
+      name: "admin-reservation-service",
       component: reservationsService,
     },
     {
@@ -148,8 +149,8 @@ const Admin = {
       component: call_center_one,
     },
     {
-      path: "/admin-confirmations_form",
-      name: "admin-confirmations_form",
+      path: "/admin-confirmations-form",
+      name: "admin-confirmations-form",
       component: confirmations_form,
     },
     {
@@ -161,6 +162,11 @@ const Admin = {
       path: "/admin-visits",
       name: "admin-visits",
       component: visits,
+    },
+    {
+      path: "/admin-profileConfirmations_form/:name",
+      name: "admin-profileConfirmations_form",
+      component: profileConfirmations_form,
     },
 
   ],

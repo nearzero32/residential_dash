@@ -6,49 +6,53 @@
       :breadcrumbs="breadcrumbs"
     ></BaseBreadcrumb>
     <v-card class="mx-auto">
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="table.search"
-          @input="getCenter"
-          append-icon="mdi-magnify"
-          label="بحث"
-          outlined
-          single-line
-          hide-details
-        ></v-text-field>
-        <br />
-        <v-data-table
-          :headers="table.headers"
-          loading-text="جاري التحميل ... الرجاء الانتظار"
-          :items="table.centers"
-          :options.sync="tableOptions"
-          :server-items-length="table.totalItems"
-          :loading="table.loading"
-          class="elevation-1"
-          no-results-text="لا توجد بيانات !"
-          @update:options="getCenter"
-        >
-          <template v-slot:item.num="{ item }">
-            {{ table.centers.indexOf(item) + 1 }}
-          </template>
-          <template v-slot:item.ac="{ item }">
-            <VTooltip bottom>
-              <template #activator="{ attrs }">
-                <v-icon
-                  color="#fffc00"
-                  v-bind="attrs"
-                  size="20"
-                  @click="Print(item)"
-                >
-                  mdi-printer
-                </v-icon>
-              </template>
-              <span>طباعه</span>
-            </VTooltip>
-          </template>
-        </v-data-table>
+    <v-container>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="table.search"
+        @input="getCenter"
+        append-icon="mdi-magnify"
+        label="بحث"
+        outlined
+        single-line
+        hide-details
+      ></v-text-field>
+      <br />
+      <v-data-table
+        :headers="table.headers"
+        loading-text="جاري التحميل ... الرجاء الانتظار"
+        :items="table.centers"
+        :options.sync="tableOptions"
+        :server-items-length="table.totalItems"
+        :loading="table.loading"
+        class="elevation-1"
+        no-results-text="لا توجد بيانات !"
+        @update:options="getCenter"
+      >
+        <template v-slot:item.num="{ item }">
+          {{ table.centers.indexOf(item) + 1 }}
+        </template>
+        <template v-slot:item.customer_name="{ item }">
+          <a @click="showP(item)">{{ item.customer_name }}</a>
+        </template>
+        <template v-slot:item.ac="{ item }">
+          <VTooltip bottom>
+            <template #activator="{ attrs }">
+              <v-icon
+                color="#fffc00"
+                v-bind="attrs"
+                size="20"
+                @click="Print(item)"
+              >
+                mdi-printer
+              </v-icon>
+            </template>
+            <span>طباعه</span>
+          </VTooltip>
+        </template>
+      </v-data-table>
+  </v-container>
     </v-card>
-
     <!-- - Dailog for show info to user -->
     <v-dialog v-model="dialogData.open" max-width="500px">
       <v-toolbar :color="dialogData.color" dense />
@@ -111,14 +115,8 @@ export default {
           },
           { text: "اسم الزبون", value: "customer_name" },
           { text: "هاتف الزبون", value: "customer_phone" },
-          { text: "تفاصيل", value: "details" },
           { text: "أسم الموظف", value: "employee_name" },
           { text: "أسم النموذج", value: "form_name" },
-          { text: "المساحة الكلية", value: "form_total_space" },
-          { text: "مساحة البناء", value: "form_building_space" },
-          { text: "البلوك", value: "form_block_number" },
-          { text: "رقم الشارع", value: "form_street_number" },
-          { text: "التصنيف", value: "form_category" },
           { text: "كود النموذج", value: "form_code" },
           { text: "رقم المنزل", value: "house_name" },
           { text: "التاريخ", value: "createdAt" },
@@ -148,6 +146,10 @@ export default {
     Print(item) {
       localStorage.setItem("PrintConfirmationsForm", JSON.stringify(item));
       window.open("/Print-Confirmations-Form", "_blank");
+    },
+    showP(item) {
+      localStorage.setItem("profileConfirmations_form", JSON.stringify(item));
+      this.$router.push(`/admin-profileConfirmations_form/${item.customer_name}`);
     },
     async getCenter() {
       try {

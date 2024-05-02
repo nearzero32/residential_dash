@@ -88,86 +88,74 @@
     <br />
     <v-card class="mx-auto" v-if="dialogshowHouse == true">
       <v-btn variant="outlined" color="#FF5252" @click="closeShowHouse">
-        <v-icon color="white" size="20">
-          mdi-close-circle-outline
-        </v-icon>
+        <v-icon color="white" size="20"> mdi-close-circle-outline </v-icon>
       </v-btn>
 
-      <v-card-title class="headline justify-center" style="color: #fb9778">
-        منازل النموذج ( {{ showHouseItem.name }} )
+      <v-card-title
+        class="headline justify-center"
+        style="text-align: center; color: #fb9778"
+      >
+        منازل النموذج ( {{ showHouseItem.name }} ) <br />
+        عدد المنازل الأجمالي ( {{ showHouseItem.houses.length }} )
       </v-card-title>
       <v-container>
         <v-row>
-          <v-col class="col" style="padding: 10px">
-            <v-card
-              shaped
-              color="#fb9778"
-              style="
-                height: 80px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
-            >
-              عدد المنازل الأجمالي <br />( {{ showHouseItem.houses.length }} )
-            </v-card>
-          </v-col>
-          <v-col class="col" style="padding: 10px">
+          <v-col cols="12" md="3" style="padding: 10px">
             <v-card
               shaped
               color="rgb(255 255 255)"
               style="
-                height: 80px;
+                height: 60px;
                 display: grid;
                 place-items: center;
                 text-align: center;
               "
             >
-              عدد المنازل الغير محجوزة <br />( {{ statusNotReserved }} )
+              عدد المنازل الغير محجوزة ( {{ statusNotReserved }} )
             </v-card>
           </v-col>
-          <v-col class="col" style="padding: 10px">
-            <v-card
-              shaped
-              color="#ffff00"
-              style="
-                height: 80px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
-            >
-              عدد المنازل المحجوزة <br />( {{ statusBookedUp }} )
-            </v-card>
-          </v-col>
-          <v-col class="col" style="padding: 10px">
+          <v-col cols="12" md="3" style="padding: 10px">
             <v-card
               shaped
               color="#d9d9d9"
               style="
-                height: 80px;
+                height: 60px;
                 display: grid;
                 place-items: center;
                 text-align: center;
               "
             >
-              عدد المنازل المحجوزة مبدئياً <br />(
+              عدد المنازل المحجوزة مبدئياً (
               {{ statusInitialReservation }} )
             </v-card>
           </v-col>
-          <v-col class="col" style="padding: 10px">
+          <v-col cols="12" md="3" style="padding: 10px">
             <v-card
               shaped
-              color="#fe0000"
+              color="rgb(249 249 134)"
               style="
-                height: 80px;
+                height: 60px;
+                display: grid;
+                place-items: center;
+                text-align: center;
+              "
+            >
+              عدد المنازل المحجوزة ( {{ statusBookedUp }} )
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="3" style="padding: 10px">
+            <v-card
+              shaped
+              color="rgb(34 208 220)"
+              style="
+                height: 60px;
                 display: grid;
                 place-items: center;
                 text-align: center;
                 color: white;
               "
             >
-              عدد المنازل التي تم بيعها <br />( {{ statusSold }} )
+              عدد المنازل التي تم بيعها ( {{ statusSold }} )
             </v-card>
           </v-col>
         </v-row>
@@ -187,11 +175,11 @@
                   @click="goHouse(item._id, item.name)"
                   :color="
                     item.status === 'حجز مبدئي'
-                      ? '#d9d9d9'
+                      ? 'rgb(249 249 134)'
                       : item.status === 'محجوز'
                       ? '#ffff00'
                       : item.status === 'تم البيع'
-                      ? '#fe0000'
+                      ? 'rgb(34 208 220)'
                       : item.status === 'غير محجوز'
                       ? 'rgb(255 255 255)'
                       : ''

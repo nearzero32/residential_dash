@@ -73,7 +73,7 @@ export default [
       {
         title: "أستماراة طلب موافقة",
         icon: "pen-tool",
-        to: "admin-confirmations_form",
+        to: "admin-confirmations-form",
         type: "admin",
       },
       {
@@ -100,7 +100,7 @@ export default [
       {
         title: "حجوزات الخدمات",
         icon: "award",
-        to: "admin-reservations-service",
+        to: "admin-reservation-service",
         type: "admin",
       },
       {
@@ -207,7 +207,7 @@ export default [
       {
         title: "أستماراة طلب موافقة",
         icon: "pen-tool",
-        to: "admin-confirmations_form",
+        to: "admin-confirmations-form",
         type: "assistance",
       },
       {
@@ -228,13 +228,13 @@ export default [
     group: "",
     model: false,
     icon: "mdi-apps",
-    title: "خدمات ما بعد assistance",
+    title: "خدمات ما بعد البيع",
     type: "assistance",
     children: [
       {
         title: "حجوزات الخدمات",
         icon: "award",
-        to: "admin-reservations-service",
+        to: "admin-reservation-service",
         type: "assistance",
       },
       {
@@ -248,7 +248,7 @@ export default [
         icon: "home",
         to: "admin-buying-offers",
         type: "assistance",
-      },    
+      },
     ],
   },
   {

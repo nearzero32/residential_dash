@@ -942,4 +942,8 @@ if (userDataString.type !== "admin") {
 .v-image {
   height: 100% !important;
 }
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+    font-size: 0.875rem;
+    height: auto;
+}
 </style>
