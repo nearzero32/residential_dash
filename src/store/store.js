@@ -73,16 +73,19 @@ export default new Vuex.Store({
         };
 
         const response = await axiosInstance.post(`/login`, requestData);
-
-        if (response.data.error) {
+        
+        if (response.data.error === true) {
           throw new Error(response.data.results);
         }
 
         commit("SET_AUTHENTICATED", true);
-        commit("SET_LOGO", response.data.results.center_id.logo);
+        if (response.data.results.type !== "super_admin") {
+          console.log(response.data)
+          commit("SET_LOGO", response.data.results.center_id.logo);
+          localStorage.setItem("logo", response.data.results.center_id.logo);
+        }
 
         localStorage.setItem("user", JSON.stringify(response.data.results));
-        localStorage.setItem("logo", response.data.results.center_id.logo);
         localStorage.setItem(
           "token",
           JSON.stringify(response.data.results.token)
