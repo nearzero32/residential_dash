@@ -9,7 +9,13 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
-            <v-btn color="primary" v-if="userData.includes('add')" text class="ml-auto" @click="dialog = true">
+            <v-btn
+              color="primary"
+              v-if="userData.includes('add')"
+              text
+              class="ml-auto"
+              @click="dialog = true"
+            >
               <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة منزل جديد
             </v-btn>
 
@@ -50,14 +56,23 @@
               <img
                 @click="showImgs(item.imgs, item.name)"
                 :src="table.content_url + item.imgs[0]"
-                style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+                style="
+                  width: 60px;
+                  border: solid 1px rebeccapurple;
+                  cursor: pointer;
+                "
               />
             </template>
             <template v-slot:item.is_available="{ item }">
-              <v-icon v-if="item.is_available === true" color="#02ff00" class="mr-2"
+              <v-icon
+                v-if="item.is_available === true"
+                color="#02ff00"
+                class="mr-2"
                 >mdi-check</v-icon
               >
-              <v-icon v-else color="rgb(255 0 0)" class="mr-2">mdi-close-circle</v-icon>
+              <v-icon v-else color="rgb(255 0 0)" class="mr-2"
+                >mdi-close-circle</v-icon
+              >
             </template>
             <template v-slot:item.price="{ item }">
               {{ $func(item.price) }}
@@ -100,7 +115,10 @@
     <div id="crdS">
       <v-dialog v-model="showImg.open" max-width="800px">
         <v-card>
-          <v-card-text class="headline justify-center" v-if="showImg.dataImg !== null">
+          <v-card-text
+            class="headline justify-center"
+            v-if="showImg.dataImg !== null"
+          >
             <v-card-title class="text-h5" style="padding: 10px !important"
               >صور المنزل ( {{ showImg.name }} )</v-card-title
             >
@@ -121,7 +139,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" text @click="showImg.open = false"> إغلاق </v-btn>
+            <v-btn color="primary" text @click="showImg.open = false">
+              إغلاق
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -219,7 +239,9 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">النوع الموجود</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >النوع الموجود</v-label
+                  >
                   <v-select
                     :items="itemsExisting_type"
                     v-model="data.existing_type"
@@ -256,7 +278,9 @@
                         :rules="Rules.image"
                         label="الصور"
                         outlined
-                        :value="selectedFiles.map((file) => file.file.name).join(', ')"
+                        :value="
+                          selectedFiles.map((file) => file.file.name).join(', ')
+                        "
                         @click="$refs.fileInput.click()"
                         variant="outlined"
                         color="primary"
@@ -274,7 +298,9 @@
                           md="3"
                           style="text-align: center"
                         >
-                          <div style="position: relative; display: inline-block">
+                          <div
+                            style="position: relative; display: inline-block"
+                          >
                             <img
                               :src="file.base64"
                               style="
@@ -320,7 +346,10 @@
                   text
                   >اٍضافة</v-btn
                 >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
+                <v-btn
+                  class="bg-lighterror text-error ml-4"
+                  @click="dialog = false"
+                  text
                   >أغلاق</v-btn
                 >
               </v-card-actions>
@@ -422,7 +451,9 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">النوع الموجود</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >النوع الموجود</v-label
+                  >
                   <v-select
                     :items="itemsExisting_type"
                     v-model="editdItem.existing_type"
@@ -458,7 +489,9 @@
                         prepend-icon="mdi-camera"
                         label="الصور"
                         outlined
-                        :value="selectedFiles.map((file) => file.file.name).join(', ')"
+                        :value="
+                          selectedFiles.map((file) => file.file.name).join(', ')
+                        "
                         @click="$refs.fileInput.click()"
                         variant="outlined"
                         color="primary"
@@ -483,7 +516,9 @@
                               text-align: center;
                             "
                           >
-                            <div style="display: inline-block; position: relative">
+                            <div
+                              style="display: inline-block; position: relative"
+                            >
                               <img
                                 v-if="!file.startsWith('data:image')"
                                 :src="table.content_url + file"
@@ -547,7 +582,9 @@
                   text
                   >تعديل</v-btn
                 >
-                <v-btn color="primary" text @click="dialogEdit = false"> الغاء </v-btn>
+                <v-btn color="primary" text @click="dialogEdit = false">
+                  الغاء
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -565,7 +602,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -579,7 +618,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -701,9 +742,15 @@ export default {
         price: [(v) => !!v || "يرجى أدخال السعر (رقم فقط)"],
         description: [(v) => !!v || "يرجى التفاصيل"],
         rating: [(v) => /^[0-9]+$/.test(v) || "يرجى أدخال التقييم (رقم فقط)"],
-        living_rooms: [(v) => /^[0-9]+$/.test(v) || "يرجى أدخال عدد غرف المعيشة (رقم فقط)"],
-        bath_rooms: [(v) => /^[0-9]+$/.test(v) || "يرجى أدخال عدد الحمامات (رقم فقط)"],
-        bed_rooms: [(v) => /^[0-9]+$/.test(v) || "يرجى أدخال عدد غرف النوم (رقم فقط)"],
+        living_rooms: [
+          (v) => /^[0-9]+$/.test(v) || "يرجى أدخال عدد غرف المعيشة (رقم فقط)",
+        ],
+        bath_rooms: [
+          (v) => /^[0-9]+$/.test(v) || "يرجى أدخال عدد الحمامات (رقم فقط)",
+        ],
+        bed_rooms: [
+          (v) => /^[0-9]+$/.test(v) || "يرجى أدخال عدد غرف النوم (رقم فقط)",
+        ],
         space: [(v) => /^[0-9]+$/.test(v) || "يرجى أدخال المساحة (رقم فقط)"],
         is_available: [(v) => v !== null || "يرجى تحديد الحالة"],
         existing_type: [(v) => v !== null || "يرجى تحديد النوع"],
@@ -736,10 +783,10 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
 
     this.getCenter();
@@ -799,7 +846,9 @@ if (userDataString.type !== "admin") {
         this.table.loading = true;
 
         const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
         const order =
           this.tableOptions.sortDesc.length > 0
             ? this.tableOptions.sortDesc[0]
@@ -942,8 +991,17 @@ if (userDataString.type !== "admin") {
 .v-image {
   height: 100% !important;
 }
-.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+@media (max-width: 600px) {
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
     font-size: 0.875rem;
     height: auto;
+  }
+}
+
+@media (min-width: 601px) {
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+    font-size: 0.875rem;
+    height: 48px;
+  }
 }
 </style>

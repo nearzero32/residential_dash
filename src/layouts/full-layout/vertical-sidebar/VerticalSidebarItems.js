@@ -23,7 +23,7 @@ export default [
   {
     title: "الحسابات",
     icon: "dollar-sign",
-    href: "http://counting.myexperience.center/#/",
+    href: "https://counting.myexperience.center/ownerBills",
     type: "admin",
     target: "_blank",
   },
