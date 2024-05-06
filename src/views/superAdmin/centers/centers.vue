@@ -56,7 +56,7 @@
                 </template>
                 <span>تعديل</span>
               </vTooltip>
-              <vTooltip bottom>
+              <!-- <vTooltip bottom>
                 <template #activator="{ attrs }">
                   <vIcon
                     color="#FF5252"
@@ -68,7 +68,7 @@
                   </vIcon>
                 </template>
                 <span>حذف</span>
-              </vTooltip>
+              </vTooltip> -->
             </template>
           </v-data-table>
         </v-card>

@@ -412,12 +412,16 @@ class Api {
   // Owners
   async getOwners({ page, limit, search, is_deleted, sortBy }) {
     const response = await axiosInstance.get(
-      `/owners?page=${page}&limit=${limit}&search=${search}&is_deleted=${is_deleted}&sortBy=${sortBy}`
+      `/owners?page=${page}&limit=${limit}&search=${search}&is_disabled=${is_deleted}&sortBy=${sortBy}`
     );
     return response;
   }
   async getOneOwner(id) {
     const response = await axiosInstance.get(`/owners/owner_id/${id}`);
+    return response;
+  }
+  async disableOwners({id, disable}) {
+    const response = await axiosInstance.put(`/owners/disable/owner_id/${id}`, {is_disabled:disable});
     return response;
   }
   async getHouses() {

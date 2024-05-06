@@ -9,26 +9,41 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
-            <v-btn
-              color="primary"
-              v-if="userData.includes('add')"
-              text
-              class="ml-auto"
-              @click="dialog = true"
-            >
-              <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة مالك جديد
-            </v-btn>
+            <v-row>
+              <v-col class="d-flex" cols="12" sm="2">
+                <v-btn
+                  color="primary"
+                  style="margin: 0px"
+                  v-if="userData.includes('add')"
+                  text
+                  class="ml-auto"
+                  @click="dialog = true"
+                >
+                  <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة مالك جديد
+                </v-btn>
+              </v-col>
+              <v-col class="d-flex" cols="12" sm="5">
+                <v-select
+                  :items="items"
+                  v-model="is_deleted"
+                  label="الملاك"
+                  outlined
+                ></v-select>
+              </v-col>
 
-            <v-spacer></v-spacer>
-            <v-text-field
-              v-model="table.search"
-              @input="getCenter"
-              append-icon="mdi-magnify"
-              label="بحث"
-              outlined
-              single-line
-              hide-details
-            ></v-text-field>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex" cols="12" sm="5">
+                <v-text-field
+                  v-model="table.search"
+                  @input="getCenter"
+                  append-icon="mdi-magnify"
+                  label="بحث"
+                  outlined
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </v-col>
+            </v-row>
           </v-card-title>
           <v-data-table
             :headers="table.headers"
@@ -81,7 +96,7 @@
               <VTooltip bottom v-if="userData.includes('edit')">
                 <template #activator="{ attrs }">
                   <v-icon
-                    color="rgb(243 216 1)"
+                    color="rgb(251 151 120)"
                     v-bind="attrs"
                     size="20"
                     @click="editItem(item)"
@@ -104,7 +119,30 @@
                 </template>
                 <span>طباعه</span>
               </VTooltip>
-              <VTooltip bottom v-if="userData.includes('remove')">
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    v-if="item.is_disabled == false"
+                    color="#FF5252"
+                    v-bind="attrs"
+                    size="20"
+                    @click="disable(item)"
+                  >
+                    mdi-pause-octagon
+                  </v-icon>
+                  <v-icon
+                  v-else
+                    color="rgb(0 235 53)"
+                    v-bind="attrs"
+                    size="20"
+                    @click="disable(item)"
+                  >
+                    mdi-play-circle
+                  </v-icon>
+                </template>
+                <span>أيقاف</span>
+              </VTooltip>
+              <!-- <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
                   <v-icon
                     color="#FF5252"
@@ -116,7 +154,7 @@
                   </v-icon>
                 </template>
                 <span>حذف</span>
-              </VTooltip>
+              </VTooltip> -->
             </template>
           </v-data-table>
         </v-card>
@@ -1220,6 +1258,34 @@
       </v-card>
     </v-dialog>
     <!-- End delete dailog -->
+
+    <!-- disable dialog -->
+    <v-dialog v-model="dialogDisable" max-width="500px">
+      <v-card>
+        <v-card-title class="headline justify-center" v-if="disableItem.is_disabled == false">
+          هل انت متأكد من أيقاف هذا الحساب ؟
+        </v-card-title>
+        <v-card-title class="headline justify-center" v-else>
+          هل انت متأكد من تفعيل هذا الحساب ؟
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="dialogDisable = false">
+            الغاء
+          </v-btn>
+          <v-btn
+            color="primary white--text"
+            :loading="disableItemLoading"
+            @click="disableItemConfirm"
+          >
+          <span v-if="disableItem.is_disabled == false">أيقاف</span>
+          <span v-else>تفعيل</span>
+          </v-btn>
+          <v-spacer />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End disable dailog -->
   </v-container>
 </template>
 
@@ -1256,6 +1322,11 @@ export default {
       // showImg
 
       // table
+      is_deleted: false,
+      items: [
+        { text: "مفعل", value: false },
+        { text: "معطل", value: true },
+      ],
       table: {
         search: "",
         content_url: null,
@@ -1357,6 +1428,11 @@ export default {
       dialogDelete: false,
       deletedItem: {},
       // delete
+      // disableItem
+      disableItemLoading: false,
+      dialogDisable: false,
+      disableItem: {},
+      // disableItem
     };
   },
   created() {
@@ -1382,6 +1458,12 @@ export default {
       },
       deep: true,
     },
+    is_deleted: {
+      handler: function () {
+        this.getCenter();
+      },
+      deep: true,
+    },
   },
   methods: {
     Print(item) {
@@ -1393,7 +1475,7 @@ export default {
         typeof this.editdItem.form_id === "object" &&
         !Array.isArray(this.editdItem.form_id)
       ) {
-        this.editdItem.form_id = this.editdItem.form_id._id
+        this.editdItem.form_id = this.editdItem.form_id._id;
       }
       for (var i = 0; i < this.Forms.length; i++) {
         if (this.Forms[i]._id == this.editdItem.form_id) {
@@ -1698,7 +1780,7 @@ export default {
           limit: itemsPerPage,
           sortBy: sortByJSON,
           search: this.table.search,
-          is_deleted: false,
+          is_deleted: this.is_deleted,
         });
 
         this.table.centers = response.data.results.data;
@@ -1809,6 +1891,37 @@ export default {
       this.dialogData.open = true;
       this.dialogData.bodyText = bodyText;
       this.dialogData.color = color;
+    },
+    disable(item) {
+      this.disableItem = { ...item };
+      this.dialogDisable = true;
+    },
+    async disableItemConfirm() {
+      var is_disabled = null;
+      if (this.disableItem.is_disabled == true) {
+        is_disabled = false;
+      } else {
+        is_disabled = true;
+      }
+      this.disableItemLoading = true;
+      console.log(this.disableItem.is_disabled);
+      try {
+        const response = await API.disableOwners({
+          id: this.disableItem._id,
+          disable: is_disabled,
+        });
+
+        this.disableItemLoading = false;
+        this.dialogDisable = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
     },
     deleteItem(item) {
       this.deletedItem = { ...item };

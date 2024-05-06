@@ -185,7 +185,8 @@
           :ripple="false"
         >
           <v-avatar size="35">
-            <img :src="content_url + logo" alt="Julia" />
+            <img v-if="logo !== null" :src="content_url + logo" alt="Julia" />
+            <img v-else :src="logoo" alt="Julia" />
           </v-avatar>
         </v-btn>
       </template>
@@ -204,6 +205,7 @@
 <script>
 // Utilities
 import { mapState, mapMutations } from "vuex";
+import logoo from '@/assets/images/office-building.png'
 export default {
   name: "VerticalHeader",
 
@@ -218,6 +220,7 @@ export default {
   data: () => ({
     showSearch: false,
     drawer: false,
+      logoo,
     group: null,
     content_url: null,
     user: null,

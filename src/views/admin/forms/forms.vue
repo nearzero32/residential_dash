@@ -175,9 +175,9 @@
                   @click="goHouse(item._id, item.name)"
                   :color="
                     item.status === 'حجز مبدئي'
-                      ? 'rgb(249 249 134)'
+                      ? 'rgb(217 217 217)'
                       : item.status === 'محجوز'
-                      ? '#ffff00'
+                      ? 'rgb(249, 249, 134)'
                       : item.status === 'تم البيع'
                       ? 'rgb(34 208 220)'
                       : item.status === 'غير محجوز'
@@ -369,18 +369,6 @@ export default {
     this.getCenter();
   },
   watch: {
-    tagsE: {
-      handler: function () {
-        this.addHoE();
-      },
-      deep: true,
-    },
-    tags: {
-      handler: function () {
-        this.addHo();
-      },
-      deep: true,
-    },
     is_available(newVal, oldVal) {
       if (newVal !== oldVal) {
         this.getCenter();
@@ -401,18 +389,18 @@ export default {
       });
       this.statusNotReserved = filteredStatusNotReserved.length;
 
-      var filteredStatusInitialReservation = item.houses.filter(function (ite) {
-        return ite.status === "حجز مبدئي";
+      var filteredStatusInitialReservation = item.houses.filter(function (iteReservation) {
+        return iteReservation.status === "حجز مبدئي";
       });
       this.statusInitialReservation = filteredStatusInitialReservation.length;
 
-      var filteredStatusBookedUp = item.houses.filter(function (ite) {
-        return ite.status === "محجوز";
+      var filteredStatusBookedUp = item.houses.filter(function (iteReservatio) {
+        return iteReservatio.status === "محجوز";
       });
       this.statusBookedUp = filteredStatusBookedUp.length;
 
-      var filteredStatusSold = item.houses.filter(function (ite) {
-        return ite.status === "تم البيع";
+      var filteredStatusSold = item.houses.filter(function (iteReservati) {
+        return iteReservati.status === "تم البيع";
       });
       this.statusSold = filteredStatusSold.length;
 
@@ -456,102 +444,6 @@ export default {
     add() {
       this.$router.push("/admin-add-forms");
     },
-    addHoE() {
-      this.editdItem.houses = [];
-      this.tagsE.forEach((tag) => {
-        if ("text" in tag) {
-          this.editdItem.houses.push(tag.text);
-        }
-      });
-    },
-    addHo() {
-      this.data.houses = [];
-      this.tags.forEach((tag) => {
-        if ("text" in tag) {
-          this.data.houses.push(tag.text);
-        }
-      });
-    },
-    handleFileUploadSuccess(file) {
-      const dataURL = file.dataURL;
-      this.data.images.push(dataURL);
-    },
-    handleFileRemoved(file) {
-      const dataURLToRemove = file.dataURL;
-      const indexToRemove = this.data.images.indexOf(dataURLToRemove);
-      if (indexToRemove !== -1) {
-        this.data.images.splice(indexToRemove, 1);
-      }
-    },
-    handleFileUploadSuccessE(file) {
-      const dataURL = file.dataURL;
-      this.data.images.push(dataURL);
-    },
-    handleFileRemovedE(file) {
-      const dataURLToRemove = file.dataURL;
-      const indexToRemove = this.data.images.indexOf(dataURLToRemove);
-      if (indexToRemove !== -1) {
-        this.data.images.splice(indexToRemove, 1);
-      }
-    },
-    handleFileUploadSuccessFloors(file, ind) {
-      const dataURL = file.dataURL;
-      this.data.floors[ind].images.push(dataURL);
-    },
-    handleFileRemovedFloors(file, ind) {
-      const dataURLToRemove = file.dataURL;
-      const indexToRemove =
-        this.data.floors[ind].images.indexOf(dataURLToRemove);
-      if (indexToRemove !== -1) {
-        this.data.floors[ind].images.splice(indexToRemove, 1);
-      }
-    },
-    deletItme(index) {
-      this.data.floors.splice(index, 1);
-    },
-    addNewItems() {
-      this.data.floors.push({
-        name: "",
-        images: [],
-        rooms: [
-          {
-            name: "",
-            image: null,
-            space: null,
-          },
-        ],
-      });
-    },
-    addNewItem(index) {
-      this.data.floors[index].rooms.push({
-        name: "",
-        image: null,
-        space: null,
-      });
-    },
-    deletItm(index, i) {
-      this.data.floors[index].rooms.splice(i, 1);
-    },
-    isBase64(image) {
-      return /^data:image\/[a-z]+;base64,/.test(image);
-    },
-    handleFileChange(event, floor, roomIndex) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.data.floors[floor].rooms[roomIndex].image = reader.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-    removeImage(floor, roomIndex) {
-      this.data.floors[floor].rooms[roomIndex].image = null;
-
-      if (this.selectedFile) {
-        this.selectedFile = null;
-      }
-    },
     showImgs(item) {
       this.showImg.open = true;
       this.showImg.dataImg = item.images;
@@ -571,82 +463,6 @@ export default {
         }
       } finally {
         this.loading = false;
-      }
-    },
-    async addCenter(event) {
-      if (this.data.images == null) {
-        this.showDialogfunction("يرجى إضافة صوره الى النموذج", "#FF5252");
-      } else if (this.data.floors.length === 0) {
-        this.showDialogfunction("يرجى إضافة تفاصيل الى النموذج", "#FF5252");
-      } else if (this.data.houses.length === 0) {
-        this.showDialogfunction("يرجى إضافة ارقام المنازل", "#FF5252");
-      } else {
-        let hasSubDetails = true;
-        for (let i = 0; i < this.data.floors.length; i++) {
-          if (this.data.floors[i].rooms.length === 0) {
-            hasSubDetails = false;
-            break;
-          }
-        }
-        if (!hasSubDetails) {
-          this.showDialogfunction(
-            "يرجى إضافة تفاصيل النموذج الفرعية",
-            "#FF5252"
-          );
-        } else {
-          let allFloorsHaveImages = true;
-          for (let i = 0; i < this.data.floors.length; i++) {
-            if (this.data.floors[i].images == null) {
-              allFloorsHaveImages = false;
-              break;
-            }
-          }
-          if (!allFloorsHaveImages) {
-            this.showDialogfunction("يرجى إضافة صوره الى الطابق", "#FF5252");
-          } else {
-            event.preventDefault();
-            this.addLoading = true;
-            try {
-              const response = await API.addForms({
-                name: this.data.name,
-                total_space: this.data.total_space,
-                images: this.data.images,
-                houses: this.data.houses,
-                floors: this.data.floors,
-                building_space: this.data.building_space,
-              });
-              this.data.name = null;
-              this.data.total_space = null;
-              this.data.images = [];
-              this.data.houses = [];
-              this.tags = [];
-              this.data.floors = [
-                {
-                  name: "",
-                  images: [],
-                  rooms: [
-                    {
-                      name: "",
-                      image: null,
-                      space: null,
-                    },
-                  ],
-                },
-              ];
-              this.data.building_space = null;
-              this.dialog = false;
-              this.addLoading = false;
-              this.getCenter();
-              this.showDialogfunction(response.data.message, "primary");
-            } catch (error) {
-              if (error.response && error.response.status === 401) {
-                this.$router.push("/login");
-              } else if (error.response && error.response.status === 500) {
-                this.showDialogfunction(error.response.data.message, "#FF5252");
-              }
-            }
-          }
-        }
       }
     },
     editItem(item) {

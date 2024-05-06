@@ -80,8 +80,10 @@ export default new Vuex.Store({
 
         commit("SET_AUTHENTICATED", true);
         if (response.data.results.type !== "super_admin") {
-          commit("SET_LOGO", response.data.results.center_id.logo);
-          localStorage.setItem("logo", response.data.results.center_id.logo);
+          if(response.data.results.center_id.logo !== null) {
+            commit("SET_LOGO", response.data.results.center_id.logo);
+            localStorage.setItem("logo", response.data.results.center_id.logo);
+          }
         }
 
         localStorage.setItem("user", JSON.stringify(response.data.results));

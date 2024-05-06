@@ -12,7 +12,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">الأسم</v-label>
               <v-text-field
-                v-if="results && results.name !== null && results.name !== undefined"
                 variant="outlined"
                 v-model="results.name"
                 :rules="Rules.name"
@@ -23,7 +22,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
               <v-text-field
-                v-if="results && results.phone !== null && results.phone !== undefined"
                 variant="outlined"
                 v-model="results.phone"
                 :rules="Rules.phone"
@@ -34,9 +32,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">العنوان</v-label>
               <v-text-field
-                v-if="
-                  results && results.address !== null && results.address !== undefined
-                "
                 variant="outlined"
                 v-model="results.address"
                 :rules="Rules.address"
@@ -47,9 +42,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">فيس بوك</v-label>
               <v-text-field
-                v-if="
-                  results && results.facebook !== null && results.facebook !== undefined
-                "
                 variant="outlined"
                 v-model="results.facebook"
                 color="primary"
@@ -59,9 +51,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">انستغرام</v-label>
               <v-text-field
-                v-if="
-                  results && results.instagram !== null && results.instagram !== undefined
-                "
                 variant="outlined"
                 v-model="results.instagram"
                 color="primary"
@@ -71,9 +60,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">سناب جات</v-label>
               <v-text-field
-                v-if="
-                  results && results.snapchat !== null && results.snapchat !== undefined
-                "
                 variant="outlined"
                 v-model="results.snapchat"
                 color="primary"
@@ -83,7 +69,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">تيك توك</v-label>
               <v-text-field
-                v-if="results && results.tiktok !== null && results.tiktok !== undefined"
                 variant="outlined"
                 v-model="results.tiktok"
                 color="primary"
@@ -93,9 +78,6 @@
             <v-col cols="12" md="4">
               <v-label class="mb-2 font-weight-medium">واتساب</v-label>
               <v-text-field
-                v-if="
-                  results && results.whatsapp !== null && results.whatsapp !== undefined
-                "
                 variant="outlined"
                 v-model="results.whatsapp"
                 color="primary"
@@ -125,12 +107,14 @@
                   cols="12"
                   md="6"
                   style="padding: 10px; display: grid; place-items: center"
-                  v-if="results && results.logo !== null && results.logo !== undefined"
                 >
                   <img
+                    v-if="results.logo"
                     style="width: 130px"
                     :src="
-                      isBase64(results.logo) ? results.logo : content_url + results.logo
+                      isBase64(results.logo)
+                        ? results.logo
+                        : content_url + results.logo
                     "
                     alt="logo"
                     @click.stop
@@ -142,11 +126,6 @@
               <v-label class="mb-2 font-weight-medium">التفاصيل</v-label>
               <v-textarea
                 variant="outlined"
-                v-if="
-                  results &&
-                  results.description !== null &&
-                  results.description !== undefined
-                "
                 v-model="results.description"
                 :rules="Rules.description"
                 color="primary"
@@ -159,9 +138,6 @@
                   <v-label class="mb-2 font-weight-medium">الفيديو</v-label>
                   <v-text-field
                     variant="outlined"
-                    v-if="
-                      results && results.video !== null && results.video !== undefined
-                    "
                     v-model="results.video"
                     :rules="Rules.video"
                     color="primary"
@@ -171,9 +147,6 @@
                 <v-col cols="12" md="6">
                   <iframe
                     width="200"
-                    v-if="
-                      results && results.video !== null && results.video !== undefined
-                    "
                     height="200"
                     :src="results.video"
                     frameborder="0"
@@ -213,7 +186,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -259,26 +234,17 @@ export default {
       },
       // showDetail
       // add
-      results: null,
+      results: {},
       content_url: null,
       addLoading: false,
       isFormvalid: true,
       Rules: {
         name: [(value) => !!value || "يرجى أضافة أسم"],
-        price: [(value) => !!value || "يرجى أضافة سعر"],
+        phone: [(value) => !!value || "يرجى أضافة رقم الهاتف"],
         image: [(value) => !!value || "يرجى أضافة صورة"],
-        is_available: [
-          (value) => (value !== null && value !== undefined) || "يرجى أضافة الحالة",
-        ],
-        type: [(value) => !!value || "يرجى أدخال نوع الخدمة"],
-        houses: [(value) => !!value || "يرجى أدخال ارقام المنازل"],
-        details: {
-          title: [(value) => !!value || "يرجى أدخال أسم الطابق"],
-          sub_details: {
-            name: [(value) => !!value || "يرجى أدخال أسم الغرفة"],
-            value: [(value) => !!value || "يرجى أدخال مساحة الغرفة"],
-          },
-        },
+        address: [(value) => !!value || "يرجى أدخال العنوان"],
+        description: [(value) => !!value || "يرجى إضافة تفاصيل"],
+        video: [(value) => !!value || "يرجى إضافة فيديو"],
       },
       // add
     };
@@ -347,34 +313,36 @@ export default {
         event.preventDefault();
         this.addLoading = true;
         try {
-        const response = await API.editCenter({
-          name: this.results.name,
-          phone: this.results.phone,
-          address: this.results.address,
-          description: this.results.description,
-          video: this.results.video,
-          facebook: this.results.facebook,
-          instagram: this.results.instagram,
-          snapchat: this.results.snapchat,
-          tiktok: this.results.tiktok,
-          whatsapp: this.results.whatsapp,
-          logo: this.results.logo,
-        });
-
-        this.addLoading = false;
-        this.getCenter();
-        this.getDataCenter();
-        this.showDialogfunction(response.data.message, "primary");
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
+          const response = await API.editCenter({
+            name: this.results.name,
+            phone: this.results.phone,
+            address: this.results.address,
+            description: this.results.description,
+            video: this.results.video,
+            facebook: this.results.facebook,
+            instagram: this.results.instagram,
+            snapchat: this.results.snapchat,
+            tiktok: this.results.tiktok,
+            whatsapp: this.results.whatsapp,
+            logo: this.results.logo,
+          });
           this.addLoading = false;
-          this.$router.push("/login");
-        } else if (error.response && error.response.status === 500) {
-          this.addLoading = false;
-          this.showDialogfunction(error.response.data.message, "#FF5252");
+          this.getCenter();
+          this.getDataCenter();
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.addLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+            this.$router.push("/login");
+          } else if (error.response && error.response.status === 500) {
+            this.addLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else {
+            this.addLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          }
         }
-      }
-
       }
     },
 
