@@ -131,7 +131,7 @@
                     mdi-pause-octagon
                   </v-icon>
                   <v-icon
-                  v-else
+                    v-else
                     color="rgb(0 235 53)"
                     v-bind="attrs"
                     size="20"
@@ -242,9 +242,9 @@
                   <v-label class="mb-2 font-weight-medium">المنزل</v-label>
                   <v-autocomplete
                     label="المنزل"
-                    :items="Houses"
+                    :items="filteredHouses"
                     v-model="data.house_id"
-                    item-text="name"
+                    :item-text="formatHouse"
                     item-value="_id"
                     variant="outlined"
                   ></v-autocomplete>
@@ -725,7 +725,7 @@
                     :items="Houses"
                     v-model="editdItem.house_id"
                     :rules="Rules.house_id_rules"
-                    item-text="name"
+                    :item-text="formatHouse"
                     item-value="_id"
                     variant="outlined"
                   ></v-autocomplete>
@@ -1262,7 +1262,10 @@
     <!-- disable dialog -->
     <v-dialog v-model="dialogDisable" max-width="500px">
       <v-card>
-        <v-card-title class="headline justify-center" v-if="disableItem.is_disabled == false">
+        <v-card-title
+          class="headline justify-center"
+          v-if="disableItem.is_disabled == false"
+        >
           هل انت متأكد من أيقاف هذا الحساب ؟
         </v-card-title>
         <v-card-title class="headline justify-center" v-else>
@@ -1278,8 +1281,8 @@
             :loading="disableItemLoading"
             @click="disableItemConfirm"
           >
-          <span v-if="disableItem.is_disabled == false">أيقاف</span>
-          <span v-else>تفعيل</span>
+            <span v-if="disableItem.is_disabled == false">أيقاف</span>
+            <span v-else>تفعيل</span>
           </v-btn>
           <v-spacer />
         </v-card-actions>
@@ -1465,6 +1468,11 @@ export default {
       deep: true,
     },
   },
+  computed: {
+    filteredHouses() {
+      return this.Houses.filter((House) => House.status !== "تم البيع");
+    },
+  },
   methods: {
     Print(item) {
       localStorage.setItem("PrintOwner", JSON.stringify(item));
@@ -1501,7 +1509,9 @@ export default {
       this.Houses = this.data.form.houses;
       this.HousesShow = true;
     },
-
+    formatHouse(item) {
+      return `${item.name}   (${item.status})`;
+    },
     showImgs(item) {
       this.showImg.open = true;
       this.showImg.dataImg = item;
@@ -1823,7 +1833,14 @@ export default {
         this.data.phone = null;
         this.data.password_show = null;
         this.data.address = null;
+        this.data.form_id = null;
         this.data.house_id = null;
+        this.data.contract_imgs = [];
+        this.data.id_img_front = null;
+        this.data.id_img_back = null;
+        this.data.location_img_front = null;
+        this.data.location_img_back = null;
+        this.data.passport_img = null;
         this.getCenter();
         this.showDialogfunction(response.data.message, "primary");
         this.dialog = false;

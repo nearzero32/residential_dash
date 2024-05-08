@@ -53,7 +53,7 @@
               <VTooltip bottom v-if="userData.includes('edit')">
                 <template #activator="{ attrs }">
                   <v-icon
-                    color="rgb(243 216 1)"
+                    color="primary"
                     v-bind="attrs"
                     size="20"
                     @click="editItem(item)"
@@ -76,6 +76,20 @@
                 </template>
                 <span>طباعه</span>
               </VTooltip>
+              <VTooltip bottom v-if="userData.includes('remove')">
+                <template #activator="{ attrs }">
+                  <v-icon
+                    color="rgb(24, 86, 230)"
+                    v-bind="attrs"
+                    size="20"
+                    @click="changeEmployee(item)"
+                  >
+                    mdi-swap-horizontal
+                  </v-icon>
+                </template>
+                <span>نقل</span>
+              </VTooltip>
+
               <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
                   <v-icon
@@ -270,6 +284,63 @@
       </v-card>
     </v-dialog>
     <!-- End delete dailog -->
+
+    <!-- delete dialog -->
+    <v-dialog v-model="dialogChangeEmployee" max-width="700px">
+      <v-card>
+        <v-card-title class="text-h5">نقل الى موظف اخر </v-card-title>
+        <v-divider></v-divider>
+
+        <v-card-text class="pb-0">
+          <v-form v-model="isFormvalidChangeEmployee">
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-label class="mb-2 font-weight-medium">الموظف الحالي</v-label>
+                <v-autocomplete
+                  variant="outlined"
+                  v-model="current_employee_id"
+                  color="primary"
+                  outlined
+                  disabled
+                  :items="Employees"
+                  item-text="name"
+                  item-value="_id"
+                ></v-autocomplete>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-label class="mb-2 font-weight-medium">الموظف الجديد</v-label>
+                <v-autocomplete
+                  variant="outlined"
+                  v-model="new_employee_id"
+                  :rules="Rules.new_employee_id"
+                  color="primary"
+                  outlined
+                  :items="filteredEmployees"
+                  item-text="name"
+                  item-value="_id"
+                ></v-autocomplete>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="dialogChangeEmployee = false">
+            الغاء
+          </v-btn>
+          <v-btn
+            color="primary white--text"
+            :disabled="!isFormvalidChangeEmployee"
+            :loading="ChangeEmployeeItemLoading"
+            @click="changeEmployeeItemConfirm"
+          >
+            نقل
+          </v-btn>
+          <v-spacer />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End delete dailog -->
   </v-container>
 </template>
 
@@ -363,6 +434,18 @@ export default {
       dialogDelete: false,
       deletedItem: {},
       // delete
+      // changeEmployee
+      ChangeEmployeeItemLoading: false,
+      dialogChangeEmployee: false,
+      isFormvalidChangeEmployee: false,
+      current_employee_id: null,
+      new_employee_id: null,
+      changeEmployeeItem: {},
+      Employees: [],
+      Rules: {
+        new_employee_id: [(v) => !!v || "يرجى اختيار الموظف الجديد"],
+      },
+      // changeEmployee
     };
   },
   created() {
@@ -375,6 +458,16 @@ export default {
     this.getCenter();
     this.getHowUHearAboutUs();
     this.getForms();
+  },
+  mounted() {
+    this.getEmployees();
+  },
+  computed: {
+    filteredEmployees() {
+      return this.Employees.filter(
+        (employee) => employee._id !== this.current_employee_id
+      );
+    },
   },
   methods: {
     Print(item) {
@@ -422,6 +515,40 @@ export default {
         });
         this.xlsxData.downloadLoading = false;
       });
+    },
+    async getEmployees() {
+      try {
+        const key =
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
+        const order =
+          this.tableOptions.sortDesc.length > 0
+            ? this.tableOptions.sortDesc[0]
+              ? "desc"
+              : "asc"
+            : "desc";
+
+        const sortByJSON = JSON.stringify({ key, order });
+
+        const response = await API.getSellsEmployee({
+          page: 1,
+          limit: 10000000000,
+          sortBy: sortByJSON,
+          search: null,
+          is_deleted: false,
+        });
+
+        this.Employees = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
@@ -573,6 +700,37 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
+      }
+    },
+    changeEmployee(item) {
+      this.changeEmployeeItem = { ...item };
+      this.current_employee_id = this.changeEmployeeItem.current_employee_id;
+      this.dialogChangeEmployee = true;
+    },
+    async changeEmployeeItemConfirm() {
+      this.ChangeEmployeeItemLoading = true;
+
+      try {
+        const response = await API.changeEmployee({
+          id: this.changeEmployeeItem._id,
+          current_employee_id: this.current_employee_id,
+          new_employee_id: this.new_employee_id,
+        });
+
+        this.ChangeEmployeeItemLoading = false;
+        this.dialogChangeEmployee = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.status === 404) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.ChangeEmployeeItemLoading = false;
       }
     },
   },

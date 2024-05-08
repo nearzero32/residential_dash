@@ -110,6 +110,7 @@ export default new Vuex.Store({
           this.user = null;
           localStorage.removeItem("user");
           localStorage.removeItem("token");
+          localStorage.removeItem("logo");
           router.push("/login");
         }
       } catch (error) {

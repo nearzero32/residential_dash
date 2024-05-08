@@ -12,6 +12,18 @@ export default [
     to: "/centers",
     type: "super_admin",
   },
+  {
+    title: "الشكاوي",
+    icon: "pie-chart",
+    to: "/complain",
+    type: "super_admin",
+  },
+  {
+    title: "معلومات عنا",
+    icon: "pie-chart",
+    to: "/AboutUsLamassu",
+    type: "super_admin",
+  },
   // super_admin
   // admin
   {
@@ -153,6 +165,12 @@ export default [
     to: "/admin-how_u_hear_about_us",
     type: "admin",
   },
+  {
+    title: "الشكاوي",
+    icon: "codesandbox",
+    to: "/admin-complain",
+    type: "admin",
+  },
   // admin
   // assistance
   {
@@ -281,5 +299,12 @@ export default [
     to: "/admin-how_u_hear_about_us",
     type: "assistance",
   },
+  {
+    title: "الشكاوي",
+    icon: "codesandbox",
+    to: "/admin-complain",
+    type: "assistance",
+  },
+
   // assistance
 ];

@@ -1,6 +1,32 @@
 import axiosInstance from "@/utils/axios";
 
 class Api {
+  // Complain
+  async getComplain({ page, limit }) {
+    const response = await axiosInstance.get(`/admin/complain?page=${page}&limit=${limit}`);
+    return response;
+  }
+  async removeComplain(id) {
+    const response = await axiosInstance.delete(
+      `/admin/complain/${id}`
+    );
+    return response;
+  }
+  // Complain
+  // Complain
+  async getAboutUsLamassu() {
+    const response = await axiosInstance.get(`/admin/about_us_lamassu`);
+    return response;
+  }
+  async editAboutUsLamassu({ name, description, address, phone, website, facebook, instagram, logo }) {
+    const requestData = {
+      name, description, address, phone, website, facebook, instagram, logo
+    };
+    const response = await axiosInstance.put(`/admin/about_us_lamassu`, requestData);
+    return response;
+  }
+  // Complain
+
   // Center
   async addCenter({ name, phone, address }) {
     const requestData = {
@@ -78,8 +104,8 @@ class Api {
   async getCenterUsers(id) {
     const response = await axiosInstance
       .get(`/admin/centerUsers/center_id/${id}`);
-      return response;
-    }
+    return response;
+  }
   async removeCenterUsers(id) {
     const response = await axiosInstance.delete(
       `/admin/centerUsers/account_id/${id}`

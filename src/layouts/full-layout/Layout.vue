@@ -14,7 +14,7 @@
         <!-- ---------------------------------- -->
         <HorizontalHeader v-else></HorizontalHeader>
         <router-view />
-        <v-btn
+        <!-- <v-btn
           bottom
           color="primary"
           dark
@@ -24,7 +24,7 @@
           @click.stop="setCustomizerDrawer(!Customizer_drawer)"
         >
           <v-icon>mdi-cog</v-icon>
-        </v-btn>
+        </v-btn> -->
       </v-container>
     </v-main>
     <!-- ---------------------------------- -->
@@ -41,7 +41,7 @@
     <!-- ---------------------------------- -->
     <!--- Customizer part -->
     <!-- ---------------------------------- -->
-    <Customizer v-model="expandOnHover"></Customizer>
+    <!-- <Customizer v-model="expandOnHover"></Customizer> -->
     <!-- ---------------------------------- -->
     <!--- Vertical Footer part -->
     <!-- ---------------------------------- -->
@@ -60,7 +60,7 @@ import HorizontalSidebar from "./horizontal-sidebar/HorizontalSidebar";
 import VerticalSidebar from "./vertical-sidebar/VerticalSidebar";
 // import Footer from "./footer/Footer";
 // import HorizontalFooter from "./horizontal-footer/HorizontalFooter";
-import Customizer from "./customizer/Customizer";
+// import Customizer from "./customizer/Customizer";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Layout",
@@ -70,7 +70,7 @@ export default {
     VerticalHeader,
     HorizontalSidebar,
     VerticalSidebar,
-    Customizer,
+    // Customizer,
   },
 
   props: {

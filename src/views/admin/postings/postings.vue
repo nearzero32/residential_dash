@@ -9,14 +9,26 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
-            <v-btn color="primary" v-if="userData.includes('add')" text class="ml-auto" @click="dialog = true">
+            <v-btn
+              color="primary"
+              v-if="userData.includes('add')"
+              text
+              class="ml-auto"
+              @click="dialog = true"
+            >
               <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة اعلان جديد
             </v-btn>
 
             <v-spacer></v-spacer>
-            <v-text-field v-model="table.search" @input="getCenter" append-icon="mdi-magnify" label="بحث" single-line
-              outlined hide-details></v-text-field>
-
+            <v-text-field
+              v-model="table.search"
+              @input="getCenter"
+              append-icon="mdi-magnify"
+              label="بحث"
+              single-line
+              outlined
+              hide-details
+            ></v-text-field>
           </v-card-title>
           <v-data-table
             :headers="table.headers"
@@ -36,7 +48,11 @@
               <img
                 @click="showImgs(item.image)"
                 :src="table.content_url + item.image"
-                style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+                style="
+                  width: 60px;
+                  border: solid 1px rebeccapurple;
+                  cursor: pointer;
+                "
               />
             </template>
             <template v-slot:item.actions="{ item }">
@@ -125,7 +141,12 @@
                         readonly
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="6" md="6" style="text-align: center" v-if="data.image">
+                    <v-col
+                      cols="6"
+                      md="6"
+                      style="text-align: center"
+                      v-if="data.image"
+                    >
                       <div style="position: relative; display: inline-block">
                         <img
                           :src="data.image"
@@ -134,7 +155,12 @@
                         <v-icon
                           class="mr-2"
                           color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            cursor: pointer;
+                          "
                           @click="removeImage"
                         >
                           mdi-close
@@ -157,7 +183,10 @@
                   text
                   >اٍضافة</v-btn
                 >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
+                <v-btn
+                  class="bg-lighterror text-error ml-4"
+                  @click="dialog = false"
+                  text
                   >أغلاق</v-btn
                 >
               </v-card-actions>
@@ -191,7 +220,9 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="12">
-                      <v-label class="mb-2 font-weight-medium">التفاصيل</v-label>
+                      <v-label class="mb-2 font-weight-medium"
+                        >التفاصيل</v-label
+                      >
                       <v-textarea
                         variant="outlined"
                         v-model="editdItem.description"
@@ -250,7 +281,12 @@
                         <v-icon
                           class="mr-2"
                           color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            cursor: pointer;
+                          "
                           @click="removeImageEdit"
                         >
                           mdi-close
@@ -274,7 +310,9 @@
                   text
                   >تعديل</v-btn
                 >
-                <v-btn color="primary" text @click="dialogEdit = false"> الغاء </v-btn>
+                <v-btn color="primary" text @click="dialogEdit = false">
+                  الغاء
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -284,14 +322,19 @@
     <!-- End edit dailog -->
 
     <!-- - showImg -->
-    <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden;">
+    <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <v-card style="padding-top: 20px">
-        <v-card-text class="headline justify-center" v-if="showImg.dataImg !== null">
-          <img style="width: 100%;" :src="table.content_url + showImg.dataImg">
+        <v-card-text
+          class="headline justify-center"
+          v-if="showImg.dataImg !== null"
+        >
+          <img style="width: 100%" :src="table.content_url + showImg.dataImg" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="showImg.open = false"> إغلاق </v-btn>
+          <v-btn color="primary" text @click="showImg.open = false">
+            إغلاق
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -306,7 +349,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -320,7 +365,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -429,10 +476,10 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
@@ -526,6 +573,12 @@ if (userDataString.type !== "admin") {
         });
 
         this.addBtnLoading = false;
+        this.data.title = null;
+        this.data.description = null;
+        this.data.image = null;
+        if (this.selectedFile) {
+          this.selectedFile = null;
+        }
         this.getCenter();
 
         this.showDialogfunction(response.data.message, "primary");

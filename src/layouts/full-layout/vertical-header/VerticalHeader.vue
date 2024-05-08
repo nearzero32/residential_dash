@@ -192,7 +192,7 @@
       </template>
 
       <v-list class="pa-8">
-        <v-btn block depressed color="secondary" class="mt-4 py-4" @click="Profile"
+        <v-btn block depressed color="secondary" v-if="user.type !== 'super_admin'" class="mt-4 py-4" @click="Profile"
           >الملف الشخصي</v-btn
         >
         <v-btn block depressed color="secondary" class="mt-4 py-4" @click="handleLogout"
@@ -223,7 +223,7 @@ export default {
       logoo,
     group: null,
     content_url: null,
-    user: null,
+    user: JSON.parse(localStorage.getItem("user")),
     href() {
       return undefined;
     },

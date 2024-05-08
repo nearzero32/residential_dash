@@ -25,6 +25,7 @@ import confirmations_form from "@/views/admin/confirmations_form/confirmations_f
 import profileConfirmations_form from "@/views/admin/confirmations_form/profileConfirmations_form.vue";
 import profileHouse from "@/views/admin/forms/profileHouse.vue";
 import visits from "@/views/admin/visits/visits.vue";
+import complain from "@/views/admin/complain/complain.vue";
 
 const Admin = {
   path: "/",
@@ -167,6 +168,11 @@ const Admin = {
       path: "/admin-profileConfirmations_form/:name",
       name: "admin-profileConfirmations_form",
       component: profileConfirmations_form,
+    },
+    {
+      path: "/admin-complain",
+      name: "admin-complain",
+      component: complain,
     },
 
   ],

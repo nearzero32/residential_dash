@@ -9,7 +9,13 @@
       <div class="mt-4">
         <v-card>
           <v-card-title>
-            <v-btn color="primary" v-if="userData.includes('add')" text class="ml-auto" @click="dialog = true">
+            <v-btn
+              color="primary"
+              v-if="userData.includes('add')"
+              text
+              class="ml-auto"
+              @click="dialog = true"
+            >
               <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة أشعار جديد
             </v-btn>
 
@@ -51,7 +57,11 @@
                 v-if="item.image !== null"
                 @click="showImgs(item.image)"
                 :src="table.content_url + item.image"
-                style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+                style="
+                  width: 60px;
+                  border: solid 1px rebeccapurple;
+                  cursor: pointer;
+                "
               />
             </template>
             <template v-slot:item.receiver_type="{ item }">
@@ -86,14 +96,19 @@
     </div>
 
     <!-- - showImg -->
-    <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden;">
+    <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <v-card style="padding-top: 20px">
-        <v-card-text class="headline justify-center" v-if="showImg.dataImg !== null">
-          <img style="width: 100%;" :src="table.content_url + showImg.dataImg">
+        <v-card-text
+          class="headline justify-center"
+          v-if="showImg.dataImg !== null"
+        >
+          <img style="width: 100%" :src="table.content_url + showImg.dataImg" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="showImg.open = false"> إغلاق </v-btn>
+          <v-btn color="primary" text @click="showImg.open = false">
+            إغلاق
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -177,7 +192,12 @@
                         readonly
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="6" md="6" style="text-align: center" v-if="data.image">
+                    <v-col
+                      cols="6"
+                      md="6"
+                      style="text-align: center"
+                      v-if="data.image"
+                    >
                       <div style="position: relative; display: inline-block">
                         <img
                           :src="data.image"
@@ -186,7 +206,12 @@
                         <v-icon
                           class="mr-2"
                           color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            cursor: pointer;
+                          "
                           @click="removeImage"
                         >
                           mdi-close
@@ -209,7 +234,10 @@
                   text
                   >اٍضافة</v-btn
                 >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
+                <v-btn
+                  class="bg-lighterror text-error ml-4"
+                  @click="dialog = false"
+                  text
                   >أغلاق</v-btn
                 >
               </v-card-actions>
@@ -229,7 +257,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -243,7 +273,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -368,10 +400,10 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("user"));
-if (userDataString.type !== "admin") {
-  this.userData = userDataString.privileges.actions;
-} else {
-      this.userData = ['add', 'edit', 'remove']
+    if (userDataString.type !== "admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
     this.getOwnersAll();
@@ -448,7 +480,9 @@ if (userDataString.type !== "admin") {
         this.table.loading = true;
 
         const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
         const order =
           this.tableOptions.sortDesc.length > 0
             ? this.tableOptions.sortDesc[0]
@@ -513,6 +547,15 @@ if (userDataString.type !== "admin") {
         });
 
         this.addBtnLoading = false;
+        this.data.title = null;
+        this.data.body = null;
+        this.data.receiver_type = null;
+        this.data.receivers = null;
+        this.data.image = null;
+        if (this.selectedFile) {
+          this.selectedFile = null;
+        }
+
         this.getCenter();
 
         this.showDialogfunction(response.data.message, "primary");

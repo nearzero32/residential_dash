@@ -123,7 +123,7 @@
                 </v-col>
                 <v-col cols="12" md="12">
                   <v-label class="font-weight-medium mb-2"
-                    >عنوان المركز</v-label
+                    >عنوان </v-label
                   >
                   <v-text-field
                     v-model="data.address"
@@ -230,7 +230,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="12">
-                <v-label class="font-weight-medium mb-2">عنوان المركز</v-label>
+                <v-label class="font-weight-medium mb-2">عنوان </v-label>
                 <v-text-field
                   v-model="editdItem.address"
                   :rules="Rules.addressRules"

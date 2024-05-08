@@ -85,7 +85,7 @@
             <v-card-text class="pb-0">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-label class="font-weight-medium mb-2">أسم المركز</v-label>
+                  <v-label class="font-weight-medium mb-2">أسم المجمع</v-label>
                   <v-text-field
                     v-model="data.name"
                     :rules="Rules.account_nameRules"
@@ -106,7 +106,7 @@
                 </v-col>
                 <v-col cols="12" md="12">
                   <v-label class="font-weight-medium mb-2"
-                    >عنوان المركز</v-label
+                    >عنوان المجمع</v-label
                   >
                   <v-text-field
                     v-model="data.address"
@@ -171,7 +171,7 @@
           <v-card-text class="pb-0">
             <v-row>
               <v-col cols="12" md="6">
-                <v-label class="font-weight-medium mb-2">أسم المركز</v-label>
+                <v-label class="font-weight-medium mb-2">أسم المجمع</v-label>
                 <v-text-field
                   v-model="editdItem.name"
                   :rules="Rules.account_nameRules"
@@ -191,7 +191,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="12">
-                <v-label class="font-weight-medium mb-2">عنوان المركز</v-label>
+                <v-label class="font-weight-medium mb-2">عنوان المجمع</v-label>
                 <v-text-field
                   v-model="editdItem.address"
                   :rules="Rules.addressRules"

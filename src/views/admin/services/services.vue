@@ -171,7 +171,7 @@
                     outlined
                   ></v-select>
                 </v-col>
-                <v-col cols="12" md="12">
+                <!-- <v-col cols="12" md="12">
                   <v-label class="mb-2 font-weight-medium">التفاصيل</v-label>
                   <v-textarea
                     variant="outlined"
@@ -180,7 +180,7 @@
                     color="primary"
                     outlined
                   ></v-textarea>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" md="12">
                   <v-row>
                     <v-col cols="6" md="6">

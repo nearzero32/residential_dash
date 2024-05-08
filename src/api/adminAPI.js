@@ -234,6 +234,15 @@ class Api {
     const response = await axiosInstance.put(`/call_center/${id}`, requestData);
     return response;
   }
+  async changeEmployee({ id, current_employee_id, new_employee_id }) {
+    const requestData = {
+      current_employee_id: current_employee_id,
+      new_employee_id: new_employee_id,
+    };
+    console.log(requestData)
+    const response = await axiosInstance.put(`/call_center/change_employee/${id}`, requestData);
+    return response;
+  }
   async removeCallCenter(id) {
     const response = await axiosInstance.delete(`/call_center/id/${id}`);
 
@@ -420,8 +429,8 @@ class Api {
     const response = await axiosInstance.get(`/owners/owner_id/${id}`);
     return response;
   }
-  async disableOwners({id, disable}) {
-    const response = await axiosInstance.put(`/owners/disable/owner_id/${id}`, {is_disabled:disable});
+  async disableOwners({ id, disable }) {
+    const response = await axiosInstance.put(`/owners/disable/owner_id/${id}`, { is_disabled: disable });
     return response;
   }
   async getHouses() {
@@ -680,29 +689,44 @@ class Api {
     const response = await axiosInstance.get(`/houses_room_names`);
     return response;
   }
+
   async addForms({
+    building_type,
     name,
-    total_space,
     images,
-    houses,
-    floors,
+    total_space,
     building_space,
     category,
     block_number,
     street_number,
+    apartment_building,
+    floor_number,
+    houses,
+    floors,
   }) {
     const requestData = {
-      name,
-      total_space,
-      images,
-      houses,
-      floors,
-      building_space,
-      category,
-      block_number,
-      street_number,
+      building_type: building_type,
+      name: name,
+      images: images,
+      total_space: total_space,
+      building_space: building_space,
+      category: category,
+      block_number: block_number,
+      street_number: street_number,
+      apartment_building: apartment_building,
+      floor_number: floor_number,
+      houses: houses,
+      floors: floors,
     };
     const response = await axiosInstance.post(`/center/forms`, requestData);
+    return response;
+  }
+
+  async checkHousesNames({ houses }) {
+    const requestData = {
+      houses
+    };
+    const response = await axiosInstance.post(`/center/forms/check_houses_names`, requestData);
     return response;
   }
   async editForms({
@@ -786,6 +810,19 @@ class Api {
     return response;
   }
   // visits
+  // Complain
+  async getComplain({ page, limit }) {
+    const response = await axiosInstance.get(`/complain?page=${page}&limit=${limit}`);
+    return response;
+  }
+  async removeComplain(id) {
+    const response = await axiosInstance.delete(
+      `/complain/${id}`
+    );
+    return response;
+  }
+  // Complain
+
 }
 
 export default new Api();

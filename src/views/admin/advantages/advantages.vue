@@ -48,7 +48,11 @@
               <img
                 @click="showImgs(item.image)"
                 :src="table.content_url + item.image"
-                style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+                style="
+                  width: 60px;
+                  border: solid 1px rebeccapurple;
+                  cursor: pointer;
+                "
               />
             </template>
             <template v-slot:item.actions="{ item }">
@@ -127,7 +131,12 @@
                         readonly
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="6" md="6" style="text-align: center" v-if="data.image">
+                    <v-col
+                      cols="6"
+                      md="6"
+                      style="text-align: center"
+                      v-if="data.image"
+                    >
                       <div style="position: relative; display: inline-block">
                         <img
                           :src="data.image"
@@ -136,7 +145,12 @@
                         <v-icon
                           class="mr-2"
                           color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            cursor: pointer;
+                          "
                           @click="removeImage"
                         >
                           mdi-close
@@ -159,7 +173,10 @@
                   text
                   >اٍضافة</v-btn
                 >
-                <v-btn class="bg-lighterror text-error ml-4" @click="dialog = false" text
+                <v-btn
+                  class="bg-lighterror text-error ml-4"
+                  @click="dialog = false"
+                  text
                   >أغلاق</v-btn
                 >
               </v-card-actions>
@@ -219,7 +236,10 @@
                       style="text-align: center"
                       v-if="editdItem.image"
                     >
-                      <div style="position: relative; display: inline-block" id="bll">
+                      <div
+                        style="position: relative; display: inline-block"
+                        id="bll"
+                      >
                         <img
                           id="oldL"
                           :src="table.content_url + old_image"
@@ -241,7 +261,12 @@
                         <v-icon
                           class="mr-2"
                           color="error"
-                          style="position: absolute; top: 0; right: 0; cursor: pointer"
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            cursor: pointer;
+                          "
                           @click="removeImageEdit"
                         >
                           mdi-close
@@ -265,7 +290,9 @@
                   text
                   >تعديل</v-btn
                 >
-                <v-btn color="primary" text @click="dialogEdit = false"> الغاء </v-btn>
+                <v-btn color="primary" text @click="dialogEdit = false">
+                  الغاء
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -277,12 +304,17 @@
     <!-- - showImg -->
     <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <v-card style="padding-top: 20px">
-        <v-card-text class="headline justify-center" v-if="showImg.dataImg !== null">
+        <v-card-text
+          class="headline justify-center"
+          v-if="showImg.dataImg !== null"
+        >
           <img style="width: 100%" :src="table.content_url + showImg.dataImg" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="showImg.open = false"> إغلاق </v-btn>
+          <v-btn color="primary" text @click="showImg.open = false">
+            إغلاق
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -297,7 +329,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -311,7 +345,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -419,7 +455,7 @@ export default {
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
     } else {
-      this.userData = ['add', 'edit', 'remove']
+      this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
   },
@@ -522,6 +558,12 @@ export default {
         });
 
         this.addBtnLoading = false;
+        this.data.title = null;
+        this.data.image = null;
+        if (this.selectedFile) {
+          this.selectedFile = null;
+        }
+
         this.getCenter();
 
         this.showDialogfunction(response.data.message, "primary");
