@@ -94,6 +94,12 @@ export default [
         to: "admin-reservations",
         type: "admin",
       },
+      {
+        title: "عقود المبيعات",
+        icon: "arrow-left",
+        to: "admin-salesContracts",
+        type: "admin",
+      },
     ],
   },
   {
@@ -232,6 +238,12 @@ export default [
         title: "طلبات المنازل",
         icon: "arrow-left",
         to: "admin-reservations",
+        type: "assistance",
+      },
+      {
+        title: "عقود المبيعات",
+        icon: "arrow-left",
+        to: "admin-salesContracts",
         type: "assistance",
       },
     ],

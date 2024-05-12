@@ -722,6 +722,30 @@ class Api {
     return response;
   }
 
+  async addFormsApartment({
+    name,
+    block_number,
+    images,
+    total_space,
+    building_space,
+    apartment_building,
+    houses,
+    rooms_for_space,
+  }) {
+    const requestData = {
+      name,
+      block_number,
+      images,
+      total_space,
+      building_space,
+      apartment_building,
+      houses,
+      rooms_for_space,
+      };
+    const response = await axiosInstance.post(`/center/forms/apartment`, requestData);
+    return response;
+  }
+
   async checkHousesNames({ houses }) {
     const requestData = {
       houses

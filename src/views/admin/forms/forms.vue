@@ -214,6 +214,21 @@
     </v-dialog>
     <!-- - Dailog for show info to user -->
 
+    <!-- - Dailog for show info to user -->
+    <v-dialog v-model="dialogAdd.open" max-width="500px">
+      <v-card>
+        <v-card-title class="headline justify-center">
+          <v-btn color="primary" text @click="AddHouseModel">
+            إضافة نموذج منازل
+          </v-btn>
+          <v-btn color="primary" text @click="AddAnApartmentModel">
+            إضافة نموذج شقق
+          </v-btn>
+        </v-card-title>
+      </v-card>
+    </v-dialog>
+    <!-- - Dailog for show info to user -->
+
     <!-- - showImg -->
     <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <v-card style="padding-top: 20px">
@@ -286,6 +301,13 @@ export default {
         },
       ],
       // nav
+      // dialogAdd
+      dialogAdd: {
+        open: false,
+        color: "primary",
+        bodyText: "test",
+      },
+      // dialogAdd
       // message
       dialogData: {
         open: false,
@@ -442,7 +464,13 @@ export default {
       this.$router.push("/forms/Edit");
     },
     add() {
+      this.dialogAdd.open = true;
+    },
+    AddHouseModel() {
       this.$router.push("/admin-add-forms");
+    },
+    AddAnApartmentModel() {
+      this.$router.push("/addApartments");
     },
     showImgs(item) {
       this.showImg.open = true;

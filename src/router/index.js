@@ -81,6 +81,12 @@ const router = new Router({
       component: () => import("@/views/admin/users/PrintUser.vue"),
       meta: { target: "_blank" }
     },
+    {
+      path: "/admin-salesContracts",
+      name: "admin-salesContracts",
+      component: () => import("@/views/admin/salesContracts/PrintsalesContracts.vue"),
+      meta: { target: "_blank" }
+    },
 
     {
       name: "/",

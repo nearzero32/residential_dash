@@ -26,6 +26,8 @@ import profileConfirmations_form from "@/views/admin/confirmations_form/profileC
 import profileHouse from "@/views/admin/forms/profileHouse.vue";
 import visits from "@/views/admin/visits/visits.vue";
 import complain from "@/views/admin/complain/complain.vue";
+import addApartments from "@/views/admin/forms/Apartments/addApartments.vue";
+// import salesContracts from "@/views/admin/salesContracts/salesContracts.vue";
 
 const Admin = {
   path: "/",
@@ -48,6 +50,11 @@ const Admin = {
       name: "users",
       path: "/users",
       component: showUsers,
+    },
+    {
+      name: "addApartments",
+      path: "/addApartments",
+      component: addApartments,
     },
     {
       path: "/admin-postings",
