@@ -564,6 +564,7 @@ export default {
         housesRoomNames: [(value) => !!value || "الحقل مطلوب"],
         space: [
           (value) => !!value || "الحقل مطلوب",
+          
         ],
         FloorNumber: [
           (value) => !isNaN(value) || "يجب أن تكون قيمة رقمية",
