@@ -55,7 +55,7 @@
           </template>
 
           <template v-slot:item.ac="{ item }">
-            <VTooltip bottom v-if="userData.includes('edit')">
+            <!-- <VTooltip bottom v-if="userData.includes('edit')">
               <template #activator="{ attrs }">
                 <v-icon
                   color="rgb(243 216 1)"
@@ -67,7 +67,7 @@
                 </v-icon>
               </template>
               <span>تعديل</span>
-            </VTooltip>
+            </VTooltip> -->
             <VTooltip bottom v-if="userData.includes('remove')">
               <template #activator="{ attrs }">
                 <v-icon

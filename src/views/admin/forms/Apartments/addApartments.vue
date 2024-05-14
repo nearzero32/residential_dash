@@ -305,6 +305,19 @@
                     </v-col>
                     <v-col cols="12" md="12" style="padding: 10px"  v-if="Space.addSpaceInput == true && Space.table.length > 0">
                       <v-container>
+                        <v-row>
+                          <v-col cols="12" md="6" style="padding: 10px">                            
+                              <v-autocomplete
+                              v-model="copyD"
+                              label="نسخ محتوى مساحة اخرى"
+                              :items="itemSp"
+                              item-text="name"
+                              item-value="building_space"
+                              @input="adCopyD(index)"
+                              return-object
+                              ></v-autocomplete>
+                            </v-col>
+                        </v-row>
                         <v-row
                           v-for="(room, ind) in data.Spaces[index].rooms"
                           :key="ind"
@@ -324,13 +337,17 @@
                               padding: 10px;
                             "
                           >
-                            <div class="mb-2 font-weight-medium">
-                              تفاصيل المساحة
-                              <span v-if="Space.building_space !== null"
-                                >( {{ Space.building_space }} )</span
-                              >
-                            </div>
-                            <div>
+                          <v-row>
+                            <v-col cols="12" md="3" style="padding: 10px">                            
+                              <div class="mb-2 font-weight-medium">
+                                تفاصيل المساحة
+                                <span v-if="Space.building_space !== null"
+                                  >( {{ Space.building_space }} )</span
+                                >
+                              </div>
+                            </v-col>
+                            <v-col cols="12" md="3" style="padding: 10px">                            
+                              <div>
                               <v-btn
                                 style="
                                   color: red !important;
@@ -347,6 +364,8 @@
                                 <v-icon>mdi-delete</v-icon>
                               </v-btn>
                             </div>
+                            </v-col>
+                          </v-row>
                           </v-col>
                           <v-col cols="12" md="6" style="padding: 10px">
                             <v-label class="mb-2 font-weight-medium"
@@ -545,7 +564,6 @@ export default {
         housesRoomNames: [(value) => !!value || "الحقل مطلوب"],
         space: [
           (value) => !!value || "الحقل مطلوب",
-          (value) => !isNaN(value) || "يجب أن تكون قيمة رقمية",
         ],
         FloorNumber: [
           (value) => !isNaN(value) || "يجب أن تكون قيمة رقمية",
@@ -558,8 +576,10 @@ export default {
       addSpaceInput: false,
       building_space: null,
       total_space: null,
+      copyD: null,
       BuildingNames: "",
       tagsBuildingNames: [],
+      itemSp: [],
       data: {
         name: null,
         BuildingNames: [],
@@ -618,6 +638,12 @@ export default {
       },
       deep: true,
     },
+    // copyD: {
+    //   handler: function () {
+    //     this.adCopyD();
+    //   },
+    //   deep: true,
+    // },
   },
   methods: {
     addTagsBuildingNames() {
@@ -695,9 +721,23 @@ export default {
       if ((this.data.Spaces[index].total_space !== null && this.data.Spaces[index].total_space !== "") &&
           (this.data.Spaces[index].building_space !== null && this.data.Spaces[index].building_space !== "")) {
         this.data.Spaces[index].addSpaceInput = true;
+        this.itemSp.push({
+          name: `${this.data.Spaces[index].building_space} - ${this.data.Spaces[index].total_space}`,
+          building_space: this.data.Spaces[index].building_space,
+          total_space: this.data.Spaces[index].total_space
+        })
       } else {
         this.showDialogfunction("خطأ: يجب إدخال مساحة البناء والمساحة الكلية", "#FF5252");
       }
+    },
+    adCopyD(index) {
+      this.data.Spaces[index].rooms = []
+      for (var i = 0; i < this.data.Spaces.length; i++) {
+        if(this.data.Spaces[i].building_space == this.copyD.building_space && this.data.Spaces[i].total_space == this.copyD.total_space){
+          this.data.Spaces[index].rooms = this.data.Spaces[i].rooms
+        }
+      }
+      console.log(this.data.Spaces[index].rooms)
     },
     backPage() {
       this.dialogData.open = false;
