@@ -21,6 +21,7 @@
                     :rules="Rules.building_type"
                     color="primary"
                     outlined
+                    disabled
                     :items="itemType"
                     item-text="name"
                     item-value="value"
@@ -712,7 +713,7 @@ export default {
       tags: [],
       houses: "",
       data: {
-        building_type: null,
+        building_type: "منازل",
         apartment_building: null,
         floor_number: null,
         typeFrom: null,
@@ -1208,6 +1209,7 @@ export default {
         });
       try {
         const response = await API.checkHousesNames({
+          id: null,
           houses: housesArray,
         });
         console.log(response);

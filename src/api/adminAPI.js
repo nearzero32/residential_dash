@@ -746,36 +746,44 @@ class Api {
     return response;
   }
 
-  async checkHousesNames({ houses }) {
+  async checkHousesNames({ houses, id }) {
     const requestData = {
+      id,
       houses
     };
     const response = await axiosInstance.post(`/center/forms/check_houses_names`, requestData);
     return response;
   }
+
   async editForms({
     id,
+    building_type,
     name,
-    total_space,
     images,
-    houses,
-    floors,
+    total_space,
     building_space,
     category,
     block_number,
     street_number,
+    apartment_building,
+    floor_number,
+    houses,
+    floors,
   }) {
     const requestData = {
+      building_type,
       name,
-      total_space,
       images,
-      houses,
-      floors,
+      total_space,
       building_space,
       category,
       block_number,
       street_number,
-    };
+      apartment_building,
+      floor_number,
+      houses,
+      floors,
+      };
     const response = await axiosInstance.put(`center/forms/${id}`, requestData);
     return response;
   }

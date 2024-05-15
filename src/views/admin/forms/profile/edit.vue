@@ -271,7 +271,11 @@
                             <div style="position: relative" class="imgI">
                               <img
                                 style="height: 100px; width: 100%"
-                                :src="image"
+                                :src="
+                                isBase64(image)
+                                  ? image
+                                  : content_url + image
+                              "
                                 alt="Image"
                                 @click.stop
                               />
@@ -369,7 +373,11 @@
                                     >
                                       <img
                                         style="height: 100px; width: 100%"
-                                        :src="imageF"
+                                        :src="
+                                          isBase64(imageF)
+                                            ? imageF
+                                            : content_url + imageF
+                                        "
                                         alt="Image"
                                         @click.stop
                                       />
@@ -488,7 +496,11 @@
                                                     height: 100px;
                                                     width: 100%;
                                                   "
-                                                  :src="dat.image"
+                                                  :src="
+                                                    isBase64(dat.image)
+                                                      ? dat.image
+                                                      : content_url + dat.image
+                                                  "
                                                   alt="Image"
                                                   @click.stop
                                                 />
@@ -560,7 +572,7 @@
                   :loading="addLoading"
                   :disabled="!isFormvalid"
                   text
-                  >إضافة</v-btn
+                  >تعديل</v-btn
                 >
                 <v-btn
                   class="bg-lighterror text-error ml-4"
@@ -644,6 +656,7 @@ export default {
         { name: "شقق", value: "شقق" },
       ],
       from: null,
+      content_url: null,
       to: null,
       checkHousesNamesLoading: false,
       addLoading: false,
@@ -685,6 +698,7 @@ export default {
       tags: [],
       houses: "",
       data: {
+        id: null,
         building_type: "منازل",
         apartment_building: null,
         floor_number: null,
@@ -743,7 +757,14 @@ export default {
     } else {
       this.userData = ["add", "edit", "remove"];
     }
+    this.data.id = itemForm._id
     this.data.name = itemForm.name
+    this.data.category = itemForm.category
+    this.data.street_number = itemForm.street_number
+    this.data.block_number = itemForm.block_number
+    this.data.images = itemForm.images
+    this.data.floors = itemForm.floors
+    this.content_url = userDataString.content_url
     itemForm.building_space.forEach((tag) => {
       let numberString = tag.toString();
       let newData = { text: numberString, tiClasses: ["ti-valid"] }
@@ -784,7 +805,6 @@ export default {
         housesNumber.push(currentGroup);
     }
     this.housesNumbers = housesNumber
-    console.log(itemForm);
     this.getCenter();
   },
   watch: {
@@ -827,6 +847,8 @@ export default {
         this.data.BuildingSpaces.push(tagText);
         this.data.building_space.push(tagText);
       });
+      this.isTrue = true;
+      console.log(this.isTrue)
     },
 
     addTagsTotalAreas() {
@@ -842,6 +864,7 @@ export default {
           this.data.total_space.push(tagText);
         }
       });
+      this.isTrue = true;
     },
     addHouesS() {
       if (this.data.BuildingSpaces.length === this.data.TotalAreas.length) {
@@ -862,34 +885,28 @@ export default {
         if (errorOccurred) {
           return;
         }
-        let uniqueAreasAndBuildingSpaces = [];
+          let tempData = JSON.parse(JSON.stringify(this.housesNumbers));
 
-        let tempData = JSON.parse(JSON.stringify(this.housesNumbers));
+          this.housesNumbers = [];
+          console.log("BuildingSpaces",this.data.BuildingSpaces)
+          console.log("TotalAreas",this.data.TotalAreas)
 
-        this.housesNumbers = [];
-
-        tempData.forEach((oldData) => {
-            let key = oldData.building_space + '-' + oldData.total_space;
-            uniqueAreasAndBuildingSpaces.push(key);
-            this.housesNumbers.push(oldData);
-        });
-
-        this.data.TotalAreas.forEach((area, index) => {
-            if (this.data.BuildingSpaces[index]) {
-                let key = this.data.BuildingSpaces[index] + '-' + area;
-                if (!uniqueAreasAndBuildingSpaces.includes(key)) {
-                    uniqueAreasAndBuildingSpaces.push(key);
-                    this.housesNumbers.push({
-                        house: [],
-                        tags: [],
-                        houses: "",
-                        building_space: this.data.BuildingSpaces[index],
-                        total_space: area,
-                        automatic: false,
-                    });
-                }
-            }
-        });
+          this.data.TotalAreas.forEach((area, index) => {
+              let found = tempData.find(item => item.total_space.toString() === area);
+              if (found) {
+                  this.housesNumbers.push(found);
+              } else {
+                  let newObj = {
+                      house: [],
+                      tags: [],
+                      houses: "",
+                      building_space: this.data.BuildingSpaces[index],
+                      total_space: area,
+                      automatic: false
+                  };
+                  this.housesNumbers.push(newObj);
+              }
+          });
       } else {
         this.SpacesItems = [];
         var maxLength = Math.max(
@@ -939,14 +956,23 @@ export default {
           `خطأ: تم إضافة المنزل (${numberx}) في مساحات أخرى`,
           "#FF5252"
         );
+        for (let i = 0; i < dd.length; i++) {
+          if(numberx !== dd[i]) {
+            this.housesNumbers[index].house.push(dd[i]);
+            this.housesNumbers[index].tags.push({ text: dd[i], tiClasses: ["ti-valid"] });
+          }
+        }
       } else {
         this.housesNumbers[index].house = [];
         this.housesNumbers[index].tags = [];
-            this.housesNumbers[index].house.push(dd);
-            this.housesNumbers[index].tags.push(dd);
-
+        for (let i = 0; i < dd.length; i++) {
+          this.housesNumbers[index].house.push(dd[i]);
+          this.housesNumbers[index].tags.push({ text: dd[i], tiClasses: ["ti-valid"] });
+        }
       }
-      console.log(this.housesNumbers);
+    },
+    isBase64(image) {
+      return /^data:image\/[a-z]+;base64,/.test(image);
     },
 
     isHouseAlreadyAdded(newHouse, currentIndex, duplicateHouses) {
@@ -1188,21 +1214,21 @@ export default {
             this.addLoading = true;
             var houseGroups = {};
 
-            for (var ind = 0; ind < this.SpacesItems.length; ind++) {
-              var elm = this.SpacesItems[ind];
+            for (var ind = 0; ind < this.housesNumbers.length; ind++) {
+              var elm = this.housesNumbers[ind];
               for (var indH = 0; indH < elm.house.length; indH++) {
                 var houseNumber = elm.house[indH];
                 if (!houseGroups[houseNumber]) {
                   houseGroups[houseNumber] = {
-                    total_space: parseInt(elm.totalArea),
-                    building_space: parseInt(elm.buildingArea),
+                    total_space: parseInt(elm.total_space),
+                    building_space: parseInt(elm.building_space),
                   };
                 } else {
                   houseGroups[houseNumber].total_space += parseInt(
-                    elm.totalArea
+                    elm.total_space
                   );
                   houseGroups[houseNumber].building_space += parseInt(
-                    elm.buildingArea
+                    elm.building_space
                   );
                 }
               }
@@ -1220,7 +1246,8 @@ export default {
                 return parseInt(a.name) - parseInt(b.name);
               });
             try {
-              const response = await API.addForms({
+              const response = await API.editForms({
+                id: this.data.id,
                 building_type: this.data.building_type,
                 name: this.data.name,
                 images: this.data.images,
@@ -1280,9 +1307,11 @@ export default {
         .sort(function (a, b) {
           return parseInt(a.name) - parseInt(b.name);
         });
+        console.log("housesArray",housesArray);
 
       try {
         const response = await API.checkHousesNames({
+          id: this.data.id,
           houses: housesArray,
         });
         console.log(response);
