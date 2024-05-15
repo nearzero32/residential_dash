@@ -564,12 +564,12 @@ export default {
         housesRoomNames: [(value) => !!value || "الحقل مطلوب"],
         space: [
           (value) => !!value || "الحقل مطلوب",
-          
+
         ],
         FloorNumber: [
-          (value) => !isNaN(value) || "يجب أن تكون قيمة رقمية",
+          (value) => !!value || "الحقل مطلوب",
+
         ],
-          block_number: [(value) => !!value || "الحقل مطلوب"],
       },
       isStorg: false,
       isFormvalid: false,
@@ -738,6 +738,7 @@ export default {
           this.data.Spaces[index].rooms = this.data.Spaces[i].rooms
         }
       }
+      this.copyD = null
       console.log(this.data.Spaces[index].rooms)
     },
     backPage() {
