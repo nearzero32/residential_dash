@@ -1312,7 +1312,7 @@ export default {
 .div-img {
   width: 100%;
   height: auto;
-  background-color: #00000026;
+  background-color: #0000000f;
   border-radius: 10px;
   display: grid;
   place-items: center;

@@ -116,364 +116,359 @@
                 </v-col>
 
                 <v-col cols="12" md="12" style="padding: 10px">
-                  <v-row
-                    v-for="(Space, index) in data.Spaces"
-                    :key="index"
-                    style="border: solid 1px #cccccc; margin-bottom: 15px"
-                  >
-                    <v-col
-                      cols="12"
-                      md="12"
-                      style="
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        flex-direction: row;
-                        padding: 10px;
-                      "
+                  <v-row justify="center">
+                    <v-expansion-panels
+                      v-model="panel"
+                      :disabled="disabled"
+                      multiple
                     >
-                      <div class="mb-2 font-weight-medium">
-                        المساحة<span v-if="Space.building_space !== null"
-                          >( {{ Space.building_space }} )</span
-                        >
-                      </div>
-                      <div>
-                        <v-btn
-                          style="
-                            color: red !important;
-                            border-radius: 100%;
-                            border: solid 1px red;
-                            min-width: 30px;
-                            height: 30px;
-                            padding: 18px;
-                            width: 30px;
-                          "
-                          text
-                          @click="deleteSpace(index)"
-                        >
-                          <v-icon>mdi-delete</v-icon>
-                        </v-btn>
-                      </div>
-                    </v-col>
-                    
-                    <v-col cols="12" md="12" style="padding: 10px">
-                      <v-row style="align-items: center;">
-                        <v-col cols="12" md="5" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium"
-                            >المساحة الكلية</v-label
-                          >
-                          <v-text-field
-                            variant="outlined"
-                            v-model="Space.total_space"
-                            :rules="Rules.total_space"
-                            :disabled="Space.addSpaceInput"
-                            color="primary"
-                            outlined
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="5" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium"
-                            >مساحة البناء</v-label
-                          >
-                          <v-text-field
-                            variant="outlined"
-                            v-model="Space.building_space"
-                            :rules="Rules.building_space"
-                            :disabled="Space.addSpaceInput"
-                            color="primary"
-                            outlined
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="2" style="padding: 10px" v-if="!Space.addSpaceInput && !Space.isStorg">
-                          <v-btn @click="addS(index)" color="primary">إضافة</v-btn>
-                        </v-col>
-                        <v-col cols="12" md="2" style="padding: 10px" v-else-if="Space.addSpaceInput == true">
-                          <v-btn @click="storg(index)" color="primary">تعديل</v-btn>
-                        </v-col>
-                        <v-col cols="12" md="2" style="padding: 10px" v-else>
-                          <v-btn @click="addSpaceInputF(index)" color="primary">تأكيد</v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-col>
-                    <v-col cols="12" md="12" style="padding: 10px" v-if="Space.addSpaceInput == true">
-                      <v-row style="align-items: center;">
-                        <v-col cols="12" md="5" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium"
-                            >ارقام الشقق</v-label
-                          >
-                          <vue-tags-input
-                            v-model="Space.tag.houseNumber"
-                            :tags="Space.tag.tagsHouseNumber"
-                            @tags-changed="
-                              (newTags) => (Space.tag.tagsHouseNumber = newTags)
-                            "
-                            variant="outlined"
-                            :rules="Rules.houseNumber"
-                            placeholder=" الرجاء إضافة رقم الشقة ثم الضغط على زر الإدخال Entr"
-                            color="primary"
-                            outlined
-                          />
-                        </v-col>
-                        <v-col cols="12" md="5" style="padding: 10px">
-                          <v-label class="mb-2 font-weight-medium"
-                            >رقم الطابق</v-label
-                          >
-                          <v-text-field
-                            variant="outlined"
-                            v-model="Space.tag.FloorNumber"
-                            :rules="Rules.FloorNumber"
-                            color="primary"
-                            outlined
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="2" style="padding: 10px">
-                          <v-btn @click="addHouesFloor(index)" color="primary"
-                            >ادخال</v-btn
-                          >
-                        </v-col>
-                        <v-col cols="12" md="12" style="padding: 10px" v-if="Space.table.length > 0">
-                          <table
-                            border="1"
-                            style="width: 100%; border-collapse: collapse"
-                          >
-                            <thead>
-                              <tr style="background-color: #bdd6ee">
-                                <th>ت</th>
-                                <th>ارقام الشقق</th>
-                                <th>رقم الطابق</th>
-                                <th>العمليات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr
-                                v-for="(showHouses, showIndex) in Space.table"
-                                :key="showIndex"
-                              >
-                                <td>{{ showIndex + 1 }}</td>
-                                <td>
-                                  <span
-                                    v-for="(
-                                      showHous, index
-                                    ) in showHouses.HouseNumber"
-                                    :key="index"
-                                  >
-                                    {{ showHous }}
-                                    <span
-                                      v-if="
-                                        index !==
-                                        showHouses.HouseNumber.length - 1"
-                                      >,</span
-                                    >
-                                  </span>
-                                </td>
-                                <td>{{ showHouses.FloorNumber }}</td>
-                                <td>
-                                  <VTooltip bottom>
-                                    <template #activator="{ attrs }">
-                                      <v-icon
-                                        color="rgb(243 216 1)"
-                                        v-bind="attrs"
-                                        size="20"
-                                        @click="
-                                          editShowHouses(showIndex, index)"
-                                      >
-                                        mdi-note-edit
-                                      </v-icon>
-                                    </template>
-                                    <span>تعديل</span>
-                                  </VTooltip>
-                                  <VTooltip bottom>
-                                    <template #activator="{ attrs }">
-                                      <v-icon
-                                        color="#FF5252"
-                                        v-bind="attrs"
-                                        size="20"
-                                        @click="
-                                          deleteShowHouses(showIndex, index)"
-                                      >
-                                        mdi-delete-restore
-                                      </v-icon>
-                                    </template>
-                                    <span>حذف</span>
-                                  </VTooltip>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </v-col>
-                      </v-row>
-                    </v-col>
-                    <v-col cols="12" md="12" style="padding: 10px"  v-if="Space.addSpaceInput == true && Space.table.length > 0">
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12" md="6" style="padding: 10px">                            
-                              <v-autocomplete
-                              v-model="copyD"
-                              label="نسخ محتوى مساحة اخرى"
-                              :items="itemSp"
-                              item-text="name"
-                              item-value="building_space"
-                              @input="adCopyD(index)"
-                              return-object
-                              ></v-autocomplete>
-                            </v-col>
-                        </v-row>
-                        <v-row
-                          v-for="(room, ind) in data.Spaces[index].rooms"
-                          :key="ind"
-                          style="
-                            border: dashed 1px rgb(251, 151, 120);
-                            margin-bottom: 15px;
-                          "
-                        >
-                          <v-col
-                            cols="12"
-                            md="12"
-                            style="
-                              display: flex;
-                              justify-content: space-between;
-                              align-items: center;
-                              flex-direction: row;
-                              padding: 10px;
-                            "
-                          >
-                          <v-row>
-                            <v-col cols="12" md="3" style="padding: 10px">                            
-                              <div class="mb-2 font-weight-medium">
-                                تفاصيل المساحة
-                                <span v-if="Space.building_space !== null"
-                                  >( {{ Space.building_space }} )</span
-                                >
-                              </div>
-                            </v-col>
-                            <v-col cols="12" md="3" style="padding: 10px">                            
-                              <div>
-                              <v-btn
-                                style="
-                                  color: red !important;
-                                  border-radius: 100%;
-                                  border: solid 1px red;
-                                  min-width: 30px;
-                                  height: 30px;
-                                  padding: 18px;
-                                  width: 30px;
-                                "
-                                text
-                                @click="deleteRoom(index, ind)"
-                              >
-                                <v-icon>mdi-delete</v-icon>
-                              </v-btn>
-                            </div>
-                            </v-col>
-                          </v-row>
-                          </v-col>
-                          <v-col cols="12" md="6" style="padding: 10px">
-                            <v-label class="mb-2 font-weight-medium"
-                              >الأسم
-                            </v-label>
-                            <v-autocomplete
-                              label="الأسم "
-                              :items="housesRoomNames"
-                              item-text="name"
-                              item-value="name"
-                              variant="outlined"
-                              v-model="room.name"
-                              :rules="Rules.housesRoomNames"
-                              color="primary"
-                              outlined
-                            ></v-autocomplete>
-                          </v-col>
-                          <v-col cols="12" md="6" style="padding: 10px">
-                            <v-label class="mb-2 font-weight-medium"
-                              >المساحة ( {{ room.name }} )</v-label
-                            >
-                            <v-text-field
-                              variant="outlined"
-                              v-model="room.space"
-                              :rules="Rules.space"
-                              color="primary"
-                              outlined
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" md="12">
+                      <v-expansion-panel v-for="(Space, index) in data.Spaces"
+                        :key="index">
+                        <v-expansion-panel-header>
                             <v-row>
-                              <v-col cols="12" md="12" style="padding: 10px">
-                                <v-label class="mb-2 font-weight-medium"
-                                  >صورة ( {{ room.name }} )</v-label
-                                >
-                                <div
-                                  @click="openFileInputR(index, ind)"
-                                  class="div-img"
-                                  style="z-index: 9999"
-                                >
-                                  <input
-                                    type="file"
-                                    accept="image/png, image/jpeg, image/bmp"
-                                    @change="
-                                      handleFileChangeR($event, index, ind)
-                                    "
-                                    :ref="'fileInput' + index + ind"
-                                    style="display: none"
-                                  />
-                                  <div
-                                    class="showImg"
-                                    v-if="room.image"
-                                    style="width: 100%"
+                              <v-col cols="6" md="6" style="padding-block: 0px;">
+                                المساحة
+                                <span v-if="Space.building_space !== null && Space.building_space !== ''">( {{ Space.building_space }} )</span>
+                                <span v-else>( جديدة )</span>
+                              </v-col>
+                              <v-col cols="6" md="6" style="padding: 0px;">
+                                <v-btn style="color: red !important; height: auto; padding: 0px;" text @click="deleteSpace(index)">
+                                  <v-icon>mdi-delete</v-icon>
+                                  <span>
+                                    حذف المساحة
+                                    <span v-if="Space.building_space !== null && Space.building_space !== ''">( {{ Space.building_space }} )</span>
+                                    <span v-else>( جديدة )</span>
+                                  </span>
+                                </v-btn>
+                              </v-col>
+                            </v-row>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                          <v-row
+                            style="border: solid 1px #cccccc; margin-bottom: 15px"
+                          >                            
+                            <v-col cols="12" md="12" style="padding: 10px">
+                              <v-row style="align-items: center;">
+                                <v-col cols="12" md="5" style="padding: 10px">
+                                  <v-label class="mb-2 font-weight-medium"
+                                    >المساحة الكلية</v-label
                                   >
-                                    <v-row>
-                                      <v-col
-                                        cols="12"
-                                        md="2"
-                                        style="padding: 10px"
+                                  <v-text-field
+                                    variant="outlined"
+                                    v-model="Space.total_space"
+                                    :rules="Rules.total_space"
+                                    :disabled="Space.addSpaceInput"
+                                    color="primary"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" md="5" style="padding: 10px">
+                                  <v-label class="mb-2 font-weight-medium"
+                                    >مساحة البناء</v-label
+                                  >
+                                  <v-text-field
+                                    variant="outlined"
+                                    v-model="Space.building_space"
+                                    :rules="Rules.building_space"
+                                    :disabled="Space.addSpaceInput"
+                                    color="primary"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" md="2" style="padding: 10px" v-if="!Space.addSpaceInput && !Space.isStorg">
+                                  <v-btn @click="addS(index)" color="primary">إضافة</v-btn>
+                                </v-col>
+                                <v-col cols="12" md="2" style="padding: 10px" v-else-if="Space.addSpaceInput == true">
+                                  <v-btn @click="storg(index)" color="primary">تعديل</v-btn>
+                                </v-col>
+                                <v-col cols="12" md="2" style="padding: 10px" v-else>
+                                  <v-btn @click="addSpaceInputF(index)" color="primary">تأكيد</v-btn>
+                                </v-col>
+                              </v-row>
+                            </v-col>
+                            <v-col cols="12" md="12" style="padding: 10px" v-if="Space.addSpaceInput == true">
+                              <v-row style="align-items: center;">
+                                <v-col cols="12" md="5" style="padding: 10px">
+                                  <v-label class="mb-2 font-weight-medium"
+                                    >ارقام الشقق</v-label
+                                  >
+                                  <vue-tags-input
+                                    v-model="Space.tag.houseNumber"
+                                    :tags="Space.tag.tagsHouseNumber"
+                                    @tags-changed="
+                                      (newTags) => (Space.tag.tagsHouseNumber = newTags)
+                                    "
+                                    variant="outlined"
+                                    :rules="Rules.houseNumber"
+                                    placeholder=" الرجاء إضافة رقم الشقة ثم الضغط على زر الإدخال Entr"
+                                    color="primary"
+                                    outlined
+                                  />
+                                </v-col>
+                                <v-col cols="12" md="5" style="padding: 10px">
+                                  <v-label class="mb-2 font-weight-medium"
+                                    >رقم الطابق</v-label
+                                  >
+                                  <v-text-field
+                                    variant="outlined"
+                                    v-model="Space.tag.FloorNumber"
+                                    color="primary"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" md="2" style="padding: 10px">
+                                  <v-btn @click="addHouesFloor(index)" color="primary"
+                                    >ادخال</v-btn
+                                  >
+                                </v-col>
+                                <v-col cols="12" md="12" style="padding: 10px" v-if="Space.table.length > 0">
+                                  <table
+                                    border="1"
+                                    style="width: 100%; border-collapse: collapse"
+                                  >
+                                    <thead>
+                                      <tr style="background-color: #bdd6ee">
+                                        <th>ارقام الشقق</th>
+                                        <th>رقم الطابق</th>
+                                        <th>العمليات</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr
+                                        v-for="(showHouses, showIndex) in Space.table"
+                                        :key="showIndex"
                                       >
-                                        <div
-                                          style="position: relative"
-                                          class="imgI"
-                                        >
-                                          <img
-                                            style="height: 100px; width: 100%"
-                                            :src="room.image"
-                                            alt="Image"
-                                            @click.stop
-                                          />
-                                          <v-btn
-                                            fab
-                                            small
-                                            color="red"
-                                            class="delete-icon"
-                                            @click.stop="
-                                              deleteImageR(index, ind)"
-                                            style="
-                                              position: absolute;
-                                              top: 50%;
-                                              left: 50%;
-                                              transform: translate(-50%, -50%);
-                                              z-index: 1;
-                                              opacity: 0;
-                                            "
+                                        <td>
+                                          <span
+                                            v-for="(
+                                              showHous, index
+                                            ) in showHouses.HouseNumber"
+                                            :key="index"
                                           >
-                                            <v-icon>mdi-delete</v-icon>
-                                          </v-btn>
+                                            {{ showHous }}
+                                            <span
+                                              v-if="
+                                                index !==
+                                                showHouses.HouseNumber.length - 1"
+                                              >,</span
+                                            >
+                                          </span>
+                                        </td>
+                                        <td>{{ showHouses.FloorNumber }}</td>
+                                        <td>
+                                          <VTooltip bottom>
+                                            <template #activator="{ attrs }">
+                                              <v-icon
+                                                color="rgb(243 216 1)"
+                                                v-bind="attrs"
+                                                size="20"
+                                                @click="
+                                                  editShowHouses(showIndex, index)"
+                                              >
+                                                mdi-note-edit
+                                              </v-icon>
+                                            </template>
+                                            <span>تعديل</span>
+                                          </VTooltip>
+                                          <VTooltip bottom>
+                                            <template #activator="{ attrs }">
+                                              <v-icon
+                                                color="#FF5252"
+                                                v-bind="attrs"
+                                                size="20"
+                                                @click="
+                                                  deleteShowHouses(showIndex, index)"
+                                              >
+                                                mdi-delete-restore
+                                              </v-icon>
+                                            </template>
+                                            <span>حذف</span>
+                                          </VTooltip>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </v-col>
+                              </v-row>
+                            </v-col>
+                            <v-col cols="12" md="12" style="padding: 10px"  v-if="Space.addSpaceInput == true && Space.table.length > 0">
+                              <v-container>
+                                <v-row>
+                                  <v-col cols="12" md="6" style="padding: 10px">                            
+                                      <v-select
+                                        dense
+                                        filled
+                                        solo
+                                        v-model="copyD"
+                                        label="نسخ محتوى مساحة اخرى"
+                                        :items="filteredItems(index)"
+                                        item-text="name"
+                                        item-value="building_space"
+                                        @input="adCopyD(index)"
+                                        return-object
+                                      ></v-select>
+                                  </v-col>
+                                </v-row>
+                                <v-row
+                                  v-for="(room, ind) in data.Spaces[index].rooms"
+                                  :key="ind"
+                                  style="
+                                    border: dashed 1px rgb(251, 151, 120);
+                                    margin-bottom: 15px;
+                                  "
+                                >
+                                  <v-col
+                                    cols="12"
+                                    md="12"
+                                    style="
+                                      display: flex;
+                                      justify-content: space-between;
+                                      align-items: center;
+                                      flex-direction: row;
+                                      padding: 10px;
+                                    "
+                                  >
+                                  <v-row>
+                                    <v-col cols="12" md="3" style="padding: 10px">                            
+                                      <div class="mb-2 font-weight-medium">
+                                        تفاصيل المساحة
+                                        <span v-if="Space.building_space !== null"
+                                          >( {{ Space.building_space }} )</span
+                                        >
+                                      </div>
+                                    </v-col>
+                                    <v-col cols="12" md="3" style="padding: 10px">                            
+                                      <div>
+                                      <v-btn
+                                        style="
+                                          color: red !important;
+                                          border-radius: 100%;
+                                          border: solid 1px red;
+                                          min-width: 30px;
+                                          height: 30px;
+                                          padding: 18px;
+                                          width: 30px;
+                                        "
+                                        text
+                                        @click="deleteRoom(index, ind)"
+                                      >
+                                        <v-icon>mdi-delete</v-icon>
+                                      </v-btn>
+                                    </div>
+                                    </v-col>
+                                  </v-row>
+                                  </v-col>
+                                  <v-col cols="12" md="4" style="padding: 10px">
+                                    <v-label class="mb-2 font-weight-medium"
+                                      >الأسم
+                                    </v-label>
+                                    <v-autocomplete
+                                      label="الأسم "
+                                      :items="housesRoomNames"
+                                      item-text="name"
+                                      item-value="name"
+                                      variant="outlined"
+                                      v-model="room.name"
+                                      :rules="Rules.housesRoomNames"
+                                      color="primary"
+                                      outlined
+                                    ></v-autocomplete>
+                                  </v-col>
+                                  <v-col cols="12" md="4" style="padding: 10px">
+                                    <v-label class="mb-2 font-weight-medium"
+                                      >المساحة ( {{ room.name }} )</v-label
+                                    >
+                                    <v-text-field
+                                      variant="outlined"
+                                      v-model="room.space"
+                                      :rules="Rules.space"
+                                      color="primary"
+                                      outlined
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="12" md="4">
+                                    <v-row>
+                                      <v-col cols="12" md="12" style="padding: 0px;">
+                                        <v-label class="mb-2 font-weight-medium"
+                                          >صورة ( {{ room.name }} )</v-label
+                                        >
+                                        <div
+                                          @click="openFileInputR(index, ind)"
+                                          class="div-img"
+                                          style="z-index: 9999"
+                                        >
+                                          <input
+                                            type="file"
+                                            accept="image/png, image/jpeg, image/bmp"
+                                            @change="
+                                              handleFileChangeR($event, index, ind)
+                                            "
+                                            :ref="'fileInput' + index + ind"
+                                            style="display: none"
+                                          />
+                                          <div
+                                            class="showImg"
+                                            v-if="room.image"
+                                            style="width: 100%"
+                                          >
+                                            <v-row>
+                                              <v-col
+                                                cols="12"
+                                                md="12"
+                                                style="padding: 0px"
+                                              >
+                                                <div
+                                                  style="text-align: center;position: relative"
+                                                  class="imgI"
+                                                >
+                                                  <img
+                                                    style="height: 70px;width: auto;"
+                                                    :src="room.image"
+                                                    alt="Image"
+                                                    @click.stop
+                                                  />
+                                                  <v-btn
+                                                    fab
+                                                    small
+                                                    color="red"
+                                                    class="delete-icon"
+                                                    @click.stop="
+                                                      deleteImageR(index, ind)"
+                                                    style="
+                                                      position: absolute;
+                                                      top: 50%;
+                                                      left: 50%;
+                                                      transform: translate(-50%, -50%);
+                                                      z-index: 1;
+                                                      opacity: 0;
+                                                    "
+                                                  >
+                                                    <v-icon>mdi-delete</v-icon>
+                                                  </v-btn>
+                                                </div>
+                                              </v-col>
+                                            </v-row>
+                                          </div>
+                                          <v-icon class="mr-2 iconImg" size="40" v-else
+                                            >mdi-plus</v-icon
+                                          >
                                         </div>
                                       </v-col>
                                     </v-row>
-                                  </div>
-                                  <v-icon class="mr-2 iconImg" size="40" v-else
-                                    >mdi-plus</v-icon
+                                  </v-col>
+                                </v-row>
+                                <v-btn color="primary" text @click="addRoom(index)">
+                                  إضافة محتوى اخر للمساحة
+                                  <span v-if="Space.building_space !== null"
+                                    >( {{ Space.building_space }} )</span
                                   >
-                                </div>
-                              </v-col>
-                            </v-row>
-                          </v-col>
-                        </v-row>
-                        <v-btn color="primary" text @click="addRoom(index)">
-                          إضافة محتوى اخر للمساحة
-                          <span v-if="Space.building_space !== null"
-                            >( {{ Space.building_space }} )</span
-                          >
-                        </v-btn>
-                      </v-container>
-                    </v-col>
+                                </v-btn>
+                              </v-container>
+                            </v-col>
+                          </v-row>
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
                   </v-row>
                 </v-col>
               </v-row>
@@ -564,13 +559,11 @@ export default {
         housesRoomNames: [(value) => !!value || "الحقل مطلوب"],
         space: [
           (value) => !!value || "الحقل مطلوب",
-
-        ],
-        FloorNumber: [
-          (value) => !!value || "الحقل مطلوب",
-
         ],
       },
+      panel: [0, 1],
+      disabled: false,
+      readonly: false,
       isStorg: false,
       isFormvalid: false,
       addLoading: false,
@@ -580,7 +573,7 @@ export default {
       copyD: null,
       BuildingNames: "",
       tagsBuildingNames: [],
-      itemSp: [],
+      itemSp: [{name: 'عدم النسخ', building_space: null, total_space: null}],
       data: {
         name: null,
         BuildingNames: [],
@@ -632,6 +625,15 @@ export default {
     }
     this.getCenter();
   },
+  computed: {
+    filteredItems() {
+      return function(index) {
+        return this.itemSp.filter(item => {
+          return item.building_space!== (this.data.Spaces[index]?.building_space?? null);
+        });
+      };
+    },
+  },
   watch: {
     BuildingNames: {
       handler: function () {
@@ -639,12 +641,6 @@ export default {
       },
       deep: true,
     },
-    // copyD: {
-    //   handler: function () {
-    //     this.adCopyD();
-    //   },
-    //   deep: true,
-    // },
   },
   methods: {
     addTagsBuildingNames() {
@@ -731,15 +727,48 @@ export default {
         this.showDialogfunction("خطأ: يجب إدخال مساحة البناء والمساحة الكلية", "#FF5252");
       }
     },
-    adCopyD(index) {
-      this.data.Spaces[index].rooms = []
-      for (var i = 0; i < this.data.Spaces.length; i++) {
-        if(this.data.Spaces[i].building_space == this.copyD.building_space && this.data.Spaces[i].total_space == this.copyD.total_space){
-          this.data.Spaces[index].rooms = this.data.Spaces[i].rooms
+    deleteSpace(index) {
+      var item = this.data.Spaces[index];
+      var houses = this.data.houses;
+      for(var i = 0; i < this.itemSp.length; i++) {
+        if (this.itemSp[i].building_space === item.building_space && this.itemSp[i].total_space === item.total_space) {
+          this.itemSp.splice(i, 1);
+          break; // Exit loop since item is found and removed
         }
       }
-      this.copyD = null
-      console.log(this.data.Spaces[index].rooms)
+
+      console.log(this.itemSp);
+      var filteredHouses = houses.filter(
+        (house) =>
+          house.building_space === item.building_space &&
+          house.total_space === item.total_space
+      );
+      filteredHouses.forEach((filteredHouse) => {
+        var houseIndex = houses.indexOf(filteredHouse);
+        if (houseIndex !== -1) {
+          houses.splice(houseIndex, 1);
+        }
+      });
+      this.data.Spaces.splice(index, 1);
+    },
+
+    adCopyD(index) {
+      this.data.Spaces[index].rooms = []
+      if(this.copyD.building_space !== null && this.copyD.total_space !== null) {
+        for (var i = 0; i < this.data.Spaces.length; i++) {
+          if(this.data.Spaces[i].building_space == this.copyD.building_space && this.data.Spaces[i].total_space == this.copyD.total_space){
+            this.data.Spaces[index].rooms = JSON.parse(JSON.stringify(this.data.Spaces[i].rooms));
+            break;
+          }
+        }
+        this.copyD = null
+      } else {
+        this.data.Spaces[index].rooms.push({
+          name: null,
+          space: null,
+          image: null,
+        })
+      }
     },
     backPage() {
       this.dialogData.open = false;
@@ -827,22 +856,6 @@ export default {
         space: null,
         image: null,
       });
-    },
-    deleteSpace(index) {
-      var item = this.data.Spaces[index];
-      var houses = this.data.houses;
-      var filteredHouses = houses.filter(
-        (house) =>
-          house.building_space === item.building_space &&
-          house.total_space === item.total_space
-      );
-      filteredHouses.forEach((filteredHouse) => {
-        var houseIndex = houses.indexOf(filteredHouse);
-        if (houseIndex !== -1) {
-          houses.splice(houseIndex, 1);
-        }
-      });
-      this.data.Spaces.splice(index, 1);
     },
     deleteRoom(index, ind) {
       this.data.Spaces[index].rooms.splice(ind, 1);
