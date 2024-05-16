@@ -437,6 +437,10 @@ class Api {
     const response = await axiosInstance.get(`/houses/all_no_bill`);
     return response;
   }
+  async getApartment(id) {
+    const response = await axiosInstance.get(`/center/forms/apartment/${id}`);
+    return response;
+  }
   async addOwners({
     name,
     phone,
@@ -785,6 +789,31 @@ class Api {
       floors,
       };
     const response = await axiosInstance.put(`center/forms/${id}`, requestData);
+    return response;
+  }
+
+  async editApartment({
+    id,
+    name,
+    block_number,
+    images,
+    total_space,
+    building_space,
+    apartment_building,
+    houses,
+    rooms_for_space,
+  }) {
+    const requestData = {
+      name,
+      block_number,
+      images,
+      total_space,
+      building_space,
+      apartment_building,
+      houses,
+      rooms_for_space,
+    };
+    const response = await axiosInstance.put(`center/forms/apartment/${id}`, requestData);
     return response;
   }
   async deleteForms(id) {

@@ -40,7 +40,10 @@
             />
           </template>
           <template v-slot:item.name="{ item }">
-            <v-btn @click="showP(item)" text color="primary">
+            <v-btn @click="showP(item)" text color="primary" v-if="item.building_type == 'منازل'">
+              {{ item.name }}
+            </v-btn>
+            <v-btn @click="showApartments(item)" text color="primary" v-else>
               {{ item.name }}
             </v-btn>
           </template>
@@ -55,13 +58,26 @@
           </template>
 
           <template v-slot:item.ac="{ item }">
-            <VTooltip bottom v-if="userData.includes('edit')">
+            <VTooltip bottom v-if="userData.includes('edit') && item.building_type == 'منازل'">
               <template #activator="{ attrs }">
                 <v-icon
                   color="rgb(243 216 1)"
                   v-bind="attrs"
                   size="20"
                   @click="editP(item)"
+                >
+                  mdi-note-edit
+                </v-icon>
+              </template>
+              <span>تعديل</span>
+            </VTooltip>
+            <VTooltip bottom v-else-if="userData.includes('edit') && item.building_type == 'شقق'">
+              <template #activator="{ attrs }">
+                <v-icon
+                  color="rgb(243 216 1)"
+                  v-bind="attrs"
+                  size="20"
+                  @click="editApartments(item)"
                 >
                   mdi-note-edit
                 </v-icon>
@@ -359,6 +375,7 @@ export default {
             value: "num",
           },
           { text: "الأسم", value: "name" },
+          { text: "نوع النموذج", value: "building_type" },
           { text: "الصوره", value: "images" },
           { text: "عدد الطوابق", value: "floors.length" },
           { text: "مساحة البناء", value: "building_space" },
@@ -428,7 +445,6 @@ export default {
 
       this.dialogshowHouse = true;
       this.showHouseLoading = false;
-      // console.log(this.showHouseItem);
     },
     closeShowHouse() {
       this.showHouseItem = [];
@@ -441,7 +457,6 @@ export default {
       this.statusSold = null;
 
       this.dialogshowHouse = false;
-      // console.log(this.showHouseItem);
     },
     goHouse(id, name) {
       this.$router.push(`/admin-profileHouse/${id}/${name}`);
@@ -462,6 +477,14 @@ export default {
     editP(item) {
       localStorage.setItem("itemForm", JSON.stringify(item));
       this.$router.push("/forms/Edit");
+    },
+    showApartments(item) {
+      localStorage.setItem("itemForm", JSON.stringify(item));
+      this.$router.push("/admin-profileApartments/Show");
+    },
+    editApartments(item) {
+      localStorage.setItem("itemForm", JSON.stringify(item));
+      this.$router.push("/admin-profileApartments/Edit");
     },
     add() {
       this.dialogAdd.open = true;
