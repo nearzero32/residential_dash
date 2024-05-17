@@ -69,7 +69,7 @@
                 </v-col>
                 <v-col cols="12" md="2" style="padding-block: 4%">
                   <v-btn @click="addHouesS" color="primary"
-                    >إضافة منازل الى المساحات</v-btn
+                    >إضافة وحدات سكنية الى المساحات</v-btn
                   >
                 </v-col>
 
@@ -85,7 +85,7 @@
                   >
                     <v-col cols="12" md="4" style="padding: 10px">
                       <v-label class="mb-2 font-weight-medium"
-                        >ارقام المنازل</v-label
+                        >ارقام الوحدات السكنية</v-label
                       >
                       <vue-tags-input
                         v-model="SpacesItem.houses"
@@ -162,7 +162,7 @@
                       @click="checkHousesNames"
                       :loading="checkHousesNamesLoading"
                       color="primary"
-                      >التحقق من المنازل المكررة</v-btn
+                      >التحقق من الوحدات السكنية المكررة</v-btn
                     >
                   </div>
                 </v-col>
@@ -693,7 +693,7 @@ export default {
             (value !== null && value !== undefined) || "يرجى أضافة الحالة",
         ],
         type: [(value) => !!value || "يرجى أدخال نوع الخدمة"],
-        houses: [(value) => !!value || "يرجى أدخال ارقام المنازل"],
+        houses: [(value) => !!value || "يرجى أدخال ارقام الوحدات السكنية"],
         category: [(value) => !!value || "الحقل مطلوب"],
         block_number: [(value) => !!value || "الحقل مطلوب"],
         street_number: [(value) => !!value || "الحقل مطلوب"],

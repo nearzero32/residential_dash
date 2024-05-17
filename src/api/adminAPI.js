@@ -635,9 +635,10 @@ class Api {
     const response = await axiosInstance.get(`/owners/getAll`);
     return response;
   }
-  async addNotifications({ title, body, image, receiver_type, receivers }) {
+  async addNotifications({ title, link, body, image, receiver_type, receivers }) {
     const requestData = {
       title,
+      link,
       body,
       image,
       receiver_type,

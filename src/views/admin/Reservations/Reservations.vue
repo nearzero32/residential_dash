@@ -35,7 +35,7 @@
               {{ table.centers.indexOf(item) + 1 }}
             </template>
             <template v-slot:item.actions="{ item }">
-              <VTooltip bottom v-if="userData.includes('remove')">
+              <!-- <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
                   <v-icon
                     color="#FF5252"
@@ -47,7 +47,7 @@
                   </v-icon>
                 </template>
                 <span>حذف</span>
-              </VTooltip>
+              </VTooltip> -->
                <VTooltip bottom>
                 <template #activator="{ attrs }">
                   <v-icon
@@ -230,7 +230,7 @@ export default {
           search: this.table.search,
           is_deleted: false,
         });
-
+        console.log(response)
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
       } catch (error) {

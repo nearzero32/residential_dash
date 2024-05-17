@@ -65,7 +65,7 @@
               />
             </template>
             <template v-slot:item.receiver_type="{ item }">
-              <div v-if="item.receiver_type == 'مالك محدد'">
+              <div v-if="item.receiver_type == 'مالك محدد' || item.receiver_type == 'موظف مبيعات محدد'">
                 <p>{{ item.receiver_type }}</p>
                 <ul v-for="(receiver, index) in item.receivers" :key="index">
                   <li>{{ receiver.name }}</li>
@@ -159,15 +159,26 @@
                     outlined
                   ></v-autocomplete>
                 </v-col>
-                <v-col cols="12" md="12">
-                  <v-label class="mb-2 font-weight-medium">التفاصيل</v-label>
-                  <v-textarea
-                    variant="outlined"
-                    v-model="data.body"
-                    :rules="Rules.body"
-                    color="primary"
+                <v-col
+                  cols="12"
+                  md="6"
+                  v-else-if="data.receiver_type == 'موظف مبيعات محدد'"
+                >
+                  <v-label class="mb-2 font-weight-medium"
+                    >موظفين المبيعات</v-label
+                  >
+                  <v-autocomplete
+                    clearable
+                    chips
+                    v-model="data.receivers"
+                    :rules="Rules.receivers"
+                    item-text="name"
+                    item-value="_id"
+                    label="موظفين المبيعات"
+                    :items="SellsEmployee"
+                    multiple
                     outlined
-                  ></v-textarea>
+                  ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="12">
                   <v-row>
@@ -219,6 +230,25 @@
                       </div>
                     </v-col>
                   </v-row>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">الرابط ( اختياري )</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="data.link"
+                    color="primary"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="12">
+                  <v-label class="mb-2 font-weight-medium">التفاصيل</v-label>
+                  <v-textarea
+                    variant="outlined"
+                    v-model="data.body"
+                    :rules="Rules.body"
+                    color="primary"
+                    outlined
+                  ></v-textarea>
                 </v-col>
               </v-row>
               <v-divider></v-divider>
@@ -360,10 +390,13 @@ export default {
       // add
       selectedFiles: [],
       OwnersAll: [],
+      SellsEmployee: [],
       items: [
         { text: "جميع الزبائن", value: "جميع الزبائن" },
         { text: "جميع الملاك", value: "جميع الملاك" },
         { text: "مالك محدد", value: "مالك محدد" },
+        { text: "جميع موظفي المبيعات", value: "جميع موظفي المبيعات" },
+        { text: "موظف مبيعات محدد", value: "موظف مبيعات محدد" },
       ],
       isFormvalid: false,
       addBtnLoading: false,
@@ -373,6 +406,7 @@ export default {
       existing_type: "بيع",
       data: {
         title: null,
+        link: null,
         body: null,
         image: null,
         receiver_type: null,
@@ -407,6 +441,7 @@ export default {
     }
     this.getCenter();
     this.getOwnersAll();
+    this.getSellsEmployee();
   },
   watch: {
     "data.receiver_type"(newValue) {
@@ -503,7 +538,6 @@ export default {
           is_deleted: false,
           sortBy: sortByJSON,
         });
-
         this.table.centers = response.data.results.data;
         this.table.content_url = response.data.content_url;
         this.table.totalItems = response.data.results.count;
@@ -533,6 +567,27 @@ export default {
         this.table.loading = false;
       }
     },
+
+    async getSellsEmployee() {
+      const sortByJSON = JSON.stringify({ key: "createdAt", order: "asc" });
+      try {
+        const response = await API.getSellsEmployee({
+          page: 1,
+          limit: 10000000000,
+          sortBy: sortByJSON,
+          search: null,
+        });
+        this.SellsEmployee = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     async addCenter(event) {
       event.preventDefault();
 
@@ -540,6 +595,7 @@ export default {
       try {
         const response = await API.addNotifications({
           title: this.data.title,
+          link: this.data.link,
           body: this.data.body,
           image: this.data.image,
           receiver_type: this.data.receiver_type,
@@ -549,6 +605,7 @@ export default {
         this.addBtnLoading = false;
         this.data.title = null;
         this.data.body = null;
+        this.data.link = null;
         this.data.receiver_type = null;
         this.data.receivers = null;
         this.data.image = null;

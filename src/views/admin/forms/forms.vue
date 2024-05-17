@@ -48,8 +48,8 @@
             </v-btn>
           </template>
           <template v-slot:item.buttonHouses="{ item }">
-            <v-btn :loading="showHouseLoading" @click="showHouse(item)">
-              عرض المنازل
+            <v-btn :loading="showHouseLoading" @click="showHouse(item)" small>
+              عرض الوحدات السكنية
 
               <template v-slot:loader>
                 <v-progress-linear indeterminate></v-progress-linear>
@@ -111,8 +111,8 @@
         class="headline justify-center"
         style="text-align: center; color: #fb9778"
       >
-        منازل النموذج ( {{ showHouseItem.name }} ) <br />
-        عدد المنازل الأجمالي ( {{ showHouseItem.houses.length }} )
+        وحدات النموذج ( {{ showHouseItem.name }} ) <br />
+        عدد الوحدات السكنية الأجمالي ( {{ showHouseItem.houses.length }} )
       </v-card-title>
       <v-container>
         <v-row>
@@ -127,7 +127,7 @@
                 text-align: center;
               "
             >
-              عدد المنازل الغير محجوزة ( {{ statusNotReserved }} )
+              عدد الوحدات السكنية الغير محجوزة ( {{ statusNotReserved }} )
             </v-card>
           </v-col>
           <v-col cols="12" md="3" style="padding: 10px">
@@ -141,7 +141,7 @@
                 text-align: center;
               "
             >
-              عدد المنازل المحجوزة مبدئياً (
+              عدد الوحدات السكنية المحجوزة مبدئياً (
               {{ statusInitialReservation }} )
             </v-card>
           </v-col>
@@ -156,7 +156,7 @@
                 text-align: center;
               "
             >
-              عدد المنازل المحجوزة ( {{ statusBookedUp }} )
+              عدد الوحدات السكنية المحجوزة ( {{ statusBookedUp }} )
             </v-card>
           </v-col>
           <v-col cols="12" md="3" style="padding: 10px">
@@ -171,7 +171,7 @@
                 color: white;
               "
             >
-              عدد المنازل التي تم بيعها ( {{ statusSold }} )
+              عدد الوحدات السكنية التي تم بيعها ( {{ statusSold }} )
             </v-card>
           </v-col>
         </v-row>
@@ -380,11 +380,11 @@ export default {
           { text: "عدد الطوابق", value: "floors.length" },
           { text: "مساحة البناء", value: "building_space" },
           { text: "المساحة الكلية", value: "total_space" },
-          { text: "عدد المنازل", value: "houses.length" },
+          { text: "عدد الوحدات السكنية", value: "houses.length" },
           { text: "التصنيف", value: "category" },
           { text: "البلوك", value: "block_number" },
           { text: "رقم الشارع", value: "street_number" },
-          { text: "عرض المنازل", value: "buttonHouses" },
+          { text: "عرض الوحدات السكنية", value: "buttonHouses" },
           { text: "العمليات", value: "ac" },
         ],
         centers: [],

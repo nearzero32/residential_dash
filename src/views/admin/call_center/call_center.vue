@@ -90,7 +90,7 @@
                 <span>نقل</span>
               </VTooltip>
 
-              <VTooltip bottom v-if="userData.includes('remove')">
+              <!-- <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
                   <v-icon
                     color="#FF5252"
@@ -102,7 +102,7 @@
                   </v-icon>
                 </template>
                 <span>حذف</span>
-              </VTooltip>
+              </VTooltip> -->
             </template>
           </v-data-table>
         </v-card>

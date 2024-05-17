@@ -16,9 +16,7 @@
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
             >
-              <p style="font-size: 14px;"><strong
-                >شركة صناع النهضة
-                 <br />للأستثمار  والتجارة العامة</strong
+              <p style="font-size: 14px;"><strong>{{ dataResidential.center_id.name }}</strong
               ></p>
             </v-col>
             <v-col
@@ -39,7 +37,7 @@
               </div>
             </v-col>
             <v-col cols="3" md="3" style="text-align: center; ">
-              <img :src="logoPrint" style="width: 160px" alt="" />
+              <img :src="dataResidential.content_url + dataResidential.center_id.logo" style="width: 160px" alt="" />
             </v-col>
           </v-row>
         </v-card-title>
@@ -81,17 +79,32 @@
               cols="6"
               md="6"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
+              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
               ><v-icon size="20"> mdi-phone </v-icon>4646</v-col
             >
             <v-col
               cols="6"
               md="6"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+              v-else
+              ><v-icon size="20"> mdi-phone </v-icon>{{ dataResidential.center_id.phone }}</v-col
+            >
+            <v-col
+              cols="6"
+              md="6"
+              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
               style="padding: 10px; text-align: left; white-space: pre-wrap"
             >
               العراق – السماوة<br /><a href="mailto:info@nahdda.com"
                 >info@nahdda.com</a
               ></v-col
             >
+            <v-col
+              cols="6"
+              md="6"
+              v-else
+              style="padding: 10px; text-align: left; white-space: pre-wrap"
+            >{{ dataResidential.center_id.address }}</v-col>
           </v-row>
         </v-container>
       </v-card>
@@ -100,7 +113,7 @@
 </template>
 
 <script>
-import logoPrint from "@/assets/images/icons/logoPrint.png";
+// import logoPrint from "@/assets/images/icons/logoPrint.png";
 import API from "@/api/adminAPI";
 
 export default {
@@ -109,10 +122,12 @@ export default {
       id: null,
       data: null,
       user: null,
-      logoPrint,
+      dataResidential: null,
     };
   },
   created() {
+    var userDataString = JSON.parse(localStorage.getItem("user"));
+    this.dataResidential = userDataString
     const da = JSON.parse(localStorage.getItem("PrintCallCenter"));
     this.id = da._id;
     API.getCallCenterOne({
@@ -121,7 +136,6 @@ export default {
       .then((response) => {
         this.data = response.data.results;
         this.user = JSON.parse(localStorage.getItem("user"));
-        console.log(this.data);
       })
       .catch((error) => {
         console.error("Error fetching call center data:", error);

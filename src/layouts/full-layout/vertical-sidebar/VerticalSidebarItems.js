@@ -89,17 +89,17 @@ export default [
         type: "admin",
       },
       {
-        title: "طلبات المنازل",
+        title: "طلبات وحدة سكنية",
         icon: "arrow-left",
         to: "admin-reservations",
         type: "admin",
       },
-      {
-        title: "عقود المبيعات",
-        icon: "arrow-left",
-        to: "admin-salesContracts",
-        type: "admin",
-      },
+      // {
+      //   title: "عقود المبيعات",
+      //   icon: "arrow-left",
+      //   to: "admin-salesContracts",
+      //   type: "admin",
+      // },
     ],
   },
   {
@@ -128,7 +128,7 @@ export default [
         type: "admin",
       },
       {
-        title: "المنازل",
+        title: "الوحدات السكنية",
         icon: "home",
         to: "admin-buying-offers",
         type: "admin",
@@ -235,17 +235,17 @@ export default [
         type: "assistance",
       },
       {
-        title: "طلبات المنازل",
+        title: "طلبات وحدة سكنية",
         icon: "arrow-left",
         to: "admin-reservations",
         type: "assistance",
       },
-      {
-        title: "عقود المبيعات",
-        icon: "arrow-left",
-        to: "admin-salesContracts",
-        type: "assistance",
-      },
+      // {
+      //   title: "عقود المبيعات",
+      //   icon: "arrow-left",
+      //   to: "admin-salesContracts",
+      //   type: "assistance",
+      // },
     ],
   },
   {
@@ -274,7 +274,7 @@ export default [
         type: "assistance",
       },
       {
-        title: "المنازل",
+        title: "الوحدات السكنية",
         icon: "home",
         to: "admin-buying-offers",
         type: "assistance",

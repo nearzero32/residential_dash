@@ -646,7 +646,7 @@ export default {
 
       // nav
       page: {
-        title: "المنازل",
+        title: "الوحدات السكنية",
       },
       breadcrumbs: [
         {
@@ -655,7 +655,7 @@ export default {
           to: "/Index",
         },
         {
-          text: "المنازل",
+          text: "الوحدات السكنية",
           disabled: true,
         },
       ],

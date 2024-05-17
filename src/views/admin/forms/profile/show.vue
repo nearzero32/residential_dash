@@ -3,7 +3,7 @@
     <v-container fluid class="down-top-padding">
       <v-card class="mx-auto">
         <v-container>
-          <v-card-title class="text-h5" style="display: grid; place-items: center"
+          <v-card-title class="text-h5" style="padding-block: 10px;display: grid; place-items: center"
             ><strong>نموذج ( {{ data.name }} )</strong></v-card-title
           >
           <v-divider></v-divider>
@@ -11,9 +11,9 @@
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
-                  <h3>
-                    <strong>أسم النموذج ( {{ data.name }} )</strong>
-                  </h3>
+                  <h5 style="text-align: center;">
+                    <strong>أسم النموذج <br>( {{ data.name }} )</strong>
+                  </h5>
                   <img style="width: 70px; margin-block: 12px" :src="domain" alt="" />
                 </v-card-text>
               </v-card>
@@ -21,9 +21,9 @@
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
-                  <h3>
-                    <strong>المساحة الكلية ( {{ data.total_space }} )</strong>
-                  </h3>
+                  <h5 style="text-align: center;">
+                    <strong>المساحات الكلية <br>( {{ data.total_space }} )</strong>
+                  </h5>
                   <img style="width: 70px; margin-block: 12px" :src="space" alt="" />
                 </v-card-text>
               </v-card>
@@ -31,9 +31,9 @@
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
-                  <h3>
-                    <strong>مساحة البناء ( {{ data.building_space }} )</strong>
-                  </h3>
+                  <h5 style="text-align: center;">
+                    <strong>مساحات البناء <br>( {{ data.building_space }} )</strong>
+                  </h5>
                   <img
                     style="width: 70px; margin-block: 12px"
                     :src="spaceUtilization"
@@ -45,9 +45,9 @@
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
-                  <h3>
+                  <h5 style="text-align: center;">
                     <strong>التصنيف ( {{ data.category }} )</strong>
-                  </h3>
+                  </h5>
                   <img
                     style="width: 70px; margin-block: 12px"
                     :src="data_classification"
@@ -59,9 +59,9 @@
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
-                  <h3>
+                  <h5 style="text-align: center;">
                     <strong>البلوك ( {{ data.block_number }} )</strong>
-                  </h3>
+                  </h5>
                   <img
                     style="width: 70px; margin-block: 12px"
                     :src="street"
@@ -73,9 +73,9 @@
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
-                  <h3>
+                  <h5 style="text-align: center;">
                     <strong>رقم الشارع ( {{ data.street_number }} )</strong>
-                  </h3>
+                  </h5>
                   <img
                     style="width: 70px; margin-block: 12px"
                     :src="location"
@@ -87,7 +87,7 @@
           </v-row>
         </v-container>
         <v-container>
-          <v-card-title class="text-h5" style="display: grid; place-items: center">
+          <v-card-title class="text-h5" style="padding-block: 10px;display: grid; place-items: center">
             <strong style="color: #fb9778; border-bottom: solid 2px; padding-bottom: 9px"
               >صور النموذج</strong
             ></v-card-title
@@ -103,7 +103,7 @@
           </v-carousel>
         </v-container>
         <v-container>
-          <v-card-title class="text-h5" style="display: grid; place-items: center">
+          <v-card-title class="text-h5" style="padding-block: 10px;display: grid; place-items: center">
             <strong style="color: #fb9778; border-bottom: solid 2px; padding-bottom: 9px"
               >الطوابق</strong
             ></v-card-title
@@ -128,7 +128,7 @@
               </v-carousel-item>
             </v-carousel>
             <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
-              <strong>مكونات ( {{ floor.name }} )</strong>
+              <strong>محتويات الطابق ( {{ floor.name }} )</strong>
             </h3>
             <v-container>
               <v-row v-for="(room, indR) in floor.rooms" :key="indR">
@@ -196,10 +196,10 @@ export default {
     const itemForm = localStorage.getItem("itemForm");
     const user = JSON.parse(localStorage.getItem("user"));
     this.content_url = user.content_url;
-
     if (itemForm) {
       const itemFormData = JSON.parse(itemForm);
       this.data = itemFormData;
+      console.log(this.data)
     }
   },
 };

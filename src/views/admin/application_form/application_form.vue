@@ -38,7 +38,7 @@
               {{ $func(item.house_info.price) }}
             </template>
             <template v-slot:item.actions="{ item }">
-              <VTooltip bottom v-if="userData.includes('remove')">
+              <!-- <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
                   <v-icon
                     color="#FF5252"
@@ -50,7 +50,7 @@
                   </v-icon>
                 </template>
                 <span>حذف</span>
-              </VTooltip>
+              </VTooltip> -->
               <VTooltip bottom>
                 <template #activator="{ attrs }">
                   <v-icon color="#fffc00" v-bind="attrs" size="20" @click="Print(item)">

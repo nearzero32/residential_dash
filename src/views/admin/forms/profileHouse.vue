@@ -114,6 +114,7 @@ export default {
         const response = await API.getProfileHouse(this.id);
         this.content_url = response.data.content_url;
         this.data = response.data.results;
+        console.log(response.data)
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
