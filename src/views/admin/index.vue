@@ -11,10 +11,10 @@
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
-                src="@/assets/images/icon/maintenance.png"
+                src="@/assets/images/icon/sales-marketing.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد موظفين المبيعات <br />( لا يوجد )</strong>
+              <strong>عدد موظفين المبيعات <br />( {{ data.allSalesEmployee }} )</strong>
             </v-card-text>
           </v-card>
         </v-col>
@@ -22,10 +22,10 @@
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
-                src="@/assets/images/icon/maintenance.png"
+                src="@/assets/images/icon/phone.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد استفسارات الزبائن <br />( لا يوجد )</strong>
+              <strong>عدد استفسارات الزبائن <br />( {{ data.allCallCenter }} )</strong>
             </v-card-text>
           </v-card>
         </v-col>
@@ -33,10 +33,10 @@
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
-                src="@/assets/images/icon/maintenance.png"
+                src="@/assets/images/icon/request.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد أستمارات طلب حجز وحدة سكنية <br />( لا يوجد )</strong>
+              <strong>عدد أستمارات طلب حجز وحدة سكنية ( {{ data.allApplicationForm }} )</strong>
             </v-card-text>
           </v-card>
         </v-col>
@@ -44,10 +44,10 @@
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
-                src="@/assets/images/icon/maintenance.png"
+                src="@/assets/images/icon/application-architecture.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد أستمارات طلب موافقة <br />( لا يوجد )</strong>
+              <strong>عدد أستمارات طلب موافقة <br />( {{ data.allConfirmationsForm }} )</strong>
             </v-card-text>
           </v-card>
         </v-col>
@@ -55,14 +55,14 @@
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
-                src="@/assets/images/icon/maintenance.png"
+                src="@/assets/images/icon/communications.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد طلبات الوحدات السكنية <br />( لا يوجد )</strong>
+              <strong>عدد طلبات الوحدات السكنية <br />( {{ data.allReservations }} )</strong>
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" md="3">
+        <!-- <v-col cols="12" md="3">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -72,7 +72,7 @@
               <strong>عدد عقود المبيعات <br />( لا يوجد )</strong>
             </v-card-text>
           </v-card>
-        </v-col>
+        </v-col> -->
         <v-col cols="12" md="3">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
@@ -82,6 +82,19 @@
               /><br />
               <strong
                 >عدد وحدات الأيجار <br />( {{ data.allHousesRent }} )</strong
+              >
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-card elevation="16" :loading="loading" outlined shaped>
+            <v-card-text style="text-align: center">
+              <img
+                src="@/assets/images/icon/sold.png"
+                style="width: 35px"
+              /><br />
+              <strong
+                >عدد الوحدات السكنية المباعة <br />( {{ data.allHousesSelling }} )</strong
               >
             </v-card-text>
           </v-card>
@@ -104,10 +117,10 @@
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
-                src="@/assets/images/icon/house-owner.png"
+                src="@/assets/images/icon/visitors.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد زوار الملاك <br />( لا يوجد )</strong>
+              <strong>عدد زوار الملاك <br />( {{ data.allOwnersVisits }} )</strong>
             </v-card-text>
           </v-card>
         </v-col>
@@ -183,20 +196,6 @@
                 style="width: 35px"
               /><br />
               <strong>عدد الحراس <br />( {{ data.allGuards }} )</strong>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" md="3">
-          <v-card elevation="16" :loading="loading" outlined shaped>
-            <v-card-text style="text-align: center">
-              <img
-                src="@/assets/images/icon/bell.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >عدد طلبات الوحدات السكنية <br />(
-                {{ data.allReservations }} )</strong
-              >
             </v-card-text>
           </v-card>
         </v-col>
