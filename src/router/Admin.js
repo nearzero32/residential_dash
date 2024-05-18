@@ -163,7 +163,7 @@ const Admin = {
       component: confirmations_form,
     },
     {
-      path: "/admin-profileHouse/:id/:name",
+      path: "/admin-profileHouse/form_id/:form_id/house_id/:house_id/name/:name",
       name: "admin-profileHouse",
       component: profileHouse,
     },

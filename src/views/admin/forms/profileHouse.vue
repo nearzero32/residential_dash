@@ -8,8 +8,8 @@
       ></BaseBreadcrumb>
       <v-card :loading="loading" v-if="data !== null">
         <v-container fluid class="down-top-padding">
-          <p v-if="data && data.name">رقم المنزل : {{ data.name }}</p>
-          <p v-if="data && data.status">حالة المنزل : {{ data.status }}</p>
+          <p v-if="data && data.name">رقم الوحدة السكنية : {{ data.name }}</p>
+          <p v-if="data && data.status">حالة الوحدة السكنية : {{ data.status }}</p>
           <p v-if="data && data.owners">المالك الحالي : {{ data.owners.name }}</p>
           <p v-if="data && data.owners">رقم هاتف المالك الحالي : {{ data.owners.phone }}</p>
           <p v-if="data && data.current_owner">تاريخ الشراء : {{ data.current_owner.date }}</p>
@@ -40,6 +40,37 @@
               <p>{{ ite }}</p>
             </li>
           </ul>
+          <v-container>
+            <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
+              <strong>محتويات الوحدة السكنية</strong>
+            </h3>
+              <v-row v-for="(room, indR) in data.rooms" :key="indR">
+                <v-col cols="12" md="4" style="padding: 10px">
+                  <v-card
+                    class="mx-auto"
+                    style="height: 100%; display: grid; place-items: center"
+                    >{{ room.name }}</v-card
+                  >
+                </v-col>
+                <v-col cols="12" md="4" style="padding: 10px">
+                  <v-card
+                    class="mx-auto"
+                    style="height: 100%; display: grid; place-items: center"
+                    >مساحة {{ room.space }}</v-card
+                  >
+                </v-col>
+                <v-col cols="12" md="4" style="padding: 10px">
+                  <v-card
+                    class="mx-auto"
+                    style="height: 100%; display: grid; place-items: center"
+                  >
+                    <img style="padding-block: 10px;width: 100px" v-if="room.image" :src="content_url + room.image" alt="" />
+                    
+                    <p v-else>صورة  ( لا توجد صوره ) </p>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
         </v-container>
       </v-card>
     </v-container>
@@ -90,7 +121,8 @@ export default {
       ],
       // nav
 
-      id: this.$route.params.id,
+      form_id: this.$route.params.form_id,
+      house_id: this.$route.params.house_id,
       loading: false,
       data: null,
       content_url: null,
@@ -111,10 +143,12 @@ export default {
     async getCenter() {
       try {
         this.loading = true;
-        const response = await API.getProfileHouse(this.id);
+        const response = await API.getProfileHouse({
+          form_id: this.form_id,
+          house_id: this.house_id,
+        });
         this.content_url = response.data.content_url;
         this.data = response.data.results;
-        console.log(response.data)
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");

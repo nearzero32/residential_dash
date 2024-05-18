@@ -132,21 +132,14 @@
             </h3>
             <v-container>
               <v-row v-for="(room, indR) in floor.rooms" :key="indR">
-                <v-col cols="12" md="2" style="padding: 10px">
-                  <v-card
-                    class="mx-auto"
-                    style="height: 100%; display: grid; place-items: center"
-                    > {{ indR + 1 }}</v-card
-                  >
-                </v-col>
-                <v-col cols="12" md="3" style="padding: 10px">
+                <v-col cols="12" md="4" style="padding: 10px">
                   <v-card
                     class="mx-auto"
                     style="height: 100%; display: grid; place-items: center"
                     >{{ room.name }}</v-card
                   >
                 </v-col>
-                <v-col cols="12" md="3" style="padding: 10px">
+                <v-col cols="12" md="4" style="padding: 10px">
                   <v-card
                     class="mx-auto"
                     style="height: 100%; display: grid; place-items: center"

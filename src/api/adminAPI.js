@@ -856,9 +856,9 @@ class Api {
   // confirmations_form
 
   // getProfileHouse
-  async getProfileHouse(id) {
+  async getProfileHouse({ form_id, house_id }) {
     const response = await axiosInstance.get(
-      `/center/forms/form_id/662e48b231374339528fb74f/house_id/${id}`
+      `/center/forms/form_id/${form_id}/house_id/${house_id}`
     );
     return response;
   }

@@ -40,12 +40,34 @@
             />
           </template>
           <template v-slot:item.name="{ item }">
-            <v-btn @click="showP(item)" text color="primary" v-if="item.building_type == 'منازل'">
+            <v-btn
+              @click="showP(item)"
+              text
+              color="primary"
+              v-if="item.building_type == 'منازل'"
+            >
               {{ item.name }}
             </v-btn>
             <v-btn @click="showApartments(item)" text color="primary" v-else>
               {{ item.name }}
             </v-btn>
+          </template>
+          <template v-slot:item.building_space="{ item }">
+            <ul>
+              <li
+                v-for="(building_spac, index) in item.building_space"
+                :key="index"
+              >
+                {{ building_spac }}
+              </li>
+            </ul>
+          </template>
+          <template v-slot:item.total_space="{ item }">
+            <ul>
+              <li v-for="(total_spac, index) in item.total_space" :key="index">
+                {{ total_spac }}
+              </li>
+            </ul>
           </template>
           <template v-slot:item.buttonHouses="{ item }">
             <v-btn :loading="showHouseLoading" @click="showHouse(item)" small>
@@ -58,7 +80,10 @@
           </template>
 
           <template v-slot:item.ac="{ item }">
-            <VTooltip bottom v-if="userData.includes('edit') && item.building_type == 'منازل'">
+            <VTooltip
+              bottom
+              v-if="userData.includes('edit') && item.building_type == 'منازل'"
+            >
               <template #activator="{ attrs }">
                 <v-icon
                   color="rgb(243 216 1)"
@@ -71,7 +96,12 @@
               </template>
               <span>تعديل</span>
             </VTooltip>
-            <VTooltip bottom v-else-if="userData.includes('edit') && item.building_type == 'شقق'">
+            <VTooltip
+              bottom
+              v-else-if="
+                userData.includes('edit') && item.building_type == 'شقق'
+              "
+            >
               <template #activator="{ attrs }">
                 <v-icon
                   color="rgb(243 216 1)"
@@ -188,7 +218,7 @@
                   style="margin: 5px"
                   :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
                   :height="40"
-                  @click="goHouse(item._id, item.name)"
+                  @click="goHouse(showHouseItem._id, item._id, item.name)"
                   :color="
                     item.status === 'حجز مبدئي'
                       ? 'rgb(217 217 217)'
@@ -378,8 +408,8 @@ export default {
           { text: "نوع النموذج", value: "building_type" },
           { text: "الصوره", value: "images" },
           { text: "عدد الطوابق", value: "floors.length" },
-          { text: "مساحة البناء", value: "building_space" },
-          { text: "المساحة الكلية", value: "total_space" },
+          { text: "مساحات البناء", value: "building_space" },
+          { text: "المساحات الكلية", value: "total_space" },
           { text: "عدد الوحدات السكنية", value: "houses.length" },
           { text: "التصنيف", value: "category" },
           { text: "البلوك", value: "block_number" },
@@ -428,7 +458,9 @@ export default {
       });
       this.statusNotReserved = filteredStatusNotReserved.length;
 
-      var filteredStatusInitialReservation = item.houses.filter(function (iteReservation) {
+      var filteredStatusInitialReservation = item.houses.filter(function (
+        iteReservation
+      ) {
         return iteReservation.status === "حجز مبدئي";
       });
       this.statusInitialReservation = filteredStatusInitialReservation.length;
@@ -458,8 +490,8 @@ export default {
 
       this.dialogshowHouse = false;
     },
-    goHouse(id, name) {
-      this.$router.push(`/admin-profileHouse/${id}/${name}`);
+    goHouse(form_id,house_id, name) {
+      this.$router.push(`/admin-profileHouse/form_id/${form_id}/house_id/${house_id}/name/${name}`);
     },
     clossMess() {
       var FormMass = localStorage.getItem("itemFormMass");
@@ -582,5 +614,11 @@ export default {
 }
 .vue-dropzone > .dz-preview .dz-remove {
   width: 100%;
+}
+@media (max-width: 600px) {
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+    border-bottom: solid 1px #cbcbcb;
+    padding-bottom: 10px;
+  }
 }
 </style>
