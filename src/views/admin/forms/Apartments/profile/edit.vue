@@ -111,9 +111,23 @@
                 </v-col>
 
                 <v-col cols="12" md="12" style="padding: 10px">
-                  <v-row justify="center">
+                  <div style="text-align: center;">
+                    <v-progress-circular
+                      :rotate="-90"
+                      :size="100"
+                      :width="15"
+                      :value="value"
+                      color="primary"
+                      style="width: 100%"
+                      id="isDisplee"
+                    >
+                      {{ value }}
+                    </v-progress-circular>
+                  </div>
+                  <v-row justify="center" id="isDisple">
                     <v-expansion-panels
                       v-model="panel"
+                      value="1"
                       :disabled="disabled"
                       multiple
                     >
@@ -123,7 +137,7 @@
                             <v-row>
                               <v-col cols="6" md="6" style="padding-block: 0px;">
                                 المساحة
-                                <span v-if="Space.building_space !== null && Space.building_space !== ''">( {{ Space.building_space }} )</span>
+                                <span v-if="Space.total_space !== null && Space.total_space !== ''">( {{ Space.total_space }} )</span>
                                 <span v-else>( جديدة )</span>
                               </v-col>
                               <v-col cols="6" md="6" style="padding: 0px;">
@@ -131,7 +145,7 @@
                                   <v-icon>mdi-delete</v-icon>
                                   <span>
                                     حذف المساحة
-                                    <span v-if="Space.building_space !== null && Space.building_space !== ''">( {{ Space.building_space }} )</span>
+                                    <span v-if="Space.total_space !== null && Space.total_space !== ''">( {{ Space.total_space }} )</span>
                                     <span v-else>( جديدة )</span>
                                   </span>
                                 </v-btn>
@@ -296,7 +310,7 @@
                                         solo
                                         v-model="Space.copyD"
                                         label="نسخ محتوى مساحة اخرى"
-                                        :items="filteredItems(index)"
+                                        :items="itemSp"
                                         item-text="name"
                                         item-value="building_space"
                                         @input="adCopyD(index)"
@@ -540,6 +554,7 @@ export default {
       // nav
 
       // addData
+      value: 0,
       content_url: null,
       Rules: {
         name: [(value) => !!value || "الحقل مطلوب"],
@@ -557,8 +572,9 @@ export default {
           (value) => !!value || "الحقل مطلوب",
         ],
       },
-      panel: [0, 1],
+      panel: [],
       disabled: false,
+      loding_div: false,
       readonly: false,
       isStorg: false,
       isFormvalid: false,
@@ -976,6 +992,10 @@ export default {
     async getHouse() {
       try {
         const response = await API.getApartment(this.data.id);
+        var l = document.getElementById('isDisplee')
+        var d = document.getElementById('isDisple')
+        l.style.display = "block"
+        d.style.display = "none"
 
         this.data.name = response.data.results.name;
         this.data.block_number = response.data.results.block_number;
@@ -987,46 +1007,57 @@ export default {
           this.tagsBuildingNames.push(newData)
         })
         var spaces = response.data.results.spaces;
+        const expectedTotal = 100;
+
+        const incrementValue = Math.floor(expectedTotal / spaces.length);
         for (var i = 0; i < spaces.length; i++) {
-            var space = spaces[i];
-            this.data.Spaces.push({
-                addSpaceInput: true,
-                isStorg: true,
-                copyD: null,
-                total_space: space.total_space,
-                building_space: space.building_space,
-                tag: {
-                    houseNumber: "",
-                    tagsHouseNumber: [],
-                    FloorNumber: "",
-                },
-                table: [],
-                houseNumber: [],
-                FloorNumber: [],
-                rooms: []
+          this.panel.push(i);
+          var space = spaces[i];
+          this.data.Spaces.push({
+            addSpaceInput: true,
+            isStorg: true,
+            copyD: null,
+            total_space: space.total_space,
+            building_space: space.building_space,
+            tag: {
+              houseNumber: "",
+              tagsHouseNumber: [],
+              FloorNumber: "",
+            },
+            table: [],
+            houseNumber: [],
+            FloorNumber: [],
+            rooms: []
+          });
+          this.itemSp.push({
+            name: `${space.building_space} - ${space.total_space}`,
+            building_space: space.building_space,
+            total_space: space.total_space
+          })
+          for (var h = 0; h < space.houses.length; h++) {
+            this.data.Spaces[i].tag.tagsHouseNumber.push({
+              text: space.houses[h].name,
+              tiClasses: ["ti-valid"]
             });
-            this.itemSp.push({
-              name: `${space.building_space} - ${space.total_space}`,
-              building_space: space.building_space,
-              total_space: space.total_space
-            })
-            for (var h = 0; h < space.houses.length; h++) {
-                this.data.Spaces[i].tag.tagsHouseNumber.push({
-                    text: space.houses[h].name,
-                    tiClasses: ["ti-valid"]
-                });
-                this.data.Spaces[i].tag.FloorNumber = space.houses[h].apartment_floor_number;
-                await this.clickButtonWithDelay(i);
+            this.data.Spaces[i].tag.FloorNumber = space.houses[h].apartment_floor_number;
+            if (this.clickButtonWithDelay) {
+              await this.clickButtonWithDelay(i);
+            } else {
+              console.error('clickButtonWithDelay is not a function or is undefined');
             }
-            
-            for (var j = 0; j < space.rooms.length; j++) {
-                this.data.Spaces[i].rooms.push({
-                    name: space.rooms[j].name,
-                    image: space.rooms[j].image,
-                    space: space.rooms[j].space,
-                });
-            }
+          }
+
+          for (var j = 0; j < space.rooms.length; j++) {
+            this.data.Spaces[i].rooms.push({
+              name: space.rooms[j].name,
+              image: space.rooms[j].image,
+              space: space.rooms[j].space,
+            });
+          }
+          this.value = Math.min(this.value + incrementValue, 100);
         }
+        l.style.display = "none"
+        d.style.display = "block"
 
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -1038,14 +1069,22 @@ export default {
         this.loading = false;
       }
     },
+
     clickButtonWithDelay(index) {
         return new Promise(resolve => {
-            setTimeout(() => {
-                document.getElementById('addHouseFloorBtn-' + index).click();
-                resolve();
-            }, 100);
+            const interval = setInterval(() => {
+                const button = document.getElementById('addHouseFloorBtn-' + index);
+                if (button) {
+                    button.click();
+                    clearInterval(interval);
+                    resolve();
+                } else {
+                    console.error('Button not found for index:', index);
+                }
+            },);
         });
     },
+
     openFileInputR(index, ind) {
       this.$refs["fileInput" + index + ind][0].click();
     },
@@ -1070,3 +1109,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.v-progress-circular {
+  margin: 1rem;
+}
+.v-progress-circular__info {
+  height: 100%;
+}
+</style>

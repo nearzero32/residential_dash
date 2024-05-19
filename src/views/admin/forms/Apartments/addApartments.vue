@@ -128,7 +128,7 @@
                             <v-row>
                               <v-col cols="6" md="6" style="padding-block: 0px;">
                                 المساحة
-                                <span v-if="Space.building_space !== null && Space.building_space !== ''">( {{ Space.building_space }} )</span>
+                                <span v-if="Space.total_space !== null && Space.total_space !== ''">( {{ Space.total_space }} )</span>
                                 <span v-else>( جديدة )</span>
                               </v-col>
                               <v-col cols="6" md="6" style="padding: 0px;">
@@ -136,7 +136,7 @@
                                   <v-icon>mdi-delete</v-icon>
                                   <span>
                                     حذف المساحة
-                                    <span v-if="Space.building_space !== null && Space.building_space !== ''">( {{ Space.building_space }} )</span>
+                                    <span v-if="Space.total_space !== null && Space.total_space !== ''">( {{ Space.total_space }} )</span>
                                     <span v-else>( جديدة )</span>
                                   </span>
                                 </v-btn>
@@ -301,7 +301,7 @@
                                         solo
                                         v-model="copyD"
                                         label="نسخ محتوى مساحة اخرى"
-                                        :items="filteredItems(index)"
+                                        :items="itemSp"
                                         item-text="name"
                                         item-value="building_space"
                                         @input="adCopyD(index)"
@@ -626,13 +626,13 @@ export default {
     this.getCenter();
   },
   computed: {
-    filteredItems() {
-      return function(index) {
-        return this.itemSp.filter(item => {
-          return item.building_space!== (this.data.Spaces[index]?.building_space?? null);
-        });
-      };
-    },
+      filteredItems() {
+          return function(space) {
+              return this.itemSp.filter(item => {
+                  return item.building_space !== (space?.building_space ?? null);
+              });
+          };
+      },
   },
   watch: {
     BuildingNames: {
