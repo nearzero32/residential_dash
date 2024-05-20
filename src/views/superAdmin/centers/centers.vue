@@ -104,6 +104,19 @@
                     hide-details="auto"
                   ></v-text-field>
                 </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="font-weight-medium mb-2">نوع البنايات</v-label>
+                  <v-autocomplete
+                    v-model="data.building_type"
+                    :rules="Rules.building_type"
+                    class="mb-8"
+                    required
+                    hide-details="auto"
+                    :items="items"
+                    item-text="name"
+                    item-value="value"
+                  ></v-autocomplete>
+                </v-col>
                 <v-col cols="12" md="12">
                   <v-label class="font-weight-medium mb-2"
                     >عنوان المجمع</v-label
@@ -190,6 +203,19 @@
                   hide-details="auto"
                 ></v-text-field>
               </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="font-weight-medium mb-2">نوع البنايات</v-label>
+                  <v-autocomplete
+                    v-model="editdItem.building_type"
+                    :rules="Rules.building_type"
+                    class="mb-8"
+                    required
+                    hide-details="auto"
+                    :items="items"
+                    item-text="name"
+                    item-value="value"
+                  ></v-autocomplete>
+                </v-col>
               <v-col cols="12" md="12">
                 <v-label class="font-weight-medium mb-2">عنوان المجمع</v-label>
                 <v-text-field
@@ -286,6 +312,7 @@ export default {
         { text: "أسم المجمع", value: "name" },
         { text: "رقم الهاتف", value: "phone" },
         { text: "العنوان", value: "address" },
+        { text: "نوع البنايات", value: "building_type" },
         { text: "العمليات", value: "actions" },
       ],
       centers: [],
@@ -307,16 +334,23 @@ export default {
     },
     // message
     // add
+    items: [
+      {name: "شقق", value: "شقق"},
+      {name: "منازل", value: "منازل"},
+      {name: "منازل وشقق", value: "منازل وشقق"},
+    ],
     isFormvalid: false,
     addBtnLoading: false,
     dialog: false,
     data: {
       name: "",
+      building_type: "",
       phone: "",
       address: "",
     },
     Rules: {
       account_nameRules: [(v) => !!v || "يرجى إدخال اسم المجمع"],
+      building_type: [(v) => !!v || "يرجى إدخال نوع البنايات"],
       phoneRules: [
         (v) => !!v || "يرجى إدخال رقم الهاتف",
         (v) =>
@@ -347,6 +381,7 @@ export default {
       try {
         const response = await API.getCenter();
         this.table.centers = response.data.results;
+        console.log(this.table.centers)
         this.table.loading = false;
       } catch (error) {
         if (error.response.status === 401) {
@@ -364,12 +399,14 @@ export default {
         const response = await API.addCenter({
           name: this.data.name,
           phone: this.data.phone,
+          building_type: this.data.building_type,
           address: this.data.address,
         });
 
         this.addBtnLoading = false;
         this.data.name = "";
         this.data.phone = "";
+        this.data.building_type = "";
         this.data.address = "";
         await this.getCenter();
         this.dialog = false;
@@ -399,6 +436,7 @@ export default {
           center_id: this.editdItem._id,
           name: this.editdItem.name,
           phone: this.editdItem.phone,
+          building_type: this.editdItem.building_type,
           address: this.editdItem.address,
         });
         this.editItemLoading = false;

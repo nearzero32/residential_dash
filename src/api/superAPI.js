@@ -28,20 +28,22 @@ class Api {
   // Complain
 
   // Center
-  async addCenter({ name, phone, address }) {
+  async addCenter({ name, phone, building_type, address }) {
     const requestData = {
       name,
       phone,
+      building_type,
       address,
     };
     const response = await axiosInstance.post(`/admin/centers`, requestData);
     return response;
   }
-  async editCenter({ center_id, name, phone, address }) {
+  async editCenter({ center_id, name, phone, building_type, address }) {
     const requestData = {
       center_id,
       name,
       phone,
+      building_type,
       address,
     };
     const response = await axiosInstance.put(`/admin/centers`, requestData);
