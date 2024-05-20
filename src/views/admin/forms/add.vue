@@ -13,21 +13,7 @@
           <v-card-text class="pb-0">
             <v-form v-model="isFormvalid">
               <v-row>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">نوع النموذج</v-label>
-                  <v-autocomplete
-                    variant="outlined"
-                    v-model="data.building_type"
-                    :rules="Rules.building_type"
-                    color="primary"
-                    outlined
-                    disabled
-                    :items="itemType"
-                    item-text="name"
-                    item-value="value"
-                  ></v-autocomplete>
-                </v-col>
-                <v-col cols="12" md="6" style="padding: 10px">
+                <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium">أسم النموذج</v-label>
                   <v-text-field
                     variant="outlined"
@@ -37,7 +23,7 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" md="4" style="padding: 10px">
+                <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium"
                     >مساحات البناء
                   </v-label>
@@ -52,7 +38,7 @@
                     outlined
                   />
                 </v-col>
-                <v-col cols="12" md="4" style="padding: 10px">
+                <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium"
                     >المساحات الكلية</v-label
                   >
@@ -67,7 +53,7 @@
                     outlined
                   />
                 </v-col>
-                <v-col cols="12" md="2" style="padding-block: 4%">
+                <v-col cols="12" md="3" style="padding-block: 4%">
                   <v-btn @click="addHouesS" color="primary"
                     >إضافة وحدات سكنية الى المساحات</v-btn
                   >
@@ -195,40 +181,6 @@
                       variant="outlined"
                       v-model="data.street_number"
                       :rules="Rules.street_number"
-                      color="primary"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    md="4"
-                    style="padding: 10px"
-                    v-if="data.building_type == 'شقق'"
-                  >
-                    <v-label class="mb-2 font-weight-medium"
-                      >اسم العمارة</v-label
-                    >
-                    <v-text-field
-                      variant="outlined"
-                      v-model="data.apartment_building"
-                      :rules="Rules.apartment_building"
-                      color="primary"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    md="4"
-                    style="padding: 10px"
-                    v-if="data.building_type == 'شقق'"
-                  >
-                    <v-label class="mb-2 font-weight-medium"
-                      >رقم الطابق</v-label
-                    >
-                    <v-text-field
-                      variant="outlined"
-                      v-model="data.floor_number"
-                      :rules="Rules.floor_number"
                       color="primary"
                       outlined
                     ></v-text-field>
@@ -667,10 +619,6 @@ export default {
       isTrue: false,
       isFormvalid: false,
       automatic: false,
-      itemType: [
-        { name: "منازل", value: "منازل" },
-        { name: "شقق", value: "شقق" },
-      ],
       from: null,
       to: null,
       checkHousesNamesLoading: false,
@@ -1169,7 +1117,9 @@ export default {
               } else if (error.response && error.response.status === 500) {
                 this.showDialogfunction(error.response.data.message, "#FF5252");
               }
-            }
+            } finally {
+        this.addLoading = false;
+      }
           }
         }
       }

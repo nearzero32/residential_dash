@@ -971,6 +971,8 @@ export default {
           this.addLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
+      } finally {
+        this.addLoading = false;
       }
 
 

@@ -12,7 +12,7 @@
           text
           class="ml-auto"
           v-if="userData.includes('add')"
-          @click="add()"
+          @click="AddAnApartmentModel"
         >
           <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة نموذج جديد
         </v-btn>
@@ -40,15 +40,7 @@
             />
           </template>
           <template v-slot:item.name="{ item }">
-            <v-btn
-              @click="showP(item)"
-              text
-              color="primary"
-              v-if="item.building_type == 'منازل'"
-            >
-              {{ item.name }}
-            </v-btn>
-            <v-btn @click="showApartments(item)" text color="primary" v-else>
+            <v-btn @click="showApartments(item)" text color="primary">
               {{ item.name }}
             </v-btn>
           </template>
@@ -81,27 +73,7 @@
 
           <template v-slot:item.ac="{ item }">
             <VTooltip
-              bottom
-              v-if="userData.includes('edit') && item.building_type == 'منازل'"
-            >
-              <template #activator="{ attrs }">
-                <v-icon
-                  color="rgb(243 216 1)"
-                  v-bind="attrs"
-                  size="20"
-                  @click="editP(item)"
-                >
-                  mdi-note-edit
-                </v-icon>
-              </template>
-              <span>تعديل</span>
-            </VTooltip>
-            <VTooltip
-              bottom
-              v-else-if="
-                userData.includes('edit') && item.building_type == 'شقق'
-              "
-            >
+              bottom v-if="userData.includes('edit')">
               <template #activator="{ attrs }">
                 <v-icon
                   color="rgb(243 216 1)"
@@ -260,21 +232,6 @@
     </v-dialog>
     <!-- - Dailog for show info to user -->
 
-    <!-- - Dailog for show info to user -->
-    <v-dialog v-model="dialogAdd.open" max-width="500px">
-      <v-card>
-        <v-card-title class="headline justify-center">
-          <v-btn color="primary" text @click="AddHouseModel">
-            إضافة نموذج منازل
-          </v-btn>
-          <v-btn color="primary" text @click="AddAnApartmentModel">
-            إضافة نموذج شقق
-          </v-btn>
-        </v-card-title>
-      </v-card>
-    </v-dialog>
-    <!-- - Dailog for show info to user -->
-
     <!-- - showImg -->
     <v-dialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <v-card style="padding-top: 20px">
@@ -333,7 +290,7 @@ export default {
       userDataString: null,
       // nav
       page: {
-        title: "النماذج",
+        title: "نماذج شقق",
       },
       breadcrumbs: [
         {
@@ -342,18 +299,11 @@ export default {
           to: "/Index",
         },
         {
-          text: "النماذج",
+          text: "نماذج شقق",
           disabled: true,
         },
       ],
       // nav
-      // dialogAdd
-      dialogAdd: {
-        open: false,
-        color: "primary",
-        bodyText: "test",
-      },
-      // dialogAdd
       // message
       dialogData: {
         open: false,
@@ -405,7 +355,6 @@ export default {
             value: "num",
           },
           { text: "الأسم", value: "name" },
-          { text: "نوع النموذج", value: "building_type" },
           { text: "الصوره", value: "images" },
           { text: "عدد الطوابق", value: "floors.length" },
           { text: "مساحات البناء", value: "building_space" },
@@ -502,14 +451,6 @@ export default {
         this.dialogData.open = false;
       }
     },
-    showP(item) {
-      localStorage.setItem("itemForm", JSON.stringify(item));
-      this.$router.push("/forms/Show");
-    },
-    editP(item) {
-      localStorage.setItem("itemForm", JSON.stringify(item));
-      this.$router.push("/forms/Edit");
-    },
     showApartments(item) {
       localStorage.setItem("itemForm", JSON.stringify(item));
       this.$router.push("/admin-profileApartments/Show");
@@ -517,12 +458,6 @@ export default {
     editApartments(item) {
       localStorage.setItem("itemForm", JSON.stringify(item));
       this.$router.push("/admin-profileApartments/Edit");
-    },
-    add() {
-      this.dialogAdd.open = true;
-    },
-    AddHouseModel() {
-      this.$router.push("/admin-add-forms");
     },
     AddAnApartmentModel() {
       this.$router.push("/addApartments");
@@ -547,33 +482,6 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-    editItem(item) {
-      this.editdItem = { ...item };
-      this.dialogEdit = true;
-      this.tagsE = [];
-      for (var i = 0; i < this.editdItem.houses.length; i++) {
-        var newData = {
-          text: this.editdItem.houses[i].name,
-          tiClasses: ["ti-valid"],
-        };
-        this.tagsE.push(newData);
-      }
-
-      this.$nextTick(() => {
-        this.$refs.myVueDropzoneE.removeAllFiles();
-
-        var newImages = this.editdItem.images.map((image) => {
-          var file = { size: 123, name: "Icon", type: "image/png" };
-          var url = this.content_url + image;
-
-          return { file, url };
-        });
-
-        newImages.forEach(({ file, url }) => {
-          this.$refs.myVueDropzoneE.manuallyAddFile(file, url);
-        });
-      });
     },
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;

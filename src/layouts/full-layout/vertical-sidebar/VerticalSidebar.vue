@@ -20,14 +20,22 @@
 
       <!---Dark Logo part -->
       <v-toolbar-title
-        class="align-center d-flex mb-9" style="justify-content: center;"
+        class="align-center d-flex mb-9"
+        style="justify-content: center"
         v-if="SidebarColor == 'white' && !$vuetify.theme.dark"
       >
-      <h5 style="colore: rgb(0, 0, 0)">المجمعات السكنية</h5>
+        <h5 style="colore: rgb(0, 0, 0)" v-if="name || name.name">
+          {{ name.name }}
+        </h5>
+        <h5 style="colore: rgb(0, 0, 0)" v-else>المجمعات السكنية</h5>
         <!-- <img src="" class="mt-2" /> -->
       </v-toolbar-title>
       <v-toolbar-title class="align-center d-flex mb-9" v-else>
-        <h5 style="colore: white">المجمعات السكنية</h5>
+        <h5 style="colore: white" v-if="name || name.name">
+          {{ name.name }}
+        </h5>
+        <h5 style="colore: white" v-else>المجمعات السكنية</h5>
+
         <!-- <img src="" class="mt-2" /> -->
       </v-toolbar-title>
       <!-- ---------------------------------------------- -->
@@ -71,6 +79,7 @@ export default {
   },
   data: () => ({
     showLogo: true,
+    name: JSON.parse(localStorage.getItem("user")),
   }),
   computed: {
     ...mapState(["SidebarColor", "SidebarBg"]),
@@ -83,16 +92,34 @@ export default {
       },
     },
     userType() {
-      // استرجاع نوع المستخدم من localStorage
       return JSON.parse(localStorage.getItem("user")).type;
     },
-    filteredItems() {
-      // تصفية المسارات بناءً على نوع المستخدم
-      return VerticalSidebarItems.filter((item) => {
-        // إظهار العناصر التي تحتوي على "type" المستخدم أو تكون فارغة
-        return !item.type || item.type === this.userType;
-      });
+    userBuildingType() {
+      return JSON.parse(localStorage.getItem("user")).building_type;
     },
+    filteredItems() {
+      if (this.userBuildingType === "منازل وشقق") {
+        return VerticalSidebarItems.filter((item) => {
+          return (!item.type || (item.type == this.userType));
+      });
+      } else {
+        return VerticalSidebarItems.filter((item) => {
+          return (
+            !item.type ||
+            (item.type === this.userType && (item.building_type === this.userBuildingType || item.building_type === "منازل وشقق"))
+          );
+        });
+      }
+    },
+
+    // filteredItems() {
+    //   return VerticalSidebarItems.filter((item) => {
+    //     return (
+    //       !item.type ||
+    //       (item.type == this.userType && (item.building_type == this.userBuildingType || item.building_type == "منازل وشقق"))
+    //     );
+    //   });
+    // },
   },
   watch: {
     "$vuetify.breakpoint.smAndDown"(val) {

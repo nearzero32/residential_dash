@@ -7,6 +7,21 @@
     ></BaseBreadcrumb>
     <v-card class="mx-auto">
       <v-container>
+        <v-btn
+        style="margin-bottom: 20px;"
+          color="primary"
+          depressed
+          elevation="5"
+          outlined
+          @click="ModifyPassword"
+          plain
+          raised
+          rounded
+          >تعديل كلمة المرور</v-btn
+        >
+        <hr>
+        <br>
+        <v-spacer></v-spacer>
         <v-form v-model="isFormvalid">
           <v-row style="justify-content: center">
             <v-col cols="12" md="4">
@@ -177,6 +192,71 @@
       </v-container>
     </v-card>
 
+    <!-- - ModifyPassword -->
+    <v-dialog v-model="dialogModifyPassword" max-width="500px">
+      <v-toolbar color="primary" dense />
+      <v-card>
+        <v-card-title class="headline justify-center">
+          <v-form v-model="isFormvalidModifyPassword">
+            <v-row style="justify-content: center">
+              <v-col cols="12" md="12">
+                <v-label class="mb-2 font-weight-medium"
+                  >كلمة المرور القديمة</v-label
+                >
+                <v-text-field
+                  variant="outlined"
+                  v-model="old_password"
+                  :rules="Rules.old_password"
+                  color="primary"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="12">
+                <v-label class="mb-2 font-weight-medium"
+                  >كلمة المرور الجديدة</v-label
+                >
+                <v-text-field
+                  variant="outlined"
+                  v-model="new_password"
+                  :rules="Rules.new_password"
+                  color="primary"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="12">
+                <v-label class="mb-2 font-weight-medium"
+                  >تأكيد كلمة المرور</v-label
+                >
+                <v-text-field
+                  variant="outlined"
+                  v-model="confirm_password"
+                  :rules="Rules.confirm_password"
+                  color="primary"
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            text
+            :loading="loadingModifyPassword"
+            @click="changePassword"
+            :disabled="!isFormvalidModifyPassword"
+          >
+            تعديل
+          </v-btn>
+          <v-btn color="primary" text @click="dialogModifyPassword = false">
+            الغاء
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- - ModifyPassword -->
+
     <!-- - Dailog for show info to user -->
     <v-dialog v-model="dialogData.open" max-width="500px">
       <v-toolbar :color="dialogData.color" dense />
@@ -233,12 +313,28 @@ export default {
         bodyText: null,
       },
       // showDetail
+      // ModifyPassword
+      loadingModifyPassword: false,
+      dialogModifyPassword: false,
+      isFormvalidModifyPassword: false,
+      old_password: null,
+      new_password: null,
+      confirm_password: null,
+      // ModifyPassword
       // add
       results: {},
       content_url: null,
       addLoading: false,
       isFormvalid: true,
       Rules: {
+        old_password: [(value) => !!value || "يرجى أدخال كلمة المرور الحالية"],
+        new_password: [(value) => !!value || "يرجى أدخال كلمة المرور الجديدة"],
+        confirm_password: [
+        (value) => !!value || "يرجى تأكيد كلمة المرور الجديدة",
+        (value) =>
+          value === this.new_password ||
+          "كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين"
+      ],
         name: [(value) => !!value || "يرجى أضافة أسم"],
         phone: [(value) => !!value || "يرجى أضافة رقم الهاتف"],
         image: [(value) => !!value || "يرجى أضافة صورة"],
@@ -351,26 +447,32 @@ export default {
       this.dialogData.bodyText = bodyText;
       this.dialogData.color = color;
     },
-    deleteItem(item) {
-      this.deletedItem = { ...item };
-      this.dialogDelete = true;
+    ModifyPassword() {
+      this.dialogModifyPassword = true;
     },
-    async deleteItemConfirm() {
-      this.deleteItemLoading = true;
-
+    async changePassword() {
       try {
-        const response = await API.removeServices(this.deletedItem._id);
-
-        this.deleteItemLoading = false;
-        this.dialogDelete = false;
-        this.getCenter();
+        this.loadingModifyPassword = true;
+        const response = await API.changePassword({
+          old_password: this.old_password,
+          new_password: this.new_password,
+          confirm_password: this.confirm_password,
+        });
+        this.dialogModifyPassword = false;
+        this.old_password = null;
+        this.new_password = null;
+        this.confirm_password = null;
         this.showDialogfunction(response.data.message, "primary");
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.status === 404) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
+      } finally {
+        this.loadingModifyPassword = false;
       }
     },
   },

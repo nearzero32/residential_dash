@@ -17,7 +17,8 @@ import application_form from "@/views/admin/application_form/application_form.vu
 import call_center from "@/views/admin/call_center/call_center.vue";
 import call_center_one from "@/views/admin/call_center/call_center_one.vue";
 import profile from "@/views/admin/owners/profile.vue";
-import forms from "@/views/admin/forms/forms.vue";
+import forms from "@/views/admin/forms/formsHouses.vue";
+import formsApartments from "@/views/admin/forms/formsApartments.vue";
 import add from "@/views/admin/forms/add.vue";
 import formShow from "@/views/admin/forms/profile/index.vue";
 import how_u_hear_about_us from "@/views/admin/how_u_hear_about_us/how_u_hear_about_us.vue";
@@ -186,6 +187,11 @@ const Admin = {
       path: "/admin-profileApartments/:ac",
       name: "admin-profileApartments",
       component: profileApartments,
+    },
+    {
+      path: "/admin-forms-Apartments",
+      name: "admin-forms-Apartments",
+      component: formsApartments,
     },
 
   ],

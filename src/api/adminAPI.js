@@ -864,6 +864,18 @@ class Api {
   }
   // getProfileHouse
 
+  // changePassword
+  async changePassword({ old_password, new_password, confirm_password }) {
+    const requestData = {
+      old_password, new_password, confirm_password
+    };
+    const response = await axiosInstance.put(
+      `/profile/change_password`, requestData
+    );
+    return response;
+  }
+  // changePassword
+
   // visits
   async getVisits({ page, limit }) {
     const response = await axiosInstance.get(
