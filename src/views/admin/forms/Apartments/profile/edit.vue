@@ -962,7 +962,7 @@ export default {
         });
         this.addLoading = false;
         localStorage.setItem("itemFormMass", response.data.message);
-        this.$router.push("/admin-forms");
+        this.$router.push("/admin-forms-Apartments");
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.addLoading = false;
