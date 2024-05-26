@@ -106,7 +106,6 @@ export default {
   },
   created() {
     this.data = JSON.parse(localStorage.getItem("PrintReservations"));
-    console.log(this.data)
     var userDataString = JSON.parse(localStorage.getItem("user"));
     this.dataResidential = userDataString
     this.user = userDataString

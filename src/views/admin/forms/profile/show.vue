@@ -192,7 +192,6 @@ export default {
     if (itemForm) {
       const itemFormData = JSON.parse(itemForm);
       this.data = itemFormData;
-      console.log(this.data)
     }
   },
 };

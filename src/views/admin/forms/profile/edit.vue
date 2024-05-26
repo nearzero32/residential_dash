@@ -796,7 +796,6 @@ export default {
         this.data.building_space.push(tagText);
       });
       this.isTrue = true;
-      console.log(this.isTrue)
     },
 
     addTagsTotalAreas() {
@@ -836,8 +835,6 @@ export default {
           let tempData = JSON.parse(JSON.stringify(this.housesNumbers));
 
           this.housesNumbers = [];
-          console.log("BuildingSpaces",this.data.BuildingSpaces)
-          console.log("TotalAreas",this.data.TotalAreas)
 
           this.data.TotalAreas.forEach((area, index) => {
               let found = tempData.find(item => item.total_space.toString() === area);
@@ -1258,7 +1255,6 @@ export default {
         .sort(function (a, b) {
           return parseInt(a.name) - parseInt(b.name);
         });
-        console.log("housesArray",housesArray);
 
       try {
         const response = await API.checkHousesNames({

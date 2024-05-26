@@ -381,7 +381,6 @@ export default {
       try {
         const response = await API.getCenter();
         this.table.centers = response.data.results;
-        console.log(this.table.centers)
         this.table.loading = false;
       } catch (error) {
         if (error.response.status === 401) {

@@ -239,7 +239,6 @@ class Api {
       current_employee_id: current_employee_id,
       new_employee_id: new_employee_id,
     };
-    console.log(requestData)
     const response = await axiosInstance.put(`/call_center/change_employee/${id}`, requestData);
     return response;
   }
@@ -685,6 +684,24 @@ class Api {
   }
   // Reservations
 
+  // Apartment
+  async getApartments() {
+    const response = await axiosInstance.get(`/center/forms/apartment/all`);
+    return response;
+  }
+  async getApartmentTowers() {
+    const response = await axiosInstance.get(`/center/forms/apartment/towers`);
+    return response;
+  }
+  async getNameFromsApartmentTowers({ name }) {
+    const response = await axiosInstance.get(`/center/forms/apartment/towers/names/${name}`);
+    return response;
+  }
+  async getNameFromsApartmentTowersFloors({ name, form_name }) {
+    const response = await axiosInstance.get(`/center/forms/apartment/towers/floors/${name}?name=${form_name}`);
+    return response;
+  }
+  // Apartment
   // Forms
   async getForms() {
     const response = await axiosInstance.get(`/center/forms`);

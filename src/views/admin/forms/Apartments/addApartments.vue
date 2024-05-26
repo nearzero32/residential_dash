@@ -737,7 +737,6 @@ export default {
         }
       }
 
-      console.log(this.itemSp);
       var filteredHouses = houses.filter(
         (house) =>
           house.building_space === item.building_space &&
@@ -847,7 +846,6 @@ export default {
       this.data.Spaces[index].addSpaceInput = true
       this.data.Spaces[index].isStorg = false
 
-      console.log(this.data.houses)
     },
 
     addRoom(index) {

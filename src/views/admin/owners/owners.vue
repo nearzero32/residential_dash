@@ -1792,7 +1792,6 @@ export default {
           search: this.table.search,
           is_deleted: this.is_deleted,
         });
-        console.log(response)
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
         this.table.content_url = response.data.content_url;
@@ -1921,7 +1920,6 @@ export default {
         is_disabled = true;
       }
       this.disableItemLoading = true;
-      console.log(this.disableItem.is_disabled);
       try {
         const response = await API.disableOwners({
           id: this.disableItem._id,

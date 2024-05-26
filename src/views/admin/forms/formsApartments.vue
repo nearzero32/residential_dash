@@ -7,20 +7,33 @@
     ></BaseBreadcrumb>
     <v-card class="mx-auto">
       <v-container>
-        <v-btn
-          color="primary"
-          text
-          class="ml-auto"
-          v-if="userData.includes('add')"
-          @click="AddAnApartmentModel"
-        >
-          <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة نموذج جديد
-        </v-btn>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-btn
+              color="primary"
+              class="ml-auto"
+              v-if="userData.includes('add')"
+              @click="AddAnApartmentModel"
+            >
+              <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة نموذج جديد
+            </v-btn>
+          </v-col>
+          <v-col cols="12" md="6" class="rr">
+            <v-btn
+              color="primary"
+              class="ml-auto"
+              @click="showBuilding"
+            >
+              <v-icon class="mr-2">mdi-eye</v-icon>عرض العمارات
+            </v-btn>
+          </v-col>
+        </v-row>
 
         <v-data-table
           :headers="table.headers"
           loading-text="جاري التحميل ... الرجاء الانتظار"
           :items="table.centers"
+          :loading="table.loading"
           class="elevation-1"
           no-results-text="لا توجد بيانات !"
         >
@@ -61,19 +74,19 @@
               </li>
             </ul>
           </template>
-          <template v-slot:item.buttonHouses="{ item }">
-            <v-btn :loading="showHouseLoading" @click="showHouse(item)" small>
-              عرض الوحدات السكنية
-
-              <template v-slot:loader>
-                <v-progress-linear indeterminate></v-progress-linear>
-              </template>
-            </v-btn>
+          <template v-slot:item.apartment_building="{ item }">
+            <ul>
+              <li
+                v-for="(apartment_buildin, index) in item.apartment_building"
+                :key="index"
+              >
+                {{ apartment_buildin }}
+              </li>
+            </ul>
           </template>
 
           <template v-slot:item.ac="{ item }">
-            <VTooltip
-              bottom v-if="userData.includes('edit')">
+            <VTooltip bottom v-if="userData.includes('edit')">
               <template #activator="{ attrs }">
                 <v-icon
                   color="rgb(243 216 1)"
@@ -104,118 +117,6 @@
       </v-container>
     </v-card>
     <br />
-    <v-card class="mx-auto" v-if="dialogshowHouse == true">
-      <v-btn variant="outlined" color="#FF5252" @click="closeShowHouse">
-        <v-icon color="white" size="20"> mdi-close-circle-outline </v-icon>
-      </v-btn>
-
-      <v-card-title
-        class="headline justify-center"
-        style="text-align: center; color: #fb9778"
-      >
-        وحدات النموذج ( {{ showHouseItem.name }} ) <br />
-        عدد الوحدات السكنية الأجمالي ( {{ showHouseItem.houses.length }} )
-      </v-card-title>
-      <v-container>
-        <v-row>
-          <v-col cols="12" md="3" style="padding: 10px">
-            <v-card
-              shaped
-              color="rgb(255 255 255)"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
-            >
-              عدد الوحدات السكنية الغير محجوزة ( {{ statusNotReserved }} )
-            </v-card>
-          </v-col>
-          <v-col cols="12" md="3" style="padding: 10px">
-            <v-card
-              shaped
-              color="#d9d9d9"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
-            >
-              عدد الوحدات السكنية المحجوزة مبدئياً (
-              {{ statusInitialReservation }} )
-            </v-card>
-          </v-col>
-          <v-col cols="12" md="3" style="padding: 10px">
-            <v-card
-              shaped
-              color="rgb(249 249 134)"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
-            >
-              عدد الوحدات السكنية المحجوزة ( {{ statusBookedUp }} )
-            </v-card>
-          </v-col>
-          <v-col cols="12" md="3" style="padding: 10px">
-            <v-card
-              shaped
-              color="rgb(34 208 220)"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-                color: white;
-              "
-            >
-              عدد الوحدات السكنية التي تم بيعها ( {{ statusSold }} )
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-container>
-        <v-item-group
-          class="d-flex justify-sm-space-between px-6 pt-2 pb-6"
-          style="flex-wrap: wrap; justify-content: flex-start !important"
-        >
-          <v-item v-for="(item, index) in showHouseItem.houses" :key="index">
-            <VTooltip top>
-              <template #activator="{ on, attrs }">
-                <v-btn
-                  style="margin: 5px"
-                  :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
-                  :height="40"
-                  @click="goHouse(showHouseItem._id, item._id, item.name)"
-                  :color="
-                    item.status === 'حجز مبدئي'
-                      ? 'rgb(217 217 217)'
-                      : item.status === 'محجوز'
-                      ? 'rgb(249, 249, 134)'
-                      : item.status === 'تم البيع'
-                      ? 'rgb(34 208 220)'
-                      : item.status === 'غير محجوز'
-                      ? 'rgb(255 255 255)'
-                      : ''
-                  "
-                  :width="40"
-                  :border="true"
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  {{ item.name }}
-                </v-btn>
-              </template>
-              <span>{{ item.status }}</span>
-            </VTooltip>
-          </v-item>
-        </v-item-group>
-      </v-container>
-    </v-card>
 
     <!-- - Dailog for show info to user -->
     <v-dialog v-model="dialogData.open" max-width="500px">
@@ -356,14 +257,10 @@ export default {
           },
           { text: "الأسم", value: "name" },
           { text: "الصوره", value: "images" },
-          { text: "عدد الطوابق", value: "floors.length" },
           { text: "مساحات البناء", value: "building_space" },
           { text: "المساحات الكلية", value: "total_space" },
-          { text: "عدد الوحدات السكنية", value: "houses.length" },
-          { text: "التصنيف", value: "category" },
+          { text: "العمارات", value: "apartment_building" },
           { text: "البلوك", value: "block_number" },
-          { text: "رقم الشارع", value: "street_number" },
-          { text: "عرض الوحدات السكنية", value: "buttonHouses" },
           { text: "العمليات", value: "ac" },
         ],
         centers: [],
@@ -399,49 +296,6 @@ export default {
     },
   },
   methods: {
-    showHouse(item) {
-      this.showHouseLoading = true;
-      this.showHouseItem = item;
-      var filteredStatusNotReserved = item.houses.filter(function (ite) {
-        return ite.status === "غير محجوز";
-      });
-      this.statusNotReserved = filteredStatusNotReserved.length;
-
-      var filteredStatusInitialReservation = item.houses.filter(function (
-        iteReservation
-      ) {
-        return iteReservation.status === "حجز مبدئي";
-      });
-      this.statusInitialReservation = filteredStatusInitialReservation.length;
-
-      var filteredStatusBookedUp = item.houses.filter(function (iteReservatio) {
-        return iteReservatio.status === "محجوز";
-      });
-      this.statusBookedUp = filteredStatusBookedUp.length;
-
-      var filteredStatusSold = item.houses.filter(function (iteReservati) {
-        return iteReservati.status === "تم البيع";
-      });
-      this.statusSold = filteredStatusSold.length;
-
-      this.dialogshowHouse = true;
-      this.showHouseLoading = false;
-    },
-    closeShowHouse() {
-      this.showHouseItem = [];
-      this.statusNotReserved = null;
-
-      this.statusInitialReservation = null;
-
-      this.statusBookedUp = null;
-
-      this.statusSold = null;
-
-      this.dialogshowHouse = false;
-    },
-    goHouse(form_id,house_id, name) {
-      this.$router.push(`/admin-profileHouse/form_id/${form_id}/house_id/${house_id}/name/${name}`);
-    },
     clossMess() {
       var FormMass = localStorage.getItem("itemFormMass");
       if (FormMass) {
@@ -462,6 +316,9 @@ export default {
     AddAnApartmentModel() {
       this.$router.push("/addApartments");
     },
+    showBuilding() {
+      this.$router.push(`/admin-showBuilding`);
+    },
     showImgs(item) {
       this.showImg.open = true;
       this.showImg.dataImg = item.images;
@@ -470,7 +327,7 @@ export default {
     async getCenter() {
       try {
         this.table.loading = true;
-        const response = await API.getForms();
+        const response = await API.getApartments();
         this.content_url = response.data.content_url;
         this.table.centers = response.data.results;
       } catch (error) {
@@ -480,7 +337,7 @@ export default {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
-        this.loading = false;
+        this.table.loading = false;
       }
     },
     showDialogfunction(bodyText, color) {
@@ -527,6 +384,14 @@ export default {
   .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
     border-bottom: solid 1px #cbcbcb;
     padding-bottom: 10px;
+  }
+  .rr {
+    text-align: start;
+  }
+}
+@media (min-width: 600px) {
+  .rr {
+    text-align: end;
   }
 }
 </style>

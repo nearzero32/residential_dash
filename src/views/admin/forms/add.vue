@@ -1162,7 +1162,7 @@ export default {
           id: null,
           houses: housesArray,
         });
-        console.log(response);
+        console.log(response)
         this.checkHousesNamesLoading = false;
         this.isTrue = true;
       } catch (error) {

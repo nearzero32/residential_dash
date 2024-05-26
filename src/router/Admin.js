@@ -29,6 +29,8 @@ import visits from "@/views/admin/visits/visits.vue";
 import complain from "@/views/admin/complain/complain.vue";
 import addApartments from "@/views/admin/forms/Apartments/addApartments.vue";
 import profileApartments from "@/views/admin/forms/Apartments/profile/index.vue";
+import showBuilding from "@/views/admin/forms/Apartments/Building/showBuilding.vue";
+import profileFloor from "@/views/admin/forms/Apartments/Building/profileFloor.vue";
 // import salesContracts from "@/views/admin/salesContracts/salesContracts.vue";
 
 const Admin = {
@@ -192,6 +194,16 @@ const Admin = {
       path: "/admin-forms-Apartments",
       name: "admin-forms-Apartments",
       component: formsApartments,
+    },
+    {
+      path: "/admin-showBuilding",
+      name: "admin-showBuilding",
+      component: showBuilding,
+    },
+    {
+      path: "/admin-profileFloor",
+      name: "admin-profileFloor",
+      component: profileFloor,
     },
 
   ],

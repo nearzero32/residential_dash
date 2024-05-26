@@ -277,7 +277,6 @@ export default {
         const response = await API.getApartment(this.id);
 
         this.data = response.data.results;
-        console.log(this.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
