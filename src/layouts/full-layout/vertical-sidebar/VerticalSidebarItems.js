@@ -110,6 +110,7 @@ export default [
     href: "https://counting.myexperience.center/ownerBills",
     type: "admin",
     target: "_blank",
+    building_type: "منازل وشقق",
   },
   {
     title: "نماذج شقق",
