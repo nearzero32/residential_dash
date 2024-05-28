@@ -31,13 +31,11 @@
             no-results-text="لا توجد بيانات !"
             class="border"
           >
-          <template v-slot:item.num="{ item }">
-            {{ table.centers.indexOf(item) + 1 }}
-          </template>
+            <template v-slot:item.num="{ item }">
+              {{ table.centers.indexOf(item) + 1 }}
+            </template>
             <template v-slot:item.name="{ item }">
-              <router-link
-                :to="`/center/${item._id}/${item.name}`"
-              >
+              <router-link :to="`/center/${item._id}/${item.name}`">
                 {{ item.name }}
               </router-link>
             </template>
@@ -92,6 +90,9 @@
                     class="mb-8"
                     required
                     hide-details="auto"
+                    variant="outlined"
+                    color="primary"
+                    outlined
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
@@ -102,10 +103,15 @@
                     class="mb-8"
                     required
                     hide-details="auto"
+                    variant="outlined"
+                    color="primary"
+                    outlined
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="font-weight-medium mb-2">نوع البنايات</v-label>
+                  <v-label class="font-weight-medium mb-2"
+                    >نوع البنايات</v-label
+                  >
                   <v-autocomplete
                     v-model="data.building_type"
                     :rules="Rules.building_type"
@@ -115,6 +121,9 @@
                     :items="items"
                     item-text="name"
                     item-value="value"
+                    variant="outlined"
+                    color="primary"
+                    outlined
                   ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="12">
@@ -127,7 +136,46 @@
                     class="mb-8"
                     required
                     hide-details="auto"
+                    variant="outlined"
+                    color="primary"
+                    outlined
                   ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="12">
+                  <v-row>
+                    <v-col cols="12" md="6" style="padding: 10px">
+                      <v-label class="mb-2 font-weight-medium">صورة QR</v-label>
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg, image/bmp"
+                        @change="handleFileChange"
+                        ref="fileInput"
+                        style="display: none"
+                      />
+                      <v-text-field
+                        @click="$refs.fileInput.click()"
+                        variant="outlined"
+                        v-model="data.qr"
+                        color="primary"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="6"
+                      style="padding: 10px; display: grid; place-items: center"
+                    >
+                      <img
+                        v-if="data.qr"
+                        style="width: 130px"
+                        :src="
+                          isBase64(data.qr) ? data.qr : content_url + data.qr
+                        "
+                        alt=""
+                        @click.stop
+                      />
+                    </v-col>
+                  </v-row>
                 </v-col>
               </v-row>
               <v-divider></v-divider>
@@ -191,6 +239,9 @@
                   class="mb-8"
                   required
                   hide-details="auto"
+                  variant="outlined"
+                  color="primary"
+                  outlined
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -201,21 +252,27 @@
                   class="mb-8"
                   required
                   hide-details="auto"
+                  variant="outlined"
+                  color="primary"
+                  outlined
                 ></v-text-field>
               </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="font-weight-medium mb-2">نوع البنايات</v-label>
-                  <v-autocomplete
-                    v-model="editdItem.building_type"
-                    :rules="Rules.building_type"
-                    class="mb-8"
-                    required
-                    hide-details="auto"
-                    :items="items"
-                    item-text="name"
-                    item-value="value"
-                  ></v-autocomplete>
-                </v-col>
+              <v-col cols="12" md="6">
+                <v-label class="font-weight-medium mb-2">نوع البنايات</v-label>
+                <v-autocomplete
+                  v-model="editdItem.building_type"
+                  :rules="Rules.building_type"
+                  class="mb-8"
+                  required
+                  hide-details="auto"
+                  :items="items"
+                  item-text="name"
+                  item-value="value"
+                  variant="outlined"
+                  color="primary"
+                  outlined
+                ></v-autocomplete>
+              </v-col>
               <v-col cols="12" md="12">
                 <v-label class="font-weight-medium mb-2">عنوان المجمع</v-label>
                 <v-text-field
@@ -224,7 +281,48 @@
                   class="mb-8"
                   required
                   hide-details="auto"
+                  variant="outlined"
+                  color="primary"
+                  outlined
                 ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="12">
+                <v-row>
+                  <v-col cols="12" md="6" style="padding: 10px">
+                    <v-label class="mb-2 font-weight-medium">صورة QR</v-label>
+                    <input
+                      type="file"
+                      accept="image/png, image/jpeg, image/bmp"
+                      @change="handleFileChangeEdit"
+                      ref="fileInput"
+                      style="display: none"
+                    />
+                    <v-text-field
+                      @click="$refs.fileInput.click()"
+                      v-model="editdItem.qr"
+                      variant="outlined"
+                      color="primary"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                    style="padding: 10px; display: grid; place-items: center"
+                  >
+                    <img
+                      v-if="editdItem.qr"
+                      style="width: 130px"
+                      :src="
+                        isBase64(editdItem.qr)
+                          ? editdItem.qr
+                          : content_url + editdItem.qr
+                      "
+                      alt=""
+                      @click.stop
+                    />
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
             <br />
@@ -335,14 +433,15 @@ export default {
     // message
     // add
     items: [
-      {name: "شقق", value: "شقق"},
-      {name: "منازل", value: "منازل"},
-      {name: "منازل وشقق", value: "منازل وشقق"},
+      { name: "شقق", value: "شقق" },
+      { name: "منازل", value: "منازل" },
+      { name: "منازل وشقق", value: "منازل وشقق" },
     ],
     isFormvalid: false,
     addBtnLoading: false,
     dialog: false,
     data: {
+      qr: null,
       name: "",
       building_type: "",
       phone: "",
@@ -360,6 +459,7 @@ export default {
     },
     // add
     // edit
+    content_url: null,
     editItemLoading: false,
     dialogEdit: false,
     editdItem: {},
@@ -371,10 +471,40 @@ export default {
     // delete
   }),
   created() {
+    var userDataString = JSON.parse(localStorage.getItem("user"));
+      this.content_url = userDataString.content_url;
+
     this.getCenter();
   },
 
   methods: {
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.data.qr = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    handleFileChangeEdit(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          this.editdItem.qr = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+
+    isBase64(image) {
+      return /^data:image\/[a-z]+;base64,/.test(image);
+    },
     async getCenter() {
       this.table.loading = true;
 
@@ -400,6 +530,7 @@ export default {
           phone: this.data.phone,
           building_type: this.data.building_type,
           address: this.data.address,
+          qr: this.data.qr,
         });
 
         this.addBtnLoading = false;
@@ -407,6 +538,7 @@ export default {
         this.data.phone = "";
         this.data.building_type = "";
         this.data.address = "";
+        this.data.qr = null;
         await this.getCenter();
         this.dialog = false;
         this.showDialogfunction(response.data.message, "primary");
@@ -437,9 +569,9 @@ export default {
           phone: this.editdItem.phone,
           building_type: this.editdItem.building_type,
           address: this.editdItem.address,
+          qr: this.editdItem.qr,
         });
         this.editItemLoading = false;
-        this.editdItem = {};
         await this.getCenter();
         this.dialogEdit = false;
         this.showDialogfunction(response.data.message, "primary");

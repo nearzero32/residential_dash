@@ -262,8 +262,13 @@ class Api {
         return error.response;
       });
   }
+  async cancelApplicationForm(id) {
+    const response = await axiosInstance.put(`/application_form/cancel/${id}`);
+
+    return response;
+  }
   async confirmApplicationForm(id) {
-    const response = await axiosInstance.delete(`/application_form/confirm/${id}`);
+    const response = await axiosInstance.put(`/application_form/confirm/${id}`);
 
     return response;
   }

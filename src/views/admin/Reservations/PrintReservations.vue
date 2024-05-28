@@ -1,7 +1,14 @@
 <template>
   <div>
-    <v-container id="pri" v-if="data !== null">
-      <v-card>
+    <v-container id="pri">
+      <v-card
+        style="
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+      >
         <v-card-title>
           <v-row
             style="
@@ -16,38 +23,74 @@
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
             >
-              <p style="font-size: 14px;"><strong>{{ dataResidential.center_id.name }}</strong></p>
+              <p style="font-size: 14px">
+                <strong v-if="dataResidential && dataResidential.center_id">{{
+                  dataResidential.center_id.name
+                }}</strong>
+              </p>
             </v-col>
             <v-col
               cols="6"
               md="6"
               style="padding: 10px; text-align: center; white-space: pre-wrap"
             >
-              <div style="background-color: #ffd147; padding: 10px; border-radius: 10px">
-                <strong style="font-size: 14px;">الزبون ( {{ data.name }} )</strong>
+              <div
+                style="
+                  background-color: #ffd147;
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <strong style="font-size: 14px"
+                  >الزبون ( {{ data.name }} )</strong
+                >
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; ">
-              <img :src="dataResidential.content_url + dataResidential.center_id.logo" style="width: 160px" alt="" />
+            <v-col cols="3" md="3" style="text-align: center">
+              <img
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.logo
+                "
+                style="width: 160px"
+                alt=""
+              />
             </v-col>
           </v-row>
         </v-card-title>
-        <v-container>
-          <div>
-            <p>أسم المالك : {{ data.name }}</p>
-            <br />
-            <p>رقم الهاتف : {{ data.phone }}</p>
-            <br />
-            <p>العنوان : {{ data.address }}</p>
-            <br />
-            <p>أسم المنزل : {{ data.house.name }}</p>
-            <br />
-            <p>نوع المنزل : {{ data.house.existing_type }}</p>
-            <br />
-            <p>تاريخ الطلب : {{ data.createdAt }}</p>
-          </div>
+        <v-container style="height: 100%">
+          <v-row
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <v-col cols="6" md="6">
+              <div>
+                <p>أسم المالك : {{ data.name }}</p>
+                <br />
+                <p>رقم الهاتف : {{ data.phone }}</p>
+                <br />
+                <p>العنوان : {{ data.address }}</p>
+                <br />
+                <p>تاريخ الطلب : {{ data.createdAt }}</p>
+              </div>
+            </v-col>
+            <v-col cols="6" md="6" style="text-align: center">
+              <p>يمكنك تحميل التطبيق</p>
+              <img
+                style="width: 120px"
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.qr
+                "
+                alt=""
+              />
+            </v-col>
+          </v-row>
           <br />
-
+        </v-container>
+        <v-container>
           <hr />
           <v-row
             style="
@@ -69,7 +112,8 @@
               md="6"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
               v-else
-              ><v-icon size="20"> mdi-phone </v-icon>{{ dataResidential.center_id.phone }}</v-col
+              ><v-icon size="20"> mdi-phone </v-icon
+              >{{ dataResidential.center_id.phone }}</v-col
             >
             <v-col
               cols="6"
@@ -86,7 +130,8 @@
               md="6"
               v-else
               style="padding: 10px; text-align: left; white-space: pre-wrap"
-            >{{ dataResidential.center_id.address }}</v-col>
+              >{{ dataResidential.center_id.address }}</v-col
+            >
           </v-row>
         </v-container>
       </v-card>
@@ -99,16 +144,16 @@
 export default {
   data() {
     return {
-      data: JSON.parse(localStorage.getItem("PrintReservations")),
-      user: {},
-      dataResidential: {},
+      data: null,
+      user: null,
+      dataResidential: null,
     };
   },
   created() {
     this.data = JSON.parse(localStorage.getItem("PrintReservations"));
     var userDataString = JSON.parse(localStorage.getItem("user"));
-    this.dataResidential = userDataString
-    this.user = userDataString
+    this.dataResidential = userDataString;
+    this.user = userDataString;
   },
   mounted() {
     setTimeout(() => {

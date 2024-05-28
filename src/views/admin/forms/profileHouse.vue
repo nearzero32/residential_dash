@@ -8,6 +8,14 @@
       ></BaseBreadcrumb>
       <v-card :loading="loading" v-if="data !== null">
         <v-container fluid class="down-top-padding">
+          <v-btn
+              color="primary"
+              class="ml-auto"
+              v-if="data.status == 'تم البيع'"
+              @click="AddAnApartmentModel"
+            >
+              <v-icon class="mr-2">mdi-plus</v-icon>اعادة بيع الوحدة السكنية
+            </v-btn>
           <p v-if="data && data.name">رقم الوحدة السكنية : {{ data.name }}</p>
           <p v-if="data && data.status">حالة الوحدة السكنية : {{ data.status }}</p>
           <p v-if="data && data.owners">المالك الحالي : {{ data.owners.name }}</p>
@@ -44,33 +52,55 @@
             <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
               <strong>محتويات الوحدة السكنية</strong>
             </h3>
-              <v-row v-for="(room, indR) in data.rooms" :key="indR">
-                <v-col cols="12" md="4" style="padding: 10px">
-                  <v-card
-                    class="mx-auto"
-                    style="height: 100%; display: grid; place-items: center"
-                    >{{ room.name }}</v-card
-                  >
-                </v-col>
-                <v-col cols="12" md="4" style="padding: 10px">
-                  <v-card
-                    class="mx-auto"
-                    style="height: 100%; display: grid; place-items: center"
-                    >مساحة {{ room.space }}</v-card
-                  >
-                </v-col>
-                <v-col cols="12" md="4" style="padding: 10px">
-                  <v-card
-                    class="mx-auto"
-                    style="height: 100%; display: grid; place-items: center"
-                  >
-                    <img style="padding-block: 10px;width: 100px" v-if="room.image" :src="content_url + room.image" alt="" />
-                    
-                    <p v-else>صورة  ( لا توجد صوره ) </p>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-container>
+            <v-card v-for="(floor, indR) in data.floors" :key="indR" style="margin-bottom: 15px;">
+              <v-container>
+                <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
+                  <strong>أسم الطابق : {{ floor.name }}</strong>
+                </h3>
+
+                <div>
+                <v-carousel :progress="true" progress-color="primary" hide-delimiters>
+                  <v-carousel-item v-for="(imgFloor, inde) in floor.images" :key="inde">
+                    <v-sheet height="100%">
+                      <div class="d-flex fill-height justify-center align-center">
+                        <img style="width: 100%;height: 100%;" :src="content_url + imgFloor" alt="" />
+                      </div>
+                    </v-sheet>
+                  </v-carousel-item>
+                </v-carousel>
+                </div>
+                <h3 style="display: grid; place-items: center; padding-block: 10px 20px">
+                  <strong>محتويات الطابق</strong>
+                </h3>
+                <v-row v-for="(room, indeR) in floor.rooms" :key="indeR">
+                  <v-col cols="12" md="4" style="padding: 10px">
+                    <v-card
+                      class="mx-auto"
+                      style="height: 100%; display: grid; place-items: center"
+                      >{{ room.name }}</v-card
+                    >
+                  </v-col>
+                  <v-col cols="12" md="4" style="padding: 10px">
+                    <v-card
+                      class="mx-auto"
+                      style="height: 100%; display: grid; place-items: center"
+                      >مساحة {{ room.space }}</v-card
+                    >
+                  </v-col>
+                  <v-col cols="12" md="4" style="padding: 10px">
+                    <v-card
+                      class="mx-auto"
+                      style="height: 100%; display: grid; place-items: center"
+                    >
+                      <img style="padding-block: 10px;width: 100px" v-if="room.image" :src="content_url + room.image" alt="" />
+                      
+                      <p v-else>صورة  ( لا توجد صوره ) </p>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
+          </v-container>
         </v-container>
       </v-card>
     </v-container>
@@ -147,6 +177,7 @@ export default {
           form_id: this.form_id,
           house_id: this.house_id,
         });
+        console.log(response);
         this.content_url = response.data.content_url;
         this.data = response.data.results;
       } catch (error) {
@@ -167,3 +198,23 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.v-carousel {
+  overflow: hidden;
+  position: relative;
+  width: 60%;
+}
+.v-window {
+  height: 600px !important;
+  width: 100%;
+}
+@media screen and (max-width: 768px) {
+  .v-window {
+    height: 140px !important;
+  }
+  .v-carousel {
+    width: 100%;
+  }
+}
+</style>

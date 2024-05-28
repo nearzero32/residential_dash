@@ -125,7 +125,7 @@
                 }}</span>
                 مساحة الوحدة السكنية :
                 <span style="border-bottom: dashed 1px; margin-left: 60px">{{
-                  data.form_total_space
+                  data.house_total_space
                 }}</span>
               </p>
               <p>

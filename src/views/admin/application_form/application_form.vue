@@ -95,7 +95,7 @@
                 </template>
                 <span>حذف</span>
               </VTooltip> -->
-              <VTooltip bottom>
+              <VTooltip bottom v-if="item.status == 'معلق'">
                 <template #activator="{ attrs }">
                   <v-icon
                     style="margin-inline: 4px"
@@ -109,14 +109,14 @@
                 </template>
                 <span>تأكيد</span>
               </VTooltip>
-              <VTooltip bottom>
+              <VTooltip bottom v-if="item.status == 'معلق'">
                 <template #activator="{ attrs }">
                   <v-icon
                     style="margin-inline: 4px"
                     color="red"
                     v-bind="attrs"
                     size="20"
-                    @click="Print(item)"
+                    @click="cancelIteme(item)"
                   >
                     mdi-alpha-x-circle-outline
                   </v-icon>
@@ -183,6 +183,30 @@
       </v-card>
     </v-dialog>
     <!-- End confirm dailog -->
+
+    <!-- cancel dialog -->
+    <v-dialog v-model="dialogCancel" max-width="500px">
+      <v-card>
+        <v-card-title class="headline justify-center">
+          هل انت متأكد من رفض هذا الطلب ؟
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="dialogCancel = false">
+            الغاء
+          </v-btn>
+          <v-btn
+            color="primary white--text"
+            :loading="cancelItemLoading"
+            @click="cancelItemConfirm"
+          >
+            رفض
+          </v-btn>
+          <v-spacer />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End cancel dailog -->
 
     <!-- delete dialog -->
     <v-dialog v-model="dialogDelete" max-width="500px">
@@ -266,8 +290,8 @@ export default {
           { text: "رقم الهاتف", value: "buyer_info.customer_phone" },
           { text: "اسم النموذج", value: "form_name" },
           { text: "اسم المنزل", value: "house_name" },
-          { text: "المساحة الكلية", value: "form_total_space" },
-          { text: "مساحة البناء", value: "form_building_space" },
+          { text: "المساحة الكلية", value: "house_total_space" },
+          { text: "مساحة البناء", value: "house_building_space" },
           { text: "السعر", value: "price" },
           { text: "أسم موظف المبيعات", value: "employee_name" },
           { text: "تاريخ الأستمارة", value: "createdAt" },
@@ -297,6 +321,11 @@ export default {
       dialogDelete: false,
       deletedItem: {},
       // delete
+      // cancel
+      cancelItemLoading: false,
+      dialogCancel: false,
+      cancelItem: {},
+      // cancel
       // confirm
       confirmItemLoading: false,
       dialogConfirm: false,
@@ -348,7 +377,6 @@ export default {
           is_deleted: false,
           status: this.status,
         });
-        console.log(response);
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
         this.table.approved = response.data.results.approved;
@@ -392,6 +420,40 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
+          this.confirmItemLoading = false;
+          this.dialogConfirm = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.status === 400) {
+          this.confirmItemLoading = false;
+          this.dialogConfirm = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
+    cancelIteme(item) {
+      this.cancelItem = { ...item };
+      this.dialogCancel = true;
+    },
+    async cancelItemConfirm() {
+      this.cancelItemLoading = true;
+
+      try {
+        const response = await API.cancelApplicationForm(this.cancelItem._id);
+
+        this.cancelItemLoading = false;
+        this.dialogCancel = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.cancelItemLoading = false;
+          this.dialogCancel = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.status === 400) {
+          this.cancelItemLoading = false;
+          this.dialogCancel = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }

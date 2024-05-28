@@ -1,7 +1,15 @@
 <template>
   <div>
     <v-container id="pri">
-      <v-card v-if="data">
+      <v-card
+        v-if="data && dataResidential"
+        style="
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+      >
         <v-card-title>
           <v-row
             style="
@@ -16,8 +24,9 @@
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
             >
-              <p style="font-size: 14px;"><strong>{{ dataResidential.center_id.name }}</strong
-              ></p>
+              <p style="font-size: 14px">
+                <strong>{{ dataResidential.center_id.name }}</strong>
+              </p>
             </v-col>
             <v-col
               cols="6"
@@ -36,36 +45,79 @@
                 >
               </div>
             </v-col>
-            <v-col cols="3" md="3" style="text-align: center; ">
-              <img :src="dataResidential.content_url + dataResidential.center_id.logo" style="width: 160px" alt="" />
+            <v-col cols="3" md="3" style="text-align: center">
+              <img
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.logo
+                "
+                style="width: 160px"
+                alt=""
+              />
             </v-col>
           </v-row>
         </v-card-title>
-        <v-container>
-          <div>
-            <p><strong>أسم المتصل : </strong> {{ data.caller_name }}</p>
-            <p><strong>رقم الهاتف : </strong> {{ data.caller_phone }}</p>
-            <p><strong>العنوان الوظيفي : </strong> {{ data.caller_job }}</p>
-            <p><strong>هاتف المتصل : </strong> {{ data.caller_address }}</p>
-            <p><strong>عدد افراد الأسرة : </strong> {{ data.caller_family_members }}</p>
-            <p><strong>كيف سمع عنا : </strong> {{ data.how_he_hear_about_us }}</p>
-            <p><strong>المساحة المطلوبة : </strong> {{ data.space_required }}</p>
-            <p><strong>أسم النموذج : </strong> {{ data.form_name }}</p>
-            <p><strong>الموظف الحالي : </strong> {{ data.current_employee.name }}</p>
-            <p><strong>نتائج المكالمة : </strong> {{ data.results_of_call }}</p>
-            <p>
-              <strong>موظفين المبيعات السابقين  : </strong>
-              <span
-                v-for="(oldEmployee, index) in data.old_employees"
-                :key="oldEmployee._id"
-              >
-                {{ oldEmployee.name }}
-                <span v-if="index !== data.old_employees.length - 1">, </span>
-              </span>
-            </p>
-          </div>
+        <v-container style="height: 100%">
+          <v-row
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <v-col cols="6" md="6">
+              <div>
+                <p><strong>أسم المتصل : </strong> {{ data.caller_name }}</p>
+                <p><strong>رقم الهاتف : </strong> {{ data.caller_phone }}</p>
+                <p><strong>العنوان الوظيفي : </strong> {{ data.caller_job }}</p>
+                <p><strong>هاتف المتصل : </strong> {{ data.caller_address }}</p>
+                <p>
+                  <strong>عدد افراد الأسرة : </strong>
+                  {{ data.caller_family_members }}
+                </p>
+                <p>
+                  <strong>كيف سمع عنا : </strong>
+                  {{ data.how_he_hear_about_us }}
+                </p>
+                <p>
+                  <strong>المساحة المطلوبة : </strong> {{ data.space_required }}
+                </p>
+                <!-- <p><strong>أسم النموذج : </strong> {{ data.form_name }}</p> -->
+                <p v-if="data && data.current_employee">
+                  <strong>الموظف الحالي : </strong>
+                  {{ data.current_employee.name }}
+                </p>
+                <p>
+                  <strong>نتائج المكالمة : </strong> {{ data.results_of_call }}
+                </p>
+                <p>
+                  <strong>موظفين المبيعات السابقين : </strong>
+                  <span
+                    v-for="(oldEmployee, index) in data.old_employees"
+                    :key="oldEmployee._id"
+                  >
+                    {{ oldEmployee.name }}
+                    <span v-if="index !== data.old_employees.length - 1"
+                      >,
+                    </span>
+                  </span>
+                </p>
+              </div>
+            </v-col>
+            <v-col cols="6" md="6" style="text-align: center">
+              <p>يمكنك تحميل التطبيق</p>
+              <img
+                style="width: 120px"
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.qr
+                "
+                alt=""
+              />
+            </v-col>
+          </v-row>
           <br />
-
+        </v-container>
+        <v-container>
           <hr />
           <v-row
             style="
@@ -87,7 +139,8 @@
               md="6"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
               v-else
-              ><v-icon size="20"> mdi-phone </v-icon>{{ dataResidential.center_id.phone }}</v-col
+              ><v-icon size="20"> mdi-phone </v-icon
+              >{{ dataResidential.center_id.phone }}</v-col
             >
             <v-col
               cols="6"
@@ -104,10 +157,14 @@
               md="6"
               v-else
               style="padding: 10px; text-align: left; white-space: pre-wrap"
-            >{{ dataResidential.center_id.address }}</v-col>
+              >{{ dataResidential.center_id.address }}</v-col
+            >
           </v-row>
         </v-container>
       </v-card>
+      <p v-else style="font-size: 14px">
+        <strong>Loading...</strong>
+      </p>
     </v-container>
   </div>
 </template>
@@ -119,23 +176,18 @@ import API from "@/api/adminAPI";
 export default {
   data() {
     return {
-      id: null,
-      data: null,
-      user: null,
-      dataResidential: null,
+      id: JSON.parse(localStorage.getItem("PrintCallCenter"))._id,
+      data: {},
+      user: JSON.parse(localStorage.getItem("user")),
+      dataResidential: JSON.parse(localStorage.getItem("user")) || {},
     };
   },
   created() {
-    var userDataString = JSON.parse(localStorage.getItem("user"));
-    this.dataResidential = userDataString
-    const da = JSON.parse(localStorage.getItem("PrintCallCenter"));
-    this.id = da._id;
     API.getCallCenterOne({
       id: this.id,
     })
       .then((response) => {
         this.data = response.data.results;
-        this.user = JSON.parse(localStorage.getItem("user"));
       })
       .catch((error) => {
         console.error("Error fetching call center data:", error);
@@ -144,7 +196,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.printElement();
-    }, 500);
+    }, 1000);
   },
   methods: {
     printElement() {
