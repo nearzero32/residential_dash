@@ -250,10 +250,10 @@ class Api {
   // users
 
   // ApplicationForm
-  async getApplicationForm({ page, limit, sortBy, search }) {
+  async getApplicationForm({ page, limit, sortBy, search, status }) {
     return axiosInstance
       .get(
-        `/application_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
+        `/application_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&status=${status}`
       )
       .then((Response) => Response)
       .catch((error) => {
@@ -261,6 +261,11 @@ class Api {
 
         return error.response;
       });
+  }
+  async confirmApplicationForm(id) {
+    const response = await axiosInstance.delete(`/application_form/confirm/${id}`);
+
+    return response;
   }
   async removeApplicationForm(id) {
     const response = await axiosInstance.delete(`/application_form/id/${id}`);

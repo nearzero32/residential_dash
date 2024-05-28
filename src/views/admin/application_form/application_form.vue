@@ -7,18 +7,62 @@
     ></BaseBreadcrumb>
     <div>
       <div class="mt-4">
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-card color="#ffe179">
+              <v-card-text style="text-align: center">
+                <h4>
+                  <strong>عدد الطلبات المعلقة ( {{ table.pending }} )</strong>
+                </h4>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-card color="#13ffc5">
+              <v-card-text style="text-align: center">
+                <h4>
+                  <strong>عدد الطلبات المؤكدة ( {{ table.approved }} )</strong>
+                </h4>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-card color="#ff7a7a">
+              <v-card-text style="text-align: center">
+                <h4>
+                  <strong>عدد الطلبات الملغية ( {{ table.canceled }} )</strong>
+                </h4>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
         <v-card>
           <v-card-title>
+            <v-row style="width: 100%">
+              <v-col cols="12" md="6">
+                <v-select
+                  v-model="status"
+                  label="نوع البيانات"
+                  :items="items"
+                  outlined
+                  single-line
+                  hide-details
+                  @input="getCenter"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="6" class="r">
+                <v-text-field
+                  v-model="table.search"
+                  @input="getCenter"
+                  append-icon="mdi-magnify"
+                  label="بحث"
+                  outlined
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-spacer></v-spacer>
-            <v-text-field
-              v-model="table.search"
-              @input="getCenter"
-              append-icon="mdi-magnify"
-              label="بحث"
-              outlined
-              single-line
-              hide-details
-            ></v-text-field>
           </v-card-title>
           <v-data-table
             :headers="table.headers"
@@ -53,7 +97,41 @@
               </VTooltip> -->
               <VTooltip bottom>
                 <template #activator="{ attrs }">
-                  <v-icon color="#fffc00" v-bind="attrs" size="20" @click="Print(item)">
+                  <v-icon
+                    style="margin-inline: 4px"
+                    color="success"
+                    v-bind="attrs"
+                    size="20"
+                    @click="confirmIteme(item)"
+                  >
+                    mdi-check
+                  </v-icon>
+                </template>
+                <span>تأكيد</span>
+              </VTooltip>
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    style="margin-inline: 4px"
+                    color="red"
+                    v-bind="attrs"
+                    size="20"
+                    @click="Print(item)"
+                  >
+                    mdi-alpha-x-circle-outline
+                  </v-icon>
+                </template>
+                <span>الغاء</span>
+              </VTooltip>
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                    style="margin-inline: 4px"
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="Print(item)"
+                  >
                     mdi-printer
                   </v-icon>
                 </template>
@@ -74,11 +152,37 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false"> تم </v-btn>
+          <v-btn color="primary" text @click="dialogData.open = false">
+            تم
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <!-- - Dailog for show info to user -->
+
+    <!-- confirm dialog -->
+    <v-dialog v-model="dialogConfirm" max-width="500px">
+      <v-card>
+        <v-card-title class="headline justify-center">
+          هل انت متأكد من الموافقة على هذا الطلب ؟
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
+          <v-btn
+            color="primary white--text"
+            :loading="confirmItemLoading"
+            @click="confirmItemConfirm"
+          >
+            تأكيد
+          </v-btn>
+          <v-spacer />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End confirm dailog -->
 
     <!-- delete dialog -->
     <v-dialog v-model="dialogDelete" max-width="500px">
@@ -88,7 +192,9 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false"> الغاء </v-btn>
+          <v-btn color="primary" text @click="dialogDelete = false">
+            الغاء
+          </v-btn>
           <v-btn
             color="primary white--text"
             :loading="deleteItemLoading"
@@ -129,6 +235,25 @@ export default {
       ],
       // nav
       // table
+      items: [
+        {
+          text: "الكل",
+          value: null,
+        },
+        {
+          text: "معلق",
+          value: "معلق",
+        },
+        {
+          text: "مؤكد",
+          value: "مؤكد",
+        },
+        {
+          text: "ملغي",
+          value: "ملغي",
+        },
+      ],
+      status: null,
       table: {
         search: "",
         itemsPerPage: 5,
@@ -151,6 +276,9 @@ export default {
         centers: [],
         loading: true,
         totalItems: 0,
+        approved: 0,
+        canceled: 0,
+        pending: 0,
       },
       tableOptions: {
         page: 1,
@@ -169,6 +297,11 @@ export default {
       dialogDelete: false,
       deletedItem: {},
       // delete
+      // confirm
+      confirmItemLoading: false,
+      dialogConfirm: false,
+      confirmItem: {},
+      // confirm
     };
   },
   created() {
@@ -191,7 +324,9 @@ export default {
       try {
         this.table.loading = true;
         const key =
-          this.tableOptions.sortBy.length > 0 ? this.tableOptions.sortBy[0] : "createdAt";
+          this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
         const order =
           this.tableOptions.sortDesc.length > 0
             ? this.tableOptions.sortDesc[0]
@@ -211,10 +346,14 @@ export default {
           sortBy: sortByJSON,
           search: this.table.search,
           is_deleted: false,
+          status: this.status,
         });
-
+        console.log(response);
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
+        this.table.approved = response.data.results.approved;
+        this.table.canceled = response.data.results.canceled;
+        this.table.pending = response.data.results.pending;
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
@@ -234,6 +373,28 @@ export default {
       localStorage.setItem("PrintForm", JSON.stringify(item));
       // this.$router.push("/Print");
       window.open("/Print", "_blank");
+    },
+    confirmIteme(item) {
+      this.confirmItem = { ...item };
+      this.dialogConfirm = true;
+    },
+    async confirmItemConfirm() {
+      this.confirmItemLoading = true;
+
+      try {
+        const response = await API.confirmApplicationForm(this.confirmItem._id);
+
+        this.confirmItemLoading = false;
+        this.dialogConfirm = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
     },
     deleteItem(item) {
       this.deletedItem = { ...item };
@@ -264,5 +425,8 @@ export default {
 <style>
 .pointer-cursor {
   cursor: pointer;
+}
+.r {
+  text-align: left;
 }
 </style>
