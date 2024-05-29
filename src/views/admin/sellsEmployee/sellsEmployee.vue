@@ -44,6 +44,11 @@
             <template v-slot:item.num="{ item }">
               {{ table.centers.indexOf(item) + 1 }}
             </template>
+            <template v-slot:item.name="{ item }">
+              <router-link :to="`admin-profileSellsEmployee/${item._id}/${item.name}`">
+                {{ item.name }}
+              </router-link>
+            </template>
             <template v-slot:item.salary="{ item }">
               {{ $func(item.salary) }}
             </template>
@@ -371,11 +376,9 @@ export default {
             value: "num",
           },
           { text: "أسم الموظف", value: "name" },
-          { text: "البريد الألكتروني", value: "email" },
-          { text: "كلمة المرور", value: "password_show" },
-          { text: "رقم الهاتف", value: "phone" },
-          { text: "العنوان", value: "address" },
-          { text: "الراتب", value: "salary" },
+          { text: "عدد استمارات الطلب", value: "application_form_count" },
+          { text: "عدد استفسارات الزبائن", value: "call_center_count" },
+          { text: "عدد طلبات الموافقة", value: "confirmations_form_count" },
           { text: "العمليات", value: "actions" },
         ],
         centers: [],
@@ -484,7 +487,6 @@ export default {
           search: this.table.search,
           is_deleted: false,
         });
-
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
       } catch (error) {

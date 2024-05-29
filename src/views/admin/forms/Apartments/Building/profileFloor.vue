@@ -7,6 +7,20 @@
         :breadcrumbs="breadcrumbs"
       ></BaseBreadcrumb>
       <v-card>
+        <div v-if="data.status == 'تم البيع'">
+          <v-btn
+            color="primary"
+            class="ml-auto"
+            v-if="data.status == 'تم البيع'"
+            @click="cancelPayingHouse"
+          >
+            اعادة بيع الوحدة السكنية
+          </v-btn>
+          <br />
+          <br />
+          <hr />
+          <br />
+        </div>
         <v-card-text>
           <strong>رقم الشقة : ( {{ data.name }} )</strong>
           <br />
@@ -26,35 +40,39 @@
           <strong>الحالة : ( {{ data.status }} )</strong>
           <br />
           <br />
-          <strong v-if="data.previous_status.length > 0">الحالات السابقة : 
-          <br />
-          <br />
-          <ul style="list-style-type: disclosure-closed; margin-right: 65px">
-            <li v-for="(ite, i) in data.previous_status" :key="i">
-              <p>{{ ite }}</p>
-            </li>
-          </ul>
+          <strong v-if="data.previous_status.length > 0"
+            >الحالات السابقة :
+            <br />
+            <br />
+            <ul style="list-style-type: disclosure-closed; margin-right: 65px">
+              <li v-for="(ite, i) in data.previous_status" :key="i">
+                <p>{{ ite }}</p>
+              </li>
+            </ul>
           </strong>
-          <strong v-if="data.previous_owners.length > 0">الملاك السابقين : 
-          <br />
-          <br />
-          <ul style="list-style-type: disclosure-closed; margin-right: 65px">
-            <li v-for="(item, i) in data.previous_owners" :key="i">
-              <div
-                style="
-                  display: flex;
-                  flex-direction: row;
-                  align-items: center;
-                  justify-content: flex-start;
-                "
-              >
-                <p style="margin-left: 83px">الأسم : {{ item.name }}</p>
-                <p>رقم الهاتف : {{ item.phone }}</p>
-              </div>
-            </li>
-          </ul>
+          <strong v-if="data.previous_owners.length > 0"
+            >الملاك السابقين :
+            <br />
+            <br />
+            <ul style="list-style-type: disclosure-closed; margin-right: 65px">
+              <li v-for="(item, i) in data.previous_owners" :key="i">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+                  "
+                >
+                  <p style="margin-left: 83px">الأسم : {{ item.name }}</p>
+                  <p>رقم الهاتف : {{ item.phone }}</p>
+                </div>
+              </li>
+            </ul>
           </strong>
-          <strong v-if="data.current_owner.date !== null">تاريخ الشراء : {{ data.current_owner.date }}</strong>
+          <strong v-if="data.current_owner.date !== null"
+            >تاريخ الشراء : {{ data.current_owner.date }}</strong
+          >
           <br />
           <br />
           <v-container>
@@ -98,6 +116,8 @@
 </template>
 
 <script>
+import API from "@/api/adminAPI";
+
 export default {
   data() {
     return {
@@ -135,6 +155,24 @@ export default {
     this.breadcrumbs[3].text = this.data.name;
     const user = JSON.parse(localStorage.getItem("user"));
     this.content_url = user.content_url;
+  },
+  methods: {
+    async cancelPayingHouse() {
+      try {
+        this.loading = true;
+        const response = await API.cancelPayingHouse({ id: this.data._id });
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 };
 </script>

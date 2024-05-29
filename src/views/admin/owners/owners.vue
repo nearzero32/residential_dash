@@ -232,7 +232,7 @@
                     :items="Forms"
                     v-model="data.form"
                     :rules="Rules.form_id"
-                    item-text="name"
+                    :item-text="getItemText"
                     item-value="_id"
                     return-object
                     variant="outlined"
@@ -709,10 +709,10 @@
                   <v-autocomplete
                     label="النموذج"
                     :items="Forms"
-                    @change="getHousesEdit"
                     v-model="editdItem.form_id"
                     :rules="Rules.form_id"
-                    item-text="name"
+                    :item-text="getItemText"
+                    @change="getHousesEdit"
                     item-value="_id"
                     return-object
                     variant="outlined"
@@ -1369,6 +1369,7 @@ export default {
       isFormvalid: false,
       addBtnLoading: false,
       dialog: false,
+      building_type: null,
       HousesShow: false,
       Forms: [],
       Houses: [],
@@ -1474,6 +1475,12 @@ export default {
     },
   },
   methods: {
+    getItemText(item) {
+      if (item.building_type === "شقق") {
+        return `${item.exact_apartment_building} - ${item.name}`;
+      }
+      return item.name;
+    },
     Print(item) {
       localStorage.setItem("PrintOwner", JSON.stringify(item));
       window.open("/Print-Owner", "_blank");
@@ -1487,13 +1494,14 @@ export default {
       }
       for (var i = 0; i < this.Forms.length; i++) {
         if (this.Forms[i]._id == this.editdItem.form_id) {
+          this.building_type = this.Forms[i].building_type
           this.Houses = this.Forms[i].houses;
         }
       }
     },
     async getForms() {
       try {
-        const response = await API.getForms();
+        const response = await API.getFormsSelect();
 
         this.Forms = response.data.results;
       } catch (error) {
@@ -1507,10 +1515,15 @@ export default {
     getHouses() {
       this.data.form_id = this.data.form._id;
       this.Houses = this.data.form.houses;
+      this.building_type = this.data.form.building_type;
       this.HousesShow = true;
     },
     formatHouse(item) {
-      return `${item.name}   (${item.status})`;
+      if(this.building_type == "شقق") {
+        return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
+      } else if(this.building_type == "منازل") {
+        return `منزل ( ${item.name} ) الحالة  (${item.status})`;
+      }
     },
     showImgs(item) {
       this.showImg.open = true;

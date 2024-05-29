@@ -117,6 +117,11 @@ class Api {
     const response = await axiosInstance.put(`/sellsEmployee`, requestData);
     return response;
   }
+  async getSellsEmployeeOne(id) {
+    const response = await axiosInstance.get(`/sellsEmployee/${id}`);
+
+    return response;
+  }
   async removeSellsEmployee(id) {
     const response = await axiosInstance.delete(`/sellsEmployee/id/${id}`);
 
@@ -721,6 +726,10 @@ class Api {
     const response = await axiosInstance.get(`/houses_room_names`);
     return response;
   }
+  async getFormsSelect() {
+    const response = await axiosInstance.get(`/center/forms/select`);
+    return response;
+  }
 
   async addForms({
     building_type,
@@ -773,7 +782,7 @@ class Api {
       apartment_building,
       houses,
       rooms_for_space,
-      };
+    };
     const response = await axiosInstance.post(`/center/forms/apartment`, requestData);
     return response;
   }
@@ -784,6 +793,13 @@ class Api {
       houses
     };
     const response = await axiosInstance.post(`/center/forms/check_houses_names`, requestData);
+    return response;
+  }
+
+  async cancelPayingHouse({
+    id,
+  }) {
+    const response = await axiosInstance.put(`center/forms/cancel_paying_house/house_id/${id}`);
     return response;
   }
 
@@ -815,7 +831,7 @@ class Api {
       floor_number,
       houses,
       floors,
-      };
+    };
     const response = await axiosInstance.put(`center/forms/${id}`, requestData);
     return response;
   }

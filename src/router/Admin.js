@@ -13,6 +13,7 @@ import employees from "@/views/admin/employees/employees.vue";
 import reservationsService from "@/views/admin/reservationsService/reservationsService.vue";
 import guards from "@/views/admin/guards/guards.vue";
 import sellsEmployee from "@/views/admin/sellsEmployee/sellsEmployee.vue";
+import profileSellsEmployee from "@/views/admin/sellsEmployee/profileSellsEmployee.vue";
 import application_form from "@/views/admin/application_form/application_form.vue";
 import call_center from "@/views/admin/call_center/call_center.vue";
 import call_center_one from "@/views/admin/call_center/call_center_one.vue";
@@ -204,6 +205,11 @@ const Admin = {
       path: "/admin-profileFloor",
       name: "admin-profileFloor",
       component: profileFloor,
+    },
+    {
+      path: "/admin-profileSellsEmployee/:id/:name",
+      name: "admin-profileSellsEmployee",
+      component: profileSellsEmployee,
     },
 
   ],

@@ -8,14 +8,20 @@
       ></BaseBreadcrumb>
       <v-card :loading="loading" v-if="data !== null">
         <v-container fluid class="down-top-padding">
-          <v-btn
+          <div v-if="data.status == 'تم البيع'">
+            <v-btn
               color="primary"
               class="ml-auto"
               v-if="data.status == 'تم البيع'"
-              @click="AddAnApartmentModel"
+              @click="cancelPayingHouse"
             >
-              <v-icon class="mr-2">mdi-plus</v-icon>اعادة بيع الوحدة السكنية
+              اعادة بيع الوحدة السكنية
             </v-btn>
+            <br />
+            <br />
+            <hr />
+            <br />
+          </div>
           <p v-if="data && data.name">رقم الوحدة السكنية : {{ data.name }}</p>
           <p v-if="data && data.status">حالة الوحدة السكنية : {{ data.status }}</p>
           <p v-if="data && data.owners">المالك الحالي : {{ data.owners.name }}</p>
@@ -24,9 +30,9 @@
           <p>الملاك السابقين :
           <ul
             style="list-style-type: disclosure-closed; margin-right: 65px"
-            v-if="data.previous_owners_data.length > 0"
+            v-if="data.previous_owners.length > 0"
           >
-            <li v-for="(item, i) in data.previous_owners_data" :key="i">
+            <li v-for="(item, i) in data.previous_owners" :key="i">
               <div
                 style="
                   display: flex;
@@ -177,9 +183,25 @@ export default {
           form_id: this.form_id,
           house_id: this.house_id,
         });
-        console.log(response);
         this.content_url = response.data.content_url;
         this.data = response.data.results;
+        console.log(this.data);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
+    async cancelPayingHouse() {
+      try {
+        this.loading = true;
+        const response = await API.cancelPayingHouse({ id: this.house_id });
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");

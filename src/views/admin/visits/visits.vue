@@ -92,6 +92,8 @@ export default {
           },
           { text: "اسم المالك", value: "owner_name" },
           { text: "رقم هاتف المالك", value: "owner_phone" },
+          { text: "اسم النموذج", value: "form_name" },
+          { text: "اسم الوحدة السكنية", value: "house_name" },
           { text: "اسم الحارس", value: "guard_name" },
           { text: "رقم هاتف الحارس", value: "guard_phone" },
           { text: "التاريخ", value: "createdAt" },
@@ -136,7 +138,7 @@ export default {
           page,
           limit: itemsPerPage,
         });
-
+        console.log(response)
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
       } catch (error) {
