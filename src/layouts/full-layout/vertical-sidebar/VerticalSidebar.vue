@@ -94,32 +94,68 @@ export default {
     userType() {
       return JSON.parse(localStorage.getItem("user")).type;
     },
+    userPages() {
+      return JSON.parse(localStorage.getItem("user")).pages;
+    },
     userBuildingType() {
       return JSON.parse(localStorage.getItem("user")).building_type;
     },
     filteredItems() {
-      if (this.userBuildingType === "منازل وشقق") {
-        return VerticalSidebarItems.filter((item) => {
-          return (!item.type || (item.type == this.userType));
-      });
-      } else {
-        return VerticalSidebarItems.filter((item) => {
-          return (
-            !item.type ||
-            (item.type === this.userType && (item.building_type === this.userBuildingType || item.building_type === "منازل وشقق"))
-          );
-        });
-      }
-    },
+      var userType = this.userType;
+      var userPages = this.userPages;
+      var userBuildingType = this.userBuildingType;
 
-    // filteredItems() {
-    //   return VerticalSidebarItems.filter((item) => {
-    //     return (
-    //       !item.type ||
-    //       (item.type == this.userType && (item.building_type == this.userBuildingType || item.building_type == "منازل وشقق"))
-    //     );
-    //   });
-    // },
+      return VerticalSidebarItems.filter((item) => {
+        if (userType && item.type && item.type !== userType) {
+          return false;
+        }
+
+        if (userType === "assistance") {
+          if (userPages && userPages.indexOf(item.name) === -1) {
+            return false;
+          }
+        }
+
+        if (userBuildingType === "منازل وشقق") {
+          return true;
+        } else if (userBuildingType === "منازل" || userBuildingType === "شقق") {
+          return (
+            item.building_type === userBuildingType ||
+            item.building_type === "منازل وشقق"
+          );
+        }
+
+        return false;
+      }).map((item) => {
+        if (item.children) {
+          item.children = item.children.filter((childItem) => {
+            if (userType && childItem.type && childItem.type !== userType) {
+              return false;
+            }
+
+            if (userType === "assistance") {
+              if (userPages && userPages.indexOf(childItem.name) === -1) {
+                return false;
+              }
+            }
+
+            if (userBuildingType === "منازل وشقق") {
+              return true;
+            } else if (
+              userBuildingType === "منازل" ||
+              userBuildingType === "شقق"
+            ) {
+              return (
+                childItem.building_type === userBuildingType ||
+                childItem.building_type === "منازل وشقق"
+              );
+            }
+            return false;
+          });
+        }
+        return item;
+      });
+    },
   },
   watch: {
     "$vuetify.breakpoint.smAndDown"(val) {

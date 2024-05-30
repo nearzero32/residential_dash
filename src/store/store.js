@@ -97,7 +97,52 @@ export default new Vuex.Store({
         } else if (response.data.results.type === "admin") {
           router.push(this.returnUrl || "/Index");
         } else if (response.data.results.type === "assistance") {
-          router.push(this.returnUrl || "/Index");
+          var pages = response.data.results.pages[0];
+          if (pages == "home") {            
+            router.push(this.returnUrl || "/Index");
+          } else if (pages == "forms-Apartments") {
+            router.push(this.returnUrl || "/admin-forms-Apartments");
+          } else if (pages == "forms") {
+            router.push(this.returnUrl || "/admin-forms");
+          } else if (pages == "owners") {
+            router.push(this.returnUrl || "/admin-owners");
+          } else if (pages == "visits") {
+            router.push(this.returnUrl || "/admin-visits");
+          } else if (pages == "sales") {
+            if (response.data.results.pages[1] == "sells-employee") {
+              router.push(this.returnUrl || "/admin-sells-employee");
+            } else if (response.data.results.pages[1] == "call-center") {
+              router.push(this.returnUrl || "/admin-call-center");
+            } else if (response.data.results.pages[1] == "application-form") {
+              router.push(this.returnUrl || "/admin-application-form");
+            } else if (response.data.results.pages[1] == "confirmations-form") {
+              router.push(this.returnUrl || "/admin-confirmations-form");
+            } else if (response.data.results.pages[1] == "reservations") {
+              router.push(this.returnUrl || "/admin-reservations");
+            }
+          } else if (pages == "notifications") {
+            router.push(this.returnUrl || "/admin-notifications");
+          }  else if (pages == "After-sales-service") {
+            if (response.data.results.pages[1] == "reservation-service") {
+              router.push(this.returnUrl || "/admin-reservation-service");
+            } else if (response.data.results.pages[1] == "services") {
+              router.push(this.returnUrl || "/admin-services");
+            } else if (response.data.results.pages[1] == "buying-offers") {
+              router.push(this.returnUrl || "/admin-buying-offers");
+            }
+          } else if (pages == "guards") {
+            router.push(this.returnUrl || "/admin-guards");
+          } else if (pages == "employees") {
+            router.push(this.returnUrl || "/admin-employees");
+          } else if (pages == "postings") {
+            router.push(this.returnUrl || "/admin-postings");
+          } else if (pages == "advantages") {
+            router.push(this.returnUrl || "/admin-advantages");
+          } else if (pages == "how_u_hear_about_us") {
+            router.push(this.returnUrl || "/admin-how_u_hear_about_us");
+          } else if (pages == "complain") {
+            router.push(this.returnUrl || "/admin-complain");
+          }
         }
 
     },

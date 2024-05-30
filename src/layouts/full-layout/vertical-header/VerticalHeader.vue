@@ -15,8 +15,7 @@
         @click="
           $vuetify.breakpoint.smAndDown
             ? setSidebarDrawer(!Sidebar_drawer)
-            : $emit('input', !value)
-        "
+            : $emit('input', !value)"
       />
     </div>
     <!---/Toggle sidebar part -->

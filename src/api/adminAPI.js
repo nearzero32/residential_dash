@@ -142,7 +142,7 @@ class Api {
         return error.response;
       });
   }
-  async addUsers({ name, email, password_show, phone, address, actions }) {
+  async addUsers({ name, email, password_show, phone, address, actions, pages }) {
     const requestData = {
       name,
       email,
@@ -150,6 +150,7 @@ class Api {
       phone,
       address,
       actions: actions,
+      pages: pages,
     };
     return axiosInstance
       .post(`/users`, requestData)
@@ -168,6 +169,7 @@ class Api {
     phone,
     address,
     actions,
+    pages,
   }) {
     const requestData = {
       user_id,
@@ -177,6 +179,7 @@ class Api {
       phone,
       address,
       actions,
+      pages,
     };
     const response = await axiosInstance.put(`/users`, requestData);
     return response;

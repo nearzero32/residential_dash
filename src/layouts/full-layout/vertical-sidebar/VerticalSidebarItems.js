@@ -1,69 +1,3 @@
-// var userData = localStorage.getItem("user");
-// var formsApartments = null;
-// var formsApartmentsAssistance = null;
-// if (userData) {
-//   var userDataString = JSON.parse(userData);
-
-//   if (userDataString && userDataString.type) {
-//     if(userDataString.type == 'super_admin') {
-//        formsApartments = null;
-//        formsApartmentsAssistance = null;
-//     } else {
-//       if (userDataString.center_id.building_type == "شقق") {
-//         formsApartments = {
-//           title: "نماذج شقق",
-//           icon: "home",
-//           to: "/admin-forms-Apartments",
-//           type: "admin",
-//         }
-//         formsApartmentsAssistance = {
-//           title: "نماذج شقق",
-//           icon: "home",
-//           to: "/admin-forms-Apartments",
-//           type: "assistance",
-//         }
-//       } else if(userDataString.center_id.building_type == "منازل") {
-//         formsApartments =   {
-//           title: "نماذج منازل",
-//           icon: "home",
-//           to: "/admin-forms",
-//           type: "admin",
-//         }
-//         formsApartmentsAssistance =   {
-//           title: "نماذج منازل",
-//           icon: "home",
-//           to: "/admin-forms",
-//           type: "assistance",
-//         }
-//       } else if (userDataString.center_id.building_type == "منازل وشقق") {
-//         formsApartments =   {
-//           title: "نماذج شقق",
-//           icon: "home",
-//           to: "/admin-forms-Apartments",
-//           type: "admin",
-//         },
-//         {
-//           title: "نماذج منازل",
-//           icon: "home",
-//           to: "/admin-forms",
-//           type: "admin",
-//         }
-//         formsApartmentsAssistance =   {
-//           title: "نماذج شقق",
-//           icon: "home",
-//           to: "/admin-forms-Apartments",
-//           type: "assistance",
-//         },
-//         {
-//           title: "نماذج منازل",
-//           icon: "home",
-//           to: "/admin-forms",
-//           type: "assistance",
-//         }
-//       }
-//     }
-//   }
-// }
 
 export default [
   // super_admin
@@ -286,6 +220,7 @@ export default [
     icon: "home",
     to: "/Index",
     type: "assistance",
+    name: "home",
     building_type: "منازل وشقق",
   },
   {
@@ -293,6 +228,7 @@ export default [
     icon: "home",
     to: "/admin-forms-Apartments",
     type: "assistance",
+    name: "forms-Apartments",
     building_type: "شقق",
   },
   {
@@ -300,6 +236,7 @@ export default [
     icon: "home",
     to: "/admin-forms",
     type: "assistance",
+    name: "forms",
     building_type: "منازل",
   },
   {
@@ -307,6 +244,7 @@ export default [
     icon: "users",
     to: "/admin-owners",
     type: "assistance",
+    name: "owners",
     building_type: "منازل وشقق",
   },
   {
@@ -314,6 +252,7 @@ export default [
     icon: "users",
     to: "/admin-visits",
     type: "assistance",
+    name: "visits",
     building_type: "منازل وشقق",
   },
   {
@@ -322,6 +261,7 @@ export default [
     icon: "mdi-apps",
     title: "المبيعات",
     type: "assistance",
+    name: "sales",
     building_type: "منازل وشقق",
     children: [
       {
@@ -329,6 +269,7 @@ export default [
         icon: "user",
         to: "admin-sells-employee",
         type: "assistance",
+        name: "sells-employee",
         building_type: "منازل وشقق",
       },
       {
@@ -336,6 +277,7 @@ export default [
         icon: "phone",
         to: "admin-call-center",
         type: "assistance",
+        name: "call-center",
         building_type: "منازل وشقق",
       },
       {
@@ -343,6 +285,7 @@ export default [
         icon: "pen-tool",
         to: "admin-application-form",
         type: "assistance",
+        name: "application-form",
         building_type: "منازل وشقق",
       },
       {
@@ -350,6 +293,7 @@ export default [
         icon: "pen-tool",
         to: "admin-confirmations-form",
         type: "assistance",
+        name: "confirmations-form",
         building_type: "منازل وشقق",
       },
       {
@@ -357,6 +301,7 @@ export default [
         icon: "arrow-left",
         to: "admin-reservations",
         type: "assistance",
+        name: "reservations",
         building_type: "منازل وشقق",
       },
       // {
@@ -364,6 +309,7 @@ export default [
       //   icon: "arrow-left",
       //   to: "admin-salesContracts",
       //   type: "assistance",
+      // name: "salesContracts",
       // building_type: "منازل وشقق",
       // },
     ],
@@ -373,6 +319,7 @@ export default [
     icon: "bell",
     to: "/admin-notifications",
     type: "assistance",
+    name: "notifications",
     building_type: "منازل وشقق",
   },
   {
@@ -381,6 +328,7 @@ export default [
     icon: "mdi-apps",
     title: "خدمات ما بعد البيع",
     type: "assistance",
+    name: "After-sales-service",
     building_type: "منازل وشقق",
     children: [
       {
@@ -388,6 +336,7 @@ export default [
         icon: "award",
         to: "admin-reservation-service",
         type: "assistance",
+        name: "reservation-service",
         building_type: "منازل وشقق",
       },
       {
@@ -395,6 +344,7 @@ export default [
         icon: "award",
         to: "admin-services",
         type: "assistance",
+        name: "services",
         building_type: "منازل وشقق",
       },
       {
@@ -402,6 +352,7 @@ export default [
         icon: "home",
         to: "admin-buying-offers",
         type: "assistance",
+        name: "buying-offers",
         building_type: "منازل وشقق",
       },
     ],
@@ -411,6 +362,7 @@ export default [
     icon: "users",
     to: "/admin-guards",
     type: "assistance",
+    name: "guards",
     building_type: "منازل وشقق",
   },
   {
@@ -418,6 +370,7 @@ export default [
     icon: "user",
     to: "/admin-employees",
     type: "assistance",
+    name: "employees",
     building_type: "منازل وشقق",
   },
   {
@@ -425,6 +378,7 @@ export default [
     icon: "aperture",
     to: "/admin-postings",
     type: "assistance",
+    name: "postings",
     building_type: "منازل وشقق",
   },
   {
@@ -432,6 +386,7 @@ export default [
     icon: "codesandbox",
     to: "/admin-advantages",
     type: "assistance",
+    name: "advantages",
     building_type: "منازل وشقق",
   },
   {
@@ -439,6 +394,7 @@ export default [
     icon: "codesandbox",
     to: "/admin-how_u_hear_about_us",
     type: "assistance",
+    name: "how_u_hear_about_us",
     building_type: "منازل وشقق",
   },
   {
@@ -446,6 +402,7 @@ export default [
     icon: "codesandbox",
     to: "/admin-complain",
     type: "assistance",
+    name: "complain",
     building_type: "منازل وشقق",
   },
   // assistance

@@ -44,16 +44,40 @@
             <template v-slot:item.num="{ item }">
               {{ table.centers.indexOf(item) + 1 }}
             </template>
+            <template v-slot:item.pages="{ item }">
+              <ul v-for="(page, index) in item.pages" :key="index">
+                <li v-if="page == 'home'">الصفحة الرئيسية</li>
+                <li v-if="page == 'forms-Apartments'">نماذج شقق</li>
+                <li v-if="page == 'forms'">نماذج منازل</li>
+                <li v-if="page == 'owners'">الملاك</li>
+                <li v-if="page == 'visits'">زيارات الملاك</li>
+                <li v-if="page == 'sales'">المبيعات</li>
+                <li v-if="page == 'sells-employee'">موظفين المبيعات</li>
+                <li v-if="page == 'call-center'">أستفسارات الزبائن</li>
+                <li v-if="page == 'application-form'">
+                  أستماراة طلب حجز وحدة سكنية
+                </li>
+                <li v-if="page == 'confirmations-form'">أستماراة طلب موافقة</li>
+                <li v-if="page == 'reservations'">طلبات وحدة سكنية</li>
+                <li v-if="page == 'notifications'">الأشعارات</li>
+                <li v-if="page == 'After-sales-service'">خدمات ما بعد البيع</li>
+                <li v-if="page == 'reservation-service'">حجوزات الخدمات</li>
+                <li v-if="page == 'services'">الخدمات</li>
+                <li v-if="page == 'buying-offers'">الوحدات السكنية</li>
+                <li v-if="page == 'guards'">الحراس</li>
+                <li v-if="page == 'employees'">الموظفين</li>
+                <li v-if="page == 'postings'">الأعلانات</li>
+                <li v-if="page == 'advantages'">المميزات</li>
+                <li v-if="page == 'how_u_hear_about_us'">كيف سمع عنا</li>
+                <li v-if="page == 'complain'">الشكاوي</li>
+              </ul>
+            </template>
             <template v-slot:item.privileges.actions="{ item }">
-              <strong v-if="item.privileges.actions.includes('add')">
-                أضافة
-              </strong>
-              <strong v-if="item.privileges.actions.includes('edit')">
-                تعديل
-              </strong>
-              <strong v-if="item.privileges.actions.includes('remove')">
-                حذف
-              </strong>
+              <ul>
+                <li v-if="item.privileges.actions.includes('add')">أضافة</li>
+                <li v-if="item.privileges.actions.includes('edit')">تعديل</li>
+                <li v-if="item.privileges.actions.includes('remove')">حذف</li>
+              </ul>
             </template>
             <template v-slot:item.actions="{ item }">
               <VTooltip bottom v-if="userData.includes('edit')">
@@ -172,6 +196,56 @@
                   ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >صفحات المستخدم</v-label
+                  >
+                  <v-autocomplete
+                    v-model="data.pages"
+                    :items="pages"
+                    outlined
+                    item-text="text"
+                    item-value="value"
+                    attach
+                    chips
+                    label="صفحات المستخدم"
+                    multiple
+                  ></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6" v-if="isPagesSeles == true">
+                  <v-label class="mb-2 font-weight-medium"
+                    >صفحات المبيعات</v-label
+                  >
+                  <v-autocomplete
+                    v-model="Seles"
+                    :items="pagesSeles"
+                    :rules="Rules.Seles"
+                    outlined
+                    item-text="text"
+                    item-value="value"
+                    attach
+                    chips
+                    label="صفحات المبيعات"
+                    multiple
+                  ></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6" v-if="isPagesServices == true">
+                  <v-label class="mb-2 font-weight-medium"
+                    >صفحات خدمات ما بعد البيع</v-label
+                  >
+                  <v-autocomplete
+                    v-model="Services"
+                    :items="pagesServices"
+                    :rules="Rules.Services"
+                    outlined
+                    item-text="text"
+                    item-value="value"
+                    attach
+                    chips
+                    label="صفحات خدمات ما بعد البيع"
+                    multiple
+                  ></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">العنوان</v-label>
                   <v-text-field
                     variant="outlined"
@@ -285,6 +359,23 @@
                   >
                   </v-autocomplete>
                 </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >صفحات المستخدم</v-label
+                  >
+                  <v-autocomplete
+                    v-model="editdItem.pages"
+                    :items="pagesEd"
+                    outlined
+                    item-text="text"
+                    item-value="value"
+                    attach
+                    chips
+                    label="صفحات المستخدم"
+                    multiple
+                  ></v-autocomplete>
+                </v-col>
+
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">العنوان</v-label>
                   <v-text-field
@@ -402,6 +493,7 @@ export default {
           { text: "كلمة المرور", value: "password_show" },
           { text: "رقم الهاتف", value: "phone" },
           { text: "صلاحيات المستخدم", value: "privileges.actions" },
+          { text: "صفحات المستخدم", value: "pages" },
           { text: "العنوان", value: "address" },
           { text: "العمليات", value: "actions" },
         ],
@@ -431,8 +523,67 @@ export default {
         phone: null,
         password_show: null,
         action: [],
+        pages: [],
         address: null,
       },
+      Seles: [],
+      Services: [],
+      pages: [
+        { text: "الصفحة الرئيسية", value: "home" },
+        { text: "نماذج شقق", value: "forms-Apartments" },
+        { text: "نماذج منازل", value: "forms" },
+        { text: "الملاك", value: "owners" },
+        { text: "زيارات الملاك", value: "visits" },
+        { text: "المبيعات", value: "sales" },
+        { text: "الأشعارات", value: "notifications" },
+        { text: "خدمات ما بعد البيع", value: "After-sales-service" },
+        { text: "الحراس", value: "guards" },
+        { text: "الموظفين", value: "employees" },
+        { text: "الأعلانات", value: "postings" },
+        { text: "المميزات", value: "advantages" },
+        { text: "كيف سمع عنا", value: "how_u_hear_about_us" },
+        { text: "الشكاوي", value: "complain" },
+      ],
+      pagesEd: [
+        { text: "الصفحة الرئيسية", value: "home" },
+        { text: "نماذج شقق", value: "forms-Apartments" },
+        { text: "نماذج منازل", value: "forms" },
+        { text: "الملاك", value: "owners" },
+        { text: "زيارات الملاك", value: "visits" },
+        { text: "المبيعات", value: "sales" },
+        { text: "موظفين المبيعات", value: "sells-employee" },
+        { text: "أستفسارات الزبائن", value: "call-center" },
+        { text: "أستماراة طلب حجز وحدة سكنية", value: "application-form" },
+        { text: "أستماراة طلب موافقة", value: "confirmations-form" },
+        { text: "طلبات وحدة سكنية", value: "reservations" },
+
+        { text: "الأشعارات", value: "notifications" },
+        { text: "خدمات ما بعد البيع", value: "After-sales-service" },
+        { text: "حجوزات الخدمات", value: "reservation-service" },
+        { text: "الخدمات", value: "services" },
+        { text: "الوحدات السكنية", value: "buying-offers" },
+
+        { text: "الحراس", value: "guards" },
+        { text: "الموظفين", value: "employees" },
+        { text: "الأعلانات", value: "postings" },
+        { text: "المميزات", value: "advantages" },
+        { text: "كيف سمع عنا", value: "how_u_hear_about_us" },
+        { text: "الشكاوي", value: "complain" },
+      ],
+      isPagesSeles: false,
+      pagesSeles: [
+        { text: "موظفين المبيعات", value: "sells-employee" },
+        { text: "أستفسارات الزبائن", value: "call-center" },
+        { text: "أستماراة طلب حجز وحدة سكنية", value: "application-form" },
+        { text: "أستماراة طلب موافقة", value: "confirmations-form" },
+        { text: "طلبات وحدة سكنية", value: "reservations" },
+      ],
+      isPagesServices: false,
+      pagesServices: [
+        { text: "حجوزات الخدمات", value: "reservation-service" },
+        { text: "الخدمات", value: "services" },
+        { text: "الوحدات السكنية", value: "buying-offers" },
+      ],
       action: [
         { text: "اٍضافة", value: "add" },
         { text: "حذف", value: "remove" },
@@ -440,6 +591,8 @@ export default {
       ],
       Rules: {
         nameRules: [(v) => !!v || "يرجى إدخال اسم المستخدم"],
+        Seles: [(v) => !!v || "يرجى اختيار صفحات البيع"],
+        Services: [(v) => !!v || "يرجى اختيار صفحات خدمات ما بعد البيع "],
         emailRules: [
           (v) => !!v || "يرجى إدخال عنوان البريد الإلكتروني",
           (v) => /.+@.+\..+/.test(v) || "يرجى إدخال عنوان بريد إلكتروني صحيح",
@@ -482,6 +635,73 @@ export default {
       this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
+  },
+  watch: {
+    "data.pages": {
+      handler: function () {
+        let found = false;
+        this.data.pages.map((page) => {
+          if (page == "sales") {
+            found = true;
+            this.isPagesSeles = true;
+          }
+        });
+        if (!found) {
+          this.isPagesSeles = false;
+        }
+        let foundd = false;
+        this.data.pages.map((page) => {
+          if (page == "After-sales-service") {
+            foundd = true;
+            this.isPagesServices = true;
+          }
+        });
+        if (!foundd) {
+          this.isPagesServices = false;
+        }
+      },
+      deep: true,
+    },
+    Seles: {
+      handler: function (newVal, oldVal) {
+        if (newVal.length > oldVal.length) {
+          const addedItems = newVal.filter((item) => !oldVal.includes(item));
+          addedItems.forEach((item) => {
+            this.data.pages.push(item);
+          });
+        }
+        if (newVal.length < oldVal.length) {
+          const removedItems = oldVal.filter((item) => !newVal.includes(item));
+          removedItems.forEach((item) => {
+            const index = this.data.pages.indexOf(item);
+            if (index !== -1) {
+              this.data.pages.splice(index, 1);
+            }
+          });
+        }
+      },
+      deep: true,
+    },
+    Services: {
+      handler: function (newVal, oldVal) {
+        if (newVal.length > oldVal.length) {
+          const addedItems = newVal.filter((item) => !oldVal.includes(item));
+          addedItems.forEach((item) => {
+            this.data.pages.push(item);
+          });
+        }
+        if (newVal.length < oldVal.length) {
+          const removedItems = oldVal.filter((item) => !newVal.includes(item));
+          removedItems.forEach((item) => {
+            const index = this.data.pages.indexOf(item);
+            if (index !== -1) {
+              this.data.pages.splice(index, 1);
+            }
+          });
+        }
+      },
+      deep: true,
+    },
   },
   methods: {
     Print(item) {
@@ -540,6 +760,7 @@ export default {
           phone: this.data.phone,
           address: this.data.address,
           actions: this.data.action,
+          pages: this.data.pages,
         });
 
         this.addBtnLoading = false;
@@ -548,7 +769,8 @@ export default {
         this.data.phone = null;
         this.data.password_show = null;
         this.data.address = null;
-        this.data.action = null;
+        this.data.action = [];
+        this.data.pages = [];
         this.getCenter();
 
         this.showDialogfunction(response.data.message, "primary");
@@ -580,6 +802,7 @@ export default {
           phone: this.editdItem.phone,
           address: this.editdItem.address,
           actions: this.editdItem.privileges.actions,
+          pages: this.editdItem.pages,
         });
         this.editItemLoading = false;
         this.getCenter();
