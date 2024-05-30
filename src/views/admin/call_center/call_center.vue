@@ -396,6 +396,7 @@ export default {
           { text: "أسم المتصل", value: "caller_name" },
           { text: "وظيفة المتصل", value: "caller_job" },
           { text: "هاتف المتصل", value: "caller_phone" },
+          { text: "المحافظة", value: "caller_governorate" },
           { text: "عنوان المتصل", value: "caller_address" },
           { text: "أفراد عائلة المتصل", value: "caller_family_members" },
           { text: "كيف يسمع عنا", value: "how_he_hear_about_us" },

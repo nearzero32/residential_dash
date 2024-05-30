@@ -63,6 +63,9 @@
                 <strong>هاتف المتصل : ( {{ data.caller_phone }} )</strong>
               </v-col>
               <v-col cols="12" md="12" style="padding: 10px">
+                <strong>المحافظة : ( {{ data.caller_governorate }} )</strong>
+              </v-col>
+              <v-col cols="12" md="12" style="padding: 10px">
                 <strong>عنوان المتصل : ( {{ data.caller_address }} )</strong>
               </v-col>
               <v-col cols="12" md="12" style="padding: 10px">

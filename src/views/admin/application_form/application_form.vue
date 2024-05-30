@@ -288,6 +288,7 @@ export default {
           },
           { text: "اسم الزبون", value: "buyer_info.customer_name" },
           { text: "رقم الهاتف", value: "buyer_info.customer_phone" },
+          { text: "رقم الهاتف الثاني", value: "buyer_info.customer_phone_two" },
           { text: "اسم النموذج", value: "form_name" },
           { text: "اسم المنزل", value: "house_name" },
           { text: "المساحة الكلية", value: "house_total_space" },

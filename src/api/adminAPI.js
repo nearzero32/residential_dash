@@ -256,16 +256,10 @@ class Api {
 
   // ApplicationForm
   async getApplicationForm({ page, limit, sortBy, search, status }) {
-    return axiosInstance
-      .get(
-        `/application_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&status=${status}`
-      )
-      .then((Response) => Response)
-      .catch((error) => {
-        console.log("error", error);
+      const response = await axiosInstance.get(`/application_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&status=${status}`);
 
-        return error.response;
-      });
+      return response;
+  
   }
   async cancelApplicationForm(id) {
     const response = await axiosInstance.put(`/application_form/cancel/${id}`);
