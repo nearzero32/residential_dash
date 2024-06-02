@@ -14,7 +14,7 @@
                 <div>
                   <strong>أسم المالك : {{ data.name }}</strong>
                   <br />
-                  <strong>أسم المالك : {{ data.phone }}</strong>
+                  <strong>رقم الهاتف : {{ data.phone }}</strong>
                 </div>
               </v-col>
               <v-col cols="12" md="6" id="ImgO">
