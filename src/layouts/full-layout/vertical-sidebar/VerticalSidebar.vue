@@ -106,6 +106,10 @@ export default {
       var userBuildingType = this.userBuildingType;
 
       return VerticalSidebarItems.filter((item) => {
+        if (userType === "super_admin") {
+          return item.type === "super_admin";
+        }
+
         if (userType && item.type && item.type !== userType) {
           return false;
         }
@@ -129,6 +133,10 @@ export default {
       }).map((item) => {
         if (item.children) {
           item.children = item.children.filter((childItem) => {
+            if (userType === "super_admin") {
+              return childItem.type === "super_admin";
+            }
+
             if (userType && childItem.type && childItem.type !== userType) {
               return false;
             }
