@@ -119,7 +119,6 @@ export default {
             return false;
           }
         }
-
         if (userBuildingType === "منازل وشقق") {
           return true;
         } else if (userBuildingType === "منازل" || userBuildingType === "شقق") {
