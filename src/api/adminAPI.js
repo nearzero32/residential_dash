@@ -452,6 +452,7 @@ class Api {
     const response = await axiosInstance.get(`/center/forms/apartment/${id}`);
     return response;
   }
+
   async addOwners({
     name,
     phone,
@@ -466,6 +467,14 @@ class Api {
     location_img_front,
     location_img_back,
     passport_img,
+    id_number,
+    id_place_of_issue,
+    id_issue_date,
+    residence_card_number,
+    residence_card_place_of_issue,
+    owner_title_jop,
+    bank_id,  
+    residence_card_issue_date,  
   }) {
     const requestData = {
       name,
@@ -481,6 +490,14 @@ class Api {
       location_img_front,
       location_img_back,
       passport_img,
+      id_number,
+      id_place_of_issue,
+      id_issue_date,
+      residence_card_number,
+      residence_card_place_of_issue,
+      owner_title_jop,
+      bank_id,  
+      residence_card_issue_date,   
     };
     const response = await axiosInstance.post(`/owners`, requestData);
     return response;
@@ -500,6 +517,14 @@ class Api {
     location_img_front,
     location_img_back,
     passport_img,
+    id_number,
+    id_place_of_issue,
+    id_issue_date,
+    residence_card_number,
+    residence_card_place_of_issue,
+    owner_title_jop,
+    bank_id,
+    residence_card_issue_date,
   }) {
     const requestData = {
       owner_id,
@@ -516,6 +541,14 @@ class Api {
       location_img_front,
       location_img_back,
       passport_img,
+      id_number,
+      id_place_of_issue,
+      id_issue_date,
+      residence_card_number,
+      residence_card_place_of_issue,
+      owner_title_jop,  
+      bank_id,  
+      residence_card_issue_date,  
     };
     const response = await axiosInstance.put(`/owners`, requestData);
     return response;
@@ -525,6 +558,80 @@ class Api {
     return response;
   }
   // Owners
+
+  // MaintenanceEmployee
+  async getMaintenanceEmployee({ page, limit, search, is_deleted, sortBy }) {
+    const response = await axiosInstance.get(
+      `/maintenance_employee?page=${page}&limit=${limit}&search=${search}&is_deleted=${is_deleted}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  async addMaintenanceEmployee({ name, phone, email, password_show, salary, address }) {
+    const requestData = {
+      name,
+      phone,
+      email, 
+      password_show,
+      salary,
+      address,
+    };
+    const response = await axiosInstance.post(`/maintenance_employee`, requestData);
+    return response;
+  }
+  async editMaintenanceEmployee({ emp_id, name, phone, email, password_show, salary, address }) {
+    const requestData = {
+      id:emp_id,
+      name,
+      phone,
+      email, 
+      password_show,
+      salary,
+      address,
+    };
+    const response = await axiosInstance.put(`/maintenance_employee`, requestData);
+    return response;
+  }
+  async removeMaintenanceEmployee(id) {
+    const response = await axiosInstance.delete(`/maintenance_employee/id/${id}`);
+    return response;
+  }
+  // MaintenanceEmployee
+
+  // OwnersContract
+  async getOwnersContract({ page, limit, search, sortBy }) {
+    const response = await axiosInstance.get(
+      `/owners/contracts?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  // OwnersContract
+
+  // bankAccounts
+  async getBankAccounts({ page, limit, search, sortBy, is_disabled }) {
+    const response = await axiosInstance.get(
+      `/owners/bank_accounts?page=${page}&limit=${limit}&search=${search}&is_disabled=${is_disabled}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  async addBankAccounts({ name, account_number, account_name }) {
+    const requestData = {
+      name, account_number, account_name
+    };
+    const response = await axiosInstance.post(`/owners/bank_accounts`, requestData);
+    return response;
+  }
+  async editBankAccounts({ id, name, account_number, account_name }) {
+    const requestData = {
+      name, account_number, account_name
+    };
+    const response = await axiosInstance.put(`/owners/bank_accounts/${id}`, requestData);
+    return response;
+  }
+  async removeBankAccounts(id) {
+    const response = await axiosInstance.delete(`/owners/bank_accounts/${id}`);
+    return response;
+  }
+  // bankAccounts
 
   // Employees
   async getEmployees({ page, limit, search, sortBy }) {

@@ -117,13 +117,13 @@ export default [
         type: "admin",
         building_type: "منازل وشقق",
       },
-      // {
-      //   title: "عقود المبيعات",
-      //   icon: "arrow-left",
-      //   to: "admin-salesContracts",
-      //   type: "admin",
-      // building_type: "منازل وشقق",
-      // },
+      {
+        title: "عقود المبيعات",
+        icon: "arrow-left",
+        to: "admin-get-salesContracts",
+        type: "admin",
+      building_type: "منازل وشقق",
+      },
     ],
   },
   {
@@ -134,6 +134,14 @@ export default [
     building_type: "منازل وشقق",
   },
   {
+    title: "المصارف",
+    icon: "bell",
+    to: "/admin-bank-accounts",
+    type: "admin",
+    name: "bankAccounts",
+    building_type: "منازل وشقق",
+  },
+  {
     group: "",
     model: false,
     icon: "mdi-apps",
@@ -141,6 +149,13 @@ export default [
     type: "admin",
     building_type: "منازل وشقق",
     children: [
+      {
+        title: "موظفين الصيانة",
+        icon: "award",
+        to: "admin-maintenance-employee",
+        type: "admin",
+        building_type: "منازل وشقق",
+      },
       {
         title: "حجوزات الخدمات",
         icon: "award",
@@ -304,14 +319,14 @@ export default [
         name: "reservations",
         building_type: "منازل وشقق",
       },
-      // {
-      //   title: "عقود المبيعات",
-      //   icon: "arrow-left",
-      //   to: "admin-salesContracts",
-      //   type: "assistance",
-      // name: "salesContracts",
-      // building_type: "منازل وشقق",
-      // },
+      {
+        title: "عقود المبيعات",
+        icon: "arrow-left",
+        to: "admin-get-salesContracts",
+        type: "assistance",
+      name: "salesContracts",
+      building_type: "منازل وشقق",
+      },
     ],
   },
   {
@@ -323,6 +338,14 @@ export default [
     building_type: "منازل وشقق",
   },
   {
+    title: "المصارف",
+    icon: "bell",
+    to: "/admin-bank-accounts",
+    type: "assistance",
+    name: "bankAccounts",
+    building_type: "منازل وشقق",
+  },
+  {
     group: "",
     model: false,
     icon: "mdi-apps",
@@ -331,6 +354,13 @@ export default [
     name: "After-sales-service",
     building_type: "منازل وشقق",
     children: [
+      {
+        title: "موظفين الصيانة",
+        icon: "award",
+        to: "admin-maintenance-employee",
+        type: "assistance",
+        building_type: "منازل وشقق",
+      },
       {
         title: "حجوزات الخدمات",
         icon: "award",

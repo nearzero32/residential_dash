@@ -40,7 +40,7 @@
                 "
               >
                 <strong style="font-size: 14px"
-                  >المالك ( {{ data.name }} )</strong
+                  >الموظف ( {{ data.name }} )</strong
                 >
               </div>
             </v-col>
@@ -66,22 +66,26 @@
           >
             <v-col cols="6" md="6">
               <div>
-                <p>أسم المالك : {{ data.name }}</p>
+                <p>أسم الموظف : {{ data.name }}</p>
+                <br />
                 <p>رقم الهاتف : {{ data.phone }}</p>
+                <br />
                 <p>العنوان : {{ data.address }}</p>
-                <p>البريد الألكتروني : {{ data.email }}</p>
-                <p>كلمة المرور : {{ data.password_show }}</p>
-                <p>رقم الهوية : {{ data.id_number }}</p>
-                <p>جهة اصدار الهوية : {{ data.id_place_of_issue }}</p>
-                <p>تاريخ اصدار الهوية : {{ data.id_issue_date }}</p>
-                <p>رقم بطاقة السكن : {{ data.residence_card_number }}</p>
-                <p>جهة اصدار بطاقة السكن : {{ data.residence_card_place_of_issue }}</p>
-                <p>العنوان الوظيفي : {{ data.owner_title_jop }}</p>
+                <br />
+                <p>العنوان الوظيفي : {{ data.title_jop }}</p>
+                <br />
+                <p>الراتب: {{ data.salary }}</p>
               </div>
             </v-col>
-            <v-col cols="6" md="6" style="text-align: center;">
-              <p>يمكنك تحميل التطبيق </p>
-              <img style="width: 120px;" :src="dataResidential.content_url + dataResidential.center_id.qr" alt="">
+            <v-col cols="6" md="6" style="text-align: center">
+              <p>يمكنك تحميل التطبيق</p>
+              <img
+                style="width: 120px"
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.qr
+                "
+                alt=""
+              />
             </v-col>
           </v-row>
           <br />
@@ -146,7 +150,7 @@ export default {
     };
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("PrintOwner"));
+    this.data = JSON.parse(localStorage.getItem("PrintEmployees"));
     var userDataString = JSON.parse(localStorage.getItem("user"));
     this.dataResidential = userDataString;
     this.user = userDataString;

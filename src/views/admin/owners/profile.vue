@@ -34,13 +34,25 @@
           <v-card-text
             style="display: flex; flex-direction: column; align-items: flex-start"
           >
-            <strong>تفاصيل المالك :</strong>
+            <strong>تفاصيل المالك :-</strong>
             <br />
             <strong>البريد الألكتروني : {{ data.email }}</strong>
             <br />
             <strong>العنوان : {{ data.address }}</strong>
             <br />
             <strong>كلمة المرور : {{ data.password_show }}</strong>
+            <br />
+            <strong>رقم الهوية : {{ data.id_number }}</strong>
+            <br />
+            <strong>جهة اصدار الهوية : {{ data.id_place_of_issue }}</strong>
+            <br />
+            <strong>تاريخ اصدار الهوية : {{ data.id_issue_date }}</strong>
+            <br />
+            <strong>رقم بطاقة السكن : {{ data.residence_card_number }}</strong>
+            <br />
+            <strong>جهة اصدار بطاقة السكن : {{ data.residence_card_place_of_issue }}</strong>
+            <br />
+            <strong>العنوان الوظيفي : {{ data.owner_title_jop }}</strong>
             <br />
             <div style="width: 100%;">
               <h2><strong>صور العقد :</strong></h2>

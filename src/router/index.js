@@ -82,9 +82,9 @@ const router = new Router({
       meta: { target: "_blank" }
     },
     {
-      path: "/admin-salesContracts",
-      name: "admin-salesContracts",
-      component: () => import("@/views/admin/salesContracts/PrintsalesContracts.vue"),
+      path: "/admin-salesContracts-nahdda",
+      name: "admin-salesContracts-nahdda",
+      component: () => import("@/views/admin/salesContracts/PrintsalesContractsNahdda.vue"),
       meta: { target: "_blank" }
     },
 

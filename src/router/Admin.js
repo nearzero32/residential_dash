@@ -10,6 +10,7 @@ import notifications from "@/views/admin/notifications/notifications.vue";
 import services from "@/views/admin/services/services.vue";
 import Profile from "@/views/admin/Profile/Profile.vue";
 import employees from "@/views/admin/employees/employees.vue";
+import maintenanceEmployee from "@/views/admin/maintenanceEmployee/employees.vue";
 import reservationsService from "@/views/admin/reservationsService/reservationsService.vue";
 import guards from "@/views/admin/guards/guards.vue";
 import sellsEmployee from "@/views/admin/sellsEmployee/sellsEmployee.vue";
@@ -32,7 +33,8 @@ import addApartments from "@/views/admin/forms/Apartments/addApartments.vue";
 import profileApartments from "@/views/admin/forms/Apartments/profile/index.vue";
 import showBuilding from "@/views/admin/forms/Apartments/Building/showBuilding.vue";
 import profileFloor from "@/views/admin/forms/Apartments/Building/profileFloor.vue";
-// import salesContracts from "@/views/admin/salesContracts/salesContracts.vue";
+import salesContracts from "@/views/admin/salesContracts/salesContracts.vue";
+import bankAccounts from "@/views/admin/bankAccounts/bankAccounts.vue";
 
 const Admin = {
   path: "/",
@@ -122,6 +124,11 @@ const Admin = {
       component: employees,
     },
     {
+      path: "/admin-bank-accounts",
+      name: "admin-bank-accounts",
+      component: bankAccounts,
+    },
+    {
       path: "/admin-reservation-service",
       name: "admin-reservation-service",
       component: reservationsService,
@@ -135,6 +142,11 @@ const Admin = {
       path: "/admin-sells-employee",
       name: "admin-sells-employee",
       component: sellsEmployee,
+    },
+    {
+      path: "/admin-maintenance-employee",
+      name: "admin-maintenance-employee",
+      component: maintenanceEmployee,
     },
     {
       path: "/admin-forms",
@@ -210,6 +222,11 @@ const Admin = {
       path: "/admin-profileSellsEmployee/:id/:name",
       name: "admin-profileSellsEmployee",
       component: profileSellsEmployee,
+    },
+    {
+      path: "/admin-get-salesContracts",
+      name: "admin-get-salesContracts",
+      component: salesContracts,
     },
 
   ],

@@ -216,6 +216,147 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">رقم الهوية</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.id_number"
+                    v-model="data.id_number"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >جهة اصدار الهوية</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.id_place_of_issue"
+                    v-model="data.id_place_of_issue"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >تاريخ اصدار الهوية</v-label
+                  >
+                  <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="data.id_issue_date"
+                        :rules="Rules.id_issue_date"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="data.id_issue_date"
+                      :rules="Rules.id_issue_date"
+                      :active-picker.sync="activePicker"
+                      :max="
+                        new Date(
+                          Date.now() - new Date().getTimezoneOffset() * 60000
+                        )
+                          .toISOString()
+                          .substring(0, 10)
+                      "
+                      min="1950-01-01"
+                      @change="save"
+                      outlined
+                      color="primary"
+                      variant="outlined"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >رقم بطاقة السكن</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.residence_card_number"
+                    v-model="data.residence_card_number"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >جهة اصدار بطاقة السكن</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.residence_card_place_of_issue"
+                    v-model="data.residence_card_place_of_issue"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >تاريخ اصدار بطاقة السكن</v-label
+                  >
+                  <v-menu
+                    ref="menuCard"
+                    v-model="menuCard"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="data.residence_card_issue_date"
+                        :rules="Rules.residence_card_issue_date"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="data.residence_card_issue_date"
+                      :rules="Rules.residence_card_issue_date"
+                      :active-picker.sync="activePicker"
+                      :max="
+                        new Date(
+                          Date.now() - new Date().getTimezoneOffset() * 60000
+                        )
+                          .toISOString()
+                          .substring(0, 10)
+                      "
+                      min="1950-01-01"
+                      @change="saveE"
+                      outlined
+                      color="primary"
+                      variant="outlined"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >العنوان الوظيفي</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.owner_title_jop"
+                    v-model="data.owner_title_jop"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">العنوان</v-label>
                   <v-text-field
                     variant="outlined"
@@ -224,6 +365,18 @@
                     outlined
                     color="primary"
                   ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">المصرف</v-label>
+                  <v-autocomplete
+                    label="المصرف"
+                    :items="BankAccounts"
+                    v-model="data.bank_id"
+                    :rules="Rules.bank"
+                    item-text="name"
+                    item-value="_id"
+                    variant="outlined"
+                  ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">النموذج</v-label>
@@ -695,6 +848,149 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">رقم الهوية</v-label>
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.id_number"
+                    v-model="editdItem.id_number"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >جهة اصدار الهوية</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.id_place_of_issue"
+                    v-model="editdItem.id_place_of_issue"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >تاريخ اصدار الهوية</v-label
+                  >
+                  <v-menu
+                    ref="menuE"
+                    v-model="menuE"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="editdItem.id_issue_date"
+                        :rules="Rules.id_issue_date"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="editdItem.id_issue_date"
+                      :rules="Rules.id_issue_date"
+                      :active-picker.sync="activePicker"
+                      :max="
+                        new Date(
+                          Date.now() - new Date().getTimezoneOffset() * 60000
+                        )
+                          .toISOString()
+                          .substring(0, 10)
+                      "
+                      min="1950-01-01"
+                      @change="saveE"
+                      outlined
+                      color="primary"
+                      variant="outlined"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >رقم بطاقة السكن</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.residence_card_number"
+                    v-model="editdItem.residence_card_number"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >جهة اصدار بطاقة السكن</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.residence_card_place_of_issue"
+                    v-model="editdItem.residence_card_place_of_issue"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >تاريخ اصدار بطاقة السكن</v-label
+                  >
+                  <v-menu
+                    ref="menuCardE"
+                    v-model="menuCardE"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="
+                          editdItem.residence_card_issue_date
+                        "
+                        :rules="Rules.residence_card_issue_date"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="editdItem.residence_card_issue_date"
+                      :rules="Rules.residence_card_issue_date"
+                      :active-picker.sync="activePicker"
+                      :max="
+                        new Date(
+                          Date.now() - new Date().getTimezoneOffset() * 60000
+                        )
+                          .toISOString()
+                          .substring(0, 10)
+                      "
+                      min="1950-01-01"
+                      @change="saveE"
+                      outlined
+                      color="primary"
+                      variant="outlined"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium"
+                    >العنوان الوظيفي</v-label
+                  >
+                  <v-text-field
+                    variant="outlined"
+                    :rules="Rules.owner_title_jop"
+                    v-model="editdItem.owner_title_jop"
+                    outlined
+                    color="primary"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">العنوان</v-label>
                   <v-text-field
                     variant="outlined"
@@ -704,6 +1000,19 @@
                     color="primary"
                   ></v-text-field>
                 </v-col>
+                <v-col cols="12" md="6">
+                  <v-label class="mb-2 font-weight-medium">المصرف</v-label>
+                  <v-autocomplete
+                    label="المصرف"
+                    :items="BankAccounts"
+                    v-model="editdItem.bank_id"
+                    :rules="Rules.bank"
+                    item-text="name"
+                    item-value="_id"
+                    variant="outlined"
+                  ></v-autocomplete>
+                </v-col>
+
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium">النموذج</v-label>
                   <v-autocomplete
@@ -1378,14 +1687,28 @@ export default {
       selectedFileL: null,
       selectedFileLT: null,
       selectedFileP: null,
+      menu: false,
+      menuCard: false,
+      menuCardE: false,
+      menuE: false,
+      activePicker: null,
       selectedFiles: [],
+      BankAccounts: [],
       data: {
         contract_imgs: [],
         name: null,
         email: null,
+        residence_card_issue_date: null,
         phone: null,
+        id_number: null,
+        id_place_of_issue: null,
+        id_issue_date: null,
+        residence_card_number: null,
+        residence_card_place_of_issue: null,
+        owner_title_jop: null,
         password_show: null,
         address: null,
+        bank_id: null,
         form: null,
         form_id: null,
         house_id: null,
@@ -1398,6 +1721,14 @@ export default {
       Rules: {
         nameRules: [(v) => !!v || "يرجى إدخال اسم المستخدم"],
         form_id: [(v) => !!v || "الحقل مطلوب"],
+        id_number: [(v) => !!v || "الحقل مطلوب"],
+        id_place_of_issue: [(v) => !!v || "الحقل مطلوب"],
+        id_issue_date: [(v) => !!v || "الحقل مطلوب"],
+        residence_card_issue_date: [(v) => !!v || "الحقل مطلوب"],
+        residence_card_number: [(v) => !!v || "الحقل مطلوب"],
+        bank: [(v) => !!v || "الحقل مطلوب"],
+        residence_card_place_of_issue: [(v) => !!v || "الحقل مطلوب"],
+        owner_title_jop: [(v) => !!v || "الحقل مطلوب"],
         house_id_rules: [(v) => !!v || "الحقل مطلوب"],
         emailRules: [
           (v) => !!v || "يرجى إدخال عنوان البريد الإلكتروني",
@@ -1447,9 +1778,13 @@ export default {
       this.userData = ["add", "edit", "remove"];
     }
     this.getCenter();
+    this.getBankAccounts();
     this.getForms();
   },
   watch: {
+    menu(val) {
+      val && setTimeout(() => (this.activePicker = "YEAR"));
+    },
     "data.form": {
       handler: function () {
         this.getHouses();
@@ -1475,6 +1810,12 @@ export default {
     },
   },
   methods: {
+    save(date) {
+      this.$refs.menu.save(date);
+    },
+    saveE(date) {
+      this.$refs.menuE.save(date);
+    },
     getItemText(item) {
       if (item.building_type === "شقق") {
         return `${item.exact_apartment_building} - ${item.name}`;
@@ -1494,7 +1835,7 @@ export default {
       }
       for (var i = 0; i < this.Forms.length; i++) {
         if (this.Forms[i]._id == this.editdItem.form_id) {
-          this.building_type = this.Forms[i].building_type
+          this.building_type = this.Forms[i].building_type;
           this.Houses = this.Forms[i].houses;
         }
       }
@@ -1519,9 +1860,9 @@ export default {
       this.HousesShow = true;
     },
     formatHouse(item) {
-      if(this.building_type == "شقق") {
+      if (this.building_type == "شقق") {
         return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
-      } else if(this.building_type == "منازل") {
+      } else if (this.building_type == "منازل") {
         return `منزل ( ${item.name} ) الحالة  (${item.status})`;
       }
     },
@@ -1818,6 +2159,25 @@ export default {
         this.table.loading = false;
       }
     },
+
+    async getBankAccounts() {
+      try {
+        const response = await API.getBankAccounts({
+          page: 1,
+          limit: 10000000000,
+          sortBy: '{"key": "createdAt", "order": "desc"}',
+          search: null,
+          is_deleted: false,
+        });
+        this.BankAccounts = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
     async addCenter(event) {
       event.preventDefault();
 
@@ -1837,6 +2197,16 @@ export default {
           location_img_front: this.data.location_img_front,
           location_img_back: this.data.location_img_back,
           passport_img: this.data.passport_img,
+          id_number: this.data.id_number,
+          id_place_of_issue: this.data.id_place_of_issue,
+          id_issue_date: this.data.id_issue_date,
+          bank_id: this.data.bank_id,
+          residence_card_number: this.data.residence_card_number,
+          residence_card_issue_date:
+            this.data.residence_card_issue_date,
+          residence_card_place_of_issue:
+            this.data.residence_card_place_of_issue,
+          owner_title_jop: this.data.owner_title_jop,
         });
 
         this.addBtnLoading = false;
@@ -1853,6 +2223,14 @@ export default {
         this.data.location_img_front = null;
         this.data.location_img_back = null;
         this.data.passport_img = null;
+        this.data.id_number = null;
+        this.data.id_place_of_issue = null;
+        this.data.bank_id = null;
+        this.data.residence_card_issue_date = null;
+        this.data.id_issue_date = null;
+        this.data.residence_card_number = null;
+        this.data.residence_card_place_of_issue = null;
+        this.data.owner_title_jop = null;
         this.getCenter();
         this.showDialogfunction(response.data.message, "primary");
         this.dialog = false;
@@ -1902,6 +2280,16 @@ export default {
           location_img_front: this.editdItem.location_img_front,
           location_img_back: this.editdItem.location_img_back,
           passport_img: this.editdItem.passport_img,
+          id_number: this.editdItem.id_number,
+          bank_id: this.editdItem.bank_id,
+          residence_card_issue_date:
+            this.editdItem.residence_card_issue_date,
+          id_place_of_issue: this.editdItem.id_place_of_issue,
+          id_issue_date: this.editdItem.id_issue_date,
+          residence_card_number: this.editdItem.residence_card_number,
+          residence_card_place_of_issue:
+            this.editdItem.residence_card_place_of_issue,
+          owner_title_jop: this.editdItem.owner_title_jop,
         });
         this.editItemLoading = false;
         this.getCenter();
