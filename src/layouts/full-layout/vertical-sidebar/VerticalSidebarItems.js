@@ -135,7 +135,7 @@ export default [
   },
   {
     title: "المصارف",
-    icon: "bell",
+    icon: "dollar-sign",
     to: "/admin-bank-accounts",
     type: "admin",
     name: "bankAccounts",
@@ -339,7 +339,7 @@ export default [
   },
   {
     title: "المصارف",
-    icon: "bell",
+    icon: "dollar-sign",
     to: "/admin-bank-accounts",
     type: "assistance",
     name: "bankAccounts",

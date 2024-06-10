@@ -678,14 +678,14 @@ export default {
           addedNumbers = addedNumbers.concat(house.names);
         });
 
-        let duplicateNumbers = this.data.Spaces[index].tag.tagsHouseNumber.filter(tag => {
-          return addedNumbers.includes(tag.text);
-        });
+        // let duplicateNumbers = this.data.Spaces[index].tag.tagsHouseNumber.filter(tag => {
+        //   return addedNumbers.includes(tag.text);
+        // });
 
-        if (duplicateNumbers.length > 0) {
-          this.showDialogfunction("خطأ: الأرقام المدخلة مكررة", "#FF5252");
-          return;
-        }
+        // if (duplicateNumbers.length > 0) {
+        //   this.showDialogfunction("خطأ: الأرقام المدخلة مكررة", "#FF5252");
+        //   return;
+        // }
 
         this.data.Spaces[index].houseNumber = [];
         this.data.Spaces[index].tag.tagsHouseNumber.forEach((tag) => {

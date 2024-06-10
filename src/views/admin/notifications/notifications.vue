@@ -65,7 +65,12 @@
               />
             </template>
             <template v-slot:item.receiver_type="{ item }">
-              <div v-if="item.receiver_type == 'مالك محدد' || item.receiver_type == 'موظف مبيعات محدد'">
+              <div
+                v-if="
+                  item.receiver_type == 'مالك محدد' ||
+                  item.receiver_type == 'موظف مبيعات محدد'
+                "
+              >
                 <p>{{ item.receiver_type }}</p>
                 <ul v-for="(receiver, index) in item.receivers" :key="index">
                   <li>{{ receiver.name }}</li>
@@ -73,6 +78,22 @@
               </div>
               <div v-else>
                 <p>{{ item.receiver_type }}</p>
+              </div>
+            </template>
+            <template v-slot:item.body="{ item }">
+              <div>
+                <p v-if="!item.showFullBody">
+                  {{ truncateText(item.body, 30) }}
+                </p>
+                <p v-else>{{ item.body }}</p>
+                <v-btn
+                  v-if="item.body.length > 30"
+                  text
+                  small
+                  @click="toggleShowFullBody(item)"
+                >
+                  {{ item.showFullBody ? "عرض أقل" : "عرض المزيد" }}
+                </v-btn>
               </div>
             </template>
             <template v-slot:item.actions="{ item }">
@@ -232,7 +253,9 @@
                   </v-row>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">الرابط ( اختياري )</v-label>
+                  <v-label class="mb-2 font-weight-medium"
+                    >الرابط ( اختياري )</v-label
+                  >
                   <v-text-field
                     variant="outlined"
                     v-model="data.link"
@@ -371,7 +394,7 @@ export default {
           { text: "التفاصيل", value: "body" },
           { text: "العمليات", value: "actions" },
         ],
-        centers: [],
+        centers: this.initializeCenters([]),
         loading: true,
         totalItems: 0,
       },
@@ -454,6 +477,20 @@ export default {
   },
 
   methods: {
+    truncateText(text, length) {
+      return text.length > length ? text.substring(0, length) + "..." : text;
+    },
+    toggleShowFullBody(item) {
+      item.showFullBody = !item.showFullBody;
+    },
+    initializeCenters(centers) {
+      return centers.map((center) => {
+        return {
+          ...center,
+          showFullBody: false,
+        };
+      });
+    },
     handleFileChange(event) {
       const file = event.target.files[0];
 
@@ -538,7 +575,7 @@ export default {
           is_deleted: false,
           sortBy: sortByJSON,
         });
-        this.table.centers = response.data.results.data;
+        this.table.centers = this.initializeCenters(response.data.results.data);
         this.table.content_url = response.data.content_url;
         this.table.totalItems = response.data.results.count;
       } catch (error) {

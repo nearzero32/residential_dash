@@ -138,7 +138,6 @@ export default {
           page,
           limit: itemsPerPage,
         });
-        console.log(response)
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;
       } catch (error) {

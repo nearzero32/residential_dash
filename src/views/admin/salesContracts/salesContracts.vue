@@ -47,6 +47,15 @@
                   >
                     mdi-printer
                   </v-icon>
+                  <v-icon
+                    v-else-if="center_id == '66393d1a260d48b063586101'"
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="PrintAlfakher(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
                 </template>
                 <span>طباعه</span>
               </VTooltip>
@@ -111,7 +120,7 @@ export default {
           },
           { text: "الاسم", value: "owner_name" },
           { text: "رقم الهاتف", value: "owner_phone" },
-          { text: "العنوان الوظيفي", value: "title_jop" },
+          { text: "العنوان الوظيفي", value: "owner_title_jop" },
           { text: "رقم العقد", value: "contract_id" },
           { text: "النموذج", value: "form_name" },
           { text: "رقم المنزل", value: "house_name" },
@@ -150,6 +159,10 @@ export default {
       localStorage.setItem("PrintsalesContractsNahdda", JSON.stringify(item));
       window.open("/admin-salesContracts-nahdda", "_blank");
     },
+    PrintAlfakher(item) {
+      localStorage.setItem("PrintAlfakher", JSON.stringify(item));
+      window.open("/admin-print-alfakher", "_blank");
+    },
 
     async getCenter() {
       try {
@@ -177,7 +190,6 @@ export default {
           search: this.table.search,
           sortBy: sortByJSON,
         });
-        console.log(response.data.results.data)
 
         this.table.centers = response.data.results.data;
         this.table.totalItems = response.data.results.count;

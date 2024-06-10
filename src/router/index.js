@@ -3,7 +3,6 @@ import Router from "vue-router";
 import goTo from "vuetify/es5/services/goto";
 import SuperAdmin from "./SuperAdmin";
 import Admin from "./Admin.js";
-// import Blanklayout from "@/layouts/blank-layout/Blanklayout";
 
 Vue.use(Router);
 
@@ -61,6 +60,12 @@ const router = new Router({
       path: "/Print-Reservations",
       name: "Print-Reservations",
       component: () => import("@/views/admin/Reservations/PrintReservations.vue"),
+      meta: { target: "_blank" }
+    },
+    {
+      path: "/admin-print-alfakher",
+      name: "admin-print-alfakher",
+      component: () => import("@/views/admin/salesContracts/PrintAlfakher.vue"),
       meta: { target: "_blank" }
     },
     {

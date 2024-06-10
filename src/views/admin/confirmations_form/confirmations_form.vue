@@ -179,6 +179,7 @@ export default {
         });
 
         this.table.centers = response.data.results.data;
+        console.log(this.table.centers)
         this.table.totalItems = response.data.results.count;
       } catch (error) {
         if (error.response && error.response.status === 401) {

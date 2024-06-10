@@ -2,6 +2,7 @@
   <div>
     <v-container id="pri">
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -77,6 +78,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -220,6 +222,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -537,6 +540,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -721,6 +725,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -860,6 +865,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1068,6 +1074,7 @@
         </v-card>
       </v-card>
       <v-card
+        class="gd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1106,20 +1113,18 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-container style="height: 100%;">
-            <div class="dis">
-              <div style="height: 100%;">
+          <v-container style="height: auto">
+            <div class="diss" style="height: auto">
+              <div style="height: auto">
                 <div style="text-align: center">
-                  <strong style="border-bottom: solid 1px black"
-                    >المادة الثانية</strong
-                  >
+                  <strong style="border-bottom: solid 1px black">المادة الثانية</strong>
                 </div>
-                <div>
+                <div style="height: auto">
                   <strong>ثمن الوحدة السكنية وطريقة التسديد:</strong>
                   <p>
                     1- ابرم هذا العقد ووافرق عليه الطرفان ببدل كامل قدراه ({{ $func(data.salary_amount) }}) دينار عراقي فقط لا غير للوحدة السكنية المباعة المشار اليها
                     في هذا العقد وحسب طريقة الدفع وجدول التسديد، بواقع (<span style="margin-inline: 60px;"></span>) شهر من
-                    تاريخ توقيع هذا العقد وبواقع (<span style="margin-inline: 60px;"></span>) دفعات كل (<span style="margin-inline: 60px;"></span>) اشهر دفعة واحدة
+                    تاريخ توقيع هذا العقد وبواقع ({{ data.salary_payment_months_number }}) دفعات كل (<span style="margin-inline: 60px;"></span>) اشهر دفعة واحدة
                     وكالتالي.
                   </p>
                   <p>
@@ -1136,7 +1141,7 @@
                   <p>3- جدول السداد (الدفعات):</p>
                   <table
                     border="1"
-                    style="width: 100%; border-collapse: collapse"
+                    style="width: 100%;height: 100%;margin-bottom: 100px; border-collapse: collapse"
                   >
                     <thead>
                       <tr style="background-color: #bdd6ee">
@@ -1149,27 +1154,17 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr>
-                        <td>1</td>
-                        <td>الدفعة المقدمة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr> -->
                       <tr v-for="(salary_payment, index) in data.salary_payments" :key="index">
                         <td>{{ index + 1 }}</td>
                         <td>{{ getTitle(index) }}</td>
                         <td>{{ salary_payment.date }}</td>
-                        <td>{{ salary_payment.amount }}</td>
+                        <td>{{ $func(salary_payment.amount) }}</td>
                         <td></td>
                         <td>{{ salary_payment.desc }}</td>
                       </tr>
                     </tbody>
                   </table>
-                  <br />
                 </div>
-
               </div>
               <v-row>
                 <v-col
@@ -1180,8 +1175,9 @@
                     background-color: rgb(189 214 238);
                     border: solid 1px black;
                   "
-                  ><p>الطرف الأول / البائع</p></v-col
                 >
+                  <p>الطرف الأول / البائع</p>
+                </v-col>
                 <v-col
                   cols="6"
                   md="6"
@@ -1190,8 +1186,9 @@
                     background-color: rgb(189 214 238);
                     border: solid 1px black;
                   "
-                  ><p>الطرف الثاني / المشتري</p></v-col
                 >
+                  <p>الطرف الثاني / المشتري</p>
+                </v-col>
                 <v-col
                   cols="6"
                   md="6"
@@ -1200,8 +1197,9 @@
                     background-color: rgb(189 214 238);
                     border: solid 1px black;
                   "
-                  ><p>شركة صناع النهضة للأستثمار والتطوير العقاري</p></v-col
                 >
+                  <p>شركة صناع النهضة للأستثمار والتطوير العقاري</p>
+                </v-col>
                 <v-col
                   cols="6"
                   md="6"
@@ -1210,8 +1208,9 @@
                     background-color: rgb(189 214 238);
                     border: solid 1px black;
                   "
-                  ><p>{{ data.owner_name }}</p
-                ></v-col>
+                >
+                  <p>{{ data.owner_name }}</p>
+                </v-col>
               </v-row>
             </div>
           </v-container>
@@ -1229,8 +1228,9 @@
                 cols="6"
                 md="6"
                 style="padding: 10px; text-align: right; white-space: pre-wrap"
-                ><v-icon size="20"> mdi-phone </v-icon>4646</v-col
               >
+                <v-icon size="20"> mdi-phone </v-icon>4646
+              </v-col>
               <v-col
                 cols="6"
                 md="6"
@@ -1238,13 +1238,15 @@
               >
                 العراق – السماوة<br /><a href="mailto:info@nahdda.com"
                   >info@nahdda.com</a
-                ></v-col
-              >
+                >
+              </v-col>
             </v-row>
           </v-container>
         </v-card>
       </v-card>
+      <br>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1374,6 +1376,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1520,6 +1523,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1667,6 +1671,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1810,6 +1815,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -1946,6 +1952,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2073,6 +2080,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2200,6 +2208,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2349,6 +2358,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2494,6 +2504,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2649,6 +2660,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2791,6 +2803,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -2942,6 +2955,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -3071,6 +3085,7 @@
         </v-card>
       </v-card>
       <v-card
+      class="gdd"
         :style="`background-image: url(${ba});background-position: center;background-repeat: no-repeat;background-size: auto;`"
       >
         <v-card
@@ -3246,6 +3261,22 @@ export default {
     console.log(this.data);
     this.user = JSON.parse(localStorage.getItem("user"));
   },
+  computed: {
+    sortedSalaryPayments() {
+      return this.data.salary_payments.slice().sort((a, b) => {
+        if (a.payment_position === "مقدم" && b.payment_position !== "مقدم") {
+          return -1;
+        } else if (
+          a.payment_position !== "مقدم" &&
+          b.payment_position === "مقدم"
+        ) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    },
+  },
   mounted() {
     setTimeout(() => {
       this.printElement();
@@ -3256,59 +3287,7 @@ export default {
       if (index === 0) {
         return "الدفعة المقدمة";
       } else {
-        return ` ${this.arabicNumber(index)}`;
-      }
-    },
-    arabicNumber(number) {
-      const units = [
-        "الأولى",
-        "الثانية",
-        "الثالثة",
-        "الرابعة",
-        "الخامسة",
-        "السادسة",
-        "السابعة",
-        "الثامنة",
-        "التاسعة",
-      ];
-      const tens = [
-        "",
-        "العاشرة",
-        "العشرين",
-        "الثلاثين",
-        "الأربعين",
-        "الخمسين",
-        "الستين",
-        "السبعين",
-        "الثمانين",
-        "التسعين",
-      ];
-      const hundreds = [
-        "",
-        "المئة",
-        "المئتين",
-        "الثلاثمئة",
-        "الأربعمئة",
-        "الخمسمئة",
-        "الستمئة",
-        "السبعمئة",
-        "الثمانمئة",
-        "التسعمئة",
-      ];
-
-      if (number <= 10) {
-        return units[number - 1];
-      } else if (number < 100) {
-        const unit = number % 10;
-        const ten = Math.floor(number / 10);
-        return tens[ten] + " و " + units[unit - 1];
-      } else if (number <= 100) {
-        const unit = number % 10;
-        const ten = Math.floor((number % 100) / 10);
-        const hundred = Math.floor(number / 100);
-        return hundreds[hundred] + " و " + tens[ten] + " و " + units[unit - 1];
-      } else {
-        return number;
+        return `الدفعة ( ${index} )`;
       }
     },
     printElement() {
@@ -3348,15 +3327,42 @@ export default {
       justify-content: space-around;
       flex-direction: row;
     }
-    .v-card {
+    .gdd {
       margin-bottom: 0px;
       height: 100vh;
+      page-break-before: always;
+    }
+    .gd {
+      margin-bottom: 0px;
+      height: auto;
+      page-break-before: always;
     }
     .dis {
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
       height: 100% !important;
+    }
+    .diss {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      height: auto !important;
+    }
+    .gdd:first-child {
+      page-break-before: auto;
+    }
+    table {
+      page-break-inside: auto;
+    }
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
+    }
+    td,
+    th {
+      page-break-inside: avoid;
+      page-break-after: auto;
     }
   }
 }
