@@ -553,6 +553,7 @@ export default {
         { text: "زيارات الملاك", value: "visits" },
         { text: "المبيعات", value: "sales" },
         { text: "موظفين المبيعات", value: "sells-employee" },
+        { text: "الاستعلامات", value: "inquiries" },
         { text: "أستفسارات الزبائن", value: "call-center" },
         { text: "أستماراة طلب حجز وحدة سكنية", value: "application-form" },
         { text: "أستماراة طلب موافقة", value: "confirmations-form" },
@@ -575,6 +576,7 @@ export default {
       isPagesSeles: false,
       pagesSeles: [
         { text: "موظفين المبيعات", value: "sells-employee" },
+        { text: "الاستعلامات", value: "inquiries" },
         { text: "أستفسارات الزبائن", value: "call-center" },
         { text: "أستماراة طلب حجز وحدة سكنية", value: "application-form" },
         { text: "أستماراة طلب موافقة", value: "confirmations-form" },

@@ -16,7 +16,7 @@
             ><strong>نموذج ( {{ data.name }} )</strong></v-card-title
           >
           <v-divider></v-divider>
-          <v-row style="justify-content: center;">
+          <v-row style="justify-content: center">
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card>
                 <v-card-text
@@ -80,7 +80,9 @@
                   style="display: grid; place-items: center"
                 >
                   <h5>
-                    <strong>اسماء العمارات ( {{ data.apartment_building }} )</strong>
+                    <strong
+                      >اسماء العمارات ( {{ data.apartment_building }} )</strong
+                    >
                   </h5>
                   <img
                     style="width: 70px; margin-block: 12px"
@@ -112,7 +114,7 @@
         <v-container>
           <v-card-title
             class="text-h5"
-            style="padding: 10px;display: grid; place-items: center"
+            style="padding: 10px; display: grid; place-items: center"
           >
             <strong
               style="
@@ -156,77 +158,100 @@
             class="mx-auto"
             v-for="(space, ind) in data.spaces"
             :key="ind"
-            style="margin-bottom: 15px;"
+            style="margin-bottom: 15px"
           >
-          <v-card-text>
-            <strong>{{ ind + 1 }} - ( المساحة الكلية {{ space.total_space }} - مساحة البناء {{ space.building_space }} )</strong>
-            <v-container>
-              <strong>الوحدات السكنية</strong>
-              <v-item-group
-                class="d-flex justify-sm-space-between px-6 pt-2 pb-6"
-                style="flex-wrap: wrap; justify-content: flex-start !important"
+            <v-card-text>
+              <strong
+                >{{ ind + 1 }} - ( المساحة الكلية {{ space.total_space }} -
+                مساحة البناء {{ space.building_space }} )</strong
               >
-                <v-item v-for="(item, index) in space.houses" :key="index">
-                  <VTooltip top>
-                    <template #activator="{ on, attrs }">
-                      <v-btn
-                        style="margin: 5px"
-                        :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
-                        :height="40"
-                        @click="goHouse(item._id, item.name)"
-                        :color="
-                          item.status === 'حجز مبدئي'
-                            ? 'rgb(217 217 217)'
-                            : item.status === 'محجوز'
-                            ? 'rgb(249, 249, 134)'
-                            : item.status === 'تم البيع'
-                            ? 'rgb(34 208 220)'
-                            : item.status === 'غير محجوز'
-                            ? 'rgb(255 255 255)'
-                            : ''
-                        "
-                        :width="40"
-                        :border="true"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        {{ item.name }}
-                      </v-btn>
-                    </template>
-                    <span>رقم الطابق ( {{ item.apartment_floor_number }} ) <br> الحالة ( {{ item.status }} ) </span>
-                  </VTooltip>
-                </v-item>
-              </v-item-group>
-              <strong>المكونات</strong>
-            <v-row v-for="(room, indR) in space.rooms" :key="indR">
-              <v-col cols="12" md="4" style="padding: 10px">
-                <v-card
-                  class="mx-auto"
-                  style="height: 100%; display: grid; place-items: center"
-                  >{{ room.name }}</v-card
+              <v-container>
+                <strong>الوحدات السكنية</strong>
+                <div
+                  v-for="(houses, floor) in groupHousesByFloor(space.houses)"
+                  :key="floor"
                 >
-              </v-col>
-              <v-col cols="12" md="4" style="padding: 10px">
-                <v-card
-                  class="mx-auto"
-                  style="height: 100%; display: grid; place-items: center"
-                  >مساحة {{ room.space }}</v-card
-                >
-              </v-col>
-              <v-col cols="12" md="4" style="padding: 10px">
-                <v-card
-                  class="mx-auto"
-                  style="height: 100%; display: grid; place-items: center"
-                >
-                  <img style="padding-block: 0px;width: 100px" v-if="room.image" :src="content_url + room.image" alt="" />
-                  
-                  <p v-else>صورة  ( لا توجد صوره ) </p>
-                </v-card>
-              </v-col>
-            </v-row>
-            </v-container>
-
-          </v-card-text>
+                  <h3>الطابق  ( {{ floor }} )</h3>
+                  <v-item-group
+                    class="d-flex justify-sm-space-between px-6 pt-2 pb-6"
+                    style="
+                      flex-wrap: wrap;
+                      justify-content: flex-start !important;
+                    "
+                  >
+                    <v-item v-for="(item, index) in houses" :key="index">
+                      <VTooltip top>
+                        <template #activator="{ on, attrs }">
+                          <v-btn
+                            style="margin: 5px"
+                            :style="
+                              item.status === 'تم البيع'
+                                ? 'color: white'
+                                : 'black'
+                            "
+                            :height="40"
+                            @click="goHouse(item._id, item.name)"
+                            :color="
+                              item.status === 'حجز مبدئي'
+                                ? 'rgb(217 217 217)'
+                                : item.status === 'محجوز'
+                                ? 'rgb(249, 249, 134)'
+                                : item.status === 'تم البيع'
+                                ? 'rgb(34 208 220)'
+                                : item.status === 'غير محجوز'
+                                ? 'rgb(255 255 255)'
+                                : ''
+                            "
+                            :width="40"
+                            :border="true"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            {{ item.name }}
+                          </v-btn>
+                        </template>
+                        <span
+                          > الطابق ( {{ item.apartment_floor_number }} )
+                          <br />
+                          الحالة ( {{ item.status }} )
+                        </span>
+                      </VTooltip>
+                    </v-item>
+                  </v-item-group>
+                </div>
+                <strong>المكونات</strong>
+                <v-row v-for="(room, indR) in space.rooms" :key="indR">
+                  <v-col cols="12" md="4" style="padding: 10px">
+                    <v-card
+                      class="mx-auto"
+                      style="height: 100%; display: grid; place-items: center"
+                      >{{ room.name }}</v-card
+                    >
+                  </v-col>
+                  <v-col cols="12" md="4" style="padding: 10px">
+                    <v-card
+                      class="mx-auto"
+                      style="height: 100%; display: grid; place-items: center"
+                      >مساحة {{ room.space }}</v-card
+                    >
+                  </v-col>
+                  <v-col cols="12" md="4" style="padding: 10px">
+                    <v-card
+                      class="mx-auto"
+                      style="height: 100%; display: grid; place-items: center"
+                    >
+                      <img
+                        style="padding-block: 0px; width: 100px"
+                        v-if="room.image"
+                        :src="content_url + room.image"
+                        alt=""
+                      />
+                      <p v-else>صورة ( لا توجد صوره )</p>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
           </v-card>
         </v-container>
       </v-card>
@@ -271,6 +296,17 @@ export default {
     }
   },
   methods: {
+    groupHousesByFloor(houses) {
+      return houses.reduce((acc, house) => {
+        const floor = house.apartment_floor_number;
+        if (!acc[floor]) {
+          acc[floor] = [];
+        }
+        acc[floor].push(house);
+        return acc;
+      }, {});
+    },
+
     async getHouse() {
       this.loading = true;
       try {

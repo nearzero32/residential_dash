@@ -653,20 +653,17 @@ export default {
     },
     addHouesFloor(index) {
       if (this.data.Spaces[index].tag.tagsHouseNumber.length > 0 && (this.data.Spaces[index].tag.FloorNumber !== null && this.data.Spaces[index].tag.FloorNumber !== "")) {
-        let addedNumbers = [];
+        let existingFloorNumbers = this.data.Spaces[index].table.map(space => space.FloorNumber);
 
-        this.data.houses.forEach(house => {
-          addedNumbers = addedNumbers.concat(house.names);
-        });
+        if (existingFloorNumbers.includes(this.data.Spaces[index].tag.FloorNumber)) {
+          this.showDialogfunction("خطأ: رقم الطابق مكرر في نفس المساحة", "#FF5252");
+          return;
+        }
 
-        // let duplicateNumbers = this.data.Spaces[index].tag.tagsHouseNumber.filter(tag => {
-        //   return addedNumbers.includes(tag.text);
-        // });
-
-        // if (duplicateNumbers.length > 0) {
-        //   this.showDialogfunction("خطأ: الأرقام المدخلة مكررة", "#FF5252");
-        //   return;
-        // }
+        if (this.isHouseFloorNumberDuplicate(index)) {
+          this.showDialogfunction("خطأ: رقم الشقة ورقم الطابق موجودان في مساحة أخرى", "#FF5252");
+          return;
+        }
 
         this.data.Spaces[index].houseNumber = [];
         this.data.Spaces[index].tag.tagsHouseNumber.forEach((tag) => {
@@ -674,22 +671,46 @@ export default {
             this.data.Spaces[index].houseNumber.push(tag.text);
           }
         });
+
         this.data.houses.push({
           names: this.data.Spaces[index].houseNumber,
           total_space: this.data.Spaces[index].total_space,
           building_space: this.data.Spaces[index].building_space,
           apartment_floor_number: this.data.Spaces[index].tag.FloorNumber,
         });
+
         this.data.Spaces[index].table.push({
           HouseNumber: this.data.Spaces[index].houseNumber,
           FloorNumber: this.data.Spaces[index].tag.FloorNumber,
         });
+
         this.data.Spaces[index].tag.tagsHouseNumber = [];
         this.data.Spaces[index].tag.houseNumber = "";
         this.data.Spaces[index].tag.FloorNumber = "";
       } else {
         this.showDialogfunction("خطأ: يجب إدخال أرقام الشقق والطوابق", "#FF5252");
       }
+    },
+
+    isHouseFloorNumberDuplicate(currentIndex) {
+      const currentHouseNumbers = this.data.Spaces[currentIndex].tag.tagsHouseNumber.map(tag => tag.text);
+      const currentFloorNumber = this.data.Spaces[currentIndex].tag.FloorNumber;
+
+      for (let i = 0; i < this.data.Spaces.length; i++) {
+        if (i !== currentIndex) {
+          const space = this.data.Spaces[i];
+          const houseNumbers = space.table.map(entry => entry.HouseNumber).flat();
+          const floorNumbers = space.table.map(entry => entry.FloorNumber);
+
+          for (let j = 0; j < houseNumbers.length; j++) {
+            if (currentHouseNumbers.includes(houseNumbers[j]) && floorNumbers[j] === currentFloorNumber) {
+              return true;
+            }
+          }
+        }
+      }
+
+      return false;
     },
     addSpace() {
       this.data.Spaces.push({

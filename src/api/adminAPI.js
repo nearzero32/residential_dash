@@ -559,6 +559,37 @@ class Api {
   }
   // Owners
 
+  // Inquiries
+  async getInquiries({ page, limit, search, sortBy }) {
+    const response = await axiosInstance.get(
+      `/inquiries?page=${page}&limit=${limit}&sortBy=${sortBy}&search=${search}`
+    );
+    return response;
+  }
+  async addInquiries({ name, phone, employee_id }) {
+    const requestData = {
+      name,
+      phone,
+      employee_id
+    };
+    const response = await axiosInstance.post(`/inquiries`, requestData);
+    return response;
+  }
+  async editInquiries({ emp_id, name, phone, employee_id }) {
+    const requestData = {
+      name,
+      phone,
+      employee_id
+    };
+    const response = await axiosInstance.put(`/inquiries/${emp_id}`, requestData);
+    return response;
+  }
+  async removeInquiries(id) {
+    const response = await axiosInstance.delete(`/inquiries/${id}`);
+    return response;
+  }
+  // Inquiries
+
   // MaintenanceEmployee
   async getMaintenanceEmployee({ page, limit, search, is_deleted, sortBy }) {
     const response = await axiosInstance.get(

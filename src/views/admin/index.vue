@@ -4,6 +4,7 @@
       :title="page.title"
       :icon="page.icon"
       :breadcrumbs="breadcrumbs"
+      @console-click="handleConsoleClick"
     ></BaseBreadcrumb>
     <v-container>
       <v-row style="justify-content: center">
@@ -14,7 +15,10 @@
                 src="@/assets/images/icon/sales-marketing.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد موظفين المبيعات <br />( {{ data.allSalesEmployee }} )</strong>
+              <strong
+                >عدد موظفين المبيعات <br />(
+                {{ data.allSalesEmployee }} )</strong
+              >
             </v-card-text>
           </v-card>
         </v-col>
@@ -25,7 +29,10 @@
                 src="@/assets/images/icon/phone.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد استفسارات الزبائن <br />( {{ data.allCallCenter }} )</strong>
+              <strong
+                >عدد استفسارات الزبائن <br />(
+                {{ data.allCallCenter }} )</strong
+              >
             </v-card-text>
           </v-card>
         </v-col>
@@ -36,7 +43,10 @@
                 src="@/assets/images/icon/request.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد أستمارات طلب حجز وحدة سكنية ( {{ data.allApplicationForm }} )</strong>
+              <strong
+                >عدد أستمارات طلب حجز وحدة سكنية (
+                {{ data.allApplicationForm }} )</strong
+              >
             </v-card-text>
           </v-card>
         </v-col>
@@ -47,7 +57,10 @@
                 src="@/assets/images/icon/application-architecture.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد أستمارات طلب موافقة <br />( {{ data.allConfirmationsForm }} )</strong>
+              <strong
+                >عدد أستمارات طلب موافقة <br />(
+                {{ data.allConfirmationsForm }} )</strong
+              >
             </v-card-text>
           </v-card>
         </v-col>
@@ -58,7 +71,10 @@
                 src="@/assets/images/icon/communications.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد طلبات الوحدات السكنية <br />( {{ data.allReservations }} )</strong>
+              <strong
+                >عدد طلبات الوحدات السكنية <br />(
+                {{ data.allReservations }} )</strong
+              >
             </v-card-text>
           </v-card>
         </v-col>
@@ -94,7 +110,8 @@
                 style="width: 35px"
               /><br />
               <strong
-                >عدد الوحدات السكنية المباعة <br />( {{ data.allHousesSelling }} )</strong
+                >عدد الوحدات السكنية المباعة <br />(
+                {{ data.allHousesSelling }} )</strong
               >
             </v-card-text>
           </v-card>
@@ -120,7 +137,9 @@
                 src="@/assets/images/icon/visitors.png"
                 style="width: 35px"
               /><br />
-              <strong>عدد زوار الملاك <br />( {{ data.allOwnersVisits }} )</strong>
+              <strong
+                >عدد زوار الملاك <br />( {{ data.allOwnersVisits }} )</strong
+              >
             </v-card-text>
           </v-card>
         </v-col>
@@ -226,13 +245,30 @@
         </v-col>
       </v-row>
     </v-container>
+    <div id="help">
+      <div class="he" style="padding: 10px;">
+        <v-btn
+          color="rgb(251 151 120)"
+          density="comfortable"
+          variant="plain"
+          @click="closeEvent"
+        >
+          <v-icon size="20" color="white">mdi-close-box</v-icon>
+        </v-btn>
+      </div>
+    </div>
   </v-container>
 </template>
 
 <script>
 import API from "@/api/adminAPI";
+import BaseBreadcrumb from "@/components/commonComponents/BaseBreadcrumb.vue";
 
 export default {
+  components: {
+    BaseBreadcrumb,
+  },
+
   data() {
     return {
       // nav
@@ -255,6 +291,14 @@ export default {
     this.getCenter();
   },
   methods: {
+    handleConsoleClick() {
+      var help = document.getElementById("help");
+      help.style.display = "block";
+    },
+    closeEvent() {
+      var help = document.getElementById("help");
+      help.style.display = "none";
+    },
     async getCenter() {
       try {
         this.loading = true;
@@ -277,4 +321,15 @@ export default {
   },
 };
 </script>
-
+<style>
+#help {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: #0000008c;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 100;
+}
+</style>

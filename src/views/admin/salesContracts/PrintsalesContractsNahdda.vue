@@ -1123,8 +1123,8 @@
                   <strong>ثمن الوحدة السكنية وطريقة التسديد:</strong>
                   <p>
                     1- ابرم هذا العقد ووافرق عليه الطرفان ببدل كامل قدراه ({{ $func(data.salary_amount) }}) دينار عراقي فقط لا غير للوحدة السكنية المباعة المشار اليها
-                    في هذا العقد وحسب طريقة الدفع وجدول التسديد، بواقع (<span style="margin-inline: 60px;"></span>) شهر من
-                    تاريخ توقيع هذا العقد وبواقع ({{ data.salary_payment_months_number }}) دفعات كل (<span style="margin-inline: 60px;"></span>) اشهر دفعة واحدة
+                    في هذا العقد وحسب طريقة الدفع وجدول التسديد، بواقع ({{ yearsDifference }}) شهر من
+                    تاريخ توقيع هذا العقد وبواقع ({{ data.salary_payment_months_number }}) دفعات كل ( {{ data.salary_difference_months_number }} ) اشهر دفعة واحدة
                     وكالتالي.
                   </p>
                   <p>
@@ -1154,15 +1154,20 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(salary_payment, index) in data.salary_payments" :key="index">
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ getTitle(index) }}</td>
+                      <tr v-for="(salary_payment, index) in sortedSalaryPayments" :key="index">
+                        <td>
+                          {{ getAdjustedIndex(index) }}
+                        </td>
+                        <td v-if="salary_payment.payment_position == 'مقدم'">الدفعة المقدمة</td>
+                        <td v-else-if="salary_payment.payment_position == 'دفعة الهيكل'">دفعة الهيكل</td>
+                        <td v-else>الدفعة ({{ getAdjustedIndex(index) }})</td>
                         <td>{{ salary_payment.date }}</td>
                         <td>{{ $func(salary_payment.amount) }}</td>
-                        <td></td>
+                        <td>{{ salary_payment.amount_written }}</td>
                         <td>{{ salary_payment.desc }}</td>
                       </tr>
                     </tbody>
+
                   </table>
                 </div>
               </div>
@@ -3260,36 +3265,67 @@ export default {
     this.data = JSON.parse(localStorage.getItem("PrintsalesContractsNahdda"));
     console.log(this.data);
     this.user = JSON.parse(localStorage.getItem("user"));
+
+    
+    if (this.data.first_payment_date && this.data.last_payment_date) {
+      this.yearsDifference = this.getMonthsDifference(
+        this.data.first_payment_date,
+        this.data.last_payment_date
+      );
+    } else {
+      console.log("تاريخ الدفع الأول أو الأخير غير موجود.");
+    }
+
   },
   computed: {
     sortedSalaryPayments() {
-      return this.data.salary_payments.slice().sort((a, b) => {
-        if (a.payment_position === "مقدم" && b.payment_position !== "مقدم") {
-          return -1;
-        } else if (
-          a.payment_position !== "مقدم" &&
-          b.payment_position === "مقدم"
-        ) {
-          return 1;
-        } else {
-          return 0;
+      const getPaymentWeight = (payment_position) => {
+        switch (payment_position) {
+          case "مقدم":
+            return 1;
+          case "دفعة الهيكل":
+            return 2;
+          default:
+            return 3;
         }
+      };
+
+      return this.data.salary_payments.slice().sort((a, b) => {
+        return (
+          getPaymentWeight(a.payment_position) -
+          getPaymentWeight(b.payment_position)
+        );
       });
     },
   },
+
   mounted() {
     setTimeout(() => {
       this.printElement();
     }, 500);
   },
   methods: {
-    getTitle(index) {
-      if (index === 0) {
-        return "الدفعة المقدمة";
+        getMonthsDifference(startDate, endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      const yearsDifference = end.getFullYear() - start.getFullYear();
+      const monthsDifference = end.getMonth() - start.getMonth();
+
+      return yearsDifference * 12 + monthsDifference;
+    },
+    getAdjustedIndex(index) {
+      const structurePaymentIndex = this.sortedSalaryPayments.findIndex(
+        (payment) => payment.payment_position === "دفعة الهيكل"
+      );
+
+      if (structurePaymentIndex === -1 || index <= structurePaymentIndex) {
+        return index + 1;
       } else {
-        return `الدفعة ( ${index} )`;
+        return index - structurePaymentIndex;
       }
     },
+
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;

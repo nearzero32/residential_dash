@@ -35,6 +35,7 @@ import showBuilding from "@/views/admin/forms/Apartments/Building/showBuilding.v
 import profileFloor from "@/views/admin/forms/Apartments/Building/profileFloor.vue";
 import salesContracts from "@/views/admin/salesContracts/salesContracts.vue";
 import bankAccounts from "@/views/admin/bankAccounts/bankAccounts.vue";
+import inquiries from "@/views/admin/inquiries/inquiries.vue";
 
 const Admin = {
   path: "/",
@@ -122,6 +123,11 @@ const Admin = {
       path: "/admin-employees",
       name: "admin-employees",
       component: employees,
+    },
+    {
+      path: "/admin-inquiries",
+      name: "admin-inquiries",
+      component: inquiries,
     },
     {
       path: "/admin-bank-accounts",

@@ -90,6 +90,13 @@ export default [
         building_type: "منازل وشقق",
       },
       {
+        title: "الاستعلامات",
+        icon: "user",
+        to: "admin-inquiries",
+        type: "admin",
+        building_type: "منازل وشقق",
+      },
+      {
         title: "أستفسارات الزبائن",
         icon: "phone",
         to: "admin-call-center",
@@ -285,6 +292,14 @@ export default [
         to: "admin-sells-employee",
         type: "assistance",
         name: "sells-employee",
+        building_type: "منازل وشقق",
+      },
+      {
+        title: "الاستعلامات",
+        icon: "user",
+        to: "admin-inquiries",
+        type: "assistance",
+        name: "inquiries",
         building_type: "منازل وشقق",
       },
       {
