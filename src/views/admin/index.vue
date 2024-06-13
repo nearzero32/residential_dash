@@ -8,7 +8,7 @@
     ></BaseBreadcrumb>
     <v-container>
       <v-row style="justify-content: center">
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="1 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -22,7 +22,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="2 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -36,7 +36,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="3 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -50,7 +50,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="4 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -64,7 +64,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="5 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -89,7 +89,7 @@
             </v-card-text>
           </v-card>
         </v-col> -->
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="6 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -102,7 +102,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="7 ww">
           <v-card elevation="16" :loading="loading" outlined shaped>
             <v-card-text style="text-align: center">
               <img
@@ -245,8 +245,8 @@
         </v-col>
       </v-row>
     </v-container>
-    <div id="help">
-      <div class="he" style="padding: 10px;">
+    <div id="help" class="modal">
+      <div class="he" style="padding: 10px">
         <v-btn
           color="rgb(251 151 120)"
           density="comfortable"
@@ -256,19 +256,40 @@
           <v-icon size="20" color="white">mdi-close-box</v-icon>
         </v-btn>
       </div>
+      <div id="bod">
+        <video width="400" autoplay muted playsinline>
+          <source src="@/assets/video/1.webm" type="video/webm" />
+          <source src="@/assets/video/1.webm" type="video/ogg" />
+        </video>
+        <div class="wil">
+          <h3 style="text-align: center; padding: 20px">
+            <span id="typed-text"></span>
+          </h3>
+          <div id="buttons" style="text-align: center; display: none">
+            <div
+              style="
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                flex-direction: row;
+              "
+            >
+              <v-btn @click="startAction" v-if="!start">ابدأ</v-btn>
+              <v-btn @click="startAction" v-else>التالي</v-btn>
+              <v-btn @click="cancelAction">إلغاء</v-btn>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </v-container>
 </template>
 
 <script>
 import API from "@/api/adminAPI";
-import BaseBreadcrumb from "@/components/commonComponents/BaseBreadcrumb.vue";
+import Typed from "typed.js";
 
 export default {
-  components: {
-    BaseBreadcrumb,
-  },
-
   data() {
     return {
       // nav
@@ -282,9 +303,11 @@ export default {
         },
       ],
       // nav
-
+      typed: null,
       loading: false,
       data: {},
+      start: false,
+      num: 0,
     };
   },
   created() {
@@ -292,12 +315,250 @@ export default {
   },
   methods: {
     handleConsoleClick() {
-      var help = document.getElementById("help");
+      const help = document.getElementById("help");
       help.style.display = "block";
+      setTimeout(() => {
+        help.style.opacity = "1";
+      }, 10);
+      setTimeout(() => {
+        const options = {
+          strings: [
+            "مرحبا بك في المساعد الذكي",
+            "سوف اقوم بشرح تفاصيل الصفحة الرئيسية",
+            "هل انت مستعد ؟",
+          ],
+          typeSpeed: 50,
+          backSpeed: 25,
+          backDelay: 1000,
+          startDelay: 500,
+          loop: false,
+          showCursor: true,
+          cursorChar: "|",
+          onComplete: () => {
+            document.getElementById("buttons").style.display = "block";
+          },
+        };
+
+        if (this.typed) {
+          this.typed.destroy();
+        }
+
+        this.typed = new Typed("#typed-text", options);
+      }, 1000);
+    },
+    startAction() {
+      const bod = document.getElementById("bod");
+      bod.classList.add("bod");
+      this.start = true;
+      this.num += 1;
+
+      if (this.num == 1) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد موظفين المبيعات الذين تم ادخالهم في قائمة موظفين المبيعات والذين هم فعالين ",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      } else if(this.num == 2) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد استفسارات الزبائن  ",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      } else if(this.num == 3) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد استمارات طلب حجز وحدة سكنية",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      } else if(this.num == 4) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد استمارات طلب موافقة",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      } else if(this.num == 5) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد طلبات الوحدة السكنية",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      } else if(this.num == 6) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد الوحدات السكنية المخصصة للايجار",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      } else if(this.num == 7) {
+        setTimeout(() => {
+          const options = {
+            strings: [
+              "في هذا الكارت يتم عرض عدد الوحدات السكنية التي تم بيعها",
+            ],
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: "|",
+            onComplete: () => {
+              document.getElementById("buttons").style.display = "block";
+            },
+          };
+
+          if (this.typed) {
+            this.typed.destroy();
+          }
+
+          this.typed = new Typed("#typed-text", options);
+        }, 1000);
+      }
+      var wwElements = document.getElementsByClassName("ww");
+      for (var i = 0; i < wwElements.length; i++) {
+        wwElements[i].style.zIndex = "";
+      }
+
+      var n = document.getElementsByClassName(this.num);
+      if (n.length > 0) {
+        n[0].style.zIndex = 1000;
+      }
+
+      console.log("بدأت العملية");
+    },
+    cancelAction() {
+      console.log("تم إلغاء العملية");
+      const help = document.getElementById("help");
+      help.style.opacity = "0";
+      setTimeout(() => {
+        help.style.display = "none";
+      }, 500);
+
+      document.getElementById("buttons").style.display = "none";
+      if (this.typed) {
+        this.typed.destroy();
+        this.typed = null;
+      }
     },
     closeEvent() {
-      var help = document.getElementById("help");
-      help.style.display = "none";
+      const help = document.getElementById("help");
+      help.style.opacity = "0";
+      setTimeout(() => {
+        help.style.display = "none";
+      }, 500);
+      document.getElementById("buttons").style.display = "none";
+
+      if (this.typed) {
+        this.typed.destroy();
+        this.typed = null;
+      }
     },
     async getCenter() {
       try {
@@ -319,6 +580,11 @@ export default {
       }
     },
   },
+  beforeDestroy() {
+    if (this.typed) {
+      this.typed.destroy();
+    }
+  },
 };
 </script>
 <style>
@@ -331,5 +597,62 @@ export default {
   top: 0px;
   right: 0px;
   z-index: 100;
+}
+#bod {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bod {
+  width: 100% !important;
+  height: 100% !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-box-direction: normal !important;
+  -ms-flex-direction: column !important;
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+}
+video {
+  background: none;
+  outline: none;
+  border: none;
+}
+.modal {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.wil {
+  width: 75%;
+  /* height: 183px; */
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px 10px 10px 10px;
+}
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-moz-media-controls {
+  display: none !important;
+}
+
+video::-ms-media-controls {
+  display: none !important;
+}
+
+video::-o-media-controls {
+  display: none !important;
+}
+
+video::media-controls {
+  display: none !important;
 }
 </style>

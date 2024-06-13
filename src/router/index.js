@@ -69,6 +69,12 @@ const router = new Router({
       meta: { target: "_blank" }
     },
     {
+      path: "/admin-print-absly",
+      name: "admin-print-absly",
+      component: () => import("@/views/admin/salesContracts/PrintAbsly.vue"),
+      meta: { target: "_blank" }
+    },
+    {
       path: "/Print-Guards",
       name: "Print-Guards",
       component: () => import("@/views/admin/guards/PrintGuards.vue"),

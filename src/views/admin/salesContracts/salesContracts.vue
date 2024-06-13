@@ -56,6 +56,15 @@
                   >
                     mdi-printer
                   </v-icon>
+                  <v-icon
+                    v-else-if="center_id == '665d7276f4c4a964001e12ab'"
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="PrintAbsly(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
                 </template>
                 <span>طباعه</span>
               </VTooltip>
@@ -162,6 +171,10 @@ export default {
     PrintAlfakher(item) {
       localStorage.setItem("PrintAlfakher", JSON.stringify(item));
       window.open("/admin-print-alfakher", "_blank");
+    },
+    PrintAbsly(item) {
+      localStorage.setItem("PrintAbsly", JSON.stringify(item));
+      window.open("/admin-print-absly", "_blank");
     },
 
     async getCenter() {

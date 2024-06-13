@@ -14,7 +14,7 @@
         >
           <v-container style="padding: 20px 20px">
             <div>
-              <h3><strong>العدد: 46</strong></h3>
+              <h3><strong>العدد: {{ data.contract_id }}</strong></h3>
               <br />
               <h3><strong>التاريخ: {{ data.createdAt }}</strong></h3>
               <br />
