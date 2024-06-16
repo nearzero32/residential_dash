@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container id="pri">
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -14,9 +14,222 @@
         >
           <v-container style="padding: 20px 20px">
             <div>
-              <h3><strong>العدد: {{ data.contract_id }}</strong></h3>
+              <h3>
+                <strong>العدد: {{ data.contract_id }}</strong>
+              </h3>
               <br />
-              <h3><strong>التاريخ: {{ data.createdAt }}</strong></h3>
+              <h3>
+                <strong>التاريخ: {{ data.createdAt }}</strong>
+              </h3>
+              <br />
+              <h3 style="text-align: center">
+                <strong>م/إقرار</strong>
+              </h3>
+              <br />
+            </div>
+          </v-container>
+          <v-container style="text-align: right">
+            <div>
+              <br />
+              <h3>
+                يقر الطرف الثاني ( {{ data.owner_name }} ) بانه على علم تام
+                بموقع الشقة والطابق والعماراة وقد اطلع على الرسومات الهندسية
+                للمشروع وطابقها على ما سيتم تنفيده في الطبيعة ووافق عليها ومن حق
+                الطرف الأول اجراء تعديلات معمارية بسيطة تصب في مصلحة عمل المشروع
+                معمارياً على ان لا تتجاوز 10% من مساحة المشروع .
+              </h3>
+              <br />
+              <br />
+              <br />
+            </div>
+          </v-container>
+          <v-container>
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="5"
+                md="5"
+                style="
+                  padding: 10px 50px;
+                  text-align: left;
+                  white-space: pre-wrap;
+                "
+              >
+                <h3>
+                  <strong>الطرف الثاني</strong>
+                </h3>
+                <br />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-card>
+      <v-card
+        class="gd"
+        :style="`background-position: center;background-repeat: no-repeat;background-size: auto;`"
+      >
+        <v-card
+          style="
+            background-color: rgb(255 255 255 / 85%);
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          "
+        >
+          <v-container style="height: auto">
+            <div class="diss" style="height: auto">
+              <div style="height: 100%">
+                <h3>المساحة : {{ data.house_total_space }}</h3>
+                <br />
+                <h3>
+                  سعر المتر : {{ $func(data.price_for_one_square_meter) }}
+                </h3>
+                <br />
+                <h3>السعر الاجمالي : {{ $func(data.salary_amount) }}</h3>
+                <br />
+                <table
+                  border="1"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    margin-bottom: 100px;
+                    border-collapse: collapse;
+                  "
+                >
+                  <thead>
+                    <tr style="background-color: rgb(217 217 217)">
+                      <th>رقم الدفعة</th>
+                      <th>تاريخ الاستحقاق</th>
+                      <th>مقدار الدفعة رقما</th>
+                      <th>مقدار الدفعة كتابة</th>
+                      <th>الملاحظات</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(salary_payment, index) in sortedSalaryPayments"
+                      :key="index"
+                    >
+                      <td
+                        style="background-color: rgb(217 217 217)"
+                        v-if="salary_payment.payment_position == 'مقدم'"
+                      >
+                        دفعة المقدمة 
+                      </td>
+                      <td
+                        style="background-color: rgb(217 217 217)"
+                        v-else-if="
+                          salary_payment.payment_position == 'دفعة الهيكل'
+                        "
+                      >
+                        دفعة الهيكل
+                      </td>
+                      <td
+                        style="background-color: rgb(217 217 217)"
+                        v-else-if="
+                          salary_payment.payment_position == 'اخر دفعة'
+                        "
+                      >
+                        الدفعة (دفعة التسليم) 
+                      </td>
+                      <td style="background-color: rgb(217 217 217)" v-else>
+                        الدفعة ({{ getAdjustedIndex(index) }})
+                      </td>
+                      <td>{{ salary_payment.date }}</td>
+                      <td>{{ $func(salary_payment.amount) }}</td>
+                      <td>{{ salary_payment.amount_written }}</td>
+                      <td>{{ salary_payment.desc }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div style="width: 100%; height: 200px; border: solid 1px black">
+              * ملاحظه
+            </div>
+          </v-container>
+          <v-container>
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="5"
+                md="5"
+                style="
+                  padding: 10px 50px;
+                  text-align: right;
+                  white-space: pre-wrap;
+                "
+              >
+                <h3>
+                  <strong>الطرف الاول</strong>
+                </h3>
+                <br />
+                <h3>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
+                </h3>
+              </v-col>
+              <v-col
+                cols="5"
+                md="5"
+                style="
+                  padding: 10px 50px;
+                  text-align: left;
+                  white-space: pre-wrap;
+                "
+              >
+                <h3>
+                  <strong>الطرف الثاني</strong>
+                </h3>
+                <br />
+                <h3>
+                  <strong>{{ data.owner_name }}</strong>
+                </h3>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-card>
+
+      <v-card class="gdd">
+        <v-card
+          style="
+            background-color: rgb(255 255 255 / 85%);
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          "
+        >
+          <v-container style="padding: 20px 20px">
+            <div>
+              <h3>
+                <strong>العدد: {{ data.contract_id }}</strong>
+              </h3>
+              <br />
+              <h3>
+                <strong>التاريخ: {{ data.createdAt }}</strong>
+              </h3>
               <br />
               <h3 style="text-align: center">
                 <strong>بسم الله الرحمن الرحيم</strong>
@@ -81,9 +294,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -98,7 +314,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -107,7 +323,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -146,31 +362,58 @@
           >
             <div>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                الطرف الثاني المشتري السيد: <span style="color: black;margin-right: 3px;">{{ data.owner_name }}</span>
+                الطرف الثاني المشتري السيد:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_name
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                اسم المشتري الثلاثي السيد: <span style="color: black;margin-right: 3px;">{{ data.owner_name }}</span>
+                اسم المشتري الثلاثي السيد:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_name
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                رقم البطاقة الشخصية: <span style="color: black;margin-right: 3px;">{{ data.owner_id_number }}</span>
+                رقم البطاقة الشخصية:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_id_number
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                جهة الاصدار: <span style="color: black;margin-right: 3px;">{{ data.owner_id_place_of_issue }}</span>
+                جهة الاصدار:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_id_place_of_issue
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                تاريخ الإصدار: <span style="color: black;margin-right: 3px;">{{ data.owner_id_issue_date }}</span>
+                تاريخ الإصدار:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_id_issue_date
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                رقم بطاقة السكن: <span style="color: black;margin-right: 3px;">{{ data.owner_id_residence_card_number }}</span>
+                رقم بطاقة السكن:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_id_residence_card_number
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                عنوان بطاقة السكن: <span style="color: black;margin-right: 3px;">{{ data.owner_id_residence_card_place_of_issue }}</span>
+                عنوان بطاقة السكن:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_id_residence_card_place_of_issue
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                رقم الموبايل: <span style="color: black;margin-right: 3px;">{{ data.owner_phone }}</span>
+                رقم الموبايل:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_phone
+                }}</span>
               </h3>
               <h3 style="color: red; font-weight: 100; margin-bottom: 9px">
-                العنوان الوظيفي او المهنة: <span style="color: black;margin-right: 3px;">{{ data.owner_title_jop }}</span>
+                العنوان الوظيفي او المهنة:
+                <span style="color: black; margin-right: 3px">{{
+                  data.owner_title_jop
+                }}</span>
               </h3>
               <h3 style="margin-bottom: 9px">
                 في حال تعذر الوصول الى المشتري يتم الاتصال على:
@@ -207,9 +450,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -224,7 +470,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -233,7 +479,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -248,10 +494,14 @@
             <div>
               <h3 style="font-weight: 100">
                 1- باع الطرف الاول بموجب هذا العقد الى الطرف الثاني الشقة
-                المرقمة ( {{ data.house_name }} ) في الطابق المرقم ( {{ data.house_floor_number }} ) في العمارة ( {{ data.exact_apartment_building }} ) في أبراج الفاخر
-                السكني لغرض السكن العائلي بما يتناسب مع غرض المشروع وبمبلغ
-                اجمالي قدره( {{ $func(data.salary_amount) }} ) , مليون دينارعراقي وكتابةً (<br /><span style="margin-inline: 200px;"></span>) علماً ان مساحة الشقة السكنية {{ data.house_total_space }} م2 مع
-                الخدمات وصافي مساحة الشقة {{ data.house_building_space }}م2
+                المرقمة ( {{ data.house_name }} ) في الطابق المرقم (
+                {{ data.house_floor_number }} ) في العمارة (
+                {{ data.exact_apartment_building }} ) في أبراج الفاخر السكني
+                لغرض السكن العائلي بما يتناسب مع غرض المشروع وبمبلغ اجمالي قدره(
+                {{ $func(data.salary_amount) }} ) , مليون دينارعراقي وكتابةً
+                (<br /><span style="margin-inline: 200px"></span>) علماً ان
+                مساحة الشقة السكنية {{ data.house_total_space }} م2 مع الخدمات
+                وصافي مساحة الشقة {{ data.house_building_space }}م2
               </h3>
               <h3 style="font-weight: 100">
                 2- في حال تم ارتفاع سعر تصريف الدولار مقابل دينار العراقي أكثر
@@ -320,9 +570,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -337,7 +590,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -346,7 +599,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -414,9 +667,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -431,7 +687,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -440,7 +696,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -532,9 +788,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -549,7 +808,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -558,7 +817,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -633,9 +892,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -650,7 +912,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -659,7 +921,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -740,9 +1002,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -757,7 +1022,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -766,7 +1031,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -842,9 +1107,12 @@
                 <h3>
                   <strong>الطرف الاول</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong>شركة المرس للمقاولات والتجارة العامة المتمثلة المدير المفوض</strong>
+                  <strong
+                    >شركة المرس للمقاولات والتجارة العامة المتمثلة المدير
+                    المفوض</strong
+                  >
                 </h3>
               </v-col>
               <v-col
@@ -859,7 +1127,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -868,7 +1136,7 @@
           </v-container>
         </v-card>
       </v-card>
-      <v-card>
+      <v-card class="gdd">
         <v-card
           style="
             background-color: rgb(255 255 255 / 85%);
@@ -949,7 +1217,7 @@
                 <h3>
                   <strong>الطرف الثاني</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
                   <strong>{{ data.owner_name }}</strong>
                 </h3>
@@ -975,11 +1243,9 @@
                 <h3>
                   <strong>السيد:</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong
-                    >التوقيع:
-                  </strong>
+                  <strong>التوقيع: </strong>
                 </h3>
               </v-col>
               <v-col
@@ -994,15 +1260,13 @@
                 <h3>
                   <strong>السيد:</strong>
                 </h3>
-                <br>
+                <br />
                 <h3>
-                  <strong
-                    >التوقيع:
-                  </strong>
+                  <strong>التوقيع: </strong>
                 </h3>
               </v-col>
             </v-row>
-            <h3 style="margin: 25px;">تاريخ تنظيم:</h3>
+            <h3 style="margin: 25px">تاريخ تنظيم:</h3>
           </v-container>
         </v-card>
       </v-card>
@@ -1025,14 +1289,49 @@ export default {
   },
   created() {
     this.data = JSON.parse(localStorage.getItem("PrintAlfakher"));
+    console.log(this.data);
     this.user = JSON.parse(localStorage.getItem("user"));
   },
-    mounted() {
-      setTimeout(() => {
-        this.printElement();
-      }, 500);
+  computed: {
+    sortedSalaryPayments() {
+      const getPaymentWeight = (payment_position) => {
+        switch (payment_position) {
+          case "مقدم":
+            return 1;
+          case "دفعة الهيكل":
+            return 2;
+          default:
+            return 3;
+        }
+      };
+
+      return this.data.salary_payments.slice().sort((a, b) => {
+        return (
+          getPaymentWeight(a.payment_position) -
+          getPaymentWeight(b.payment_position)
+        );
+      });
     },
+  },
+
+   mounted() {
+   setTimeout(() => {
+   this.printElement();
+  }, 500);
+  },
   methods: {
+    getAdjustedIndex(index) {
+      const structurePaymentIndex = this.sortedSalaryPayments.findIndex(
+        (payment) => payment.payment_position === "دفعة الهيكل"
+      );
+
+      if (structurePaymentIndex === -1 || index <= structurePaymentIndex) {
+        return index + 1;
+      } else {
+        return index - structurePaymentIndex;
+      }
+    },
+
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;
@@ -1061,6 +1360,10 @@ export default {
 
 @media print {
   @media print {
+    table {
+      page-break-inside: auto;
+    }
+
     body {
       direction: rtl;
     }
@@ -1070,15 +1373,42 @@ export default {
       justify-content: space-around;
       flex-direction: row;
     }
-    .v-card {
+    .gdd {
       margin-bottom: 0px;
       height: 100vh;
+      page-break-before: always;
+    }
+    .gd {
+      margin-bottom: 0px;
+      height: auto;
+      page-break-before: always;
     }
     .dis {
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
       height: 100% !important;
+    }
+    .diss {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      height: auto !important;
+    }
+    .gdd:first-child {
+      page-break-before: auto;
+    }
+    table {
+      page-break-inside: auto;
+    }
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
+    }
+    td,
+    th {
+      page-break-inside: avoid;
+      page-break-after: auto;
     }
   }
 }

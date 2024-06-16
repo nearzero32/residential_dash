@@ -75,6 +75,12 @@ const router = new Router({
       meta: { target: "_blank" }
     },
     {
+      path: "/admin-print-alrawan",
+      name: "admin-print-alrawan",
+      component: () => import("@/views/admin/salesContracts/PrintAlrawan.vue"),
+      meta: { target: "_blank" }
+    },
+    {
       path: "/Print-Guards",
       name: "Print-Guards",
       component: () => import("@/views/admin/guards/PrintGuards.vue"),
