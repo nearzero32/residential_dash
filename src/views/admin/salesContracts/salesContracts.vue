@@ -74,6 +74,15 @@
                   >
                     mdi-printer
                   </v-icon>
+                  <v-icon
+                    v-else-if="center_id == '6667fa62668eb9af32976f03'"
+                    color="#fffc00"
+                    v-bind="attrs"
+                    size="20"
+                    @click="PrintAlrtaj(item)"
+                  >
+                    mdi-printer
+                  </v-icon>
                 </template>
                 <span>طباعه</span>
               </VTooltip>
@@ -188,6 +197,10 @@ export default {
     PrintAbsly(item) {
       localStorage.setItem("PrintAbsly", JSON.stringify(item));
       window.open("/admin-print-alrawan", "_blank");
+    },
+    PrintAlrtaj(item) {
+      localStorage.setItem("PrintAlrtaj", JSON.stringify(item));
+      window.open("/admin-print-alrtaj", "_blank");
     },
 
     async getCenter() {
