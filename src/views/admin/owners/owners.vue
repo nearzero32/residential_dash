@@ -296,7 +296,6 @@
                   >
                   <v-text-field
                     variant="outlined"
-                    :rules="Rules.residence_card_place_of_issue"
                     v-model="data.residence_card_place_of_issue"
                     outlined
                     color="primary"
@@ -316,7 +315,6 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="data.residence_card_issue_date"
                         :rules="Rules.residence_card_issue_date"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -326,7 +324,6 @@
                     </template>
                     <v-date-picker
                       v-model="data.residence_card_issue_date"
-                      :rules="Rules.residence_card_issue_date"
                       :active-picker.sync="activePicker"
                       :max="
                         new Date(
@@ -927,7 +924,6 @@
                   >
                   <v-text-field
                     variant="outlined"
-                    :rules="Rules.residence_card_place_of_issue"
                     v-model="editdItem.residence_card_place_of_issue"
                     outlined
                     color="primary"
@@ -950,7 +946,6 @@
                         v-model="
                           editdItem.residence_card_issue_date
                         "
-                        :rules="Rules.residence_card_issue_date"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
@@ -959,7 +954,6 @@
                     </template>
                     <v-date-picker
                       v-model="editdItem.residence_card_issue_date"
-                      :rules="Rules.residence_card_issue_date"
                       :active-picker.sync="activePicker"
                       :max="
                         new Date(
