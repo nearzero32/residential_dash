@@ -315,6 +315,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
+                      v-model="data.residence_card_issue_date"
                         :rules="Rules.residence_card_issue_date"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -333,7 +334,7 @@
                           .substring(0, 10)
                       "
                       min="1950-01-01"
-                      @change="saveE"
+                      @change="saveC"
                       outlined
                       color="primary"
                       variant="outlined"
@@ -943,9 +944,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="
-                          editdItem.residence_card_issue_date
-                        "
+                        v-model="editdItem.residence_card_issue_date"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
@@ -963,7 +962,7 @@
                           .substring(0, 10)
                       "
                       min="1950-01-01"
-                      @change="saveE"
+                      @change="saveCE"
                       outlined
                       color="primary"
                       variant="outlined"
@@ -1680,9 +1679,9 @@ export default {
       selectedFileLT: null,
       selectedFileP: null,
       menu: false,
-      menuCard: false,
-      menuCardE: false,
       menuE: false,
+      menuCardE: false,
+      menuCard: false,
       activePicker: null,
       selectedFiles: [],
       BankAccounts: [],
@@ -1802,6 +1801,12 @@ export default {
     },
   },
   methods: {
+    saveC(date) {
+      this.$refs.menuCard.save(date);
+    },
+    saveCE(date) {
+      this.$refs.menuCardE.save(date);
+    },
     save(date) {
       this.$refs.menu.save(date);
     },
@@ -2194,8 +2199,7 @@ export default {
           id_issue_date: this.data.id_issue_date,
           bank_id: this.data.bank_id,
           residence_card_number: this.data.residence_card_number,
-          residence_card_issue_date:
-            this.data.residence_card_issue_date,
+          residence_card_issue_date: this.data.residence_card_issue_date,
           residence_card_place_of_issue:
             this.data.residence_card_place_of_issue,
           owner_title_jop: this.data.owner_title_jop,
@@ -2274,8 +2278,7 @@ export default {
           passport_img: this.editdItem.passport_img,
           id_number: this.editdItem.id_number,
           bank_id: this.editdItem.bank_id,
-          residence_card_issue_date:
-            this.editdItem.residence_card_issue_date,
+          residence_card_issue_date: this.editdItem.residence_card_issue_date,
           id_place_of_issue: this.editdItem.id_place_of_issue,
           id_issue_date: this.editdItem.id_issue_date,
           residence_card_number: this.editdItem.residence_card_number,
