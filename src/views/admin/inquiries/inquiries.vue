@@ -89,7 +89,7 @@
               <v-row>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium"
-                    >أسم المستخدم</v-label
+                    >أسم المتصل</v-label
                   >
                   <v-text-field
                     variant="outlined"
@@ -163,7 +163,7 @@
               <v-row>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium"
-                    >أسم المستخدم</v-label
+                    >أسم المتصل</v-label
                   >
                   <v-text-field
                     variant="outlined"
@@ -299,7 +299,7 @@ export default {
             text: "#",
             value: "num",
           },
-          { text: "أسم المستخدم", value: "name" },
+          { text: "أسم المتصل", value: "name" },
           { text: "رقم الهاتف", value: "phone" },
           { text: "اسم موظف المبيعات", value: "employee_name" },
           { text: "العمليات", value: "actions" },
@@ -333,7 +333,7 @@ export default {
       },
       action: [],
       Rules: {
-        nameRules: [(v) => !!v || "يرجى إدخال اسم المستخدم"],
+        nameRules: [(v) => !!v || "يرجى إدخال اسم المتصل"],
         title_jop: [(v) => !!v || "يرجى أختيار العنوان الوظيفي"],
         salary: [(v) => !!v || "يرجى تحديد الراتب"],
         phoneRules: [

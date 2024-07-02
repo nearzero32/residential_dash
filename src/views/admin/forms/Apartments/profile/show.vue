@@ -42,7 +42,7 @@
                 >
                   <h5>
                     <strong
-                      >المساحات الكلية <br />( {{ data.total_space }} )</strong
+                      >مساحة الأرض <br />( {{ data.total_space }} )</strong
                     >
                   </h5>
                   <img
@@ -162,7 +162,7 @@
           >
             <v-card-text>
               <strong
-                >{{ ind + 1 }} - ( المساحة الكلية {{ space.total_space }} -
+                >{{ ind + 1 }} - ( مساحة الأرض {{ space.total_space }} -
                 مساحة البناء {{ space.building_space }} )</strong
               >
               <v-container>

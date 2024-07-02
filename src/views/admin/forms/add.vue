@@ -40,7 +40,7 @@
                 </v-col>
                 <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium"
-                    >المساحات الكلية</v-label
+                    >مساحات الارض</v-label
                   >
                   <vue-tags-input
                     v-model="tagsTotalAreass"
@@ -132,7 +132,7 @@
                     </v-col>
                     <v-col cols="12" md="3" style="padding: 10px">
                       <v-label class="mb-2 font-weight-medium"
-                        >المساحة الكلية</v-label
+                        >مساحة الأرض</v-label
                       >
                       <v-text-field
                         variant="outlined"
@@ -788,7 +788,7 @@ export default {
       } else {
         this.SpacesItems = [];
         this.showDialogfunctionadd(
-          "خطأ: يجب ان تكون المساحات الكلية ومساحات البناء متساوية",
+          "خطأ: يجب ان تكون مساحات الارض ومساحات البناء متساوية",
           "#FF5252"
         );
       }

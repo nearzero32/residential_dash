@@ -22,7 +22,7 @@
               <v-card>
                 <v-card-text class="pb-0" style="display: grid; place-items: center">
                   <h5 style="text-align: center;">
-                    <strong>المساحات الكلية <br>( {{ data.total_space }} )</strong>
+                    <strong>مساحات الأرض <br>( {{ data.total_space }} )</strong>
                   </h5>
                   <img style="width: 70px; margin-block: 12px" :src="space" alt="" />
                 </v-card-text>

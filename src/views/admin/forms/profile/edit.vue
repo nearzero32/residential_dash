@@ -18,7 +18,7 @@
                 </v-col>
                 <v-col cols="12" md="3" style="padding: 10px">
                   <v-label class="mb-2 font-weight-medium"
-                    >المساحات الكلية</v-label
+                    >مساحات الأرض</v-label
                   >
                   <vue-tags-input
                     v-model="tagsTotalAreass"
@@ -112,7 +112,7 @@
                     </v-col>
                     <v-col cols="12" md="3" style="padding: 10px">
                       <v-label class="mb-2 font-weight-medium"
-                        >المساحة الكلية</v-label
+                        >مساحة الأرض</v-label
                       >
                       <v-text-field
                         variant="outlined"
@@ -822,7 +822,7 @@ export default {
           const buildingSpace = this.data.BuildingSpaces[index];
           if (parseInt(totalArea) < parseInt(buildingSpace)) {
             this.showDialogfunctionadd(
-              `خطأ: المساحة الكلية (${totalArea}) اصغر من مساحة البناء الخاصة بها (${buildingSpace})`,
+              `خطأ: مساحة الأرض (${totalArea}) اصغر من مساحة البناء الخاصة بها (${buildingSpace})`,
               "#FF5252"
             );
             errorOccurred = true;
@@ -861,12 +861,12 @@ export default {
 
         if (maxLength === this.data.BuildingSpaces.length) {
           this.showDialogfunctionadd(
-            `خطأ: عدد مساحات البناء اكثر من عدد المساحات الكلية`,
+            `خطأ: عدد مساحات البناء اكثر من عدد مساحات الأرض`,
             "#FF5252"
           );
         } else if (maxLength === this.data.TotalAreas.length) {
           this.showDialogfunctionadd(
-            `خطأ: عدد المساحات الكلية اكثر من عدد مساحات البناء`,
+            `خطأ: عدد مساحات الأرض اكثر من عدد مساحات البناء`,
             "#FF5252"
           );
         }

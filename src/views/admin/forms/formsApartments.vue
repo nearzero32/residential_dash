@@ -258,7 +258,7 @@ export default {
           { text: "الأسم", value: "name" },
           { text: "الصوره", value: "images" },
           { text: "مساحات البناء", value: "building_space" },
-          { text: "المساحات الكلية", value: "total_space" },
+          { text: "مساحات الأرض", value: "total_space" },
           { text: "العمارات", value: "apartment_building" },
           { text: "البلوك", value: "block_number" },
           { text: "العمليات", value: "ac" },

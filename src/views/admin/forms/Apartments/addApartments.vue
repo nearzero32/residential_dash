@@ -151,7 +151,7 @@
                               <v-row style="align-items: center;">
                                 <v-col cols="12" md="5" style="padding: 10px">
                                   <v-label class="mb-2 font-weight-medium"
-                                    >المساحة الكلية</v-label
+                                    >مساحة الأرض</v-label
                                   >
                                   <v-text-field
                                     variant="outlined"
@@ -745,7 +745,7 @@ export default {
           total_space: this.data.Spaces[index].total_space
         })
       } else {
-        this.showDialogfunction("خطأ: يجب إدخال مساحة البناء والمساحة الكلية", "#FF5252");
+        this.showDialogfunction("خطأ: يجب إدخال مساحة البناء ومساحة الأرض", "#FF5252");
       }
     },
     deleteSpace(index) {

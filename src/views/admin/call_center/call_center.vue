@@ -120,7 +120,7 @@
             <v-form v-model="isFormvalid">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">أسم المتصل</v-label>
+                  <v-label class="mb-2 font-weight-medium">أسم الزبون</v-label>
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.caller_name"
@@ -129,7 +129,7 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">هاتف المتصل</v-label>
+                  <v-label class="mb-2 font-weight-medium">هاتف الزبون</v-label>
                   <v-text-field
                     variant="outlined"
                     v-model="editdItem.caller_phone"
@@ -139,7 +139,7 @@
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium"
-                    >وظيفة المتصل</v-label
+                    >وظيفة الزبون</v-label
                   >
                   <v-text-field
                     variant="outlined"
@@ -150,7 +150,7 @@
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium"
-                    >عنوان المتصل</v-label
+                    >عنوان الزبون</v-label
                   >
                   <v-text-field
                     variant="outlined"
@@ -161,7 +161,7 @@
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-label class="mb-2 font-weight-medium"
-                    >أفراد عائلة المتصل</v-label
+                    >أفراد عائلة الزبون</v-label
                   >
                   <v-text-field
                     variant="outlined"
@@ -393,12 +393,12 @@ export default {
             text: "#",
             value: "num",
           },
-          { text: "أسم المتصل", value: "caller_name" },
-          { text: "وظيفة المتصل", value: "caller_job" },
-          { text: "هاتف المتصل", value: "caller_phone" },
+          { text: "أسم الزبون", value: "caller_name" },
+          { text: "وظيفة الزبون", value: "caller_job" },
+          { text: "هاتف الزبون", value: "caller_phone" },
           { text: "المحافظة", value: "caller_governorate" },
-          { text: "عنوان المتصل", value: "caller_address" },
-          { text: "أفراد عائلة المتصل", value: "caller_family_members" },
+          { text: "عنوان الزبون", value: "caller_address" },
+          { text: "أفراد عائلة الزبون", value: "caller_family_members" },
           { text: "كيف يسمع عنا", value: "how_he_hear_about_us" },
           { text: "المساحة المطلوبة", value: "space_required" },
           { text: "اسم النموذج", value: "form_name" },
@@ -479,11 +479,11 @@ export default {
       import("@/vendor/Export2Excel").then((excel) => {
         const tHeader = [
           "تاريخ المكالمة",
-          "أسم المتصل",
-          "وظيفة المتصل",
-          "هاتف المتصل",
-          "عنوان المتصل",
-          "أفراد عائلة المتصل",
+          "أسم الزبون",
+          "وظيفة الزبون",
+          "هاتف الزبون",
+          "عنوان الزبون",
+          "أفراد عائلة الزبون",
           "كيف سمع عنا",
           "المساحة المطلوبة",
           "سبب المكالمة",

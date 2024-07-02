@@ -364,7 +364,7 @@ export default {
           { text: "الصوره", value: "images" },
           { text: "عدد الطوابق", value: "floors.length" },
           { text: "مساحات البناء", value: "building_space" },
-          { text: "المساحات الكلية", value: "total_space" },
+          { text: "مساحات الأرض", value: "total_space" },
           { text: "عدد الوحدات السكنية", value: "houses.length" },
           { text: "التصنيف", value: "category" },
           { text: "البلوك", value: "block_number" },
