@@ -122,6 +122,11 @@ class Api {
 
     return response;
   }
+  async disableSellsEmployee(id) {
+    const response = await axiosInstance.put(`/sellsEmployee/disable/id/${id}`);
+
+    return response;
+  }
   async removeSellsEmployee(id) {
     const response = await axiosInstance.delete(`/sellsEmployee/id/${id}`);
 

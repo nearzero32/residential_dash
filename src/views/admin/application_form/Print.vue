@@ -15,7 +15,9 @@
             md="3"
             style="padding: 10px; text-align: center; white-space: pre-wrap"
           >
-            <p style="font-size: 14px;"><strong>{{ dataResidential.center_id.name }}</strong></p>
+            <p style="font-size: 14px">
+              <strong>{{ dataResidential.center_id.name }}</strong>
+            </p>
           </v-col>
           <v-col
             cols="6"
@@ -30,12 +32,19 @@
               "
             >
               <strong style="font-size: 14px"
-                >أستمارة حجز وحدة سكنية في {{ dataResidential.center_id.name }}</strong
+                >أستمارة حجز وحدة سكنية في
+                {{ dataResidential.center_id.name }}</strong
               >
             </div>
           </v-col>
           <v-col cols="3" md="3" style="text-align: center">
-              <img :src="dataResidential.content_url + dataResidential.center_id.logo" style="width: 160px" alt="" />
+            <img
+              :src="
+                dataResidential.content_url + dataResidential.center_id.logo
+              "
+              style="width: 160px"
+              alt=""
+            />
           </v-col>
         </v-row>
         <v-container>
@@ -128,24 +137,40 @@
                   data.house_total_space
                 }}</span>
               </p>
-              <p>
-                البلوك :
-                <span style="border-bottom: dashed 1px; margin-left: 60px">{{
-                  data.form_block_number
-                }}</span>
-                التصنيف :
-                <span style="border-bottom: dashed 1px; margin-left: 60px">{{
-                  data.form_category
-                }}</span>
-                رقم الشارع :
-                <span style="border-bottom: dashed 1px; margin-left: 60px">{{
-                  data.form_street_number
-                }}</span>
-                رقم الدار :
-                <span style="border-bottom: dashed 1px; margin-left: 60px">{{
-                  data.house_name
-                }}</span>
-              </p>
+              <div
+                style="display: flex; align-items: center; flex-direction: row"
+              >
+                <p>
+                  البلوك :
+                  <span style="border-bottom: dashed 1px; margin-left: 60px">{{
+                    data.form_block_number
+                  }}</span>
+                </p>
+                <p v-if="user.building_type !== 'شقق'">
+                  التصنيف :
+                  <span style="border-bottom: dashed 1px; margin-left: 60px">{{
+                    data.form_category
+                  }}</span>
+                </p>
+                <p v-else>
+                  العمارة :
+                  <span style="border-bottom: dashed 1px; margin-left: 60px">{{
+                    data.exact_apartment_building
+                  }}</span>
+                </p>
+                <p v-if="user.building_type !== 'شقق'">
+                  رقم الشارع :
+                  <span style="border-bottom: dashed 1px; margin-left: 60px">{{
+                    data.form_street_number
+                  }}</span>
+                </p>
+                <p>
+                  رقم الدار :
+                  <span style="border-bottom: dashed 1px; margin-left: 60px">{{
+                    data.house_name
+                  }}</span>
+                </p>
+              </div>
               <p>
                 السعر رقمآ :
                 <span style="border-bottom: dashed 1px; margin-left: 60px"
@@ -250,7 +275,8 @@
               md="6"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
               v-else
-              ><v-icon size="20"> mdi-phone </v-icon>{{ dataResidential.center_id.phone }}</v-col
+              ><v-icon size="20"> mdi-phone </v-icon
+              >{{ dataResidential.center_id.phone }}</v-col
             >
             <v-col
               cols="6"
@@ -267,10 +293,11 @@
               md="6"
               v-else
               style="padding: 10px; text-align: left; white-space: pre-wrap"
-            >{{ dataResidential.center_id.address }}</v-col>
+              >{{ dataResidential.center_id.address }}</v-col
+            >
           </v-row>
         </v-container>
-        <br>
+        <br />
       </v-card>
       <v-card>
         <v-row
@@ -286,7 +313,9 @@
             md="3"
             style="padding: 10px; text-align: center; white-space: pre-wrap"
           >
-            <p style="font-size: 14px;"><strong>{{ dataResidential.center_id.name }}</strong></p>
+            <p style="font-size: 14px">
+              <strong>{{ dataResidential.center_id.name }}</strong>
+            </p>
           </v-col>
           <v-col
             cols="6"
@@ -301,20 +330,26 @@
               "
             >
               <strong style="font-size: 14px"
-                >أستمارة حجز وحدة سكنية في {{ dataResidential.center_id.name }}</strong
+                >أستمارة حجز وحدة سكنية في
+                {{ dataResidential.center_id.name }}</strong
               >
             </div>
           </v-col>
           <v-col cols="3" md="3" style="text-align: center">
-              <img :src="dataResidential.content_url + dataResidential.center_id.logo" style="width: 160px" alt="" />
+            <img
+              :src="
+                dataResidential.content_url + dataResidential.center_id.logo
+              "
+              style="width: 160px"
+              alt=""
+            />
           </v-col>
         </v-row>
         <v-container>
           <div>
             <p>
               اني الموقع ادناه أقر باني قد قرأت جميع بنود هذه الأستمارة
-              وتفاصيلها وبنود عقد البيع لتملك الوحدة السكنية في مجمع النهضة
-              السكني وتفاصيلها واتعهد بااللتزام بكافة الشروط واتحمل كافة التبعات
+              وتفاصيلها وبنود عقد البيع لتملك الوحدة السكنية في {{ dataResidential.center_id.name }} وتفاصيلها واتعهد بااللتزام بكافة الشروط واتحمل كافة التبعات
               الماليه والقانونية .<br />
               الحجز ساري لمدة شهر واحد فقط من تاريخ الحجز اعلاه وبعدها سيتم
               الغاء الحجز تلقائيا في حال لم يتم التسديد .<br />
@@ -376,7 +411,8 @@
               md="6"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
               v-else
-              ><v-icon size="20"> mdi-phone </v-icon>{{ dataResidential.center_id.phone }}</v-col
+              ><v-icon size="20"> mdi-phone </v-icon
+              >{{ dataResidential.center_id.phone }}</v-col
             >
             <v-col
               cols="6"
@@ -393,7 +429,8 @@
               md="6"
               v-else
               style="padding: 10px; text-align: left; white-space: pre-wrap"
-            >{{ dataResidential.center_id.address }}</v-col>
+              >{{ dataResidential.center_id.address }}</v-col
+            >
           </v-row>
         </v-container>
       </v-card>
@@ -416,15 +453,16 @@ export default {
   },
   created() {
     this.data = JSON.parse(localStorage.getItem("PrintForm"));
+    console.log(this.data);
     var userDataString = JSON.parse(localStorage.getItem("user"));
-    this.dataResidential = userDataString
-    this.user = userDataString
+    this.dataResidential = userDataString;
+    this.user = userDataString;
   },
-  mounted() {
-    setTimeout(() => {
-      this.printElement();
-    }, 500);
-  },
+  // mounted() {
+  //   setTimeout(() => {
+  //     this.printElement();
+  //   }, 500);
+  // },
   methods: {
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;

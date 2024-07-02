@@ -45,7 +45,9 @@
               {{ table.centers.indexOf(item) + 1 }}
             </template>
             <template v-slot:item.name="{ item }">
-              <router-link :to="`admin-profileSellsEmployee/${item._id}/${item.name}`">
+              <router-link
+                :to="`admin-profileSellsEmployee/${item._id}/${item.name}`"
+              >
                 {{ item.name }}
               </router-link>
             </template>
@@ -80,7 +82,21 @@
                 </template>
                 <span>طباعه</span>
               </VTooltip>
-              <VTooltip bottom v-if="userData.includes('remove')">
+              <VTooltip bottom>
+                <template #activator="{ attrs }">
+                  <v-icon
+                  color="#FF5252"
+                    v-bind="attrs"
+                    size="20"
+                    @click="disable(item)"
+                  >
+                  mdi-pause-octagon
+                  </v-icon>
+                </template>
+                <span>أيقاف</span>
+              </VTooltip>
+
+              <!-- <VTooltip bottom v-if="userData.includes('remove')">
                 <template #activator="{ attrs }">
                   <v-icon
                     color="#FF5252"
@@ -92,12 +108,38 @@
                   </v-icon>
                 </template>
                 <span>حذف</span>
-              </VTooltip>
+              </VTooltip> -->
             </template>
           </v-data-table>
         </v-card>
       </div>
     </div>
+
+    <!-- disable dialog -->
+    <v-dialog v-model="dialogDisable" max-width="500px">
+      <v-card>
+        <v-card-title
+          class="headline justify-center"
+        >
+          هل انت متأكد من أيقاف هذا الحساب ؟
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="dialogDisable = false">
+            الغاء
+          </v-btn>
+          <v-btn
+            color="primary white--text"
+            :loading="disableItemLoading"
+            @click="disableItemConfirm"
+          >
+            <span>أيقاف</span>
+          </v-btn>
+          <v-spacer />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End disable dailog -->
 
     <!-- add -->
     <v-dialog v-model="dialog" max-width="800px">
@@ -366,6 +408,12 @@ export default {
         },
       ],
       // nav
+      // disableItem
+      disableItemLoading: false,
+      dialogDisable: false,
+      disableItem: {},
+      // disableItem
+
       // table
       table: {
         search: "",
@@ -596,6 +644,28 @@ export default {
         }
       }
     },
+    disable(item) {
+      this.disableItem = { ...item };
+      this.dialogDisable = true;
+    },
+    async disableItemConfirm() {
+      this.disableItemLoading = true;
+      try {
+        const response = await API.disableSellsEmployee(this.disableItem._id);
+
+        this.disableItemLoading = false;
+        this.dialogDisable = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
+
   },
 };
 </script>

@@ -130,7 +130,7 @@ export default {
           to: "/Index",
         },
         {
-          text: "أستفسارات الزبائن",
+          text: "استمارة حضور زبون",
           disabled: false,
           to: "/admin-call-center",
         },

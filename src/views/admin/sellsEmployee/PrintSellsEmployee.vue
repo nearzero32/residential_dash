@@ -157,6 +157,7 @@ export default {
     var userDataString = JSON.parse(localStorage.getItem("user"));
     this.dataResidential = userDataString;
     this.user = userDataString;
+    console.log(this.dataResidential.center_id)
   },
   mounted() {
     setTimeout(() => {

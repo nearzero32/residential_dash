@@ -76,7 +76,7 @@
                 </template>
                 <span>طباعه</span>
               </VTooltip>
-              <VTooltip bottom v-if="userData.includes('remove')">
+              <!-- <VTooltip bottom>
                 <template #activator="{ attrs }">
                   <v-icon
                     color="rgb(24, 86, 230)"
@@ -88,9 +88,9 @@
                   </v-icon>
                 </template>
                 <span>نقل</span>
-              </VTooltip>
+              </VTooltip> -->
 
-              <!-- <VTooltip bottom v-if="userData.includes('remove')">
+              <!-- <VTooltip bottom>
                 <template #activator="{ attrs }">
                   <v-icon
                     color="#FF5252"
@@ -354,7 +354,7 @@ export default {
 
       // nav
       page: {
-        title: "أستفسارات الزبائن",
+        title: "استمارة حضور زبون",
       },
 
       breadcrumbs: [
@@ -364,7 +364,7 @@ export default {
           to: "/Index",
         },
         {
-          text: "أستفسارات الزبائن",
+          text: "استمارة حضور زبون",
           disabled: true,
         },
       ],
@@ -626,9 +626,11 @@ export default {
     async getForms() {
       try {
         this.table.loading = true;
-        const response = await API.getForms();
+        const response = await API.getFormsSelect();
 
         this.forms = response.data.results;
+        console.log(response)
+
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
@@ -640,6 +642,7 @@ export default {
       }
     },
     editItem(item) {
+      console.log(item)
       this.$nextTick(() => {
         this.editdItem = { ...item };
         this.dialogEdit = true;

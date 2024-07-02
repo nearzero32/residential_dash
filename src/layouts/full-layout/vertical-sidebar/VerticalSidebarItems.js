@@ -97,7 +97,7 @@ export default [
         building_type: "منازل وشقق",
       },
       {
-        title: "أستفسارات الزبائن",
+        title: "استمارة حضور زبون",
         icon: "phone",
         to: "admin-call-center",
         type: "admin",
@@ -303,7 +303,7 @@ export default [
         building_type: "منازل وشقق",
       },
       {
-        title: "أستفسارات الزبائن",
+        title: "استمارة حضور زبون",
         icon: "phone",
         to: "admin-call-center",
         type: "assistance",
