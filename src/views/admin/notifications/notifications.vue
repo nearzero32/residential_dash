@@ -192,7 +192,7 @@
                     clearable
                     chips
                     v-model="data.receivers"
-                    :rules="Rules.receivers"
+                    :rules="Rules.receiverse"
                     item-text="name"
                     item-value="_id"
                     label="موظفين المبيعات"
@@ -283,7 +283,6 @@
                   :loading="addBtnLoading"
                   color="primary"
                   :disabled="!isFormvalid"
-                  type="submit"
                   text
                   >اٍضافة</v-btn
                 >
@@ -440,6 +439,8 @@ export default {
         title: [(v) => !!v || "يرجى أضافة عنوان"],
         body: [(v) => !!v || "يرجى أضافة تفاصيل"],
         receiver_type: [(v) => !!v || "يرجى أدخال نوع المستلم"],
+        receivers: [(v) => !!v || "الحقل مطلوب"],
+        receiverse: [(v) => !!v || "الحقل مطلوب"],
       },
       // add
       // edit
@@ -625,43 +626,58 @@ export default {
         this.table.loading = false;
       }
     },
-    async addCenter(event) {
-      event.preventDefault();
-
-      this.addBtnLoading = true;
-      try {
-        const response = await API.addNotifications({
-          title: this.data.title,
-          link: this.data.link,
-          body: this.data.body,
-          image: this.data.image,
-          receiver_type: this.data.receiver_type,
-          receivers: this.data.receivers,
-        });
-
-        this.addBtnLoading = false;
-        this.data.title = null;
-        this.data.body = null;
-        this.data.link = null;
-        this.data.receiver_type = null;
-        this.data.receivers = null;
-        this.data.image = null;
-        if (this.selectedFile) {
-          this.selectedFile = null;
+    async addCenter() {
+      if (this.data.receiver_type === "موظف مبيعات محدد") {
+        if (this.data.receivers.length === 0) {
+          this.showDialogfunction("يرجى اختيار موظف مبيعات", "#FF5252");
+          return;
         }
-
-        this.getCenter();
-
-        this.showDialogfunction(response.data.message, "primary");
-        this.dialog = false;
-      } catch (error) {
-        if (error.response.status === 401) {
-          this.$router.push("/login");
-        } else if (error.response.status === 500) {
-          this.addBtnLoading = false;
-          this.showDialogfunction(error.response.data.message, "#FF5252");
+      } else if (this.data.receiver_type === "مالك محدد") {
+        if (this.data.receivers.length === 0) {
+          this.showDialogfunction("يرجى اختيار مالك", "#FF5252");
+          return;
         }
       }
+      this.addBtnLoading = true;
+        try {
+          const response = await API.addNotifications({
+            title: this.data.title,
+            link: this.data.link,
+            body: this.data.body,
+            image: this.data.image,
+            receiver_type: this.data.receiver_type,
+            receivers: this.data.receivers,
+          });
+
+          this.addBtnLoading = false;
+          this.data.title = null;
+          this.data.body = null;
+          this.data.link = null;
+          this.data.receiver_type = null;
+          this.data.receivers = null;
+          this.data.image = null;
+          if (this.selectedFile) {
+            this.selectedFile = null;
+          }
+
+          this.getCenter();
+
+          this.showDialogfunction(response.data.message, "primary");
+          this.dialog = false;
+        } catch (error) {
+          this.addBtnLoading = false; // Ensure loading state is reset in case of error
+          if (error.response && error.response.status) {
+            if (error.response.status === 401) {
+              this.$router.push("/login");
+            } else if (error.response.status === 500) {
+              this.showDialogfunction(error.response.data.message, "#FF5252");
+            }
+          } else {
+            // Handle case where error response is undefined or does not have status
+            this.showDialogfunction("حدث خطأ غير متوقع", "#FF5252");
+          }
+        }
+
     },
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;
