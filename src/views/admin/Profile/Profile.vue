@@ -142,7 +142,6 @@
               <v-textarea
                 variant="outlined"
                 v-model="results.description"
-                :rules="Rules.description"
                 color="primary"
                 outlined
               ></v-textarea>
@@ -154,7 +153,6 @@
                   <v-text-field
                     variant="outlined"
                     v-model="results.video"
-                    :rules="Rules.video"
                     color="primary"
                     outlined
                   ></v-text-field>
