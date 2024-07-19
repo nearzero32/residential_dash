@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container id="pri">
+    <v-container id="pri" v-if="loading == false">
       <v-card
         style="
           height: 100vh;
@@ -49,13 +49,13 @@
                 :src="
                   dataResidential.content_url + dataResidential.center_id.logo
                 "
-                style="width: 160px"
+                style="width: 80px"
                 alt=""
               />
             </v-col>
           </v-row>
         </v-card-title>
-        <v-container style="height: 100%">
+        <v-container style="padding-block: 0px; height: 100%">
           <v-row
             style="
               display: flex;
@@ -75,13 +75,48 @@
                 <p>جهة اصدار الهوية : {{ data.id_place_of_issue }}</p>
                 <p>تاريخ اصدار الهوية : {{ data.id_issue_date }}</p>
                 <p>رقم بطاقة السكن : {{ data.residence_card_number }}</p>
-                <p>جهة اصدار بطاقة السكن : {{ data.residence_card_place_of_issue }}</p>
+                <p>
+                  جهة اصدار بطاقة السكن :
+                  {{ data.residence_card_place_of_issue }}
+                </p>
                 <p>العنوان الوظيفي : {{ data.owner_title_jop }}</p>
               </div>
+              <div
+                v-if="data.another_owner && data.another_owner.name !== null"
+                style="width: 100%"
+              >
+                <hr style="width: 100%" />
+                <p>تفاصيل المالك الثاني :-</p>
+                <p>العنوان : {{ data.another_owner.address }}</p>
+                <p>رقم الهوية : {{ data.another_owner.id_number }}</p>
+                <p>
+                  جهة اصدار الهوية : {{ data.another_owner.id_place_of_issue }}
+                </p>
+                <p>
+                  تاريخ اصدار الهوية : {{ data.another_owner.id_issue_date }}
+                </p>
+                <p>
+                  رقم بطاقة السكن :
+                  {{ data.another_owner.residence_card_number }}
+                </p>
+                <p>
+                  جهة اصدار بطاقة السكن :
+                  {{ data.another_owner.residence_card_place_of_issue }}
+                </p>
+                <p>
+                  العنوان الوظيفي : {{ data.another_owner.owner_title_jop }}
+                </p>
+              </div>
             </v-col>
-            <v-col cols="6" md="6" style="text-align: center;">
-              <p>يمكنك تحميل التطبيق </p>
-              <img style="width: 120px;" :src="dataResidential.content_url + dataResidential.center_id.qr" alt="">
+            <v-col cols="6" md="6" style="text-align: center">
+              <p>يمكنك تحميل التطبيق</p>
+              <img
+                style="width: 120px"
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.qr
+                "
+                alt=""
+              />
             </v-col>
           </v-row>
           <br />
@@ -136,27 +171,44 @@
 </template>
 
 <script>
-// import logoPrint from "@/assets/images/icons/logoPrint.png"
+import adminApi from "@/api/adminApi";
 export default {
   data() {
     return {
+      loading: true,
       data: null,
       user: null,
       dataResidential: null,
+      id: JSON.parse(localStorage.getItem("PrintOwner"))._id,
     };
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("PrintOwner"));
-    var userDataString = JSON.parse(localStorage.getItem("user"));
+    var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
     this.user = userDataString;
-  },
-  mounted() {
-    setTimeout(() => {
-      this.printElement();
-    }, 500);
+    this.getCenter();
   },
   methods: {
+    async getCenter() {
+      try {
+        this.loading = true;
+
+        const response = await adminApi.getOneOwner(this.id);
+        this.data = response.data.results;
+        setTimeout(() => {
+          this.printElement();
+        }, 500);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
+
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;

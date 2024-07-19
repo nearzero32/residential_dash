@@ -144,7 +144,6 @@
 </template>
 
 <script>
-// import logoPrint from "@/assets/images/icons/logoPrint.png"
 export default {
   data() {
     return {
@@ -155,7 +154,7 @@ export default {
   },
   created() {
     this.data = JSON.parse(localStorage.getItem("PrintGuards"));
-    var userDataString = JSON.parse(localStorage.getItem("user"));
+    var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
     this.user = userDataString;
   },

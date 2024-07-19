@@ -1,0 +1,842 @@
+<template>
+  <VDataTableServer
+    loading-text="جاري التحميل ... الرجاء الانتظار"
+    class="elevation-1"
+    :headers="isMobile ? [] : headers"
+    :items="table.Data"
+    :search="table.actions.includes('بحث') ? table.search : ''"
+    :loading="table.loading"
+    :options="tableOptions"
+    :items-per-page="tableOptions.itemsPerPage"
+    :items-length="table.totalItems"
+    :items-per-page-options="[
+      { value: 5, title: '5' },
+      { value: 10, title: '10' },
+      { value: 25, title: '25' },
+      { value: 50, title: '50' },
+      { value: 100, title: '100' },
+      { value: table.totalItems, title: '$vuetify.dataFooter.itemsPerPageAll' },
+    ]"
+    :items-per-page-text="t('Data is displayed:')"
+    no-data-text="لا توجد بيانات متاحة"
+  >
+    <template v-slot:item="{ item, index }">
+      <tr v-if="!isMobile">
+        <td v-for="(header, ind) in headers" :key="ind">
+          <div v-if="header.key === 'num'">
+            {{ index + 1 }}
+          </div>
+          <div v-else-if="header.type === 'link'">
+            <RouterLink
+              :to="header.link"
+              @click.native.prevent="emitGoToPage(item.selectable)"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'images'">
+            <img
+              v-if="item.selectable[header.key][0]"
+              @click="emitShowImgs(item)"
+              :src="content_urll + item.selectable[header.key][0]"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.type === 'imgs'">
+            <img
+              v-if="item.selectable.imgs"
+              @click="emitShowImgs(item)"
+              :src="content_urll + item.selectable.imgs[0]"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.key === 'building_space'">
+            <ul>
+              <li
+                v-for="(building_spac, index) in item.selectable.building_space"
+                :key="index"
+              >
+                {{ building_spac }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'total_space'">
+            <ul>
+              <li
+                v-for="(total_spac, inde) in item.selectable.total_space"
+                :key="inde"
+              >
+                {{ total_spac }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'apartment_building'">
+            <ul>
+              <li
+                v-for="(apartment_buildin, inde) in item.selectable
+                  .apartment_building"
+                :key="inde"
+              >
+                {{ apartment_buildin }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'current_employeeName'">
+            {{ item.selectable.current_employee.name }}
+          </div>
+          <div v-else-if="header.key === 'buyer_info.customer_name'">
+            {{ item.selectable.buyer_info.customer_name }}
+          </div>
+          <div v-else-if="header.key === 'buyer_info.customer_phone'">
+            {{ item.selectable.buyer_info.customer_phone }}
+          </div>
+          <div v-else-if="header.key === 'buyer_info.customer_phone_two'">
+            {{ item.selectable.buyer_info.customer_phone_two }}
+          </div>
+          <div v-else-if="header.key === 'service.name'">
+            {{ item.selectable.service.name }}
+          </div>
+          <div v-else-if="header.key === 'service.price'">
+            {{ item.selectable.service.price }}
+          </div>
+          <div v-else-if="header.key === 'service.type'">
+            {{ item.selectable.service.type }}
+          </div>
+          <div v-else-if="header.key === 'is_available'">
+            <p v-if="item.selectable.service.is_available == true">مفعلة</p>
+            <p v-else>غير مفعلة</p>
+          </div>
+          <div v-else-if="header.key === 'is_availablee'">
+            <p v-if="item.selectable.is_available == true">مفعلة</p>
+            <p v-else>غير مفعلة</p>
+          </div>
+          <div v-else-if="header.key === 'privileges.actions'">
+            <ul>
+              <li v-if="item.selectable.privileges.actions.includes('add')">
+                أضافة
+              </li>
+              <li v-if="item.selectable.privileges.actions.includes('edit')">
+                تعديل
+              </li>
+              <li v-if="item.selectable.privileges.actions.includes('remove')">
+                حذف
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'pages'">
+            <ul v-for="(page, index) in item.selectable.pages" :key="index">
+              <li v-if="page == 'home'">الصفحة الرئيسية</li>
+              <li v-if="page == 'forms-Apartments'">نماذج شقق</li>
+              <li v-if="page == 'forms'">نماذج منازل</li>
+              <li v-if="page == 'owners'">الملاك</li>
+              <li v-if="page == 'visits'">زيارات الملاك</li>
+              <li v-if="page == 'sales'">المبيعات</li>
+              <li v-if="page == 'sells-employee'">موظفين المبيعات</li>
+              <li v-if="page == 'call-center'">أستفسارات الزبائن</li>
+              <li v-if="page == 'application-form'">
+                أستماراة طلب حجز وحدة سكنية
+              </li>
+              <li v-if="page == 'confirmations-form'">أستماراة طلب موافقة</li>
+              <li v-if="page == 'reservations'">طلبات وحدة سكنية</li>
+              <li v-if="page == 'notifications'">الأشعارات</li>
+              <li v-if="page == 'After-sales-service'">خدمات ما بعد البيع</li>
+              <li v-if="page == 'reservation-service'">حجوزات الخدمات</li>
+              <li v-if="page == 'services'">الخدمات</li>
+              <li v-if="page == 'buying-offers'">الوحدات السكنية</li>
+              <li v-if="page == 'guards'">الحراس</li>
+              <li v-if="page == 'employees'">الموظفين</li>
+              <li v-if="page == 'postings'">الأعلانات</li>
+              <li v-if="page == 'advantages'">المميزات</li>
+              <li v-if="page == 'how_u_hear_about_us'">كيف سمع عنا</li>
+              <li v-if="page == 'complain'">الشكاوي</li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'image'">
+            <img
+              v-if="item.selectable.image !== null"
+              @click="emitShowImage(item)"
+              :src="`${content_urll}${item.selectable.image}`"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.key === 'service.image'">
+            <img
+              v-if="item.selectable.service.image !== null"
+              @click="emitShowImage(item)"
+              :src="`${content_urll}${item.selectable.service.image}`"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.key === 'houses.length'">
+            {{ item.selectable.houses.length }}
+          </div>
+          <div v-else-if="header.key === 'block_number'">
+            <ul>
+              <li
+                v-for="(block_numbe, index) in item.selectable.block_number"
+                :key="index"
+              >
+                {{ block_numbe }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'categories'">
+            <ul>
+              <li
+                v-for="(categorie, index) in item.selectable.categories"
+                :key="index"
+              >
+                {{ categorie }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'street_number'">
+            <ul>
+              <li
+                v-for="(street_numbe, index) in item.selectable.street_number"
+                :key="index"
+              >
+                {{ street_numbe }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'floors'">
+            {{ item.selectable.floors.length }}
+          </div>
+
+          <div v-else>
+            {{ item.selectable[header.key] }}
+          </div>
+
+          <div v-if="header.key === 'actions'">
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('حذف') && userData.includes('remove')
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FF5252"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDeleteItems(item.selectable)"
+                >
+                  fa-trash
+                </VIcon>
+              </template>
+              <span>حذف</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('تعديل') && userData.includes('edit')
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="primary"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitEditItems(item.selectable)"
+                >
+                  fa-edit
+                </VIcon>
+              </template>
+              <span>تعديل</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('طباعة')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FDD835"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitPrintItems(item.selectable)"
+                >
+                  fa-print
+                </VIcon>
+              </template>
+              <span>طباعة</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('ايقاف')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FF5252"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-pause-octagon
+                </VIcon>
+              </template>
+              <span>ايقاف</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('موافقة') &&
+                item.selectable.status == 'معلق'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="success"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empConfirmIteme(item.selectable)"
+                >
+                  mdi-check
+                </VIcon>
+              </template>
+              <span>موافقة</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('الغاء') &&
+                item.selectable.status == 'معلق'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#D32F2F"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empCancelIteme(item.selectable)"
+                >
+                  mdi-alpha-x-circle-outline
+                </VIcon>
+              </template>
+              <span>الغاء</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('عرض')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#2196F3"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empShowIteme(item.selectable)"
+                >
+                  mdi-eye
+                </VIcon>
+              </template>
+              <span>عرض المنازل</span>
+            </VTooltip>
+          </div>
+        </td>
+      </tr>
+      <tr variant="tonal" class="all" v-else>
+        <td
+          class="alll"
+          v-for="(header, headerIndex) in headers"
+          :key="headerIndex"
+        >
+          <div class="r">{{ header.title }}</div>
+          <div v-if="header.key === 'num'" class="l">
+            {{ index + 1 }}
+          </div>
+          <div v-else-if="header.type === 'link'" class="l">
+            <RouterLink
+              :to="header.link"
+              @click.native.prevent="emitGoToPage(item.selectable)"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'images'" class="l">
+            <img
+              v-if="item.selectable[header.key][0]"
+              @click="emitShowImgs(item)"
+              :src="content_urll + item.selectable[header.key][0]"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.type === 'imgs'" class="l">
+            <img
+              v-if="item.selectable.imgs"
+              @click="emitShowImgs(item)"
+              :src="content_urll + item.selectable.imgs[0]"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.key === 'building_space'" class="l">
+            <ul>
+              <li
+                v-for="(building_spac, index) in item.selectable.building_space"
+                :key="index"
+              >
+                {{ building_spac }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'total_space'" class="l">
+            <ul>
+              <li
+                v-for="(total_spac, inde) in item.selectable.total_space"
+                :key="inde"
+              >
+                {{ total_spac }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'apartment_building'" class="l">
+            <ul>
+              <li
+                v-for="(apartment_buildin, inde) in item.selectable
+                  .apartment_building"
+                :key="inde"
+              >
+                {{ apartment_buildin }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'current_employeeName'" class="l">
+            {{ item.selectable.current_employee.name }}
+          </div>
+          <div v-else-if="header.key === 'buyer_info.customer_name'" class="l">
+            {{ item.selectable.buyer_info.customer_name }}
+          </div>
+          <div v-else-if="header.key === 'buyer_info.customer_phone'" class="l">
+            {{ item.selectable.buyer_info.customer_phone }}
+          </div>
+          <div
+            v-else-if="header.key === 'buyer_info.customer_phone_two'"
+            class="l"
+          >
+            {{ item.selectable.buyer_info.customer_phone_two }}
+          </div>
+          <div v-else-if="header.key === 'image'" class="l">
+            <img
+              v-if="item.selectable.image !== null"
+              @click="emitShowImage(item)"
+              :src="`${content_urll}${item.selectable[header.key]}`"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.key === 'service.image'" class="l">
+            <img
+              v-if="item.selectable.service.image !== null"
+              @click="emitShowImage(item)"
+              :src="`${content_urll}${item.selectable.service.image}`"
+              style="
+                width: 60px;
+                border: solid 1px rebeccapurple;
+                cursor: pointer;
+              "
+            />
+          </div>
+          <div v-else-if="header.key === 'service.name'" class="l">
+            {{ item.selectable.service.name }}
+          </div>
+          <div v-else-if="header.key === 'service.price'" class="l">
+            {{ item.selectable.service.price }}
+          </div>
+          <div v-else-if="header.key === 'service.type'" class="l">
+            {{ item.selectable.service.type }}
+          </div>
+          <div v-else-if="header.key === 'is_available'" class="l">
+            <p v-if="item.selectable.service.is_available == true">مفعلة</p>
+            <p v-else>غير مفعلة</p>
+          </div>
+          <div v-else-if="header.key === 'is_availablee'" class="l">
+            <p v-if="item.selectable.is_available == true">مفعلة</p>
+            <p v-else>غير مفعلة</p>
+          </div>
+          <div v-else-if="header.key === 'privileges.actions'" class="l">
+            <ul>
+              <li v-if="item.selectable.privileges.actions.includes('add')">
+                أضافة
+              </li>
+              <li v-if="item.selectable.privileges.actions.includes('edit')">
+                تعديل
+              </li>
+              <li v-if="item.selectable.privileges.actions.includes('remove')">
+                حذف
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'houses.length'" class="l">
+            {{ item.selectable.houses.length }}
+          </div>
+          <div v-else-if="header.key === 'pages'" class="l">
+            <ul v-for="(page, index) in item.selectable.pages" :key="index">
+              <li v-if="page == 'home'">الصفحة الرئيسية</li>
+              <li v-if="page == 'forms-Apartments'">نماذج شقق</li>
+              <li v-if="page == 'forms'">نماذج منازل</li>
+              <li v-if="page == 'owners'">الملاك</li>
+              <li v-if="page == 'visits'">زيارات الملاك</li>
+              <li v-if="page == 'sales'">المبيعات</li>
+              <li v-if="page == 'sells-employee'">موظفين المبيعات</li>
+              <li v-if="page == 'call-center'">أستفسارات الزبائن</li>
+              <li v-if="page == 'application-form'">
+                أستماراة طلب حجز وحدة سكنية
+              </li>
+              <li v-if="page == 'confirmations-form'">أستماراة طلب موافقة</li>
+              <li v-if="page == 'reservations'">طلبات وحدة سكنية</li>
+              <li v-if="page == 'notifications'">الأشعارات</li>
+              <li v-if="page == 'After-sales-service'">خدمات ما بعد البيع</li>
+              <li v-if="page == 'reservation-service'">حجوزات الخدمات</li>
+              <li v-if="page == 'services'">الخدمات</li>
+              <li v-if="page == 'buying-offers'">الوحدات السكنية</li>
+              <li v-if="page == 'guards'">الحراس</li>
+              <li v-if="page == 'employees'">الموظفين</li>
+              <li v-if="page == 'postings'">الأعلانات</li>
+              <li v-if="page == 'advantages'">المميزات</li>
+              <li v-if="page == 'how_u_hear_about_us'">كيف سمع عنا</li>
+              <li v-if="page == 'complain'">الشكاوي</li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'block_number'" class="l">
+            <ul>
+              <li
+                v-for="(block_numbe, index) in item.selectable.block_number"
+                :key="index"
+              >
+                {{ block_numbe }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'categories'" class="l">
+            <ul>
+              <li
+                v-for="(categorie, index) in item.selectable.categories"
+                :key="index"
+              >
+                {{ categorie }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'street_number'" class="l">
+            <ul>
+              <li
+                v-for="(street_numbe, index) in item.selectable.street_number"
+                :key="index"
+              >
+                {{ street_numbe }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="header.key === 'floors'" class="l">
+            {{ item.selectable.floors.length }}
+          </div>
+
+          <div v-else>
+            {{ item.selectable[header.key] }}
+          </div>
+
+          <div v-if="header.key === 'actions'" class="l">
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('حذف') && userData.includes('remove')
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FF5252"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDeleteItems(item.selectable)"
+                >
+                  fa-trash
+                </VIcon>
+              </template>
+              <span>حذف</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('عرض')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#2196F3"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empShowIteme(item.selectable)"
+                >
+                  mdi-eye
+                </VIcon>
+              </template>
+              <span>عرض المنازل</span>
+            </VTooltip>
+
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('تعديل') && userData.includes('edit')
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="primary"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitEditItems(item.selectable)"
+                >
+                  fa-edit
+                </VIcon>
+              </template>
+              <span>تعديل</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('طباعة')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FDD835"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitPrintItems(item.selectable)"
+                >
+                  fa-print
+                </VIcon>
+              </template>
+              <span>طباعة</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('ايقاف')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FF5252"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-pause-octagon
+                </VIcon>
+              </template>
+              <span>ايقاف</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('موافقة') &&
+                item.selectable.status == 'معلق'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="success"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empConfirmIteme(item.selectable)"
+                >
+                  mdi-check
+                </VIcon>
+              </template>
+              <span>موافقة</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('الغاء') &&
+                item.selectable.status == 'معلق'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#D32F2F"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empCancelIteme(item.selectable)"
+                >
+                  mdi-alpha-x-circle-outline
+                </VIcon>
+              </template>
+              <span>الغاء</span>
+            </VTooltip>
+          </div>
+        </td>
+      </tr>
+      <hr v-if="isMobile" />
+    </template>
+  </VDataTableServer>
+</template>
+
+<script>
+import { useI18n } from "vue-i18n";
+import { VDataTableServer } from "vuetify/labs/VDataTable";
+
+export default {
+  name: "Table",
+  components: {
+    VDataTableServer,
+  },
+  setup() {
+    const { t } = useI18n();
+
+    return {
+      t,
+    };
+  },
+  props: {
+    table: Object,
+    content_url: String,
+    tableOptions: Object,
+    headers: Object,
+  },
+  data() {
+    return {
+      isMobile: false,
+      image: JSON.parse(localStorage.getItem("results")),
+      content_urll: JSON.parse(localStorage.getItem("results")).content_url,
+      userData: [],
+    };
+  },
+  created() {
+    window.addEventListener("resize", this.onResize);
+    this.onResize();
+    var userDataString = JSON.parse(localStorage.getItem("results"));
+    if (userDataString.type !== "super_admin") {
+      this.userData = userDataString.privileges.actions;
+    } else {
+      this.userData = ["add", "edit", "remove"];
+    }
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.onResize);
+  },
+  methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 769;
+    },
+    updateOptions(newOptions) {
+      this.$emit("update:options", newOptions);
+    },
+    emitEditItems(item) {
+      this.$emit("editItems", item);
+    },
+    emitGoToPage(item) {
+      sessionStorage.setItem("pageData", JSON.stringify(item));
+    },
+    emitDeleteItems(item) {
+      this.$emit("deleteItems", item);
+    },
+    emitShowImgs(item) {
+      this.$emit("emitShowImgs", item);
+    },
+    emitPrintItems(item) {
+      this.$emit("emitPrintItems", item);
+    },
+    emitDisable(item) {
+      this.$emit("emitDisable", item);
+    },
+    empConfirmIteme(item) {
+      this.$emit("empConfirmIteme", item);
+    },
+    empCancelIteme(item) {
+      this.$emit("empCancelIteme", item);
+    },
+    emitShowImage(item) {
+      this.$emit("showImages", item);
+    },
+    empShowIteme(item) {
+      this.$emit("empShowIteme", item);
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.all {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.alll {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.v-table__wrapper {
+  border-radius: inherit;
+  padding-block: 10px;
+}
+.v-data-table-footer__pagination {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.teacher_image_table {
+  cursor: pointer;
+}
+.button-like {
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.button-like:hover {
+  background-color: #9155fd;
+}
+
+.button-like:focus {
+  outline: none;
+}
+</style>

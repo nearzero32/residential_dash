@@ -1,522 +1,361 @@
 <template>
-  <v-container fluid class="down-top-padding">
+  <div class="team">
     <BaseBreadcrumb
-      :title="page.title"
+      :title="t(page.title)"
       :icon="page.icon"
-      :breadcrumbs="breadcrumbs"
+      :breadcrumbs="b.map((crumb) => ({ ...crumb, text: t(crumb.text) }))"
     ></BaseBreadcrumb>
-    <div>
-      <div class="mt-4">
-        <v-card>
-          <v-card-title>
-            <v-btn
+    <br />
+    <br />
+    <VCard class="mb-6">
+      <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
+      <VCardText>
+        <VRow style="justify-content: space-between">
+          <VCol cols="12" md="4">
+            <VBtn
+              tile
               color="primary"
+              prepend-icon="mdi-plus"
+              @click="addDialog.open = true"
               v-if="userData.includes('add')"
-              text
-              class="ml-auto"
-              @click="dialog = true"
             >
-              <v-icon class="mr-2">mdi-plus</v-icon>اٍضافة مستخدم جديد
-            </v-btn>
+              {{ t("Addition") }}
+            </VBtn>
+          </VCol>
+        </VRow>
+      </VCardText>
+    </VCard>
 
-            <v-spacer></v-spacer>
-            <v-text-field
+    <VCard>
+      <VCardTitle>
+        <VRow
+          justify="space-between"
+          style="align-items: center; margin-bottom: 15px"
+        >
+          <VCol cols="12" sm="12" md="12">
+            <VTextField
               v-model="table.search"
-              @input="getCenter"
-              append-icon="mdi-magnify"
-              label="بحث"
-              outlined
-              single-line
+              append-inner-icon="mdi-magnify"
+              density="compact"
+              :label="t('Search')"
+              variant="solo"
               hide-details
-            ></v-text-field>
-          </v-card-title>
-          <v-data-table
-            :headers="table.headers"
-            loading-text="جاري التحميل ... الرجاء الانتظار"
-            :items="table.centers"
-            :options.sync="tableOptions"
-            :server-items-length="table.totalItems"
-            :loading="table.loading"
-            class="elevation-1"
-            no-results-text="لا توجد بيانات !"
-            @update:options="getCenter"
-          >
-            <template v-slot:item.num="{ item }">
-              {{ table.centers.indexOf(item) + 1 }}
-            </template>
-            <template v-slot:item.pages="{ item }">
-              <ul v-for="(page, index) in item.pages" :key="index">
-                <li v-if="page == 'home'">الصفحة الرئيسية</li>
-                <li v-if="page == 'forms-Apartments'">نماذج شقق</li>
-                <li v-if="page == 'forms'">نماذج منازل</li>
-                <li v-if="page == 'owners'">الملاك</li>
-                <li v-if="page == 'visits'">زيارات الملاك</li>
-                <li v-if="page == 'sales'">المبيعات</li>
-                <li v-if="page == 'sells-employee'">موظفين المبيعات</li>
-                <li v-if="page == 'call-center'">أستفسارات الزبائن</li>
-                <li v-if="page == 'application-form'">
-                  أستماراة طلب حجز وحدة سكنية
-                </li>
-                <li v-if="page == 'confirmations-form'">أستماراة طلب موافقة</li>
-                <li v-if="page == 'reservations'">طلبات وحدة سكنية</li>
-                <li v-if="page == 'notifications'">الأشعارات</li>
-                <li v-if="page == 'After-sales-service'">خدمات ما بعد البيع</li>
-                <li v-if="page == 'reservation-service'">حجوزات الخدمات</li>
-                <li v-if="page == 'services'">الخدمات</li>
-                <li v-if="page == 'buying-offers'">الوحدات السكنية</li>
-                <li v-if="page == 'guards'">الحراس</li>
-                <li v-if="page == 'employees'">الموظفين</li>
-                <li v-if="page == 'postings'">الأعلانات</li>
-                <li v-if="page == 'advantages'">المميزات</li>
-                <li v-if="page == 'how_u_hear_about_us'">كيف سمع عنا</li>
-                <li v-if="page == 'complain'">الشكاوي</li>
-              </ul>
-            </template>
-            <template v-slot:item.privileges.actions="{ item }">
-              <ul>
-                <li v-if="item.privileges.actions.includes('add')">أضافة</li>
-                <li v-if="item.privileges.actions.includes('edit')">تعديل</li>
-                <li v-if="item.privileges.actions.includes('remove')">حذف</li>
-              </ul>
-            </template>
-            <template v-slot:item.actions="{ item }">
-              <VTooltip bottom v-if="userData.includes('edit')">
-                <template #activator="{ attrs }">
-                  <v-icon
-                    color="rgb(243 216 1)"
-                    v-bind="attrs"
-                    size="20"
-                    @click="editItem(item)"
-                  >
-                    mdi-note-edit
-                  </v-icon>
-                </template>
-                <span>تعديل</span>
-              </VTooltip>
-              <VTooltip bottom>
-                <template #activator="{ attrs }">
-                  <v-icon
-                    color="#fffc00"
-                    v-bind="attrs"
-                    size="20"
-                    @click="Print(item)"
-                  >
-                    mdi-printer
-                  </v-icon>
-                </template>
-                <span>طباعه</span>
-              </VTooltip>
-              <VTooltip bottom v-if="userData.includes('remove')">
-                <template #activator="{ attrs }">
-                  <v-icon
-                    color="#FF5252"
-                    v-bind="attrs"
-                    size="20"
-                    @click="deleteItem(item)"
-                  >
-                    mdi-delete-restore
-                  </v-icon>
-                </template>
-                <span>حذف</span>
-              </VTooltip>
-            </template>
-          </v-data-table>
-        </v-card>
-      </div>
-    </div>
+              single-line
+              @click:clear="getCenter"
+              @input="getCenter"
+              clearable
+            />
+          </VCol>
+        </VRow>
+      </VCardTitle>
+      <VCardText>
+        <Table
+          :table="table"
+          :content_url="content_url"
+          :tableOptions="tableOptions"
+          :headers="headers"
+          @update:options="getCenter"
+          @deleteItems="deleteItem"
+          @editItems="editItem"
+          @emitPrintItems="printItem"
+        />
+      </VCardText>
+    </VCard>
 
-    <!-- add -->
-    <v-dialog v-model="dialog" max-width="800px">
-      <v-card>
-        <v-card>
-          <v-card-title class="text-h5">اٍضافة مستخدم جديد</v-card-title>
-          <v-divider></v-divider>
-          <!----Account Details---->
-          <v-card-text class="pb-0">
-            <v-form v-model="isFormvalid">
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >أسم المستخدم</v-label
-                  >
-                  <v-text-field
-                    variant="outlined"
-                    outlined
-                    :rules="Rules.nameRules"
+    <!-- Add Class Dialog -->
+    <VDialog v-model="addDialog.open" max-width="800px">
+      <VCard>
+        <VCardTitle>
+          <span class="headline">{{ t("Addition") }}</span>
+        </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VForm ref="form">
+              <VRow>
+                <VCol cols="12" md="6">
+                  <VTextField
                     v-model="data.name"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >البريد الألكتروني</v-label
-                  >
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.emailRules"
+                    :rules="Rules.name"
+                    :label="t('Guard Name')"
                     outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
                     v-model="data.email"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
-                  <v-text-field
-                    variant="outlined"
+                    :rules="Rules.email"
+                    :label="t('Email')"
                     outlined
-                    :rules="Rules.phoneRules"
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
                     v-model="data.phone"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">كلمة المرور</v-label>
-                  <v-text-field
-                    variant="outlined"
+                    :rules="Rules.phone"
+                    :label="t('Phone number')"
                     outlined
-                    :rules="Rules.password_showRules"
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
                     v-model="data.password_show"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >صلاحيات المستخدم</v-label
-                  >
-                  <v-autocomplete
+                    :rules="Rules.password_show"
+                    :label="t('Password')"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="data.address"
+                    :rules="Rules.address"
+                    :label="t('Address')"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VAutocomplete
                     v-model="data.action"
+                    :rules="Rules.action"
                     :items="action"
                     outlined
-                    item-text="text"
+                    item-title="text"
                     item-value="value"
                     attach
-                    chips
-                    label="صلاحيات المستخدم"
                     multiple
-                  ></v-autocomplete>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >صفحات المستخدم</v-label
-                  >
-                  <v-autocomplete
+                    :label="t('User Permissions')"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VAutocomplete
                     v-model="data.pages"
+                    :rules="Rules.pages"
                     :items="pages"
                     outlined
-                    item-text="text"
+                    item-title="text"
                     item-value="value"
                     attach
-                    chips
-                    label="صفحات المستخدم"
                     multiple
-                  ></v-autocomplete>
-                </v-col>
-                <v-col cols="12" md="6" v-if="isPagesSeles == true">
-                  <v-label class="mb-2 font-weight-medium"
-                    >صفحات المبيعات</v-label
-                  >
-                  <v-autocomplete
-                    v-model="Seles"
-                    :items="pagesSeles"
-                    :rules="Rules.Seles"
-                    outlined
-                    item-text="text"
-                    item-value="value"
-                    attach
-                    chips
-                    label="صفحات المبيعات"
-                    multiple
-                  ></v-autocomplete>
-                </v-col>
-                <v-col cols="12" md="6" v-if="isPagesServices == true">
-                  <v-label class="mb-2 font-weight-medium"
-                    >صفحات خدمات ما بعد البيع</v-label
-                  >
-                  <v-autocomplete
-                    v-model="Services"
-                    :items="pagesServices"
-                    :rules="Rules.Services"
-                    outlined
-                    item-text="text"
-                    item-value="value"
-                    attach
-                    chips
-                    label="صفحات خدمات ما بعد البيع"
-                    multiple
-                  ></v-autocomplete>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">العنوان</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.addressRules"
-                    v-model="data.address"
-                    outlined
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-divider></v-divider>
-              <!----Personal Info---->
-              <v-card-actions>
-                <v-btn
-                  size="large"
-                  @click="addCenter"
-                  :loading="addBtnLoading"
-                  color="primary"
-                  :disabled="!isFormvalid"
-                  type="submit"
-                  text
-                  >اٍضافة</v-btn
-                >
-                <v-btn
-                  class="bg-lighterror text-error ml-4"
-                  @click="dialog = false"
-                  text
-                  >أغلاق</v-btn
-                >
-              </v-card-actions>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-card>
-    </v-dialog>
-    <!-- add -->
+                    :label="t('User Pages')"
+                  ></VAutocomplete>
+                </VCol>
+              </VRow>
+            </VForm>
+          </VContainer>
+        </VCardText>
+        <VCardActions class="ml-3">
+          <VSpacer />
+          <VBtn color="primary" text @click="addDialog.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary"
+            :loading="addDialog.saveLoading"
+            @click="addCenter"
+          >
+            {{ t("Addition") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Add Class Dialog -->
 
-    <!-- edit dialog -->
-    <v-dialog v-model="dialogEdit" max-width="800px">
-      <v-card>
-        <v-card elevation="10">
-          <v-card-title class="text-h5">تعديل الحساب</v-card-title>
-          <v-divider></v-divider>
-          <!----Account Details---->
-          <v-card-text class="pb-0">
-            <v-form v-model="isFormvalid">
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >أسم المستخدم</v-label
-                  >
-                  <v-text-field
-                    variant="outlined"
+    <!-- Edit Class Dialog -->
+    <VDialog v-model="dialogEdit.open" max-width="800px" max-height="100%">
+      <VCard>
+        <VCardTitle>
+          <span class="headline">{{ t("Edit") }}</span>
+        </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VForm ref="form">
+              <VRow>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.name"
+                    :rules="Rules.name"
+                    :label="t('Guard Name')"
                     outlined
-                    :rules="Rules.nameRules"
-                    v-model="editdItem.name"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >البريد الألكتروني</v-label
-                  >
-                  <v-text-field
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.email"
+                    :rules="Rules.email"
+                    :label="t('Email')"
                     outlined
-                    variant="outlined"
-                    :rules="Rules.emailRules"
-                    v-model="editdItem.email"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.phoneRules"
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.phone"
+                    :rules="Rules.phone"
+                    :label="t('Phone number')"
                     outlined
-                    v-model="editdItem.phone"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">كلمة المرور</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.password_showRules"
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.password_show"
+                    :rules="Rules.password_show"
+                    :label="t('Password')"
                     outlined
-                    v-model="editdItem.password_show"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >صلاحيات المستخدم</v-label
-                  >
-                  <v-autocomplete
-                    v-if="
-                      editdItem &&
-                      editdItem.privileges &&
-                      editdItem.privileges.actions
-                    "
-                    v-model="editdItem.privileges.actions"
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.address"
+                    :rules="Rules.address"
+                    :label="t('Address')"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VAutocomplete
+                    v-model="dialogEdit.editedItem.privileges.actions"
+                    :rules="Rules.action"
                     :items="action"
                     outlined
-                    attach
-                    item-text="text"
-                    item-value="value"
-                    chips
-                    label="صلاحيات المستخدم"
-                    multiple
-                  >
-                  </v-autocomplete>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium"
-                    >صفحات المستخدم</v-label
-                  >
-                  <v-autocomplete
-                    v-model="editdItem.pages"
-                    :items="pagesEd"
-                    outlined
-                    item-text="text"
+                    item-title="text"
                     item-value="value"
                     attach
-                    chips
-                    label="صفحات المستخدم"
                     multiple
-                  ></v-autocomplete>
-                </v-col>
-
-                <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">العنوان</v-label>
-                  <v-text-field
-                    variant="outlined"
-                    :rules="Rules.addressRules"
+                    :label="t('User Permissions')"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VAutocomplete
+                    v-model="dialogEdit.editedItem.pages"
+                    :rules="Rules.pages"
+                    :items="pages"
                     outlined
-                    v-model="editdItem.address"
-                    color="primary"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <br />
-              <v-divider></v-divider>
-              <!----Personal Info---->
-              <v-card-actions>
-                <v-btn
-                  size="large"
-                  @click="editItemConfirm"
-                  :loading="editItemLoading"
-                  :disabled="!isFormvalid"
-                  color="primary"
-                  type="submit"
-                  text
-                  >تعديل</v-btn
-                >
-                <v-btn color="primary" text @click="dialogEdit = false">
-                  الغاء
-                </v-btn>
-              </v-card-actions>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-card>
-    </v-dialog>
-    <!-- End edit dailog -->
+                    item-title="text"
+                    item-value="value"
+                    attach
+                    multiple
+                    :label="t('User Pages')"
+                  ></VAutocomplete>
+                </VCol>
+              </VRow>
+            </VForm>
+          </VContainer>
+        </VCardText>
+        <VCardActions class="ml-3">
+          <VSpacer />
+          <VBtn color="primary" text @click="dialogEdit.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary"
+            :loading="dialogEdit.loading"
+            @click="editItemConform"
+          >
+            {{ t("Edit") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Edit Class Dialog -->
 
-    <!-- - Dailog for show info to user -->
-    <v-dialog v-model="dialogData.open" max-width="500px">
-      <v-toolbar :color="dialogData.color" dense />
-      <v-card>
-        <v-card-title class="headline justify-center">
-          {{ dialogData.bodyText }}
-        </v-card-title>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false">
-            تم
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <!-- - Dailog for show info to user -->
-
-    <!-- delete dialog -->
-    <v-dialog v-model="dialogDelete" max-width="500px">
-      <v-card>
-        <v-card-title class="headline justify-center">
-          هل انت متأكد من حذف هذا الحساب ؟
-        </v-card-title>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" text @click="dialogDelete = false">
-            الغاء
-          </v-btn>
-          <v-btn
+    <!-- Delete Dialog -->
+    <VDialog v-model="dialogDelete.open" max-width="500px">
+      <VCard>
+        <VCardTitle class="headline justify-center">
+          {{ t("Are you sure you want to delete?") }}
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="blue darken-1" text @click="dialogDelete.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
             color="primary white--text"
-            :loading="deleteItemLoading"
+            :loading="dialogDelete.loading"
             @click="deleteItemConfirm"
           >
-            حذف
-          </v-btn>
-          <v-spacer />
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <!-- End delete dailog -->
-  </v-container>
+            {{ t("Delete") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Delete Dialog -->
+
+    <!-- Message Dialog -->
+    <VDialog v-model="dialogData.open" max-width="500px">
+      <VToolbar :color="dialogData.color" dense />
+      <VCard>
+        <VCardTitle class="headline justify-center">
+          {{ dialogData.bodyText }}
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="primary" text @click="dialogData.open = false">
+            {{ t("Finish") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Message Dialog -->
+  </div>
 </template>
-    
+
 <script>
-import API from "@/api/adminAPI";
+import adminApi from "@/api/adminApi";
+import { useI18n } from "vue-i18n";
+import Table from "@/components/table.vue";
 
 export default {
-  data() {
-    return {
-      userDataString: null,
+  components: {
+    Table,
+  },
+  setup() {
+    const { t } = useI18n();
 
+    return {
+      t,
       // nav
       page: {
-        title: "المستخدمين",
+        title: "Users",
       },
-      breadcrumbs: [
+      b: [
         {
-          text: "الصفحة الرئيسية",
+          text: "Home Page",
           disabled: false,
-          to: "/Index",
+          to: "/admin-index",
         },
         {
-          text: "المستخدمين",
+          text: "Users",
           disabled: true,
         },
       ],
       // nav
+    };
+  },
+  data() {
+    return {
       // table
-      table: {
-        search: "",
-        itemsPerPage: 5,
-        headers: [
-          {
-            text: "#",
-            value: "num",
-          },
-          { text: "أسم المستخدم", value: "name" },
-          { text: "البريد الألكتروني", value: "email" },
-          { text: "كلمة المرور", value: "password_show" },
-          { text: "رقم الهاتف", value: "phone" },
-          { text: "صلاحيات المستخدم", value: "privileges.actions" },
-          { text: "صفحات المستخدم", value: "pages" },
-          { text: "العنوان", value: "address" },
-          { text: "العمليات", value: "actions" },
-        ],
-        centers: [],
-        loading: true,
-        totalItems: 0,
-      },
+      is_deleted: false,
+      content_url: JSON.parse(localStorage.getItem("results")).content_url,
       tableOptions: {
-        page: 1,
         itemsPerPage: 10,
+        page: 1,
       },
+      table: {
+        loading: false,
+        totalItems: 0,
+        Data: [],
+        actions: ["حذف", "تعديل", "طباعة"],
+        search: null,
+        itemsPerPage: 5,
+      },
+      userData: [],
       // table
-      // message
-      dialogData: {
-        open: false,
-        color: "primary",
-        bodyText: "test",
-      },
-      // message
+
       // add
-      isFormvalid: false,
-      addBtnLoading: false,
-      dialog: false,
+      addDialog: {
+        open: false,
+        saveLoading: false,
+      },
       data: {
         name: null,
         email: null,
@@ -526,328 +365,361 @@ export default {
         pages: [],
         address: null,
       },
-      Seles: [],
-      Services: [],
-      pages: [
-        { text: "الصفحة الرئيسية", value: "home" },
-        { text: "نماذج شقق", value: "forms-Apartments" },
-        { text: "نماذج منازل", value: "forms" },
-        { text: "الملاك", value: "owners" },
-        { text: "زيارات الملاك", value: "visits" },
-        { text: "المبيعات", value: "sales" },
-        { text: "الأشعارات", value: "notifications" },
-        { text: "المصارف", value: "bankAccounts" },
-        { text: "خدمات ما بعد البيع", value: "After-sales-service" },
-        { text: "الحراس", value: "guards" },
-        { text: "الموظفين", value: "employees" },
-        { text: "الأعلانات", value: "postings" },
-        { text: "المميزات", value: "advantages" },
-        { text: "كيف سمع عنا", value: "how_u_hear_about_us" },
-        { text: "الشكاوي", value: "complain" },
-      ],
-      pagesEd: [
-        { text: "الصفحة الرئيسية", value: "home" },
-        { text: "نماذج شقق", value: "forms-Apartments" },
-        { text: "نماذج منازل", value: "forms" },
-        { text: "الملاك", value: "owners" },
-        { text: "زيارات الملاك", value: "visits" },
-        { text: "المبيعات", value: "sales" },
-        { text: "موظفين المبيعات", value: "sells-employee" },
-        { text: "الاستعلامات", value: "inquiries" },
-        { text: "أستفسارات الزبائن", value: "call-center" },
-        { text: "أستماراة طلب حجز وحدة سكنية", value: "application-form" },
-        { text: "أستماراة طلب موافقة", value: "confirmations-form" },
-        { text: "طلبات وحدة سكنية", value: "reservations" },
-
-        { text: "الأشعارات", value: "notifications" },
-        { text: "المصارف", value: "bankAccounts" },
-        { text: "خدمات ما بعد البيع", value: "After-sales-service" },
-        { text: "حجوزات الخدمات", value: "reservation-service" },
-        { text: "الخدمات", value: "services" },
-        { text: "الوحدات السكنية", value: "buying-offers" },
-
-        { text: "الحراس", value: "guards" },
-        { text: "الموظفين", value: "employees" },
-        { text: "الأعلانات", value: "postings" },
-        { text: "المميزات", value: "advantages" },
-        { text: "كيف سمع عنا", value: "how_u_hear_about_us" },
-        { text: "الشكاوي", value: "complain" },
-      ],
-      isPagesSeles: false,
-      pagesSeles: [
-        { text: "موظفين المبيعات", value: "sells-employee" },
-        { text: "الاستعلامات", value: "inquiries" },
-        { text: "أستفسارات الزبائن", value: "call-center" },
-        { text: "أستماراة طلب حجز وحدة سكنية", value: "application-form" },
-        { text: "أستماراة طلب موافقة", value: "confirmations-form" },
-        { text: "طلبات وحدة سكنية", value: "reservations" },
-      ],
-      isPagesServices: false,
-      pagesServices: [
-        { text: "حجوزات الخدمات", value: "reservation-service" },
-        { text: "الخدمات", value: "services" },
-        { text: "الوحدات السكنية", value: "buying-offers" },
-      ],
-      action: [
-        { text: "اٍضافة", value: "add" },
-        { text: "حذف", value: "remove" },
-        { text: "تعديل", value: "edit" },
-      ],
-      Rules: {
-        nameRules: [(v) => !!v || "يرجى إدخال اسم المستخدم"],
-        Seles: [(v) => !!v || "يرجى اختيار صفحات البيع"],
-        Services: [(v) => !!v || "يرجى اختيار صفحات خدمات ما بعد البيع "],
-        emailRules: [
-          (v) => !!v || "يرجى إدخال عنوان البريد الإلكتروني",
-          (v) => /.+@.+\..+/.test(v) || "يرجى إدخال عنوان بريد إلكتروني صحيح",
-        ],
-        password_showRules: [
-          (v) => !!v || "يرجى إدخال كلمة المرور",
-          (v) =>
-            (v && v.length >= 8) ||
-            "يجب أن تكون كلمة المرور أكثر من ثمانية أحرف",
-          (v) => /\d/.test(v) || "يجب أن تحتوي كلمة المرور على أرقام",
-          (v) => /[a-zA-Z]/.test(v) || "يجب أن تحتوي كلمة المرور على حروف",
-        ],
-        phoneRules: [
-          (v) => !!v || "يرجى إدخال رقم الهاتف",
-          (v) =>
-            (v && /^[0-9]{11}$/.test(v)) ||
-            "يرجى إدخال رقم هاتف صحيح (11 أرقام)",
-        ],
-        addressRules: [(v) => !!v || "يرجى إدخال عنوان المستخدم"],
-        actionRules: [(v) => !!v || "يرجى تحديد صلاحيات المستخدم"],
-      },
       // add
-      // edit
-      editItemLoading: false,
-      dialogEdit: false,
-      editdItem: {},
-      // edit
-      // delete
-      deleteItemLoading: false,
-      dialogDelete: false,
-      deletedItem: {},
-      // delete
+
+      // dialogEdit
+      dialogEdit: {
+        open: false,
+        editedItem: null,
+        isFormValid: false,
+        loading: false,
+      },
+      // dialogEdit
+
+      // Delete
+      dialogDelete: {
+        open: false,
+        deletedItem: null,
+        loading: false,
+      },
+      // Delete
+
+      // message
+      dialogData: {
+        open: false,
+        color: "primary",
+        bodyText: "test",
+      },
+      // message
     };
   },
   created() {
-    var userDataString = JSON.parse(localStorage.getItem("user"));
+    var userDataString = JSON.parse(localStorage.getItem("results"));
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
     } else {
       this.userData = ["add", "edit", "remove"];
     }
-    this.getCenter();
   },
-  watch: {
-    "data.pages": {
-      handler: function () {
-        let found = false;
-        this.data.pages.map((page) => {
-          if (page == "sales") {
-            found = true;
-            this.isPagesSeles = true;
-          }
-        });
-        if (!found) {
-          this.isPagesSeles = false;
-        }
-        let foundd = false;
-        this.data.pages.map((page) => {
-          if (page == "After-sales-service") {
-            foundd = true;
-            this.isPagesServices = true;
-          }
-        });
-        if (!foundd) {
-          this.isPagesServices = false;
-        }
-      },
-      deep: true,
+  computed: {
+    Rules() {
+      return {
+        name: [(value) => !!value || this.t("This field is required")],
+        pages: [(value) => !!value || this.t("This field is required")],
+        action: [(value) => !!value || this.t("This field is required")],
+        password_show: [(value) => !!value || this.t("This field is required")],
+        email: [
+          (value) => !!value || this.t("This field is required"),
+          (value) =>
+            /.+@.+\..+/.test(value) ||
+            this.t("Please enter a valid email address"),
+        ],
+        phone: [
+          (value) => {
+            if (!value) return this.t("This field is required");
+            if (value.length !== 11)
+              return this.t("Phone number must be 11 digits");
+            return true;
+          },
+        ],
+        address: [(value) => !!value || this.t("This field is required")],
+      };
     },
-    Seles: {
-      handler: function (newVal, oldVal) {
-        if (newVal.length > oldVal.length) {
-          const addedItems = newVal.filter((item) => !oldVal.includes(item));
-          addedItems.forEach((item) => {
-            this.data.pages.push(item);
-          });
-        }
-        if (newVal.length < oldVal.length) {
-          const removedItems = oldVal.filter((item) => !newVal.includes(item));
-          removedItems.forEach((item) => {
-            const index = this.data.pages.indexOf(item);
-            if (index !== -1) {
-              this.data.pages.splice(index, 1);
-            }
-          });
-        }
-      },
-      deep: true,
+    headers() {
+      return [
+        {
+          title: "#",
+          type: "strong",
+          link: "",
+          key: "num",
+        },
+        {
+          title: this.t("The name"),
+          type: "strong",
+          link: ``,
+          key: "name",
+        },
+        {
+          title: this.t("Email"),
+          type: "strong",
+          link: ``,
+          key: "email",
+        },
+        {
+          title: this.t("Password"),
+          type: "strong",
+          link: ``,
+          key: "password_show",
+        },
+        {
+          title: this.t("Phone number"),
+          type: "strong",
+          link: ``,
+          key: "phone",
+        },
+        {
+          title: this.t("User Permissions"),
+          type: "privileges.actions",
+          link: ``,
+          key: "privileges.actions",
+        },
+        {
+          title: this.t("User Pages"),
+          type: "strong",
+          link: ``,
+          key: "pages",
+        },
+        {
+          title: this.t("Address"),
+          type: "strong",
+          link: ``,
+          key: "address",
+        },
+        {
+          title: this.t("Operations"),
+          key: "actions",
+          sortable: false,
+          type: "strong",
+          link: "",
+        },
+      ];
     },
-    Services: {
-      handler: function (newVal, oldVal) {
-        if (newVal.length > oldVal.length) {
-          const addedItems = newVal.filter((item) => !oldVal.includes(item));
-          addedItems.forEach((item) => {
-            this.data.pages.push(item);
-          });
-        }
-        if (newVal.length < oldVal.length) {
-          const removedItems = oldVal.filter((item) => !newVal.includes(item));
-          removedItems.forEach((item) => {
-            const index = this.data.pages.indexOf(item);
-            if (index !== -1) {
-              this.data.pages.splice(index, 1);
-            }
-          });
-        }
-      },
-      deep: true,
+    action() {
+      return [
+        { text: this.t("Addition"), value: "add" },
+        { text: this.t("Remove"), value: "remove" },
+        { text: this.t("Edit"), value: "edit" },
+      ];
+    },
+    pages() {
+      return [
+        { text: this.t("Home Page"), value: "home" },
+        { text: this.t("Apartment models"), value: "forms-Apartments" },
+        { text: this.t("House Models"), value: "forms" },
+        { text: this.t("Owners"), value: "owners" },
+        { text: this.t("Owners' visits"), value: "visits" },
+        { text: this.t("Sales"), value: "sales" },
+        { text: this.t("Sales staff"), value: "sells-employee" },
+        { text: this.t("Queries"), value: "inquiries" },
+        { text: this.t("Customer attendance form"), value: "call-center" },
+        {
+          text: this.t("Residential Unit Booking Application Form"),
+          value: "application-form",
+        },
+        { text: this.t("Approval Request Form"), value: "confirmations-form" },
+        { text: this.t("Residential Unit Requests"), value: "reservations" },
+
+        { text: this.t("Notifications"), value: "notifications" },
+        { text: this.t("Banks"), value: "bankAccounts" },
+        { text: this.t("After-Sales Services"), value: "After-sales-service" },
+        { text: this.t("Service Bookings"), value: "reservation-service" },
+        { text: this.t("Services"), value: "services" },
+        { text: this.t("Residential Units"), value: "buying-offers" },
+
+        { text: this.t("Guards"), value: "guards" },
+        { text: this.t("Staff"), value: "employees" },
+        { text: this.t("Advertisements"), value: "postings" },
+        { text: this.t("Features"), value: "advantages" },
+        {
+          text: this.t("How did you hear about us?"),
+          value: "how_u_hear_about_us",
+        },
+        { text: this.t("Complaints"), value: "complain" },
+      ];
     },
   },
   methods: {
-    Print(item) {
-      localStorage.setItem("PrintUser", JSON.stringify(item));
-      window.open("/Print-User", "_blank");
-    },
-
-    async getCenter() {
-      try {
-        this.table.loading = true;
-        const key =
-          this.tableOptions.sortBy.length > 0
-            ? this.tableOptions.sortBy[0]
-            : "createdAt";
-        const order =
-          this.tableOptions.sortDesc.length > 0
-            ? this.tableOptions.sortDesc[0]
-              ? "desc"
-              : "asc"
-            : "desc";
-
-        const sortByJSON = JSON.stringify({ key, order });
-
-        var { page, itemsPerPage } = this.tableOptions;
-        if (itemsPerPage == -1) {
-          itemsPerPage = this.table.totalItems;
+    // Get Data
+    async getCenter(newOptions) {
+      if (newOptions) {
+        if (JSON.stringify(newOptions) !== JSON.stringify(this.tableOptions)) {
+          this.tableOptions = { ...newOptions };
         }
-        const response = await API.getUsers({
+      }
+
+      const key =
+        this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+          ? this.tableOptions.sortBy[0]
+          : "createdAt";
+      const order =
+        this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+          ? this.tableOptions.sortDesc[0]
+            ? "desc"
+            : "asc"
+          : "desc";
+
+      const sortByJSON = JSON.stringify({ key, order });
+
+      this.table.loading = true;
+      let { page, itemsPerPage } = this.tableOptions;
+
+      if (!page) {
+        page = 1;
+      }
+      if (!itemsPerPage) {
+        itemsPerPage = 10;
+      }
+
+      try {
+        const response = await adminApi.getUsers({
           page,
           limit: itemsPerPage,
           sortBy: sortByJSON,
           search: this.table.search,
         });
-
-        this.table.centers = response.data.results.data;
+        this.table.Data = response.data.results.data;
         this.table.totalItems = response.data.results.count;
+        this.table.loading = false;
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          this.$router.push("/login");
+          this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
       }
     },
-    async addCenter(event) {
-      event.preventDefault();
+    // Get Data
 
-      this.addBtnLoading = true;
-      try {
-        const response = await API.addUsers({
-          name: this.data.name,
-          email: this.data.email,
-          password_show: this.data.password_show,
-          phone: this.data.phone,
-          address: this.data.address,
-          actions: this.data.action,
-          pages: this.data.pages,
-        });
+    // Add Data
+    async addCenter() {
+      const { valid } = await this.$refs.form.validate();
 
-        this.addBtnLoading = false;
-        this.data.name = null;
-        this.data.email = null;
-        this.data.phone = null;
-        this.data.password_show = null;
-        this.data.address = null;
-        this.data.action = [];
-        this.data.pages = [];
-        this.getCenter();
+      if (valid) {
+        this.addDialog.saveLoading = true;
 
-        this.showDialogfunction(response.data.message, "primary");
-        this.dialog = false;
-      } catch (error) {
-        if (error.response.status === 401) {
-          this.$router.push("/login");
-        } else if (error.response.status === 500) {
-          this.addBtnLoading = false;
-          this.showDialogfunction(error.response.data.message, "#FF5252");
+        try {
+          const response = await adminApi.addUsers({
+            name: this.data.name,
+            email: this.data.email,
+            password_show: this.data.password_show,
+            phone: this.data.phone,
+            address: this.data.address,
+            actions: this.data.action,
+            pages: this.data.pages,
+          });
+
+          this.addDialog.saveLoading = false;
+          await this.getCenter();
+          this.addDialog.open = false;
+          this.showDialogfunction(response.data.message, "primary");
+
+          this.data.name = null;
+          this.data.email = null;
+          this.data.password_show = null;
+          this.data.phone = null;
+          this.data.action = [];
+          this.data.address = null;
+          this.data.pages = [];
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.addDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else {
+            this.addDialog.saveLoading = false;
+          }
+        } finally {
+          this.addDialog.saveLoading = false;
         }
       }
     },
+    // Add Data
+
+    // editItem
     editItem(item) {
-      this.editdItem = { ...item };
-      this.dialogEdit = true;
+      this.dialogEdit.editedItem = { ...item };
+      this.dialogEdit.open = true;
     },
+    async editItemConform() {
+      const { valid } = await this.$refs.form.validate();
 
-    async editItemConfirm(event) {
-      event.preventDefault();
+      if (valid) {
+        this.dialogEdit.loading = true;
 
-      this.editItemLoading = true;
+        try {
+          const response = await adminApi.editUsers({
+            user_id: this.dialogEdit.editedItem._id,
+            name: this.dialogEdit.editedItem.name,
+            email: this.dialogEdit.editedItem.email,
+            password_show: this.dialogEdit.editedItem.password_show,
+            phone: this.dialogEdit.editedItem.phone,
+            address: this.dialogEdit.editedItem.address,
+            actions: this.dialogEdit.editedItem.privileges.actions,
+            pages: this.dialogEdit.editedItem.pages,
+          });
+
+          this.dialogEdit.open = false;
+          this.dialogEdit.loading = false;
+          this.getCenter();
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.dialogEdit.open = false;
+            this.dialogEdit.loading = false;
+            this.showDialogfunction(error.response.data.results, "#FF5252");
+          }
+        } finally {
+          this.dialogEdit.loading = false;
+        }
+      }
+    },
+    // editItem
+
+    // deleteItem
+    deleteItem(item) {
+      this.dialogDelete.deletedItem = { ...item };
+      this.dialogDelete.open = true;
+    },
+    async deleteItemConfirm() {
+      this.dialogDelete.loading = true;
       try {
-        const response = await API.editUsers({
-          user_id: this.editdItem._id,
-          name: this.editdItem.name,
-          email: this.editdItem.email,
-          password_show: this.editdItem.password_show,
-          phone: this.editdItem.phone,
-          address: this.editdItem.address,
-          actions: this.editdItem.privileges.actions,
-          pages: this.editdItem.pages,
-        });
-        this.editItemLoading = false;
+        const response = await adminApi.removeUsers(
+          this.dialogDelete.deletedItem._id
+        );
+        this.dialogDelete.loading = false;
+        this.dialogDelete.open = false;
         this.getCenter();
-
         this.showDialogfunction(response.data.message, "primary");
-        this.dialogEdit = false;
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          this.$router.push("/login");
+          this.dialogDelete.loading = false;
+          this.dialogDelete.open = false;
+          this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
+          this.dialogDelete.loading = false;
+          this.dialogDelete.open = false;
+          this.showDialogfunction(error.response.data.results, "#FF5252");
         }
+      } finally {
+        this.dialogDelete.loading = false;
+        this.dialogDelete.open = false;
       }
     },
+    // deleteItem
+
+    // printItem
+    printItem(item) {
+      localStorage.setItem("PrintEmployees", JSON.stringify(item));
+      let routeData = this.$router.resolve({
+        name: `admin-print-staff`,
+      });
+      window.open(routeData.href, "_blank");
+    },
+    // printItem
+
+    // message
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;
       this.dialogData.bodyText = bodyText;
       this.dialogData.color = color;
     },
-    deleteItem(item) {
-      this.deletedItem = { ...item };
-      this.dialogDelete = true;
-    },
-    async deleteItemConfirm() {
-      this.deleteItemLoading = true;
-
-      try {
-        const response = await API.removeUsers(this.deletedItem._id);
-
-        this.deleteItemLoading = false;
-        this.dialogDelete = false;
-        this.getCenter();
-        this.showDialogfunction(response.data.message, "primary");
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          this.$router.push("/login");
-        } else if (error.response && error.response.status === 500) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
-        }
-      }
-    },
+    // message
   },
 };
 </script>

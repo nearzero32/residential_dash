@@ -1,241 +1,409 @@
-import Layout from "@/layouts/full-layout/Layout";
-import Index from "@/views/admin/index.vue";
-import showUsers from "@/views/admin/users/showUsers.vue";
-import postings from "@/views/admin/postings/postings.vue";
-import advantages from "@/views/admin/advantages/advantages.vue";
-import BuyingOffers from "@/views/admin/BuyingOffers/BuyingOffers.vue";
-import owners from "@/views/admin/owners/owners.vue";
-import reservations from "@/views/admin/Reservations/Reservations.vue";
-import notifications from "@/views/admin/notifications/notifications.vue";
-import services from "@/views/admin/services/services.vue";
-import Profile from "@/views/admin/Profile/Profile.vue";
-import employees from "@/views/admin/employees/employees.vue";
-import maintenanceEmployee from "@/views/admin/maintenanceEmployee/employees.vue";
-import reservationsService from "@/views/admin/reservationsService/reservationsService.vue";
-import guards from "@/views/admin/guards/guards.vue";
-import sellsEmployee from "@/views/admin/sellsEmployee/sellsEmployee.vue";
-import profileSellsEmployee from "@/views/admin/sellsEmployee/profileSellsEmployee.vue";
-import application_form from "@/views/admin/application_form/application_form.vue";
-import call_center from "@/views/admin/call_center/call_center.vue";
-import call_center_one from "@/views/admin/call_center/call_center_one.vue";
-import profile from "@/views/admin/owners/profile.vue";
-import forms from "@/views/admin/forms/formsHouses.vue";
-import formsApartments from "@/views/admin/forms/formsApartments.vue";
-import add from "@/views/admin/forms/add.vue";
-import formShow from "@/views/admin/forms/profile/index.vue";
-import how_u_hear_about_us from "@/views/admin/how_u_hear_about_us/how_u_hear_about_us.vue";
-import confirmations_form from "@/views/admin/confirmations_form/confirmations_form.vue";
-import profileConfirmations_form from "@/views/admin/confirmations_form/profileConfirmations_form.vue";
-import profileHouse from "@/views/admin/forms/profileHouse.vue";
-import visits from "@/views/admin/visits/visits.vue";
-import complain from "@/views/admin/complain/complain.vue";
-import addApartments from "@/views/admin/forms/Apartments/addApartments.vue";
-import profileApartments from "@/views/admin/forms/Apartments/profile/index.vue";
-import showBuilding from "@/views/admin/forms/Apartments/Building/showBuilding.vue";
-import profileFloor from "@/views/admin/forms/Apartments/Building/profileFloor.vue";
-import salesContracts from "@/views/admin/salesContracts/salesContracts.vue";
-import bankAccounts from "@/views/admin/bankAccounts/bankAccounts.vue";
-import inquiries from "@/views/admin/inquiries/inquiries.vue";
-
-const Admin = {
-  path: "/",
-  component: Layout,
-  children: [
-    {
-      path: "/Index",
-      component: Index,
-      beforeEnter: (to, from, next) => {
-        const isAuthenticated = JSON.parse(localStorage.getItem("user"));
-
-        if (isAuthenticated && isAuthenticated.type === "admin" || isAuthenticated && isAuthenticated.type === "assistance") {
-          next();
-        } else {
-          next("/login");
-        }
+export default [
+  {
+    component: () =>
+      import("@/layouts/components/DefaultLayoutWithVerticalNav.vue"),
+    children: [
+      {
+        path: "/admin-index",
+        name: "admin-index",
+        component: () => import("@/views/admin/index.vue"),
       },
-    },
-    {
-      name: "users",
-      path: "/users",
-      component: showUsers,
-    },
-    {
-      name: "addApartments",
-      path: "/addApartments",
-      component: addApartments,
-    },
-    {
-      path: "/admin-postings",
-      name: "admin-postings",
-      component: postings,
-    },
-    {
-      path: "/admin-advantages",
-      name: "admin-advantages",
-      component: advantages,
-    },
-    {
-      path: "/admin-buying-offers",
-      name: "admin-buying-offers",
-      component: BuyingOffers,
-    },
-    {
-      path: "/admin-owners",
-      name: "admin-owners",
-      component: owners,
-    },
-    {
-      path: "/admin-reservations",
-      name: "admin-reservations",
-      component: reservations,
-    },
-    {
-      path: "/admin-notifications",
-      name: "admin-notifications",
-      component: notifications,
-    },
-    {
-      path: "/admin-services",
-      name: "admin-services",
-      component: services,
-    },
-    {
-      path: "/profile/:id",
-      name: "profile",
-      component: profile,
-    },
-    {
-      path: "/admin-application-form",
-      name: "admin-application-form",
-      component: application_form,
-    },
-    {
-      path: "/admin-call-center",
-      name: "admin-call-center",
-      component: call_center,
-    },
-    {
-      path: "/Profile",
-      name: "Profile",
-      component: Profile,
-    },
-    {
-      path: "/admin-employees",
-      name: "admin-employees",
-      component: employees,
-    },
-    {
-      path: "/admin-inquiries",
-      name: "admin-inquiries",
-      component: inquiries,
-    },
-    {
-      path: "/admin-bank-accounts",
-      name: "admin-bank-accounts",
-      component: bankAccounts,
-    },
-    {
-      path: "/admin-reservation-service",
-      name: "admin-reservation-service",
-      component: reservationsService,
-    },
-    {
-      path: "/admin-guards",
-      name: "admin-guards",
-      component: guards,
-    },
-    {
-      path: "/admin-sells-employee",
-      name: "admin-sells-employee",
-      component: sellsEmployee,
-    },
-    {
-      path: "/admin-maintenance-employee",
-      name: "admin-maintenance-employee",
-      component: maintenanceEmployee,
-    },
-    {
-      path: "/admin-forms",
-      name: "admin-forms",
-      component: forms,
-    },
-    {
-      path: "/admin-add-forms",
-      name: "admin-add-forms",
-      component: add,
-    },
-    {
-      path: "/forms/:ac",
-      name: "admin-ac-forms",
-      component: formShow,
-    },
-    {
-      path: "/admin-how_u_hear_about_us",
-      name: "admin-how_u_hear_about_us",
-      component: how_u_hear_about_us,
-    },
-    {
-      path: "/admin-call_center_one/:id/:name",
-      name: "admin-call_center_one",
-      component: call_center_one,
-    },
-    {
-      path: "/admin-confirmations-form",
-      name: "admin-confirmations-form",
-      component: confirmations_form,
-    },
-    {
-      path: "/admin-profileHouse/form_id/:form_id/house_id/:house_id/name/:name",
-      name: "admin-profileHouse",
-      component: profileHouse,
-    },
-    {
-      path: "/admin-visits",
-      name: "admin-visits",
-      component: visits,
-    },
-    {
-      path: "/admin-profileConfirmations_form/:name",
-      name: "admin-profileConfirmations_form",
-      component: profileConfirmations_form,
-    },
-    {
-      path: "/admin-complain",
-      name: "admin-complain",
-      component: complain,
-    },
-    {
-      path: "/admin-profileApartments/:ac",
-      name: "admin-profileApartments",
-      component: profileApartments,
-    },
-    {
-      path: "/admin-forms-Apartments",
-      name: "admin-forms-Apartments",
-      component: formsApartments,
-    },
-    {
-      path: "/admin-showBuilding",
-      name: "admin-showBuilding",
-      component: showBuilding,
-    },
-    {
-      path: "/admin-profileFloor",
-      name: "admin-profileFloor",
-      component: profileFloor,
-    },
-    {
-      path: "/admin-profileSellsEmployee/:id/:name",
-      name: "admin-profileSellsEmployee",
-      component: profileSellsEmployee,
-    },
-    {
-      path: "/admin-get-salesContracts",
-      name: "admin-get-salesContracts",
-      component: salesContracts,
-    },
+      // Apartments
+      {
+        path: "/admin-show-apartment-models",
+        name: "admin-show-apartment-models",
+        component: () =>
+          import("@/views/admin/form/apartmentModels/showApartmentModels.vue"),
+      },
+      {
+        path: "/admin-add-apartment-models",
+        name: "admin-add-apartment-models",
+        component: () =>
+          import("@/views/admin/form/apartmentModels/addApartmentModels.vue"),
+      },
+      {
+        path: "/admin-show-building",
+        name: "admin-show-building",
+        component: () =>
+          import("@/views/admin/form/apartmentModels/showBuilding.vue"),
+      },
+      {
+        path: "/admin-show-profile-floor",
+        name: "admin-show-profile-floor",
+        component: () =>
+          import("@/views/admin/form/apartmentModels/profileFloor.vue"),
+      },
+      {
+        path: "/admin-show-profile-apartments",
+        name: "admin-show-profile-apartments",
+        component: () =>
+          import("@/views/admin/form/apartmentModels/profileApartments.vue"),
+      },
+      {
+        path: "/admin-edit-apartments-models",
+        name: "admin-edit-apartments-models",
+        component: () =>
+          import("@/views/admin/form/apartmentModels/editApartmentModels.vue"),
+      },
+      // Apartments
 
-  ],
-};
+      // Owners' visits
+      {
+        path: "/admin-show-owners-visits",
+        name: "admin-show-owners-visits",
+        component: () =>
+          import("@/views/admin/OwnersVisits/showOwnersVisits.vue"),
+      },
+      // Owners' visits
 
-export default Admin;
+      // SalesStaff
+      {
+        path: "/admin-show-sales-staff",
+        name: "admin-show-sales-staff",
+        component: () =>
+          import("@/views/admin/SalesStaff/showSalesStaff.vue"),
+      },
+      {
+        path: "/admin-profile-sales-staff",
+        name: "admin-profile-sales-staff",
+        component: () =>
+          import("@/views/admin/SalesStaff/profileSalesStaff.vue"),
+      },
+      // SalesStaff
+
+      // Queries
+      {
+        path: "/admin-show-queries",
+        name: "admin-show-queries",
+        component: () =>
+          import("@/views/admin/Queries/showQueries.vue"),
+      },
+      // Queries
+
+      // CustomerAttendanceForm
+      {
+        path: "/admin-show-customer-attendance-form",
+        name: "admin-show-customer-attendance-form",
+        component: () =>
+          import("@/views/admin/CustomerAttendanceForm/showCustomerAttendanceForm.vue"),
+      },
+      {
+        path: "/admin-profile-customer-attendance-form",
+        name: "admin-profile-customer-attendance-form",
+        component: () =>
+          import("@/views/admin/CustomerAttendanceForm/profileCustomerAttendanceForm.vue"),
+      },
+      // CustomerAttendanceForm
+
+      // applicationForm
+      {
+        path: "/admin-show-application-form",
+        name: "admin-show-application-form",
+        component: () =>
+          import("@/views/admin/applicationForm/showApplicationForm.vue"),
+      },
+      // applicationForm
+
+      // ApprovalRequestForm
+      {
+        path: "/admin-show-approval-request-form",
+        name: "admin-show-approval-request-form",
+        component: () =>
+          import("@/views/admin/ApprovalRequestForm/showApprovalRequestForm.vue"),
+      },
+      {
+        path: "/admin-profile-approval-request-form",
+        name: "admin-profile-approval-request-form",
+        component: () =>
+          import("@/views/admin/ApprovalRequestForm/profileApprovalRequestForm.vue"),
+      },
+      // ApprovalRequestForm
+
+      // ResidentialUnitRequests
+      {
+        path: "/admin-show-residential-unit-requests",
+        name: "admin-show-residential-unit-requests",
+        component: () =>
+          import("@/views/admin/ResidentialUnitRequests/showResidentialUnitRequests.vue"),
+      },
+      // ResidentialUnitRequests
+
+      // SalesContracts
+      {
+        path: "/admin-show-sales-contracts",
+        name: "admin-show-sales-contracts",
+        component: () =>
+          import("@/views/admin/SalesContracts/showSalesContracts.vue"),
+      },
+      // SalesContracts
+
+      // Notifications
+      {
+        path: "/admin-show-notifications",
+        name: "admin-show-notifications",
+        component: () =>
+          import("@/views/admin/Notifications/showNotifications.vue"),
+      },
+      // Notifications
+
+      // Banks
+      {
+        path: "/admin-show-banks",
+        name: "admin-show-banks",
+        component: () =>
+          import("@/views/admin/Banks/showBanks.vue"),
+      },
+      // Banks
+
+      // MaintenanceStaff
+      {
+        path: "/admin-show-maintenance-staff",
+        name: "admin-show-maintenance-staff",
+        component: () =>
+          import("@/views/admin/MaintenanceStaff/showMaintenanceStaff.vue"),
+      },
+      // MaintenanceStaff
+
+      // ServiceBookings
+      {
+        path: "/admin-show-service-bookings",
+        name: "admin-show-service-bookings",
+        component: () =>
+          import("@/views/admin/ServiceBookings/showServiceBookings.vue"),
+      },
+      // ServiceBookings
+
+      // Services
+      {
+        path: "/admin-show-services",
+        name: "admin-show-services",
+        component: () =>
+          import("@/views/admin/Services/showServices.vue"),
+      },
+      // Services
+
+      // ResidentialUnits
+      {
+        path: "/admin-show-residential-units",
+        name: "admin-show-residential-units",
+        component: () =>
+          import("@/views/admin/ResidentialUnits/showResidentialUnits.vue"),
+      },
+      // ResidentialUnits
+
+      // Guards
+      {
+        path: "/admin-show-guards",
+        name: "admin-show-guards",
+        component: () =>
+          import("@/views/admin/Guards/showGuards.vue"),
+      },
+      // Guards
+
+      // Staff
+      {
+        path: "/admin-show-staff",
+        name: "admin-show-staff",
+        component: () =>
+          import("@/views/admin/Staff/showStaff.vue"),
+      },
+      // Staff
+
+      // Users
+      {
+        path: "/admin-show-users",
+        name: "admin-show-users",
+        component: () =>
+          import("@/views/admin/Users/showUsers.vue"),
+      },
+      // Users
+
+      // Advertisements
+      {
+        path: "/admin-show-advertisements",
+        name: "admin-show-advertisements",
+        component: () =>
+          import("@/views/admin/Advertisements/showAdvertisements.vue"),
+      },
+      // Advertisements
+
+      // Features
+      {
+        path: "/admin-show-features",
+        name: "admin-show-features",
+        component: () =>
+          import("@/views/admin/Features/showFeatures.vue"),
+      },
+      // Features
+
+      // HowDidYouHearAboutUs
+      {
+        path: "/admin-show-how-did-you-hear-about-us",
+        name: "admin-show-how-did-you-hear-about-us",
+        component: () =>
+          import("@/views/admin/HowDidYouHearAboutUs/showHowDidYouHearAboutUs.vue"),
+      },
+      // HowDidYouHearAboutUs
+
+      // Complaints
+      {
+        path: "/admin-show-complaints",
+        name: "admin-show-complaints",
+        component: () =>
+          import("@/views/admin/Complaints/showComplaints.vue"),
+      },
+      // Complaints
+
+      // Owners
+      {
+        path: "/admin-show-owners",
+        name: "admin-show-owners",
+        component: () =>
+          import("@/views/admin/Owners/showOwners.vue"),
+      },
+      {
+        path: "/admin-profile-owner",
+        name: "admin-profile-owner",
+        component: () =>
+          import("@/views/admin/Owners/profileOwner.vue"),
+      },
+      // Owners
+
+      // HouseModels
+      {
+        path: "/admin-show-house-models",
+        name: "admin-show-house-models",
+        component: () =>
+          import("@/views/admin/form/HouseModels/showHouseModels.vue"),
+      },
+      {
+        path: "/admin-add-house-models",
+        name: "admin-add-house-models",
+        component: () =>
+          import("@/views/admin/form/HouseModels/addHouseModels.vue"),
+      },
+      {
+        path: "/admin-profile-house-models",
+        name: "admin-profile-house-models",
+        component: () =>
+          import("@/views/admin/form/HouseModels/profileHouseModels.vue"),
+      },
+      {
+        path: "/admin-profile-house/:id",
+        name: "admin-profile-house",
+        component: () =>
+          import("@/views/admin/form/HouseModels/profileHouse.vue"),
+      },
+      {
+        path: "/admin-edit-house-models/:id",
+        name: "admin-edit-house-models",
+        component: () =>
+          import("@/views/admin/form/HouseModels/editHouseModels.vue"),
+      },
+      // HouseModels
+    ],
+  },
+  {
+    path: "/admin-print-sales-staff",
+    name: "admin-print-sales-staff",
+    component: () =>
+      import("@/views/admin/SalesStaff/printSalesStaff.vue"),
+  },
+  {
+    path: "/admin-profile-customer-attendance-form",
+    name: "admin-profile-customer-attendance-form",
+    component: () =>
+      import("@/views/admin/CustomerAttendanceForm/printCustomerAttendanceForm.vue"),
+  },
+  {
+    path: "/admin-print-application-form-alnahdaa",
+    name: "admin-print-application-form-alnahdaa",
+    component: () =>
+      import("@/views/admin/applicationForm/print/printApplicationFormAlnahdaa.vue"),
+  },
+  {
+    path: "/admin-print-application-form-alfakher",
+    name: "admin-print-application-form-alfakher",
+    component: () =>
+      import("@/views/admin/applicationForm/print/printApplicationFormAlfakher.vue"),
+  },
+  {
+    path: "/admin-print-application-form-abasly",
+    name: "admin-print-application-form-abasly",
+    component: () =>
+      import("@/views/admin/applicationForm/print/printApplicationFormAbasly.vue"),
+  },
+  {
+    path: "/admin-print-application-form-alrawan",
+    name: "admin-print-application-form-alrawan",
+    component: () =>
+      import("@/views/admin/applicationForm/print/printApplicationFormAlrawan.vue"),
+  },
+  {
+    path: "/admin-print-approval-request-form",
+    name: "admin-print-approval-request-form",
+    component: () =>
+      import("@/views/admin/ApprovalRequestForm/PrintApprovalRequestForm.vue"),
+  },
+  {
+    path: "/admin-print-residential-unit-requests",
+    name: "admin-print-residential-unit-requests",
+    component: () =>
+      import("@/views/admin/ResidentialUnitRequests/PrintReservations.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-abasly",
+    name: "admin-print-sales-contracts-abasly",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintAbsly.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-alfakher",
+    name: "admin-print-sales-contracts-alfakher",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintAlfakher.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-alrawan",
+    name: "admin-print-sales-contracts-alrawan",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintAlrawan.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-alrtaj",
+    name: "admin-print-sales-contracts-alrtaj",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintAlrtaj.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-alnahdaa",
+    name: "admin-print-sales-contracts-alnahdaa",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintNahdda.vue"),
+  },
+  {
+    path: "/admin-print-maintenance-staff",
+    name: "admin-print-maintenance-staff",
+    component: () =>
+      import("@/views/admin/MaintenanceStaff/printMaintenanceStaff.vue"),
+  },
+  {
+    path: "/admin-print-guards",
+    name: "admin-print-guards",
+    component: () =>
+      import("@/views/admin/Guards/PrintGuards.vue"),
+  },
+  {
+    path: "/admin-print-staff",
+    name: "admin-print-staff",
+    component: () =>
+      import("@/views/admin/Staff/PrintEmployees.vue"),
+  },
+  {
+    path: "/admin-print-owner",
+    name: "admin-print-owner",
+    component: () =>
+      import("@/views/admin/Owners/printOwner.vue"),
+  },
+
+];

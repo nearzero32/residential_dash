@@ -1,183 +1,175 @@
 <template>
-  <v-container fluid class="down-top-padding">
+  <div class="team">
     <BaseBreadcrumb
-      :title="page.title"
+      :title="t(page.title)"
       :icon="page.icon"
-      :breadcrumbs="breadcrumbs"
+      :breadcrumbs="b.map((crumb) => ({ ...crumb, text: t(crumb.text) }))"
     ></BaseBreadcrumb>
-    <v-card class="mx-auto">
-      <v-container>
-        <v-form v-model="isFormvalid">
-          <v-row style="justify-content: center">
-            <v-col cols="12" md="4">
-              <v-label class="mb-2 font-weight-medium">الأسم</v-label>
-              <v-text-field
-                variant="outlined"
-                v-model="results.name"
-                :rules="Rules.name"
-                color="primary"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-label class="mb-2 font-weight-medium">رقم الهاتف</v-label>
-              <v-text-field
-                variant="outlined"
-                v-model="results.phone"
-                :rules="Rules.phone"
-                color="primary"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-label class="mb-2 font-weight-medium">العنوان</v-label>
-              <v-text-field
-                variant="outlined"
-                v-model="results.address"
-                :rules="Rules.address"
-                color="primary"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-label class="mb-2 font-weight-medium">الويب سايت</v-label>
-              <v-text-field
-                variant="outlined"
-                v-model="results.website"
-                :rules="Rules.website"
-                color="primary"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-label class="mb-2 font-weight-medium">فيس بوك</v-label>
-              <v-text-field
-                variant="outlined"
-                v-model="results.facebook"
-                color="primary"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-label class="mb-2 font-weight-medium">انستغرام</v-label>
-              <v-text-field
-                variant="outlined"
-                v-model="results.instagram"
-                color="primary"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="12">
-              <v-row>
-                <v-col cols="12" md="6" style="padding: 10px">
-                  <v-label class="mb-2 font-weight-medium">الوكو</v-label>
-                  <input
-                    type="file"
-                    accept="image/png, image/jpeg, image/bmp"
-                    @change="handleFileChange"
-                    ref="fileInput"
-                    style="display: none"
-                  />
-                  <v-text-field
-                    @click="$refs.fileInput.click()"
-                    variant="outlined"
-                    v-model="results.logo"
-                    color="primary"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="6"
-                  style="padding: 10px; display: grid; place-items: center"
-                >
-                  <img
-                    v-if="results.logo"
-                    style="width: 130px"
-                    :src="
-                      isBase64(results.logo)
-                        ? results.logo
-                        : content_url + results.logo
-                    "
-                    alt="logo"
-                    @click.stop
-                  />
-                </v-col>
-              </v-row>
-            </v-col>
-            <v-col cols="12" md="12">
-              <v-label class="mb-2 font-weight-medium">التفاصيل</v-label>
-              <v-textarea
-                variant="outlined"
-                v-model="results.description"
-                :rules="Rules.description"
-                color="primary"
-                outlined
-              ></v-textarea>
-            </v-col>
-          </v-row>
-        </v-form>
-        <v-divider></v-divider>
-        <!----Personal Info---->
-        <v-card-actions>
-          <v-btn
-            size="large"
-            @click="addCenter"
-            color="primary"
-            :loading="addLoading"
-            :disabled="!isFormvalid"
-            text
-            >تعديل</v-btn
-          >
-          <v-btn class="bg-lighterror text-error ml-4" @click="backPage" text
-            >الغاء</v-btn
-          >
-        </v-card-actions>
-      </v-container>
-    </v-card>
+    <br />
+    <br />
 
-    <!-- - Dailog for show info to user -->
-    <v-dialog v-model="dialogData.open" max-width="500px">
-      <v-toolbar :color="dialogData.color" dense />
-      <v-card>
-        <v-card-title class="headline justify-center">
+    <VCard class="mb-6">
+      <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
+      <VCardText>
+        <VContainer>
+          <VForm ref="form">
+            <VRow>
+              <VCol cols="12" md="4">
+                <VTextField
+                  v-model="data.name"
+                  :rules="Rules.name"
+                  :label="t('Name of the complex')"
+                  outlined
+                />
+              </VCol>
+              <VCol cols="12" md="4">
+                <VTextField
+                  v-model="data.phone"
+                  :rules="Rules.phone"
+                  :label="t('Phone number')"
+                  outlined
+                />
+              </VCol>
+              <VCol cols="12" md="4">
+                <VTextField
+                  v-model="data.address"
+                  :rules="Rules.address"
+                  :label="t('Address')"
+                  outlined
+                />
+              </VCol>
+              <VCol cols="12" md="4">
+                <VTextField
+                  v-model="data.website"
+                  :label="t('Website')"
+                  outlined
+                />
+              </VCol>
+              <VCol cols="12" md="4">
+                <VTextField
+                  v-model="data.facebook"
+                  :label="t('Facebook')"
+                  outlined
+                />
+              </VCol>
+              <VCol cols="12" md="4">
+                <VTextField
+                  v-model="data.instagram"
+                  :label="t('Instagram')"
+                  outlined
+                />
+              </VCol>
+              <VCol cols="12" md="12">
+                <VRow>
+                  <VCol cols="12" md="6">
+                    <VFileInput
+                      v-model="file"
+                      :label="t('Logo')"
+                      accept="image/png, image/jpeg, image/bmp"
+                      prepend-icon="mdi-camera-outline"
+                      @change="handleFileChange"
+                      @click:clear="
+                        file = null;
+                        data.logo = null;
+                      "
+                    />
+                  </VCol>
+                  <VCol cols="12" md="6">
+                    <img
+                      v-if="data.logo"
+                      style="width: 130px"
+                      :src="
+                        isBase64(data.logo)
+                          ? data.logo
+                          : content_url + data.logo
+                      "
+                      alt=""
+                      @click.stop
+                    />
+                  </VCol>
+                </VRow>
+              </VCol>
+              <VCol cols="12" md="12">
+                <VTextarea
+                  v-model="data.description"
+                  :label="t('Details')"
+                  outlined
+                />
+              </VCol>
+            </VRow>
+          </VForm>
+        </VContainer>
+      </VCardText>
+      <VCardActions class="ml-3">
+        <VSpacer />
+        <VBtn color="primary" text @click="cancelAdd">
+          {{ t("Cancel") }}
+        </VBtn>
+        <VBtn color="primary" :loading="saveLoading" @click="editItemConform">
+          {{ t("Edit") }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+
+    <!-- Message Dialog -->
+    <VDialog v-model="dialogData.open" max-width="500px">
+      <VToolbar :color="dialogData.color" dense />
+      <VCard>
+        <VCardTitle class="headline justify-center">
           {{ dialogData.bodyText }}
-        </v-card-title>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" text @click="dialogData.open = false">
-            تم
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <!-- - Dailog for show info to user -->
-  </v-container>
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="primary" text @click="dialogData.open = false">
+            {{ t("Finish") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Message Dialog -->
+  </div>
 </template>
 
 <script>
-import API from "@/api/superAPI";
+import { useI18n } from "vue-i18n";
+import superAPI from "@/api/superAPI.js";
 
 export default {
-  data() {
+  setup() {
+    const { t } = useI18n();
+
     return {
-      userDataString: null,
+      t,
       // nav
       page: {
-        title: "معلومات عنا",
+        title: "About us lamassu",
       },
-      breadcrumbs: [
+      b: [
         {
-          text: "الصفحة الرئيسية",
+          text: "Home Page",
           disabled: false,
-          to: "/SuperAdminHome",
+          to: "/super-admin-home",
         },
+
         {
-          text: "معلومات عنا",
+          text: "About us lamassu",
           disabled: true,
         },
       ],
       // nav
+    };
+  },
+  data() {
+    return {
+      content_url: JSON.parse(localStorage.getItem("results")).content_url,
+
+      // add
+      file: null,
+      saveLoading: false,
+      loading: false,
+      data: {},
+      // add
+
       // message
       dialogData: {
         open: false,
@@ -185,107 +177,112 @@ export default {
         bodyText: "test",
       },
       // message
-      // showDetail
-      showDetail: {
-        open: false,
-        color: "primary",
-        bodyText: null,
-      },
-      // showDetail
-      // add
-      results: {},
-      content_url: null,
-      addLoading: false,
-      isFormvalid: true,
-      Rules: {
-        name: [(value) => !!value || "يرجى أضافة أسم"],
-        phone: [(value) => !!value || "يرجى أضافة رقم الهاتف"],
-        image: [(value) => !!value || "يرجى أضافة صورة"],
-        address: [(value) => !!value || "يرجى أدخال العنوان"],
-        description: [(value) => !!value || "يرجى إضافة تفاصيل"],
-      },
-      // add
     };
   },
   created() {
     this.getCenter();
   },
+  computed: {
+    Rules() {
+      return {
+        name: [(value) => !!value || this.t("This field is required")],
+        phone: [
+          (value) => {
+            if (!value) return this.t("This field is required");
+            if (value.length !== 11)
+              return this.t("Phone number must be 11 digits");
+            return true; // Validation passed
+          },
+        ],
+        address: [(value) => !!value || this.t("This field is required")],
+      };
+    },
+  },
   methods: {
-    backPage() {
-      this.dialogData.open = false;
-      this.$router.push("/Index");
-    },
-    isBase64(image) {
-      return /^data:image\/[a-z]+;base64,/.test(image);
-    },
-    handleFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.results.logo = reader.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
+    // Get Data
     async getCenter() {
+      this.loading = true;
+
       try {
-        const response = await API.getAboutUsLamassu();
-        this.content_url = response.data.content_url;
-        this.results = response.data.results;
+        const response = await superAPI.getAboutUsLamassu();
+
+        this.data = response.data.results;
+        this.loading = false;
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          this.$router.push("/login");
+          this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.loading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.loading = false;
       }
     },
-    async addCenter() {
-      if (this.results.logo == null) {
-        this.showDialogfunction("يرجى إضافة صوره الى النموذج", "#FF5252");
-      } else {
-        event.preventDefault();
-        this.addLoading = true;
+    // Get Data
+
+    // add
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.data.qr = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    isBase64(image) {
+      return /^data:image\/[a-z]+;base64,/.test(image);
+    },
+    async editItemConform() {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        this.saveLoading = true;
+
         try {
-          const response = await API.editAboutUsLamassu({
-            name: this.results.name,
-            description: this.results.description,
-            address: this.results.address,
-            phone: this.results.phone,
-            website: this.results.website,
-            facebook: this.results.facebook,
-            instagram: this.results.instagram,
-            logo: this.results.logo,
+          const response = await superAPI.editAboutUsLamassu({
+            name: this.data.name,
+            description: this.data.description,
+            address: this.data.address,
+            phone: this.data.phone,
+            website: this.data.website,
+            facebook: this.data.facebook,
+            instagram: this.data.instagram,
+            logo: this.data.logo,
           });
-          this.addLoading = false;
-          this.getCenter();
-          this.$store.state.logo = response.data.results.logo;
-          localStorage.setItem("logo", response.data.results.logo);
+
+          this.saveLoading = false;
+          await this.getCenter();
           this.showDialogfunction(response.data.message, "primary");
         } catch (error) {
           if (error.response && error.response.status === 401) {
-            this.addLoading = false;
-            this.showDialogfunction(error.response.data.message, "#FF5252");
-            this.$router.push("/login");
+            this.$store.dispatch("submitLogout");
           } else if (error.response && error.response.status === 500) {
-            this.addLoading = false;
+            this.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
           } else {
-            this.addLoading = false;
-            this.showDialogfunction(error.response.data.message, "#FF5252");
+            this.saveLoading = false;
           }
+        } finally {
+          this.saveLoading = false;
         }
       }
     },
 
+    // add
+    cancelAdd() {
+      this.$router.back(1);
+    },
+
+    // message
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;
       this.dialogData.bodyText = bodyText;
       this.dialogData.color = color;
     },
+    // message
   },
 };
 </script>
