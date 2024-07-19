@@ -122,8 +122,8 @@
                 border-bottom: solid 2px;
                 padding-bottom: 9px;
               "
-              >صور النموذج</strong
-            ></v-card-title
+              >صور النموذج</strong>
+            </v-card-title
           >
           <v-carousel
             :progress="true"
