@@ -89,6 +89,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 5000,
   },
   optimizeDeps: {
+    include: ["@vuepic/vue-datepicker"], // إضافة هذه السطر
     exclude: ["vuetify"],
     entries: ["./src/**/*.vue"],
   },

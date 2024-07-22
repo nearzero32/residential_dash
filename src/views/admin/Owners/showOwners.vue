@@ -121,7 +121,8 @@
                   />
                 </VCol>
                 <VCol cols="12" md="6">
-                  <AppDateTimePicker
+                  <VueDatePicker
+                    :format="format"
                     v-model="data.id_issue_date"
                     :rules="Rules.id_issue_date"
                     density="compact"
@@ -129,7 +130,7 @@
                     outlined
                     required
                     dense
-                  />
+                  ></VueDatePicker>
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
@@ -148,7 +149,8 @@
                   />
                 </VCol>
                 <VCol cols="12" md="6">
-                  <AppDateTimePicker
+                  <VueDatePicker
+                    :format="format"
                     v-model="data.residence_card_issue_date"
                     :rules="Rules.residence_card_issue_date"
                     density="compact"
@@ -156,7 +158,7 @@
                     outlined
                     required
                     dense
-                  />
+                  ></VueDatePicker>
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
@@ -493,7 +495,8 @@
                       />
                     </VCol>
                     <VCol cols="12" md="4">
-                      <AppDateTimePicker
+                      <VueDatePicker
+                        :format="format"
                         v-model="data.another_owner.id_issue_date"
                         :rules="Rules.id_issue_date"
                         density="compact"
@@ -503,7 +506,7 @@
                         outlined
                         required
                         dense
-                      />
+                      ></VueDatePicker>
                     </VCol>
                     <VCol cols="12" md="4">
                       <VTextField
@@ -524,7 +527,8 @@
                       />
                     </VCol>
                     <VCol cols="12" md="6">
-                      <AppDateTimePicker
+                      <VueDatePicker
+                        :format="format"
                         v-model="data.another_owner.residence_card_issue_date"
                         :rules="Rules.residence_card_issue_date"
                         density="compact"
@@ -532,7 +536,7 @@
                         outlined
                         required
                         dense
-                      />
+                      ></VueDatePicker>
                     </VCol>
                     <VCol cols="12" md="6">
                       <VTextField
@@ -781,7 +785,8 @@
                   />
                 </VCol>
                 <VCol cols="12" md="6">
-                  <AppDateTimePicker
+                  <VueDatePicker
+                    :format="format"
                     v-model="dialogEdit.editedItem.id_issue_date"
                     :rules="Rules.id_issue_date"
                     density="compact"
@@ -789,7 +794,7 @@
                     outlined
                     required
                     dense
-                  />
+                  ></VueDatePicker>
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
@@ -810,7 +815,8 @@
                   />
                 </VCol>
                 <VCol cols="12" md="6">
-                  <AppDateTimePicker
+                  <VueDatePicker
+                    :format="format"
                     v-model="dialogEdit.editedItem.residence_card_issue_date"
                     :rules="Rules.residence_card_issue_date"
                     density="compact"
@@ -818,7 +824,7 @@
                     outlined
                     required
                     dense
-                  />
+                  ></VueDatePicker>
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
@@ -1188,7 +1194,8 @@
                       />
                     </VCol>
                     <VCol cols="12" md="4">
-                      <AppDateTimePicker
+                      <VueDatePicker
+                        :format="format"
                         v-model="
                           dialogEdit.editedItem.another_owner.id_issue_date
                         "
@@ -1200,7 +1207,7 @@
                         outlined
                         required
                         dense
-                      />
+                      ></VueDatePicker>
                     </VCol>
                     <VCol cols="12" md="4">
                       <VTextField
@@ -1225,7 +1232,8 @@
                       />
                     </VCol>
                     <VCol cols="12" md="6">
-                      <AppDateTimePicker
+                      <VueDatePicker
+                        :format="format"
                         v-model="
                           dialogEdit.editedItem.another_owner
                             .residence_card_issue_date
@@ -1236,7 +1244,7 @@
                         outlined
                         required
                         dense
-                      />
+                      ></VueDatePicker>
                     </VCol>
                     <VCol cols="12" md="6">
                       <VTextField
@@ -1519,8 +1527,15 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const format = (date) => {
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
 
+      return `${day}/${month}/${year}`;
+    };
     return {
+      format,
       t,
       // nav
       page: {
