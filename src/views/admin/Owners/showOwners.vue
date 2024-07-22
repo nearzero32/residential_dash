@@ -143,7 +143,6 @@
                 <VCol cols="12" md="6">
                   <VTextField
                     v-model="data.residence_card_place_of_issue"
-                    :rules="Rules.residence_card_place_of_issue"
                     :label="t('Issuing Authority of the Residence Card')"
                     outlined
                   />
@@ -152,7 +151,6 @@
                   <VueDatePicker
                     :format="format"
                     v-model="data.residence_card_issue_date"
-                    :rules="Rules.residence_card_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Residence Card')"
                     outlined
@@ -521,7 +519,6 @@
                         v-model="
                           data.another_owner.residence_card_place_of_issue
                         "
-                        :rules="Rules.residence_card_place_of_issue"
                         :label="t('Issuing Authority of the Residence Card')"
                         outlined
                       />
@@ -530,7 +527,6 @@
                       <VueDatePicker
                         :format="format"
                         v-model="data.another_owner.residence_card_issue_date"
-                        :rules="Rules.residence_card_issue_date"
                         density="compact"
                         :label="t('Date of Issuance of the Residence Card')"
                         outlined
