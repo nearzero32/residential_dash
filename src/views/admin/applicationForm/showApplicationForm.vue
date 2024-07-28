@@ -530,6 +530,15 @@ export default {
           name: `admin-print-application-form-alrawan`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "6667fa62668eb9af32976f03") {
+        localStorage.setItem(
+          "printApplicationFormAlrtaj",
+          JSON.stringify(item)
+        );
+        let routeData = this.$router.resolve({
+          name: `admin-print-application-form-alrtaj`,
+        });
+        window.open(routeData.href, "_blank");
       }
       //   localStorage.setItem("CustomerAttendanceForm", JSON.stringify(item));
       //   let routeData = this.$router.resolve({

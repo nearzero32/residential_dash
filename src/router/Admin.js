@@ -345,6 +345,12 @@ export default [
       import("@/views/admin/applicationForm/print/printApplicationFormAlrawan.vue"),
   },
   {
+    path: "/admin-print-application-form-alrtaj",
+    name: "admin-print-application-form-alrtaj",
+    component: () =>
+      import("@/views/admin/applicationForm/print/printApplicationFormAlrtaj.vue"),
+  },
+  {
     path: "/admin-print-approval-request-form",
     name: "admin-print-approval-request-form",
     component: () =>
