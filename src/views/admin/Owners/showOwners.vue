@@ -63,7 +63,7 @@
     </VCard>
 
     <!-- Add Class Dialog -->
-    <VDialog v-model="addDialog.open" max-width="800px" persistent>
+    <VDialog v-model="addDialog.open" max-width="800px">
       <VCard>
         <VCardTitle>
           <span class="headline">{{ t("Addition") }}</span>
@@ -718,12 +718,7 @@
     <!-- Add Class Dialog -->
 
     <!-- Edit Class Dialog -->
-    <VDialog
-      v-model="dialogEdit.open"
-      max-width="800px"
-      max-height="100%"
-      persistent
-    >
+    <VDialog v-model="dialogEdit.open" max-width="800px" max-height="100%">
       <VCard>
         <VCardTitle>
           <span class="headline">{{ t("Edit") }}</span>
@@ -1139,7 +1134,7 @@
                   cols="12"
                   md="12"
                   v-if="
-                    addAnotherOwnerE &&
+                    AnotherOwnerE &&
                     dialogEdit.editedItem &&
                     dialogEdit.editedItem.another_owner
                   "
@@ -2214,28 +2209,6 @@ export default {
         this.data.another_owner.location_img_front = null;
         this.data.another_owner.location_img_back = null;
         this.data.another_owner.passport_img = null;
-      }
-    },
-    addAnotherOwnerE() {
-      this.AnotherOwnerE = !this.AnotherOwnerE;
-      if (this.AnotherOwnerE == false) {
-        this.dialogEdit.editedItem.another_owner.name = null;
-        this.dialogEdit.editedItem.another_owner.id_number = null;
-        this.dialogEdit.editedItem.another_owner.phone = null;
-        this.dialogEdit.editedItem.another_owner.id_place_of_issue = null;
-        this.dialogEdit.editedItem.another_owner.id_issue_date = null;
-        this.dialogEdit.editedItem.another_owner.residence_card_number = null;
-        this.dialogEdit.editedItem.another_owner.residence_card_place_of_issue =
-          null;
-        this.dialogEdit.editedItem.another_owner.residence_card_issue_date =
-          null;
-        this.dialogEdit.editedItem.another_owner.address = null;
-        this.dialogEdit.editedItem.another_owner.owner_title_jop = null;
-        this.dialogEdit.editedItem.another_owner.id_img_front = null;
-        this.dialogEdit.editedItem.another_owner.id_img_back = null;
-        this.dialogEdit.editedItem.another_owner.location_img_front = null;
-        this.dialogEdit.editedItem.another_owner.location_img_back = null;
-        this.dialogEdit.editedItem.another_owner.passport_img = null;
       }
     },
     // images

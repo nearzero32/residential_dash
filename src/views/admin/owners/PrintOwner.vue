@@ -18,7 +18,7 @@
               align-items: center;
             "
           >
-            <v-col
+            <!-- <v-col
               cols="3"
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
@@ -52,7 +52,7 @@
                 style="width: 80px"
                 alt=""
               />
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-card-title>
         <v-container style="padding-block: 0px; height: 100%">
@@ -64,22 +64,36 @@
               align-items: center;
             "
           >
-            <v-col cols="6" md="6">
+            <v-col cols="12" md="12">
               <div>
-                <p>أسم المالك : {{ data.name }}</p>
-                <p>رقم الهاتف : {{ data.phone }}</p>
-                <p>العنوان : {{ data.address }}</p>
-                <p>البريد الألكتروني : {{ data.email }}</p>
-                <p>كلمة المرور : {{ data.password_show }}</p>
-                <p>رقم الهوية : {{ data.id_number }}</p>
-                <p>جهة اصدار الهوية : {{ data.id_place_of_issue }}</p>
-                <p>تاريخ اصدار الهوية : {{ data.id_issue_date }}</p>
-                <p>رقم بطاقة السكن : {{ data.residence_card_number }}</p>
-                <p>
+                <p style="margin-bottom: 0px">أسم المالك : {{ data.name }}</p>
+                <p style="margin-bottom: 0px">رقم الهاتف : {{ data.phone }}</p>
+                <p style="margin-bottom: 0px">العنوان : {{ data.address }}</p>
+                <p style="margin-bottom: 0px">
+                  البريد الألكتروني : {{ data.email }}
+                </p>
+                <p style="margin-bottom: 0px">
+                  كلمة المرور : {{ data.password_show }}
+                </p>
+                <p style="margin-bottom: 0px">
+                  رقم الهوية : {{ data.id_number }}
+                </p>
+                <p style="margin-bottom: 0px">
+                  جهة اصدار الهوية : {{ data.id_place_of_issue }}
+                </p>
+                <p style="margin-bottom: 0px">
+                  تاريخ اصدار الهوية : {{ data.id_issue_date }}
+                </p>
+                <p style="margin-bottom: 0px">
+                  رقم بطاقة السكن : {{ data.residence_card_number }}
+                </p>
+                <p style="margin-bottom: 0px">
                   جهة اصدار بطاقة السكن :
                   {{ data.residence_card_place_of_issue }}
                 </p>
-                <p>العنوان الوظيفي : {{ data.owner_title_jop }}</p>
+                <p style="margin-bottom: 0px">
+                  العنوان الوظيفي : {{ data.owner_title_jop }}
+                </p>
               </div>
               <div
                 v-if="data.another_owner && data.another_owner.name !== null"
@@ -107,9 +121,42 @@
                   العنوان الوظيفي : {{ data.another_owner.owner_title_jop }}
                 </p>
               </div>
+              <hr style="width: 100%" />
             </v-col>
-            <v-col cols="6" md="6" style="text-align: center">
-              <p>يمكنك تحميل التطبيق</p>
+            <v-col cols="12" md="12" style="text-align: center">
+              <p style="text-align: right">
+                مرحبًا بسكان مجمع الروان،<br />
+                يمكنكم الآن تحميل تطبيق مجمع الروان السكني وبدء استخدامه باتباع
+                الخطوات التالية: <br />
+                ### لتحميل التطبيق: <br />
+                - قوموا بتصوير رمز الاستجابة السريعة (QR) المرفق لتحميل
+                التطبيق.<br />
+                ### لتسجيل الدخول:<br />
+                1. بعد تحميل التطبيق وتثبيته، افتح التطبيق.<br />
+                2. أدخل البريد الإلكتروني وكلمة المرور الخاصة بوحدتك السكنية
+                لتسجيل الدخول.<br />
+                *البريد الإلكتروني*<br />
+                *كلمة المرور<br />* باتباع هذه الخطوات، يمكنك البدء في استخدام
+                تطبيق مجمع الروان السكني بسهولة ويسر. يتمتع التطبيق بالعديد من
+                المميزات، منها: <br />
+                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل
+                وحدة سكنية.<br />
+                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار
+                والإعلانات.<br />
+                - *إشعارات من قبل إدارة المجمع:* تلقي إشعارات دقيقة حول كل ما
+                يحدث داخل المجمع.<br />
+                - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.<br />
+                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر
+                التطبيق.<br />
+                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير
+                الشحن.<br />
+                - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات
+                إلكترونيًا.<br />
+                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات
+                السكنية في حال وجود أقساط.<br />
+                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة
+                شؤونكم اليومية.
+              </p>
               <img
                 style="width: 120px"
                 :src="
