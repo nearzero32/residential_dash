@@ -123,8 +123,17 @@
                 <p style="margin-bottom: 0px">
                   كلمة المرور : {{ data.password_show }}
                 </p>
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id == '66656b164cdec95cab679181'
+                  "
+                >
+                  اسم العمارة : {{ data.exact_apartment_building }}
+                </p>
                 <p style="margin-bottom: 0px">
-                  اسم الشقة : {{ data.house_name }}
+                  اسم الوحدة السكنية : {{ data.house_name }}
                 </p>
                 <p
                   style="margin-bottom: 0px"
@@ -208,9 +217,16 @@
                   العنوان الوظيفي : {{ data.another_owner.owner_title_jop }}
                 </p>
               </div>
-              <hr style="width: 100%" />
             </v-col>
-            <v-col cols="12" md="12">
+            <v-col
+              cols="12"
+              md="12"
+              v-if="
+                user.center_id &&
+                user.center_id._id == '66656b164cdec95cab679181'
+              "
+            >
+              <hr style="width: 100%" />
               <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الروان،</p>
               <p style="margin-bottom: 0px">
                 يمكنكم الآن تحميل تطبيق مجمع الروان السكني وبدء استخدامه باتباع
@@ -377,7 +393,6 @@ export default {
 
         const response = await adminApi.getOneOwner(this.id);
         this.data = response.data.results;
-        console.log(this.data);
         setTimeout(() => {
           this.printElement();
         }, 500);
