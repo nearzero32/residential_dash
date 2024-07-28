@@ -774,9 +774,11 @@ export default {
                 is_corner: house.is_corner,
               };
             }),
-            houseNumber: space.houses.find((house) => house.is_corner).name,
+            houseNumber:
+              space.houses.find((house) => house.is_corner)?.name || null,
           };
         });
+
         this.data.houses = response.data.results.spaces.flatMap((space) => {
           return space.houses.map((house) => {
             return {
