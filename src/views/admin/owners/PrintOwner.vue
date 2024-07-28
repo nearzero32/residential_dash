@@ -17,8 +17,12 @@
               justify-content: space-around;
               align-items: center;
             "
+            v-if="
+              user.center_id &&
+              user.center_id._id !== '66656b164cdec95cab679181'
+            "
           >
-            <!-- <v-col
+            <v-col
               cols="3"
               md="3"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
@@ -52,8 +56,44 @@
                 style="width: 80px"
                 alt=""
               />
-            </v-col> -->
+            </v-col>
           </v-row>
+          <div v-else>
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="3"
+                md="3"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="logo1" style="width: 60px" alt="" />
+              </v-col>
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.logo
+                  "
+                  style="width: 80px"
+                  alt=""
+                />
+              </v-col>
+              <v-col cols="3" md="3" style="text-align: center">
+                <img :src="logo2" style="width: 60px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <br />
+          </div>
         </v-card-title>
         <v-container style="padding-block: 0px; height: 100%">
           <v-row
@@ -68,7 +108,15 @@
               <div>
                 <p style="margin-bottom: 0px">أسم المالك : {{ data.name }}</p>
                 <p style="margin-bottom: 0px">رقم الهاتف : {{ data.phone }}</p>
-                <p style="margin-bottom: 0px">العنوان : {{ data.address }}</p>
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
+                  العنوان : {{ data.address }}
+                </p>
                 <p style="margin-bottom: 0px">
                   البريد الألكتروني : {{ data.email }}
                 </p>
@@ -76,22 +124,61 @@
                   كلمة المرور : {{ data.password_show }}
                 </p>
                 <p style="margin-bottom: 0px">
+                  اسم الشقة : {{ data.house_name }}
+                </p>
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
                   رقم الهوية : {{ data.id_number }}
                 </p>
-                <p style="margin-bottom: 0px">
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
                   جهة اصدار الهوية : {{ data.id_place_of_issue }}
                 </p>
-                <p style="margin-bottom: 0px">
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
                   تاريخ اصدار الهوية : {{ data.id_issue_date }}
                 </p>
-                <p style="margin-bottom: 0px">
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
                   رقم بطاقة السكن : {{ data.residence_card_number }}
                 </p>
-                <p style="margin-bottom: 0px">
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
                   جهة اصدار بطاقة السكن :
                   {{ data.residence_card_place_of_issue }}
                 </p>
-                <p style="margin-bottom: 0px">
+                <p
+                  style="margin-bottom: 0px"
+                  v-if="
+                    user.center_id &&
+                    user.center_id._id !== '66656b164cdec95cab679181'
+                  "
+                >
                   العنوان الوظيفي : {{ data.owner_title_jop }}
                 </p>
               </div>
@@ -123,47 +210,88 @@
               </div>
               <hr style="width: 100%" />
             </v-col>
-            <v-col cols="12" md="12" style="text-align: center">
-              <p style="text-align: right">
-                مرحبًا بسكان مجمع الروان،<br />
+            <v-col cols="12" md="12">
+              <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الروان،</p>
+              <p style="margin-bottom: 0px">
                 يمكنكم الآن تحميل تطبيق مجمع الروان السكني وبدء استخدامه باتباع
-                الخطوات التالية: <br />
-                ### لتحميل التطبيق: <br />
-                - قوموا بتصوير رمز الاستجابة السريعة (QR) المرفق لتحميل
-                التطبيق.<br />
-                ### لتسجيل الدخول:<br />
-                1. بعد تحميل التطبيق وتثبيته، افتح التطبيق.<br />
-                2. أدخل البريد الإلكتروني وكلمة المرور الخاصة بوحدتك السكنية
-                لتسجيل الدخول.<br />
-                *البريد الإلكتروني*<br />
-                *كلمة المرور<br />* باتباع هذه الخطوات، يمكنك البدء في استخدام
-                تطبيق مجمع الروان السكني بسهولة ويسر. يتمتع التطبيق بالعديد من
-                المميزات، منها: <br />
+                الخطوات التالية:
+              </p>
+              <p
+                style="
+                  text-align: center;
+                  background-color: #163d68;
+                  color: white;
+                  padding: 0px 20px;
+                  border-radius: 10px;
+                  margin-bottom: 0px;
+                "
+              >
+                لتحميل التطبيق:
+              </p>
+              <p style="margin-bottom: 0px">
+                - الرجاء تصوير رمز الاستجابة السريعة (QR) المرفق لتحميل التطبيق.
+              </p>
+              <div style="text-align: center; margin-block: 10px">
+                <img
+                  style="width: 120px"
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.qr
+                  "
+                  alt=""
+                />
+              </div>
+
+              <p
+                style="
+                  text-align: center;
+                  background-color: #163d68;
+                  color: white;
+                  padding: 0px 20px;
+                  border-radius: 10px;
+                  margin-bottom: 0px;
+                "
+              >
+                لتسجيل الدخول:
+              </p>
+              <p style="margin-bottom: 0px">
+                1. بعد تحميل التطبيق وتثبيته، افتح التطبيق.
+              </p>
+              <p style="margin-bottom: 0px">البريد الإلكتروني</p>
+              <p style="margin-bottom: 0px">كلمة المرور</p>
+              <p style="margin-bottom: 0px">
+                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الروان
+                السكني بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
+              </p>
+              <p style="margin-bottom: 0px">
                 - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل
-                وحدة سكنية.<br />
+                وحدة سكنية.
+              </p>
+              <p style="margin-bottom: 0px">
                 - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار
-                والإعلانات.<br />
-                - *إشعارات من قبل إدارة المجمع:* تلقي إشعارات دقيقة حول كل ما
-                يحدث داخل المجمع.<br />
-                - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.<br />
+                والإعلانات.
+              </p>
+              <p style="margin-bottom: 0px">
+                - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
+              </p>
+              <p style="margin-bottom: 0px">
                 - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر
-                التطبيق.<br />
+                التطبيق.
+              </p>
+              <p style="margin-bottom: 0px">
                 - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير
-                الشحن.<br />
-                - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات
-                إلكترونيًا.<br />
+                الشحن.
+              </p>
+              <p style="margin-bottom: 0px">
+                - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
+              </p>
+              <p style="margin-bottom: 0px">
                 - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات
-                السكنية في حال وجود أقساط.<br />
+                السكنية في حال وجود أقساط.
+              </p>
+              <p style="margin-bottom: 0px">
                 نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة
                 شؤونكم اليومية.
               </p>
-              <img
-                style="width: 120px"
-                :src="
-                  dataResidential.content_url + dataResidential.center_id.qr
-                "
-                alt=""
-              />
             </v-col>
           </v-row>
           <br />
@@ -219,9 +347,16 @@
 
 <script>
 import adminApi from "@/api/adminApi";
+import r from "@/assets/images/icons/r.jpg";
+import logo1 from "@/assets/logo/41412d.png";
+import logo2 from "@/assets/logo/qaiwan-logo.png";
+
 export default {
   data() {
     return {
+      r,
+      logo1,
+      logo2,
       loading: true,
       data: null,
       user: null,
@@ -242,6 +377,7 @@ export default {
 
         const response = await adminApi.getOneOwner(this.id);
         this.data = response.data.results;
+        console.log(this.data);
         setTimeout(() => {
           this.printElement();
         }, 500);
@@ -287,6 +423,9 @@ export default {
       align-items: center;
       justify-content: space-around;
       flex-direction: row;
+    }
+    #pri v-card {
+      height: 100vh;
     }
   }
 }

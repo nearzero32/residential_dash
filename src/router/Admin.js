@@ -8,6 +8,11 @@ export default [
         name: "admin-index",
         component: () => import("@/views/admin/index.vue"),
       },
+      {
+        path: "/admin-show-profile",
+        name: "admin-show-profile",
+        component: () => import("@/views/admin/Profile/showProfile.vue"),
+      },
       // Apartments
       {
         path: "/admin-show-apartment-models",

@@ -8,6 +8,42 @@ class adminApi {
   }
   // index
 
+  // Profile
+  async getCenter() {
+    const response = await axiosInstance.get(`/center`);
+    return response;
+  }
+  async editCenter({
+    name,
+    phone,
+    address,
+    description,
+    video,
+    facebook,
+    instagram,
+    snapchat,
+    tiktok,
+    whatsapp,
+    logo,
+  }) {
+    const requestData = {
+      name,
+      phone,
+      address,
+      description,
+      video,
+      facebook,
+      instagram,
+      snapchat,
+      tiktok,
+      whatsapp,
+      logo,
+    };
+    const response = await axiosInstance.put(`/center`, requestData);
+    return response;
+  }
+  // Profile
+
   // form
   // Apartment
   async getApartments() {

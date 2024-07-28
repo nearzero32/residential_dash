@@ -127,6 +127,19 @@ const store = createStore({
         }
       }
     },
+    async getCenterP({ commit }) {
+      try {
+        const response = await axiosInstance.get(`/center`);
+        if (response) {
+          localStorage.setItem("logo", response.data.results.logo);
+          commit("SET_LOGO", response.data.results.logo);
+        }
+      } catch (error) {
+        commit("SET_LOGO", null);
+        throw error;
+      }
+    },
+
     async checkAccessTokenOnLoad({ commit }) {
       const token = localStorage.getItem("accessToken");
 

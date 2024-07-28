@@ -76,7 +76,11 @@ if (r.type === "super_admin") {
   logo = log;
   name = "Super Admin";
 } else {
-  logo = r.content_url + localStorage.getItem("logo");
+  if (localStorage.getItem("logo") !== null) {
+    logo = r.content_url + localStorage.getItem("logo");
+  } else {
+    logo = log;
+  }
   name = r.center_id.name;
 }
 

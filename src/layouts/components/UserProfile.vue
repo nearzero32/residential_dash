@@ -1,5 +1,5 @@
 <script setup>
-import log from "@/assets/images/avatars/building.png"
+import log from "@/assets/images/avatars/building.png";
 import { useRouter } from "vue-router";
 import avatar1 from "@images/avatars/avatar-1.png";
 import { useI18n } from "vue-i18n";
@@ -15,7 +15,12 @@ if (r.type === "super_admin") {
   logo = log;
   name = "Super Admin";
 } else {
-  logo = r.content_url + localStorage.getItem("logo");
+  if (localStorage.getItem("logo") !== null) {
+    logo = r.content_url + localStorage.getItem("logo");
+  } else {
+    logo = log;
+  }
+
   name = r.center_id.name;
   name2 = r.name;
 }
@@ -37,7 +42,13 @@ function Logout() {
           <VListItem>
             <template #prepend>
               <VListItemAction start>
-                <VBadge dot location="bottom right" offset-x="3" offset-y="3" color="success">
+                <VBadge
+                  dot
+                  location="bottom right"
+                  offset-x="3"
+                  offset-y="3"
+                  color="success"
+                >
                   <VAvatar color="primary" variant="tonal">
                     <VImg :src="logo" />
                   </VAvatar>
@@ -53,12 +64,12 @@ function Logout() {
           <VDivider class="my-2" />
 
           <!-- 👉 Profile -->
-          <VListItem link>
+          <VListItem to="/admin-show-profile">
             <template #prepend>
               <VIcon class="me-2" icon="mdi-account-outline" size="22" />
             </template>
 
-            <VListItemTitle>Profile</VListItemTitle>
+            <VListItemTitle>{{ t("Profile") }} </VListItemTitle>
           </VListItem>
 
           <!-- Divider -->
