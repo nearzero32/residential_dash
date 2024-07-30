@@ -800,7 +800,6 @@
                     v-model="
                       dialogEdit.editedItem.residence_card_place_of_issue
                     "
-                    :rules="Rules.residence_card_place_of_issue"
                     :label="t('Issuing Authority of the Residence Card')"
                     outlined
                   />
