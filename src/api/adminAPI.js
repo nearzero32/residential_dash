@@ -74,7 +74,10 @@ class adminApi {
       houses,
       rooms_for_space,
     };
-    const response = await axiosInstance.post(`/center/forms/apartment`, requestData);
+    const response = await axiosInstance.post(
+      `/center/forms/apartment`,
+      requestData
+    );
     return response;
   }
   async getApartmentTowers() {
@@ -82,17 +85,21 @@ class adminApi {
     return response;
   }
   async getNameFromsApartmentTowers({ name }) {
-    const response = await axiosInstance.get(`/center/forms/apartment/towers/names/${name}`);
+    const response = await axiosInstance.get(
+      `/center/forms/apartment/towers/names/${name}`
+    );
     return response;
   }
   async getNameFromsApartmentTowersFloors({ name, form_name }) {
-    const response = await axiosInstance.get(`/center/forms/apartment/towers/floors/${name}?name=${form_name}`);
+    const response = await axiosInstance.get(
+      `/center/forms/apartment/towers/floors/${name}?name=${form_name}`
+    );
     return response;
   }
-  async cancelPayingHouse({
-    id,
-  }) {
-    const response = await axiosInstance.put(`center/forms/cancel_paying_house/house_id/${id}`);
+  async cancelPayingHouse({ id }) {
+    const response = await axiosInstance.put(
+      `center/forms/cancel_paying_house/house_id/${id}`
+    );
     return response;
   }
   async getApartment(id) {
@@ -120,7 +127,10 @@ class adminApi {
       houses,
       rooms_for_space,
     };
-    const response = await axiosInstance.put(`center/forms/apartment/${id}`, requestData);
+    const response = await axiosInstance.put(
+      `center/forms/apartment/${id}`,
+      requestData
+    );
     return response;
   }
   // Apartment
@@ -200,7 +210,7 @@ class adminApi {
   }
   // SellsEmployee
 
-  // Queries  
+  // Queries
   async getQueries({ page, limit, search, sortBy }) {
     const response = await axiosInstance.get(
       `/inquiries?page=${page}&limit=${limit}&sortBy=${sortBy}&search=${search}`
@@ -211,7 +221,7 @@ class adminApi {
     const requestData = {
       name,
       phone,
-      employee_id
+      employee_id,
     };
     const response = await axiosInstance.post(`/inquiries`, requestData);
     return response;
@@ -220,16 +230,19 @@ class adminApi {
     const requestData = {
       name,
       phone,
-      employee_id
+      employee_id,
     };
-    const response = await axiosInstance.put(`/inquiries/${emp_id}`, requestData);
+    const response = await axiosInstance.put(
+      `/inquiries/${emp_id}`,
+      requestData
+    );
     return response;
   }
   async removeQueries(id) {
     const response = await axiosInstance.delete(`/inquiries/${id}`);
     return response;
   }
-  // Queries  
+  // Queries
 
   // CallCenter
   async getCallCenter({ page, limit, sortBy, search }) {
@@ -240,9 +253,7 @@ class adminApi {
   }
   async getCallCenterOne({ id }) {
     return axiosInstance
-      .get(
-        `/call_center/${id}`
-      )
+      .get(`/call_center/${id}`)
       .then((Response) => Response)
       .catch((error) => {
         console.log("error", error);
@@ -281,7 +292,10 @@ class adminApi {
       current_employee_id: current_employee_id,
       new_employee_id: new_employee_id,
     };
-    const response = await axiosInstance.put(`/call_center/change_employee/${id}`, requestData);
+    const response = await axiosInstance.put(
+      `/call_center/change_employee/${id}`,
+      requestData
+    );
     return response;
   }
   async removeCallCenter(id) {
@@ -319,11 +333,19 @@ class adminApi {
   // getHowUHearAboutUs
 
   // ApplicationForm
-  async getApplicationForm({ page, limit, sortBy, search, status, is_deleted }) {
-    const response = await axiosInstance.get(`/application_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&is_deleted=${is_deleted}&status=${status}`);
+  async getApplicationForm({
+    page,
+    limit,
+    sortBy,
+    search,
+    status,
+    is_deleted,
+  }) {
+    const response = await axiosInstance.get(
+      `/application_form?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&is_deleted=${is_deleted}&status=${status}`
+    );
 
     return response;
-
   }
   async cancelApplicationForm(id) {
     const response = await axiosInstance.put(`/application_form/cancel/${id}`);
@@ -360,7 +382,6 @@ class adminApi {
   }
   // Reservations
 
-
   // OwnersContract
   async getOwnersContract({ page, limit, search, sortBy }) {
     const response = await axiosInstance.get(
@@ -381,7 +402,14 @@ class adminApi {
     const response = await axiosInstance.get(`/owners/getAll`);
     return response;
   }
-  async addNotifications({ title, link, body, image, receiver_type, receivers }) {
+  async addNotifications({
+    title,
+    link,
+    body,
+    image,
+    receiver_type,
+    receivers,
+  }) {
     const requestData = {
       title,
       link,
@@ -410,16 +438,26 @@ class adminApi {
   }
   async addBankAccounts({ name, account_number, account_name }) {
     const requestData = {
-      name, account_number, account_name
+      name,
+      account_number,
+      account_name,
     };
-    const response = await axiosInstance.post(`/owners/bank_accounts`, requestData);
+    const response = await axiosInstance.post(
+      `/owners/bank_accounts`,
+      requestData
+    );
     return response;
   }
   async editBankAccounts({ id, name, account_number, account_name }) {
     const requestData = {
-      name, account_number, account_name
+      name,
+      account_number,
+      account_name,
     };
-    const response = await axiosInstance.put(`/owners/bank_accounts/${id}`, requestData);
+    const response = await axiosInstance.put(
+      `/owners/bank_accounts/${id}`,
+      requestData
+    );
     return response;
   }
   async removeBankAccounts(id) {
@@ -435,7 +473,14 @@ class adminApi {
     );
     return response;
   }
-  async addMaintenanceEmployee({ name, phone, email, password_show, salary, address }) {
+  async addMaintenanceEmployee({
+    name,
+    phone,
+    email,
+    password_show,
+    salary,
+    address,
+  }) {
     const requestData = {
       name,
       phone,
@@ -444,10 +489,21 @@ class adminApi {
       salary,
       address,
     };
-    const response = await axiosInstance.post(`/maintenance_employee`, requestData);
+    const response = await axiosInstance.post(
+      `/maintenance_employee`,
+      requestData
+    );
     return response;
   }
-  async editMaintenanceEmployee({ emp_id, name, phone, email, password_show, salary, address }) {
+  async editMaintenanceEmployee({
+    emp_id,
+    name,
+    phone,
+    email,
+    password_show,
+    salary,
+    address,
+  }) {
     const requestData = {
       id: emp_id,
       name,
@@ -457,11 +513,16 @@ class adminApi {
       salary,
       address,
     };
-    const response = await axiosInstance.put(`/maintenance_employee`, requestData);
+    const response = await axiosInstance.put(
+      `/maintenance_employee`,
+      requestData
+    );
     return response;
   }
   async removeMaintenanceEmployee(id) {
-    const response = await axiosInstance.delete(`/maintenance_employee/id/${id}`);
+    const response = await axiosInstance.delete(
+      `/maintenance_employee/id/${id}`
+    );
     return response;
   }
   // MaintenanceEmployee
@@ -697,7 +758,15 @@ class adminApi {
         return error.response;
       });
   }
-  async addUsers({ name, email, password_show, phone, address, actions, pages }) {
+  async addUsers({
+    name,
+    email,
+    password_show,
+    phone,
+    address,
+    actions,
+    pages,
+  }) {
     const requestData = {
       name,
       email,
@@ -835,13 +904,13 @@ class adminApi {
 
   // Complain
   async getComplain({ page, limit }) {
-    const response = await axiosInstance.get(`/complain?page=${page}&limit=${limit}`);
+    const response = await axiosInstance.get(
+      `/complain?page=${page}&limit=${limit}`
+    );
     return response;
   }
   async removeComplain(id) {
-    const response = await axiosInstance.delete(
-      `/complain/${id}`
-    );
+    const response = await axiosInstance.delete(`/complain/${id}`);
     return response;
   }
   // Complain
@@ -854,9 +923,12 @@ class adminApi {
   async checkHousesNames({ houses, id }) {
     const requestData = {
       id,
-      houses
+      houses,
     };
-    const response = await axiosInstance.post(`/center/forms/check_houses_names`, requestData);
+    const response = await axiosInstance.post(
+      `/center/forms/check_houses_names`,
+      requestData
+    );
     return response;
   }
   async addForms({
@@ -886,10 +958,10 @@ class adminApi {
     );
     return response;
   }
-  async cancelPayingHouse({
-    id,
-  }) {
-    const response = await axiosInstance.put(`center/forms/cancel_paying_house/house_id/${id}`);
+  async cancelPayingHouse({ id }) {
+    const response = await axiosInstance.put(
+      `center/forms/cancel_paying_house/house_id/${id}`
+    );
     return response;
   }
   async getDataHouse(id) {
@@ -915,11 +987,14 @@ class adminApi {
       houses,
       floors,
     };
-    const response = await axiosInstance.put(`/center/forms/${id}`, requestData);
+    const response = await axiosInstance.put(
+      `/center/forms/${id}`,
+      requestData
+    );
     return response;
   }
   // Forms
-  
+
   // Owners
   async getOwners({ page, limit, search, is_deleted, sortBy }) {
     const response = await axiosInstance.get(
@@ -948,8 +1023,8 @@ class adminApi {
     residence_card_place_of_issue,
     owner_title_jop,
     bank_id,
-    residence_card_issue_date,  
-    another_owner,  
+    residence_card_issue_date,
+    another_owner,
   }) {
     const requestData = {
       name,
@@ -972,8 +1047,8 @@ class adminApi {
       residence_card_place_of_issue,
       owner_title_jop,
       bank_id,
-      residence_card_issue_date,   
-      another_owner,   
+      residence_card_issue_date,
+      another_owner,
     };
     const response = await axiosInstance.post(`/owners`, requestData);
     return response;
@@ -1027,19 +1102,106 @@ class adminApi {
       id_issue_date,
       residence_card_number,
       residence_card_place_of_issue,
-      owner_title_jop,  
-      bank_id,  
-      residence_card_issue_date,  
-      another_owner,  
+      owner_title_jop,
+      bank_id,
+      residence_card_issue_date,
+      another_owner,
     };
     const response = await axiosInstance.put(`/owners`, requestData);
     return response;
   }
   async disableOwners({ id, disable }) {
-    const response = await axiosInstance.put(`/owners/disable/owner_id/${id}`, { is_disabled: disable });
+    const response = await axiosInstance.put(`/owners/disable/owner_id/${id}`, {
+      is_disabled: disable,
+    });
     return response;
   }
   // Owners
 
+  // Units
+  async getUnits({ page, limit, search, sortBy }) {
+    const response = await axiosInstance.get(
+      `/marketing_residential/market_residential_units?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  async addUnits({ name, note }) {
+    const requestData = {
+      name,
+      note,
+    };
+    const response = await axiosInstance.post(
+      `/marketing_residential/market_residential_units`,
+      requestData
+    );
+    return response;
+  }
+  async editUnits({ id, name, note }) {
+    const requestData = {
+      id,
+      name,
+      note,
+    };
+    const response = await axiosInstance.put(
+      `/marketing_residential/market_residential_units/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeUnits(id) {
+    const response = await axiosInstance.delete(
+      `/marketing_residential/market_residential_units/${id}`
+    );
+    return response;
+  }
+  // Units
+
+  // MarketingCallCenter
+  async getMarketingCallCenter({
+    page,
+    limit,
+    search,
+    residential_id,
+    sortBy,
+  }) {
+    const response = await axiosInstance.get(
+      `/marketing_residential/marketing_call_center?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&residential_id=${residential_id}`
+    );
+    return response;
+  }
+  async addMarketingCallCenter({ name, phone, money, residential_id }) {
+    const requestData = {
+      name,
+      phone,
+      money,
+      residential_id,
+    };
+    const response = await axiosInstance.post(
+      `/marketing_residential/marketing_call_center`,
+      requestData
+    );
+    return response;
+  }
+  async editMarketingCallCenter({ id, name, phone, money, residential_id }) {
+    const requestData = {
+      id,
+      name,
+      phone,
+      money,
+      residential_id,
+    };
+    const response = await axiosInstance.put(
+      `/marketing_residential/marketing_call_center/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeMarketingCallCenter(id) {
+    const response = await axiosInstance.delete(
+      `/marketing_residential/marketing_call_center/${id}`
+    );
+    return response;
+  }
+  // Units
 }
 export default new adminApi();

@@ -65,8 +65,7 @@ export default [
       {
         path: "/admin-show-sales-staff",
         name: "admin-show-sales-staff",
-        component: () =>
-          import("@/views/admin/SalesStaff/showSalesStaff.vue"),
+        component: () => import("@/views/admin/SalesStaff/showSalesStaff.vue"),
       },
       {
         path: "/admin-profile-sales-staff",
@@ -80,8 +79,7 @@ export default [
       {
         path: "/admin-show-queries",
         name: "admin-show-queries",
-        component: () =>
-          import("@/views/admin/Queries/showQueries.vue"),
+        component: () => import("@/views/admin/Queries/showQueries.vue"),
       },
       // Queries
 
@@ -90,13 +88,17 @@ export default [
         path: "/admin-show-customer-attendance-form",
         name: "admin-show-customer-attendance-form",
         component: () =>
-          import("@/views/admin/CustomerAttendanceForm/showCustomerAttendanceForm.vue"),
+          import(
+            "@/views/admin/CustomerAttendanceForm/showCustomerAttendanceForm.vue"
+          ),
       },
       {
         path: "/admin-profile-customer-attendance-form",
         name: "admin-profile-customer-attendance-form",
         component: () =>
-          import("@/views/admin/CustomerAttendanceForm/profileCustomerAttendanceForm.vue"),
+          import(
+            "@/views/admin/CustomerAttendanceForm/profileCustomerAttendanceForm.vue"
+          ),
       },
       // CustomerAttendanceForm
 
@@ -114,13 +116,17 @@ export default [
         path: "/admin-show-approval-request-form",
         name: "admin-show-approval-request-form",
         component: () =>
-          import("@/views/admin/ApprovalRequestForm/showApprovalRequestForm.vue"),
+          import(
+            "@/views/admin/ApprovalRequestForm/showApprovalRequestForm.vue"
+          ),
       },
       {
         path: "/admin-profile-approval-request-form",
         name: "admin-profile-approval-request-form",
         component: () =>
-          import("@/views/admin/ApprovalRequestForm/profileApprovalRequestForm.vue"),
+          import(
+            "@/views/admin/ApprovalRequestForm/profileApprovalRequestForm.vue"
+          ),
       },
       // ApprovalRequestForm
 
@@ -129,7 +135,9 @@ export default [
         path: "/admin-show-residential-unit-requests",
         name: "admin-show-residential-unit-requests",
         component: () =>
-          import("@/views/admin/ResidentialUnitRequests/showResidentialUnitRequests.vue"),
+          import(
+            "@/views/admin/ResidentialUnitRequests/showResidentialUnitRequests.vue"
+          ),
       },
       // ResidentialUnitRequests
 
@@ -155,8 +163,7 @@ export default [
       {
         path: "/admin-show-banks",
         name: "admin-show-banks",
-        component: () =>
-          import("@/views/admin/Banks/showBanks.vue"),
+        component: () => import("@/views/admin/Banks/showBanks.vue"),
       },
       // Banks
 
@@ -182,8 +189,7 @@ export default [
       {
         path: "/admin-show-services",
         name: "admin-show-services",
-        component: () =>
-          import("@/views/admin/Services/showServices.vue"),
+        component: () => import("@/views/admin/Services/showServices.vue"),
       },
       // Services
 
@@ -200,8 +206,7 @@ export default [
       {
         path: "/admin-show-guards",
         name: "admin-show-guards",
-        component: () =>
-          import("@/views/admin/Guards/showGuards.vue"),
+        component: () => import("@/views/admin/Guards/showGuards.vue"),
       },
       // Guards
 
@@ -209,8 +214,7 @@ export default [
       {
         path: "/admin-show-staff",
         name: "admin-show-staff",
-        component: () =>
-          import("@/views/admin/Staff/showStaff.vue"),
+        component: () => import("@/views/admin/Staff/showStaff.vue"),
       },
       // Staff
 
@@ -218,8 +222,7 @@ export default [
       {
         path: "/admin-show-users",
         name: "admin-show-users",
-        component: () =>
-          import("@/views/admin/Users/showUsers.vue"),
+        component: () => import("@/views/admin/Users/showUsers.vue"),
       },
       // Users
 
@@ -236,8 +239,7 @@ export default [
       {
         path: "/admin-show-features",
         name: "admin-show-features",
-        component: () =>
-          import("@/views/admin/Features/showFeatures.vue"),
+        component: () => import("@/views/admin/Features/showFeatures.vue"),
       },
       // Features
 
@@ -246,7 +248,9 @@ export default [
         path: "/admin-show-how-did-you-hear-about-us",
         name: "admin-show-how-did-you-hear-about-us",
         component: () =>
-          import("@/views/admin/HowDidYouHearAboutUs/showHowDidYouHearAboutUs.vue"),
+          import(
+            "@/views/admin/HowDidYouHearAboutUs/showHowDidYouHearAboutUs.vue"
+          ),
       },
       // HowDidYouHearAboutUs
 
@@ -254,8 +258,7 @@ export default [
       {
         path: "/admin-show-complaints",
         name: "admin-show-complaints",
-        component: () =>
-          import("@/views/admin/Complaints/showComplaints.vue"),
+        component: () => import("@/views/admin/Complaints/showComplaints.vue"),
       },
       // Complaints
 
@@ -263,14 +266,12 @@ export default [
       {
         path: "/admin-show-owners",
         name: "admin-show-owners",
-        component: () =>
-          import("@/views/admin/Owners/showOwners.vue"),
+        component: () => import("@/views/admin/Owners/showOwners.vue"),
       },
       {
         path: "/admin-profile-owner",
         name: "admin-profile-owner",
-        component: () =>
-          import("@/views/admin/Owners/profileOwner.vue"),
+        component: () => import("@/views/admin/Owners/profileOwner.vue"),
       },
       // Owners
 
@@ -306,49 +307,77 @@ export default [
           import("@/views/admin/form/HouseModels/editHouseModels.vue"),
       },
       // HouseModels
+
+      // marketingResidentail
+      {
+        path: "/admin-show-units",
+        name: "admin-show-units",
+        component: () =>
+          import("@/views/admin/marketingResidentail/units/showUnits.vue"),
+      },
+      {
+        path: "/admin-show-marketing-call-center",
+        name: "admin-show-marketing-call-center",
+        component: () =>
+          import(
+            "@/views/admin/marketingResidentail/marketingCallCenter/showMarketingCallCenter.vue"
+          ),
+      },
+      // marketingResidentail
     ],
   },
   {
     path: "/admin-print-sales-staff",
     name: "admin-print-sales-staff",
-    component: () =>
-      import("@/views/admin/SalesStaff/printSalesStaff.vue"),
+    component: () => import("@/views/admin/SalesStaff/printSalesStaff.vue"),
   },
   {
-    path: "/admin-profile-customer-attendance-form",
-    name: "admin-profile-customer-attendance-form",
+    path: "/admin-print-customer-attendance-form",
+    name: "admin-print-customer-attendance-form",
     component: () =>
-      import("@/views/admin/CustomerAttendanceForm/printCustomerAttendanceForm.vue"),
+      import(
+        "@/views/admin/CustomerAttendanceForm/printCustomerAttendanceForm.vue"
+      ),
   },
   {
     path: "/admin-print-application-form-alnahdaa",
     name: "admin-print-application-form-alnahdaa",
     component: () =>
-      import("@/views/admin/applicationForm/print/printApplicationFormAlnahdaa.vue"),
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormAlnahdaa.vue"
+      ),
   },
   {
     path: "/admin-print-application-form-alfakher",
     name: "admin-print-application-form-alfakher",
     component: () =>
-      import("@/views/admin/applicationForm/print/printApplicationFormAlfakher.vue"),
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormAlfakher.vue"
+      ),
   },
   {
     path: "/admin-print-application-form-abasly",
     name: "admin-print-application-form-abasly",
     component: () =>
-      import("@/views/admin/applicationForm/print/printApplicationFormAbasly.vue"),
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormAbasly.vue"
+      ),
   },
   {
     path: "/admin-print-application-form-alrawan",
     name: "admin-print-application-form-alrawan",
     component: () =>
-      import("@/views/admin/applicationForm/print/printApplicationFormAlrawan.vue"),
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormAlrawan.vue"
+      ),
   },
   {
     path: "/admin-print-application-form-alrtaj",
     name: "admin-print-application-form-alrtaj",
     component: () =>
-      import("@/views/admin/applicationForm/print/printApplicationFormAlrtaj.vue"),
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormAlrtaj.vue"
+      ),
   },
   {
     path: "/admin-print-approval-request-form",
@@ -401,20 +430,16 @@ export default [
   {
     path: "/admin-print-guards",
     name: "admin-print-guards",
-    component: () =>
-      import("@/views/admin/Guards/PrintGuards.vue"),
+    component: () => import("@/views/admin/Guards/PrintGuards.vue"),
   },
   {
     path: "/admin-print-staff",
     name: "admin-print-staff",
-    component: () =>
-      import("@/views/admin/Staff/PrintEmployees.vue"),
+    component: () => import("@/views/admin/Staff/PrintEmployees.vue"),
   },
   {
     path: "/admin-print-owner",
     name: "admin-print-owner",
-    component: () =>
-      import("@/views/admin/Owners/printOwner.vue"),
+    component: () => import("@/views/admin/Owners/printOwner.vue"),
   },
-
 ];

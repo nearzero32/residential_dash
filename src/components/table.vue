@@ -110,6 +110,9 @@
           <div v-else-if="header.key === 'service.type'">
             {{ item.selectable.service.type }}
           </div>
+          <div v-else-if="header.key === 'money'">
+            {{ numberWithComma(item.selectable.money) }}
+          </div>
           <div v-else-if="header.key === 'is_available'">
             <p v-if="item.selectable.service.is_available == true">مفعلة</p>
             <p v-else>غير مفعلة</p>
@@ -437,6 +440,9 @@
           <div v-else-if="header.key === 'current_employeeName'" class="l">
             {{ item.selectable.current_employee.name }}
           </div>
+          <div v-else-if="header.key === 'money'" class="l">
+            {{ numberWithComma(item.selectable.money) }}
+          </div>
           <div v-else-if="header.key === 'buyer_info.customer_name'" class="l">
             {{ item.selectable.buyer_info.customer_name }}
           </div>
@@ -718,6 +724,7 @@
 <script>
 import { useI18n } from "vue-i18n";
 import { VDataTableServer } from "vuetify/labs/VDataTable";
+import numberWithComma from "@/constant/number";
 
 export default {
   name: "Table",
@@ -795,6 +802,7 @@ export default {
     empShowIteme(item) {
       this.$emit("empShowIteme", item);
     },
+    numberWithComma,
   },
 };
 </script>

@@ -18,6 +18,9 @@
   "Username": "Username",
   "Email": "Email",
   "Password": "Password",
+  "Note": "Note",
+  "the amount": "the amount",
+  "marketing call center": "marketing call center",
   "Please enter a valid email address": "Please enter a valid email address",
   "Are you sure you want to delete?": "Are you sure you want to delete?",
   "Delete": "Delete",
@@ -226,6 +229,7 @@
   "Front Side of the Residence Card": "Front Side of the Residence Card",
   "Back Side of the Residence Card": "Back Side of the Residence Card",
   "Passport Photo": "Passport Photo",
+  "marketing Residentail": "marketing Residentail",
   "Add Another Owner": "Add Another Owner",
   "Logout": "Logout"
 }

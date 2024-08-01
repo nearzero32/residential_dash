@@ -13,6 +13,7 @@
   "QR code": "صورة QR",
   "Cancel": "الغاء",
   "Edit": "تعديل",
+  "the amount": "المبلغ",
   "This field is required": "الحقل مطلوب",
   "Complex": "المجمع",
   "Username": "أسم المستخدم",
@@ -84,6 +85,8 @@
   "At least one room must be added": "خطأ: يجب أضافة غرفة واحده على الأقل",
   "Forms": "النماذج",
   "All": "الكل",
+  "Note": "ملاحظة",
+  "marketing call center": "مركز الاتصال التسويقي",
   "Apartment number": "رقم الشقق",
   "Apartments": "الشقق",
   "Apartment details": "تفاصيل الشقة",
@@ -227,6 +230,7 @@
   "Front Side of the Residence Card": "صورة بطاقة السكن الامامية",
   "Back Side of the Residence Card": "صورة بطاقة السكن الخلفية",
   "Passport Photo": "صورة الجواز",
+  "marketing Residentail": "التسويق السكني",
   "Add Another Owner": "إضافة مالك اخر",
   "Logout": "تسجيل الخروج"
 }

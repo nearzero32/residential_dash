@@ -483,7 +483,6 @@ export default {
         }
       }
     },
-
     // Get Data
 
     // editItem
@@ -645,7 +644,7 @@ export default {
     printItem(item) {
       localStorage.setItem("CustomerAttendanceForm", JSON.stringify(item));
       let routeData = this.$router.resolve({
-        name: `admin-profile-customer-attendance-form`,
+        name: `admin-print-customer-attendance-form`,
       });
       window.open(routeData.href, "_blank");
     },
