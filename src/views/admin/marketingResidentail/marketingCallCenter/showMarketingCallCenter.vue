@@ -458,6 +458,7 @@ export default {
           search: null,
           sortBy: '{"key": "createdAt", "order": "desc"}',
         });
+        console.log(response);
         this.itemss = response.data.results.data;
       } catch (error) {
         if (error.response && error.response.status === 401) {
