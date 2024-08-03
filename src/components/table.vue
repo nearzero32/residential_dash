@@ -219,7 +219,7 @@
               </li>
             </ul>
           </div>
-          <div v-else-if="header.key === 'floors'">
+          <div v-else-if="header.type === 'floors'">
             {{ item.selectable.floors.length }}
           </div>
 
@@ -570,7 +570,7 @@
               </li>
             </ul>
           </div>
-          <div v-else-if="header.key === 'floors'" class="l">
+          <div v-else-if="header.type === 'floors'" class="l">
             {{ item.selectable.floors.length }}
           </div>
 

@@ -374,7 +374,7 @@ export default {
         },
         {
           title: this.t("Number of Floors"),
-          type: "strong",
+          type: "floors",
           link: ``,
           key: "floors",
         },

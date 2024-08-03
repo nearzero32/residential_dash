@@ -1124,8 +1124,12 @@ export default {
         password_show: [(value) => !!value || this.t("This field is required")],
       };
     },
+
     headers() {
-      return [
+      const buildingType = JSON.parse(localStorage.getItem("results"))
+        ?.center_id?.building_type;
+
+      const baseHeaders = [
         {
           title: "#",
           type: "strong",
@@ -1145,49 +1149,140 @@ export default {
           key: "phone",
         },
         {
-          title: this.t("Email"),
+          title: this.t("The block"),
           type: "strong",
           link: ``,
-          key: "email",
-        },
-        {
-          title: this.t("Password"),
-          type: "strong",
-          link: ``,
-          key: "password_show",
-        },
-        {
-          title: this.t("Address"),
-          type: "strong",
-          link: ``,
-          key: "address",
-        },
-        {
-          title: this.t("The image"),
-          type: "strong",
-          link: ``,
-          key: "image",
-        },
-        {
-          title: this.t("Form name"),
-          type: "strong",
-          link: ``,
-          key: "form_name",
-        },
-        {
-          title: this.t("Residential unit name"),
-          type: "strong",
-          link: ``,
-          key: "house_name",
-        },
-        {
-          title: this.t("Operations"),
-          key: "actions",
-          sortable: false,
-          type: "strong",
-          link: "",
+          key: "form_block_number",
         },
       ];
+
+      if (buildingType === "شقق") {
+        baseHeaders.push(
+          {
+            title: this.t("Form name"),
+            type: "strong",
+            link: ``,
+            key: "form_name",
+          },
+          {
+            title: this.t("Form Code"),
+            type: "strong",
+            link: ``,
+            key: "form_code",
+          },
+          {
+            title: this.t("Architecture name"),
+            type: "strong",
+            link: ``,
+            key: "exact_apartment_building",
+          },
+          {
+            title: this.t("Floor number"),
+            type: "strong",
+            link: ``,
+            key: "house_apartment_floor_number",
+          },
+          {
+            title: this.t("Residential unit name"),
+            type: "strong",
+            link: ``,
+            key: "house_name",
+          }
+        );
+      } else if (buildingType === "منازل") {
+        baseHeaders.push(
+          {
+            title: this.t("Form name"),
+            type: "strong",
+            link: ``,
+            key: "form_name",
+          },
+          {
+            title: this.t("Form Code"),
+            type: "strong",
+            link: ``,
+            key: "form_code",
+          },
+          {
+            title: this.t("Residential unit name"),
+            type: "strong",
+            link: ``,
+            key: "house_name",
+          },
+          {
+            title: this.t("Number of Floors"),
+            type: "strong",
+            link: ``,
+            key: "house_apartment_floor_number",
+          },
+          {
+            title: this.t("Architecture name"),
+            type: "strong",
+            link: ``,
+            key: "exact_apartment_building",
+          },
+          {
+            title: this.t("Category"),
+            type: "strong",
+            link: ``,
+            key: "form_category",
+          },
+          {
+            title: this.t("Number of Floors"),
+            type: "strong",
+            link: ``,
+            key: "floors",
+          }
+        );
+      } else {
+        baseHeaders.push(
+          {
+            title: this.t("Form name"),
+            type: "strong",
+            link: ``,
+            key: "form_name",
+          },
+          {
+            title: this.t("Form Code"),
+            type: "strong",
+            link: ``,
+            key: "form_code",
+          },
+          {
+            title: this.t("Residential unit name"),
+            type: "strong",
+            link: ``,
+            key: "house_name",
+          },
+          {
+            title: this.t("Architecture name"),
+            type: "strong",
+            link: ``,
+            key: "exact_apartment_building",
+          },
+          {
+            title: this.t("Floor number"),
+            type: "strong",
+            link: ``,
+            key: "house_apartment_floor_number",
+          },
+          {
+            title: this.t("Number of Floors"),
+            type: "strong",
+            link: ``,
+            key: "floors",
+          }
+        );
+      }
+
+      baseHeaders.push({
+        title: this.t("Operations"),
+        key: "actions",
+        sortable: false,
+        type: "strong",
+        link: "",
+      });
+      return baseHeaders;
     },
     filteredHouses() {
       return this.Houses.filter((House) => House.status !== "تم البيع");
@@ -1234,6 +1329,7 @@ export default {
           is_deleted: this.is_deleted,
         });
         this.table.Data = response.data.results.data;
+        console.log(this.table.Data);
         this.table.totalItems = response.data.results.count;
         this.table.loading = false;
       } catch (error) {
