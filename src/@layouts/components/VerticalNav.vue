@@ -86,8 +86,8 @@ if (r.type === "super_admin") {
 
 const accountType = localStorage.getItem("account_type");
 const results = JSON.parse(localStorage.getItem("results"));
-const buildingType = results.building_type;
-const centerId = results.center_id._id;
+const buildingType = results ? results.building_type : null;
+const centerId = results && results.center_id ? results.center_id._id : null;
 const pages = JSON.parse(localStorage.getItem("pages"));
 
 let filteredNavItems = props.navItems.filter((item) => {
@@ -97,9 +97,14 @@ let filteredNavItems = props.navItems.filter((item) => {
     item.building_type === "منازل وشقق" ||
     item.building_type === buildingType;
 
-  const matchesCenterId =
-    item.name !== "marketing Residentail" ||
-    ["663944d5260d48b0635862ad", "6638d6a4c8462a1d83346b54"].includes(centerId);
+  let matchesCenterId = true;
+  if (centerId) {
+    matchesCenterId =
+      item.name !== "marketing Residentail" ||
+      ["663944d5260d48b0635862ad", "6638d6a4c8462a1d83346b54"].includes(
+        centerId
+      );
+  }
 
   return matchesAccountType && matchesBuildingType && matchesCenterId;
 });
