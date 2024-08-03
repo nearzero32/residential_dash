@@ -1024,7 +1024,6 @@ class adminApi {
     owner_title_jop,
     bank_id,
     residence_card_issue_date,
-    another_owner,
   }) {
     const requestData = {
       name,
@@ -1048,7 +1047,6 @@ class adminApi {
       owner_title_jop,
       bank_id,
       residence_card_issue_date,
-      another_owner,
     };
     const response = await axiosInstance.post(`/owners`, requestData);
     return response;
@@ -1080,7 +1078,6 @@ class adminApi {
     owner_title_jop,
     bank_id,
     residence_card_issue_date,
-    another_owner,
   }) {
     const requestData = {
       owner_id,
@@ -1105,7 +1102,6 @@ class adminApi {
       owner_title_jop,
       bank_id,
       residence_card_issue_date,
-      another_owner,
     };
     const response = await axiosInstance.put(`/owners`, requestData);
     return response;
@@ -1117,6 +1113,97 @@ class adminApi {
     return response;
   }
   // Owners
+
+  // AnotherOwner
+  async getAnotherOwner({ id }) {
+    const response = await axiosInstance.get(
+      `/owners/another_owners/owner_id/${id}`
+    );
+    return response;
+  }
+  async addAnotherOwner({
+    owner_id,
+    name,
+    phone,
+    id_place_of_issue,
+    id_issue_date,
+    residence_card_number,
+    residence_card_issue_date,
+    residence_card_place_of_issue,
+    owner_title_jop,
+    id_img_front,
+    id_img_back,
+    location_img_front,
+    location_img_back,
+    passport_img,
+  }) {
+    const requestData = {
+      owner_id,
+      name,
+      phone,
+      id_place_of_issue,
+      id_issue_date,
+      residence_card_number,
+      residence_card_issue_date,
+      residence_card_place_of_issue,
+      owner_title_jop,
+      id_img_front,
+      id_img_back,
+      location_img_front,
+      location_img_back,
+      passport_img,
+    };
+    const response = await axiosInstance.post(
+      `/owners/another_owners`,
+      requestData
+    );
+    return response;
+  }
+  async editAnotherOwner({
+    id,
+    owner_id,
+    name,
+    phone,
+    id_place_of_issue,
+    id_issue_date,
+    residence_card_number,
+    residence_card_issue_date,
+    residence_card_place_of_issue,
+    owner_title_jop,
+    id_img_front,
+    id_img_back,
+    location_img_front,
+    location_img_back,
+    passport_img,
+  }) {
+    const requestData = {
+      owner_id,
+      name,
+      phone,
+      id_place_of_issue,
+      id_issue_date,
+      residence_card_number,
+      residence_card_issue_date,
+      residence_card_place_of_issue,
+      owner_title_jop,
+      id_img_front,
+      id_img_back,
+      location_img_front,
+      location_img_back,
+      passport_img,
+    };
+    const response = await axiosInstance.put(
+      `/owners/another_owners/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeAnotherOwner(id) {
+    const response = await axiosInstance.delete(`/owners/another_owners/${id}`);
+    return response;
+  }
+
+  // AnotherOwner
 
   // Units
   async getUnits({ page, limit, search, sortBy }) {

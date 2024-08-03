@@ -45,41 +45,41 @@ export default [
     target: "_blank",
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-cash-multiple" },
   },
   {
     title: "Apartment models",
     to: { name: "admin-show-apartment-models" },
     type: "admin",
     building_type: "شقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-home-city" },
   },
   {
     title: "House Models",
     to: { name: "admin-show-house-models" },
     type: "admin",
     building_type: "منازل",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-home-variant" },
   },
   {
     title: "Owners",
     to: { name: "admin-show-owners" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account-tie" },
   },
   {
     title: "Owners' visits",
     to: { name: "admin-show-owners-visits" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account-clock" },
   },
   {
     title: "Sales",
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-file-document-outline" },
+    icon: { icon: "mdi-sale" },
     children: [
       { title: "Sales staff", to: "admin-show-sales-staff" },
       { title: "Queries", to: "admin-show-queries" },
@@ -107,7 +107,7 @@ export default [
     type: "admin",
     name: "marketing Residentail",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-file-document-outline" },
+    icon: { icon: "mdi-home-city" },
     children: [
       { title: "Complexes", name: "show-units", to: "admin-show-units" },
       {
@@ -122,20 +122,20 @@ export default [
     to: { name: "admin-show-notifications" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-bell" },
   },
   {
     title: "Banks",
     to: { name: "admin-show-banks" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-bank" },
   },
   {
     title: "After-Sales Services",
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-file-document-outline" },
+    icon: { icon: "mdi-cogs" },
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
       { title: "Service Bookings", to: "admin-show-service-bookings" },
@@ -148,49 +148,49 @@ export default [
     to: { name: "admin-show-guards" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-shield-account" },
   },
   {
     title: "Staff",
     to: { name: "admin-show-staff" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account-group" },
   },
   {
     title: "Users",
     to: { name: "admin-show-users" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account" },
   },
   {
     title: "Advertisements",
     to: { name: "admin-show-advertisements" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-bullhorn" },
   },
   {
     title: "Features",
     to: { name: "admin-show-features" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-star" },
   },
   {
     title: "How did you hear about u",
     to: { name: "admin-show-how-did-you-hear-about-us" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-help-circle" },
   },
   {
     title: "Complaints",
     to: { name: "admin-show-complaints" },
     type: "admin",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-alert-circle" },
   },
   //admin
 
@@ -209,7 +209,7 @@ export default [
     type: "assistance",
     name: "forms-Apartments",
     building_type: "شقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-home-city" },
   },
   {
     title: "House Models",
@@ -217,7 +217,7 @@ export default [
     type: "assistance",
     name: "forms",
     building_type: "منازل",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-home-variant" },
   },
   {
     title: "Owners",
@@ -225,7 +225,7 @@ export default [
     type: "assistance",
     name: "owners",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account-tie" },
   },
   {
     title: "Owners' visits",
@@ -233,14 +233,14 @@ export default [
     type: "assistance",
     name: "visits",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account-clock" },
   },
   {
     title: "Sales",
     type: "assistance",
     name: "sales",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-file-document-outline" },
+    icon: { icon: "mdi-sale" },
     children: [
       {
         title: "Sales staff",
@@ -280,7 +280,7 @@ export default [
     type: "assistance",
     name: "marketing Residentail",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-file-document-outline" },
+    icon: { icon: "mdi-home-city" },
     children: [
       { title: "Complexes", name: "show-units", to: "admin-show-units" },
       {
@@ -296,7 +296,7 @@ export default [
     type: "assistance",
     name: "notifications",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-bell" },
   },
   {
     title: "Banks",
@@ -304,14 +304,14 @@ export default [
     type: "assistance",
     name: "bankAccounts",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-bank" },
   },
   {
     title: "After-Sales Services",
     type: "assistance",
     name: "After-sales-service",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-file-document-outline" },
+    icon: { icon: "mdi-cogs" },
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
       {
@@ -333,7 +333,7 @@ export default [
     type: "assistance",
     name: "guards",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-shield-account" },
   },
   {
     title: "Staff",
@@ -341,7 +341,7 @@ export default [
     type: "assistance",
     name: "employees",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-account-group" },
   },
   {
     title: "Advertisements",
@@ -349,7 +349,7 @@ export default [
     type: "assistance",
     name: "postings",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-bullhorn" },
   },
   {
     title: "Features",
@@ -357,7 +357,7 @@ export default [
     type: "assistance",
     name: "advantages",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-star" },
   },
   {
     title: "How did you hear about u",
@@ -365,7 +365,7 @@ export default [
     type: "assistance",
     name: "how_u_hear_about_us",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-help-circle" },
   },
   {
     title: "Complaints",
@@ -373,7 +373,7 @@ export default [
     type: "assistance",
     name: "complain",
     building_type: "منازل وشقق",
-    icon: { icon: "mdi-home-outline" },
+    icon: { icon: "mdi-alert-circle" },
   },
   //admin
 ];
