@@ -607,7 +607,6 @@
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.id_issue_date"
-                    :rules="Rules.id_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Identification Card')"
                     outlined
@@ -1149,7 +1148,6 @@ export default {
       try {
         const response = await adminApi.getAnotherOwner({ id: this.id });
         this.table.Data = response.data.results;
-        console.log(this.table.Data);
         this.table.loading = false;
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -1283,9 +1281,11 @@ export default {
             name: this.dataAdd.name,
             phone: this.dataAdd.phone,
             id_place_of_issue: this.dataAdd.id_place_of_issue,
-            id_issue_date: this.dataAdd.id_issue_date,
+            id_issue_date: this.format(this.dataAdd.id_issue_date),
             residence_card_number: this.dataAdd.residence_card_number,
-            residence_card_issue_date: this.dataAdd.residence_card_issue_date,
+            residence_card_issue_date: this.format(
+              this.dataAdd.residence_card_issue_date
+            ),
             residence_card_place_of_issue:
               this.dataAdd.residence_card_place_of_issue,
             owner_title_jop: this.dataAdd.owner_title_jop,
@@ -1334,6 +1334,34 @@ export default {
     // editItem
     editItem(item) {
       this.dialogEdit.editedItem = { ...item };
+
+      if (typeof this.dialogEdit.editedItem.id_issue_date === "string") {
+        const dateParts = this.dialogEdit.editedItem.id_issue_date.split("/");
+        if (dateParts.length === 3) {
+          const day = parseInt(dateParts[0], 10);
+          const month = parseInt(dateParts[1], 10) - 1;
+          const year = parseInt(dateParts[2], 10);
+          this.dialogEdit.editedItem.id_issue_date = new Date(year, month, day);
+        }
+      }
+
+      if (
+        typeof this.dialogEdit.editedItem.residence_card_issue_date === "string"
+      ) {
+        const dateParts =
+          this.dialogEdit.editedItem.residence_card_issue_date.split("/");
+        if (dateParts.length === 3) {
+          const day = parseInt(dateParts[0], 10);
+          const month = parseInt(dateParts[1], 10) - 1;
+          const year = parseInt(dateParts[2], 10);
+          this.dialogEdit.editedItem.residence_card_issue_date = new Date(
+            year,
+            month,
+            day
+          );
+        }
+      }
+
       this.dialogEdit.open = true;
     },
     async editItemConform() {
@@ -1349,11 +1377,14 @@ export default {
             name: this.dialogEdit.editedItem.name,
             phone: this.dialogEdit.editedItem.phone,
             id_place_of_issue: this.dialogEdit.editedItem.id_place_of_issue,
-            id_issue_date: this.dialogEdit.editedItem.id_issue_date,
+            id_issue_date: this.format(
+              this.dialogEdit.editedItem.id_issue_date
+            ),
             residence_card_number:
               this.dialogEdit.editedItem.residence_card_number,
-            residence_card_issue_date:
-              this.dialogEdit.editedItem.residence_card_issue_date,
+            residence_card_issue_date: this.format(
+              this.dialogEdit.editedItem.residence_card_issue_date
+            ),
             residence_card_place_of_issue:
               this.dialogEdit.editedItem.residence_card_place_of_issue,
             owner_title_jop: this.dialogEdit.editedItem.owner_title_jop,

@@ -432,7 +432,7 @@ export default {
     },
     goHouse(item) {
       localStorage.setItem("profileFloor", JSON.stringify(item));
-      this.$router.push(`/admin-profile-house/${this.id}`);
+      this.$router.push(`/admin-profile-house/${encodeURIComponent(this.id)}`);
     },
 
     // Get Data
@@ -513,7 +513,9 @@ export default {
     // editItem
     editItem(item) {
       localStorage.setItem("editForm", JSON.stringify(item));
-      this.$router.push(`/admin-edit-house-models/${item._id}`);
+      this.$router.push(
+        `/admin-edit-house-models/${encodeURIComponent(item._id)}`
+      );
     },
     // editItem
 

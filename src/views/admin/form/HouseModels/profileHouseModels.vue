@@ -376,7 +376,7 @@ export default {
     },
     goHouse(item) {
       localStorage.setItem("profileFloor", JSON.stringify(item));
-      this.$router.push(`/admin-profile-house/${this.id}`);
+      this.$router.push(`/admin-profile-house/${encodeURIComponent(this.id)}`);
     },
   },
 };
