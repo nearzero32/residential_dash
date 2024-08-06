@@ -124,7 +124,6 @@
                   <VueDatePicker
                     :format="format"
                     v-model="data.id_issue_date"
-                    :rules="Rules.id_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Identification Card')"
                     outlined
@@ -524,7 +523,6 @@
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.id_issue_date"
-                    :rules="Rules.id_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Identification Card')"
                     outlined
@@ -553,7 +551,6 @@
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.residence_card_issue_date"
-                    :rules="Rules.residence_card_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Residence Card')"
                     outlined

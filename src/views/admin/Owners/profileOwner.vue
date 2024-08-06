@@ -319,7 +319,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dataAdd.id_number"
                     :rules="Rules.id_number"
@@ -327,7 +327,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dataAdd.id_place_of_issue"
                     :rules="Rules.id_place_of_issue"
@@ -335,11 +335,13 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
+                  <VLabel
+                    >{{ t("Date of Issuance of the Identification Card") }}
+                  </VLabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dataAdd.id_issue_date"
-                    :rules="Rules.id_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Identification Card')"
                     outlined
@@ -347,7 +349,7 @@
                     dense
                   ></VueDatePicker>
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dataAdd.residence_card_number"
                     :rules="Rules.residence_card_number"
@@ -355,14 +357,18 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dataAdd.residence_card_place_of_issue"
                     :label="t('Issuing Authority of the Residence Card')"
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
+                  <VLabel
+                    >{{ t("Date of Issuance of the Residence Card") }}
+                  </VLabel>
+
                   <VueDatePicker
                     :format="format"
                     v-model="dataAdd.residence_card_issue_date"
@@ -373,7 +379,7 @@
                     dense
                   ></VueDatePicker>
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dataAdd.owner_title_jop"
                     :rules="Rules.owner_title_jop"
@@ -578,7 +584,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dialogEdit.editedItem.id_number"
                     :rules="Rules.id_number"
@@ -586,7 +592,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dialogEdit.editedItem.id_place_of_issue"
                     :rules="Rules.id_place_of_issue"
@@ -594,7 +600,10 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
+                  <Vlabel
+                    >{{ t("Date of Issuance of the Identification Card") }}
+                  </Vlabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.id_issue_date"
@@ -606,7 +615,7 @@
                     dense
                   ></VueDatePicker>
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dialogEdit.editedItem.residence_card_number"
                     :rules="Rules.residence_card_number"
@@ -614,7 +623,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="
                       dialogEdit.editedItem.residence_card_place_of_issue
@@ -623,7 +632,10 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
+                  <Vlabel
+                    >{{ t("Date of Issuance of the Residence Card") }}
+                  </Vlabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.residence_card_issue_date"
@@ -634,7 +646,7 @@
                     dense
                   ></VueDatePicker>
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                   <VTextField
                     v-model="dialogEdit.editedItem.owner_title_jop"
                     :rules="Rules.owner_title_jop"
@@ -869,12 +881,19 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const format = (date) => {
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
 
+      return `${day}/${month}/${year}`;
+    };
     return {
+      format,
       t,
       // nav
       page: {
-        title: "Profile",
+        title: "Owners",
       },
       b: [
         {
@@ -884,11 +903,6 @@ export default {
         },
         {
           text: "Owners",
-          disabled: false,
-          to: "/admin-show-owners",
-        },
-        {
-          text: "Profile",
           disabled: true,
         },
       ],
