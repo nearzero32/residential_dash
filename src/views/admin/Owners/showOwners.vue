@@ -594,7 +594,9 @@
                     outlined
                     :item-title="
                       (item) =>
-                        `${item.exact_apartment_building} - ${item.name}`
+                        item.exact_apartment_building
+                          ? `${item.exact_apartment_building} - ${item.name}`
+                          : item.name
                     "
                     item-value="_id"
                     attach
@@ -1557,6 +1559,7 @@ export default {
       if (this.building_type == "شقق") {
         return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
       } else if (this.building_type == "منازل") {
+        console.log(item);
         return `منزل ( ${item.name} ) الحالة  (${item.status})`;
       }
     },
