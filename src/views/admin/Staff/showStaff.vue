@@ -76,7 +76,7 @@
                   <VTextField
                     v-model="data.name"
                     :rules="Rules.name"
-                    :label="t('Guard Name')"
+                    :label="t('The name')"
                     outlined
                   />
                 </VCol>
@@ -152,7 +152,7 @@
                   <VTextField
                     v-model="dialogEdit.editedItem.name"
                     :rules="Rules.name"
-                    :label="t('Guard Name')"
+                    :label="t('The name')"
                     outlined
                   />
                 </VCol>

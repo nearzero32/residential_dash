@@ -59,7 +59,10 @@ const store = createStore({
         localStorage.setItem("accessToken", response.data.results.token);
         localStorage.setItem("account_type", response.data.results.type);
         localStorage.setItem("results", JSON.stringify(response.data.results));
-        localStorage.setItem("pages", JSON.stringify(response.data.results.pages));
+        localStorage.setItem(
+          "pages",
+          JSON.stringify(response.data.results.pages)
+        );
         if (
           response.data.results.center_id &&
           response.data.results.center_id.logo !== null
@@ -87,20 +90,28 @@ const store = createStore({
             if (response.data.results.pages[1] == "sells-employee") {
               router.push(this.returnUrl || "/admin-show-sales-staff");
             } else if (response.data.results.pages[1] == "call-center") {
-              router.push(this.returnUrl || "/admin-show-customer-attendance-form");
+              router.push(
+                this.returnUrl || "/admin-show-customer-attendance-form"
+              );
             } else if (response.data.results.pages[1] == "inquiries") {
               router.push(this.returnUrl || "/admin-show-queries");
             } else if (response.data.results.pages[1] == "application-form") {
               router.push(this.returnUrl || "/admin-show-application-form");
             } else if (response.data.results.pages[1] == "confirmations-form") {
-              router.push(this.returnUrl || "/admin-show-approval-request-form");
+              router.push(
+                this.returnUrl || "/admin-show-approval-request-form"
+              );
             } else if (response.data.results.pages[1] == "reservations") {
-              router.push(this.returnUrl || "/admin-show-residential-unit-requests");
+              router.push(
+                this.returnUrl || "/admin-show-residential-unit-requests"
+              );
             }
           } else if (pages == "notifications") {
             router.push(this.returnUrl || "/admin-show-notifications");
-          } else if (pages == "After-sales-service") {
-            if (response.data.results.pages[1] == "reservation-service") {
+          } else if (pages == "notifications") {
+            router.push(this.returnUrl || "/admin-show-notifications");
+          } else if (pages == "marketing Residentail") {
+            if (response.data.results.pages[1] == "admin-show-units") {
               router.push(this.returnUrl || "/admin-show-service-bookings");
             } else if (response.data.results.pages[1] == "services") {
               router.push(this.returnUrl || "/admin-show-services");
@@ -116,7 +127,9 @@ const store = createStore({
           } else if (pages == "advantages") {
             router.push(this.returnUrl || "/admin-show-features");
           } else if (pages == "how_u_hear_about_us") {
-            router.push(this.returnUrl || "/admin-show-how-did-you-hear-about-us");
+            router.push(
+              this.returnUrl || "/admin-show-how-did-you-hear-about-us"
+            );
           } else if (pages == "complain") {
             router.push(this.returnUrl || "/admin-show-complaints");
           }
@@ -166,15 +179,21 @@ const store = createStore({
             if (response.data.results.pages[1] == "sells-employee") {
               router.push(this.returnUrl || "/admin-show-sales-staff");
             } else if (response.data.results.pages[1] == "call-center") {
-              router.push(this.returnUrl || "/admin-show-customer-attendance-form");
+              router.push(
+                this.returnUrl || "/admin-show-customer-attendance-form"
+              );
             } else if (response.data.results.pages[1] == "inquiries") {
               router.push(this.returnUrl || "/admin-show-queries");
             } else if (response.data.results.pages[1] == "application-form") {
               router.push(this.returnUrl || "/admin-show-application-form");
             } else if (response.data.results.pages[1] == "confirmations-form") {
-              router.push(this.returnUrl || "/admin-show-approval-request-form");
+              router.push(
+                this.returnUrl || "/admin-show-approval-request-form"
+              );
             } else if (response.data.results.pages[1] == "reservations") {
-              router.push(this.returnUrl || "/admin-show-residential-unit-requests");
+              router.push(
+                this.returnUrl || "/admin-show-residential-unit-requests"
+              );
             }
           } else if (pages == "notifications") {
             router.push(this.returnUrl || "/admin-show-notifications");
@@ -195,7 +214,9 @@ const store = createStore({
           } else if (pages == "advantages") {
             router.push(this.returnUrl || "/admin-show-features");
           } else if (pages == "how_u_hear_about_us") {
-            router.push(this.returnUrl || "/admin-show-how-did-you-hear-about-us");
+            router.push(
+              this.returnUrl || "/admin-show-how-did-you-hear-about-us"
+            );
           } else if (pages == "complain") {
             router.push(this.returnUrl || "/admin-show-complaints");
           }

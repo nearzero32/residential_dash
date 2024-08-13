@@ -76,7 +76,7 @@
                   <VTextField
                     v-model="data.name"
                     :rules="Rules.name"
-                    :label="t('Guard Name')"
+                    :label="t('The name')"
                     outlined
                   />
                 </VCol>
@@ -173,7 +173,7 @@
                   <VTextField
                     v-model="dialogEdit.editedItem.name"
                     :rules="Rules.name"
-                    :label="t('Guard Name')"
+                    :label="t('The name')"
                     outlined
                   />
                 </VCol>
@@ -508,6 +508,11 @@ export default {
         },
         { text: this.t("Approval Request Form"), value: "confirmations-form" },
         { text: this.t("Residential Unit Requests"), value: "reservations" },
+        { text: this.t("Sales Contracts"), value: "salesContracts" },
+        {
+          text: this.t("marketing Residentail"),
+          value: "marketing Residentail",
+        },
 
         { text: this.t("Notifications"), value: "notifications" },
         { text: this.t("Banks"), value: "bankAccounts" },

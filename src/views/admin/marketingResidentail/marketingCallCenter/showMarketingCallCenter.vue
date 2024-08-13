@@ -21,7 +21,25 @@
             >
               {{ t("Addition") }}
             </VBtn>
+            <VBtn
+              style="margin-inline: 10px"
+              tile
+              color="success"
+              prepend-icon="fa-download"
+              :loading="xlsxData.listLoading"
+              @click="getAllDataAxios"
+            >
+              تحميل اكسل
+            </VBtn>
           </VCol>
+        </VRow>
+      </VCardText>
+    </VCard>
+
+    <VCard class="mb-6">
+      <VCardTitle style="text-align: center">{{ t("Filter") }}</VCardTitle>
+      <VCardText>
+        <VRow style="justify-content: space-between">
           <VCol cols="12" md="4" style="text-align: center">
             <VAutocomplete
               v-model="residential_id"
@@ -251,6 +269,7 @@ import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
 import Table from "@/components/table.vue";
 import numberWithComma from "@/constant/number";
+import * as XLSX from "xlsx";
 
 export default {
   components: {
@@ -298,6 +317,14 @@ export default {
       },
       userData: [],
       // table
+
+      // xlsx
+      xlsxData: {
+        allData: [],
+        listLoading: false,
+        filename: `مركز الاتصال.xlsx`,
+      },
+      // xlsx
 
       // add
       addDialog: {
@@ -469,6 +496,93 @@ export default {
       }
     },
     // Get Data
+
+    // Download Excel
+    async getAllDataAxios() {
+      this.xlsxData.listLoading = true;
+      const key =
+        this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+          ? this.tableOptions.sortBy[0]
+          : "createdAt";
+      const order =
+        this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+          ? this.tableOptions.sortDesc[0]
+            ? "desc"
+            : "asc"
+          : "desc";
+
+      const sortByJSON = JSON.stringify({ key, order });
+
+      try {
+        const response = await adminApi.getMarketingCallCenter({
+          page: 1,
+          limit: 999999999999999,
+          search: null,
+          sortBy: sortByJSON,
+          residential_id: this.residential_id,
+        });
+        this.xlsxData.allData = response.data.results.data;
+        this.handleDownload();
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.xlsxData.downloadLoading = false;
+          this.showDialogfunction("حصلت مشكلة يرجى المحاولة مجددا", "#FF5252");
+        } else {
+          console.error(error);
+          this.showDialogfunction("حدث خطأ غير متوقع", "#FF5252");
+        }
+      } finally {
+        this.xlsxData.listLoading = false;
+      }
+    },
+    async handleDownload() {
+      const header = ["الأسم", "رقم الهاتف", "المبلغ", "المجمع"];
+
+      const dataForExcel = [
+        header,
+        ...this.xlsxData.allData.map((item) => [
+          item.name,
+          item.phone,
+          this.numberWithComma(item.money),
+          item.residential_units_name,
+        ]),
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(dataForExcel);
+
+      ws["!cols"] = [
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+        { wch: 30 },
+      ];
+
+      const headerStyle = {
+        font: { bold: true, color: { rgb: "#9155fd" } },
+        fill: { fgColor: { rgb: "0000FF" } },
+      };
+
+      header.forEach((col, index) => {
+        const cellAddress = XLSX.utils.encode_cell({ r: 0, c: index });
+        if (!ws[cellAddress]) ws[cellAddress] = { t: "s", v: col };
+        ws[cellAddress].s = headerStyle;
+      });
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      this.xlsxData.listLoading = false;
+
+      XLSX.writeFile(wb, this.xlsxData.filename);
+    },
+    // Download Excel
 
     // Add Data
     async addCenter() {
