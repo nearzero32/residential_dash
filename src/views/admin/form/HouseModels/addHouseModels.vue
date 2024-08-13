@@ -1125,8 +1125,6 @@ export default {
     // Add Data
     async addCenter() {
       this.saveLoading = true;
-      console.log(this.data.Spaces);
-
       if (this.data.Spaces.length <= 0) {
         this.saveLoading = false;
         this.showDialogfunction(

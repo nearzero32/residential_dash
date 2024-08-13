@@ -1007,7 +1007,6 @@ export default {
 
         return formattedData;
       });
-      console.log(this.data.BuildingNames);
       try {
         const response = await adminApi.editApartment({
           id: this.editApartmentsModels._id,

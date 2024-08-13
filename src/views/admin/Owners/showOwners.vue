@@ -1328,7 +1328,6 @@ export default {
           is_deleted: this.is_deleted,
         });
         this.table.Data = response.data.results.data;
-        console.log(this.table.Data);
         this.table.totalItems = response.data.results.count;
         this.table.loading = false;
       } catch (error) {
@@ -1559,7 +1558,6 @@ export default {
       if (this.building_type == "شقق") {
         return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
       } else if (this.building_type == "منازل") {
-        console.log(item);
         return `منزل ( ${item.name} ) الحالة  (${item.status})`;
       }
     },
@@ -1628,6 +1626,7 @@ export default {
             this.showDialogfunction(error.response.data.message, "#FF5252");
           } else {
             this.addDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.addDialog.saveLoading = false;

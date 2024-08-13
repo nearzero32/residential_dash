@@ -7,26 +7,65 @@
     <br />
     <br />
     <v-form v-model="isFormValidAdd" :loading="loading">
-      <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="500" rounded="lg">
+      <v-card
+        class="mx-auto pa-12 pb-8"
+        elevation="8"
+        max-width="500"
+        rounded="lg"
+      >
+        <v-card-title style="text-align: center">
+          <div v-if="url == 'admin.alfakhertowers.com'">
+            تسجيل الدخول الى ابراج الفاخر السكني
+          </div>
+          <div v-else-if="url == 'admin.alrawan.net'">
+            تسجيل الدخول الى مجمع الروان السكني
+          </div>
+          <div v-else>تسجيل الدخول</div>
+        </v-card-title>
+        <hr />
+        <br />
         <div class="text-subtitle-1 text-medium-emphasis">
           البريد الألكتروني
         </div>
 
-        <v-text-field density="compact" v-model="data.email" :rules="Rules.email" placeholder="البريد الألكتروني"
-          prepend-inner-icon="mdi-email-outline" variant="outlined"></v-text-field>
+        <v-text-field
+          density="compact"
+          v-model="data.email"
+          :rules="Rules.email"
+          placeholder="البريد الألكتروني"
+          prepend-inner-icon="mdi-email-outline"
+          variant="outlined"
+        ></v-text-field>
         <br />
-        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+        <div
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        >
           كلمة المرور
         </div>
 
-        <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
-          density="compact" v-model="data.password" :rules="Rules.password" placeholder="كلمة المرور"
-          prepend-inner-icon="mdi-lock-outline" variant="outlined"
-          @click:append-inner="visible = !visible"></v-text-field>
+        <v-text-field
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          density="compact"
+          v-model="data.password"
+          :rules="Rules.password"
+          placeholder="كلمة المرور"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          @click:append-inner="visible = !visible"
+        ></v-text-field>
         <br />
 
-        <v-btn class="mb-8" @click="login" color="blue" size="large" variant="tonal" block :disabled="!isFormValidAdd"
-          :loading="loading">
+        <v-btn
+          class="mb-8"
+          @click="login"
+          color="blue"
+          size="large"
+          variant="tonal"
+          block
+          :disabled="!isFormValidAdd"
+          :loading="loading"
+        >
           تسجيل الدخول
         </v-btn>
       </v-card>
@@ -61,6 +100,7 @@ export default {
     }),
   },
   data: () => ({
+    url: localStorage.getItem("currentPath"),
     visible: false,
     isFormValidAdd: false,
     loading: false,

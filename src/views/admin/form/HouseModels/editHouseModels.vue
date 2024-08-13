@@ -792,7 +792,6 @@ export default {
             };
           });
         });
-        console.log(this.data.houses);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");

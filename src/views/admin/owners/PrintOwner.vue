@@ -1,53 +1,91 @@
 <template>
   <div>
     <v-container id="pri" v-if="loading == false">
-      <v-card style="
+      <v-card
+        style="
           height: 100vh;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-        ">
+        "
+      >
         <v-card-title>
-          <v-row style="
+          <v-row
+            style="
               display: flex;
               flex-direction: row;
               justify-content: space-around;
               align-items: center;
-            " v-if="user.center_id &&
-      user.center_id._id !== '66656b164cdec95cab679181'
-      ">
-            <v-col cols="3" md="3" style="padding: 10px; text-align: right; white-space: pre-wrap">
+            "
+            v-if="
+              user.center_id &&
+              user.center_id._id !== '66656b164cdec95cab679181'
+            "
+          >
+            <v-col
+              cols="3"
+              md="3"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+            >
               <p style="font-size: 14px">
                 <strong>{{ dataResidential.center_id.name }}</strong>
               </p>
             </v-col>
-            <v-col cols="6" md="6" style="padding: 10px; text-align: center; white-space: pre-wrap">
-              <div style="
+            <v-col
+              cols="6"
+              md="6"
+              style="padding: 10px; text-align: center; white-space: pre-wrap"
+            >
+              <div
+                style="
                   background-color: #ffd147;
                   padding: 10px;
                   border-radius: 10px;
-                ">
-                <strong style="font-size: 14px">المالك ( {{ data.name }} )</strong>
+                "
+              >
+                <strong style="font-size: 14px"
+                  >المالك ( {{ data.name }} )</strong
+                >
               </div>
             </v-col>
             <v-col cols="3" md="3" style="text-align: center">
-              <img :src="dataResidential.content_url + dataResidential.center_id.logo
-      " style="width: 80px" alt="" />
+              <img
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.logo
+                "
+                style="width: 80px"
+                alt=""
+              />
             </v-col>
           </v-row>
           <div v-else>
-            <v-row style="
+            <v-row
+              style="
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
                 align-items: center;
-              ">
-              <v-col cols="3" md="3" style="padding: 10px; text-align: center; white-space: pre-wrap">
+              "
+            >
+              <v-col
+                cols="3"
+                md="3"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
                 <img :src="logo1" style="width: 60px" alt="" />
               </v-col>
-              <v-col cols="6" md="6" style="padding: 10px; text-align: center; white-space: pre-wrap">
-                <img :src="dataResidential.content_url + dataResidential.center_id.logo
-      " style="width: 80px" alt="" />
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.logo
+                  "
+                  style="width: 80px"
+                  alt=""
+                />
               </v-col>
               <v-col cols="3" md="3" style="text-align: center">
                 <img :src="logo2" style="width: 60px" alt="" />
@@ -58,12 +96,14 @@
           </div>
         </v-card-title>
         <v-container style="padding-block: 0px; height: 100%">
-          <v-row style="
+          <v-row
+            style="
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
-            ">
+            "
+          >
             <v-col cols="12" md="12">
               <div>
                 <p style="margin-bottom: 0px">أسم المالك : {{ data.name }}</p>
@@ -80,7 +120,10 @@
                   اسم الوحدة السكنية : {{ data.house_name }}
                 </p>
               </div>
-              <div v-if="data.another_owner && data.another_owner.name !== null" style="width: 100%">
+              <div
+                v-if="data.another_owner && data.another_owner.name !== null"
+                style="width: 100%"
+              >
                 <hr style="width: 100%" />
                 <p>تفاصيل المالك الثاني :-</p>
                 <p>العنوان : {{ data.another_owner.address }}</p>
@@ -104,41 +147,55 @@
                 </p>
               </div>
             </v-col>
-            <v-col cols="12" md="12" v-if="user.center_id &&
-      user.center_id._id == '66656b164cdec95cab679181'
-      ">
+            <v-col
+              cols="12"
+              md="12"
+              v-if="
+                user.center_id &&
+                user.center_id._id == '66656b164cdec95cab679181'
+              "
+            >
               <hr style="width: 100%" />
               <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الروان،</p>
               <p style="margin-bottom: 0px">
                 يمكنكم الآن تحميل تطبيق مجمع الروان السكني وبدء استخدامه باتباع
                 الخطوات التالية:
               </p>
-              <p style="
+              <p
+                style="
                   text-align: center;
                   background-color: #163d68;
                   color: white;
                   padding: 0px 20px;
                   border-radius: 10px;
                   margin-bottom: 0px;
-                ">
+                "
+              >
                 لتحميل التطبيق:
               </p>
               <p style="margin-bottom: 0px">
                 - الرجاء تصوير رمز الاستجابة السريعة (QR) المرفق لتحميل التطبيق.
               </p>
               <div style="text-align: center; margin-block: 10px">
-                <img style="width: 120px" :src="dataResidential.content_url + dataResidential.center_id.qr
-      " alt="" />
+                <img
+                  style="width: 120px"
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.qr
+                  "
+                  alt=""
+                />
               </div>
 
-              <p style="
+              <p
+                style="
                   text-align: center;
                   background-color: #163d68;
                   color: white;
                   padding: 0px 20px;
                   border-radius: 10px;
                   margin-bottom: 0px;
-                ">
+                "
+              >
                 لتسجيل الدخول:
               </p>
               <p style="margin-bottom: 0px">
@@ -181,39 +238,52 @@
                 شؤونكم اليومية.
               </p>
             </v-col>
-            <v-col cols="12" md="12" v-else-if="user.center_id._id == '66393d1a260d48b063586101'">
+            <v-col
+              cols="12"
+              md="12"
+              v-else-if="user.center_id._id == '66393d1a260d48b063586101'"
+            >
               <hr style="width: 100%" />
               <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الفاخر</p>
               <p style="margin-bottom: 0px">
                 يمكنكم الآن تحميل تطبيق مجمع الفاخر السكني وبدء استخدامه باتباع
                 الخطوات التالية:
               </p>
-              <p style="
+              <p
+                style="
                   text-align: center;
                   background-color: #163d68;
                   color: white;
                   padding: 0px 20px;
                   border-radius: 10px;
                   margin-bottom: 0px;
-                ">
+                "
+              >
                 لتحميل التطبيق:
               </p>
               <p style="margin-bottom: 0px">
                 - الرجاء تصوير رمز الاستجابة السريعة (QR) المرفق لتحميل التطبيق.
               </p>
               <div style="text-align: center; margin-block: 10px">
-                <img style="width: 120px" :src="dataResidential.content_url + dataResidential.center_id.qr
-      " alt="" />
+                <img
+                  style="width: 120px"
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.qr
+                  "
+                  alt=""
+                />
               </div>
 
-              <p style="
+              <p
+                style="
                   text-align: center;
                   background-color: #163d68;
                   color: white;
                   padding: 0px 20px;
                   border-radius: 10px;
                   margin-bottom: 0px;
-                ">
+                "
+              >
                 لتسجيل الدخول:
               </p>
               <p style="margin-bottom: 0px">
@@ -261,22 +331,46 @@
         </v-container>
         <v-container>
           <hr />
-          <v-row style="
+          <v-row
+            style="
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
-            ">
-            <v-col cols="6" md="6" style="padding: 10px; text-align: right; white-space: pre-wrap"
-              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"><v-icon size="20"> mdi-phone
-              </v-icon>4646</v-col>
-            <v-col cols="6" md="6" style="padding: 10px; text-align: right; white-space: pre-wrap" v-else><v-icon
-                size="20"> mdi-phone </v-icon>{{ dataResidential.center_id.phone }}</v-col>
-            <v-col cols="6" md="6" v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
-              style="padding: 10px; text-align: left; white-space: pre-wrap">
-              العراق – السماوة<br /><a href="mailto:info@nahdda.com">info@nahdda.com</a></v-col>
-            <v-col cols="6" md="6" v-else style="padding: 10px; text-align: left; white-space: pre-wrap">{{
-      dataResidential.center_id.address }}</v-col>
+            "
+          >
+            <v-col
+              cols="6"
+              md="6"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
+              ><v-icon size="20"> mdi-phone </v-icon>4646</v-col
+            >
+            <v-col
+              cols="6"
+              md="6"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+              v-else
+              ><v-icon size="20"> mdi-phone </v-icon
+              >{{ dataResidential.center_id.phone }}</v-col
+            >
+            <v-col
+              cols="6"
+              md="6"
+              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
+              style="padding: 10px; text-align: left; white-space: pre-wrap"
+            >
+              العراق – السماوة<br /><a href="mailto:info@nahdda.com"
+                >info@nahdda.com</a
+              ></v-col
+            >
+            <v-col
+              cols="6"
+              md="6"
+              v-else
+              style="padding: 10px; text-align: left; white-space: pre-wrap"
+              >{{ dataResidential.center_id.address }}</v-col
+            >
           </v-row>
         </v-container>
       </v-card>
@@ -306,7 +400,6 @@ export default {
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
-    console.log(this.dataResidential)
     this.user = userDataString;
     this.getCenter();
   },
