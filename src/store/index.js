@@ -10,6 +10,7 @@ const store = createStore({
     lan: localStorage.getItem("selectedLanguage") || "ar",
     logo: localStorage.getItem("logo"),
     Message: false,
+    currentPath: "",
   },
   mutations: {
     SET_AUTHENTICATED(state, payload) {
@@ -24,8 +25,16 @@ const store = createStore({
     SET_LOGO(state, logo) {
       state.logo = logo;
     },
+    SET_CURRENT_PATH(state, path) {
+      state.currentPath = path;
+    },
   },
   actions: {
+    checkCurrentPath({ commit }) {
+      const currentPath = window.location;
+      console.log("currentPath", currentPath);
+      commit("SET_CURRENT_PATH", currentPath);
+    },
     checkAuth() {
       const rawData = localStorage.getItem("results");
       if (rawData == null) {
