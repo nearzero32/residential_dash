@@ -160,7 +160,7 @@ const store = createStore({
               }
             }
           } else {
-            commit("SET_EREORM", "حطأ, الرجاء ادخال حساب مجمع الروان");
+            commit("SET_EREORM", "خطأ, الرجاء ادخال حساب مجمع الروان");
           }
         } else if (currentPath == "admin.alfakhertowers.com") {
           if (
@@ -259,7 +259,7 @@ const store = createStore({
               }
             }
           } else {
-            commit("SET_EREORM", "حطأ, الرجاء ادخال حساب مجمع الفاخر");
+            commit("SET_EREORM", "خطأ, الرجاء ادخال حساب مجمع الفاخر");
           }
         } else {
           commit("SET_AUTHENTICATED", true);
