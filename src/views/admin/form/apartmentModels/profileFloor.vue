@@ -38,7 +38,7 @@
         <strong>رقم الطابق : ( {{ data.apartment_floor_number }} )</strong>
         <br />
         <br />
-        <strong>مساحة الأرض : ( {{ data.total_space }} )</strong>
+        <strong>المساحة الكلية : ( {{ data.total_space }} )</strong>
         <br />
         <br />
         <strong>مساحة البناء : ( {{ data.building_space }} )</strong>

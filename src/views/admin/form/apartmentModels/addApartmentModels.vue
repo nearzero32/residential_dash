@@ -165,7 +165,7 @@
                       <v-row style="align-items: center">
                         <v-col cols="12" md="5" style="padding: 10px">
                           <v-label class="mb-2 font-weight-medium">{{
-                            t("Land area")
+                            t("Total area")
                           }}</v-label>
                           <v-text-field
                             variant="outlined"
@@ -734,7 +734,7 @@ export default {
         });
       } else {
         this.showDialogfunction(
-          this.t("The building area and land area must be entered."),
+          this.t("The building area and Total area must be entered."),
           "#FF5252"
         );
       }

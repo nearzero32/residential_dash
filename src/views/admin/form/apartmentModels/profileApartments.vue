@@ -23,7 +23,7 @@
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
-              <strong>مساحة الأرض <br />( {{ data.total_space }} )</strong>
+              <strong>المساحة الكلية <br />( {{ data.total_space }} )</strong>
             </h5>
             <img style="width: 70px; margin-block: 12px" :src="space" alt="" />
           </v-card-text>
@@ -122,7 +122,7 @@
         >
           <VCardText>
             <strong
-              >{{ ind + 1 }} - ( مساحة الأرض {{ space.total_space }} - مساحة
+              >{{ ind + 1 }} - ( المساحة الكلية {{ space.total_space }} - مساحة
               البناء {{ space.building_space }} )</strong
             >
             <VContainer>

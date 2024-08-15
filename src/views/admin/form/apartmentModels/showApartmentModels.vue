@@ -209,7 +209,7 @@ export default {
           key: "building_space",
         },
         {
-          title: this.t("Land areas"),
+          title: this.t("Total area"),
           type: "strong",
           link: ``,
           key: "total_space",
