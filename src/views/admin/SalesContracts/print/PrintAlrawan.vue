@@ -101,6 +101,137 @@
           </v-container>
         </v-card>
       </v-card>
+      <v-card
+        class="gd"
+        :style="`background-position: center;background-repeat: no-repeat;background-size: auto;`"
+      >
+        <v-card
+          style="
+            background-color: rgb(255 255 255 / 85%);
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          "
+        >
+          <v-container style="height: auto">
+            <div class="diss" style="height: auto">
+              <div style="height: 100%">
+                <h3>المساحة : {{ data.house_total_space }}</h3>
+                <br />
+                <h3>
+                  سعر المتر :
+                  {{ numberWithComma(data.price_for_one_square_meter) }}
+                </h3>
+                <br />
+                <h3>
+                  السعر الاجمالي : {{ numberWithComma(data.salary_amount) }}
+                </h3>
+                <br />
+                <table
+                  border="1"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    margin-bottom: 100px;
+                    border-collapse: collapse;
+                  "
+                >
+                  <thead>
+                    <tr style="background-color: rgb(217 217 217)">
+                      <th>رقم الدفعة</th>
+                      <th>تاريخ الاستحقاق</th>
+                      <th>مقدار الدفعة رقما</th>
+                      <th>مقدار الدفعة كتابة</th>
+                      <th>الملاحظات</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(salary_payment, index) in sortedSalaryPayments"
+                      :key="index"
+                    >
+                      <td
+                        style="background-color: rgb(217 217 217)"
+                        v-if="salary_payment.payment_position == 'مقدم'"
+                      >
+                        دفعة المقدمة
+                      </td>
+                      <td
+                        style="background-color: rgb(217 217 217)"
+                        v-else-if="
+                          salary_payment.payment_position == 'دفعة الهيكل'
+                        "
+                      >
+                        دفعة الهيكل
+                      </td>
+                      <td
+                        style="background-color: rgb(217 217 217)"
+                        v-else-if="
+                          salary_payment.payment_position == 'اخر دفعة'
+                        "
+                      >
+                        الدفعة (دفعة التسليم)
+                      </td>
+                      <td style="background-color: rgb(217 217 217)" v-else>
+                        الدفعة ({{ getAdjustedIndex(index) }})
+                      </td>
+                      <td>{{ salary_payment.date }}</td>
+                      <td>{{ numberWithComma(salary_payment.amount) }}</td>
+                      <td>{{ salary_payment.amount_written }}</td>
+                      <td>{{ salary_payment.desc }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div style="width: 100%; height: 200px; border: solid 1px black">
+              * ملاحظه
+            </div>
+          </v-container>
+          <v-container>
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="
+                  padding: 10px;
+                  text-align: right;
+                  white-space: pre-wrap;
+                  padding-right: 80px;
+                "
+                ><h3>الطرف الاول</h3></v-col
+              >
+              <v-col
+                cols="6"
+                md="6"
+                style="
+                  padding: 10px;
+                  text-align: left;
+                  white-space: pre-wrap;
+                  padding-left: 80px;
+                "
+              >
+                <h3>الطرف الثاني</h3></v-col
+              >
+            </v-row>
+
+            <img :src="rrr" style="width: 100%" alt="" />
+          </v-container>
+        </v-card>
+      </v-card>
+
       <v-card class="gdd">
         <v-card
           style="
