@@ -158,7 +158,10 @@
                         {{ item.name }}
                       </v-btn>
                     </template>
-                    <span>{{ item.status }}</span>
+                    <span
+                      >الحالة : {{ item.status }} <br />اسم المالك :
+                      {{ item.current_owner_name }}</span
+                    >
                   </VTooltip>
                 </v-item>
               </v-item-group>
@@ -319,8 +322,7 @@ export default {
 
     // Go To Page
     goHouse(item) {
-      localStorage.setItem("profileFloor", JSON.stringify(item));
-      this.$router.push(`/admin-show-profile-floor`);
+      this.$router.push(`/admin-show-profile-floor/${item._id}`);
     },
     // Go To Page
 

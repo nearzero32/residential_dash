@@ -29,13 +29,29 @@
 
     <VCard class="mb-6">
       <VCardText>
-        <strong>{{ t("Apartment number") }} : ( {{ data.name }} )</strong>
+        <strong v-if="data.current_owner && data.current_owner.name"
+          >اسم المالك : ( {{ data.current_owner.name }} )</strong
+        >
+        <br />
+        <br />
+        <strong v-if="data.current_owner && data.current_owner.phone"
+          >هاتف المالك : ( {{ data.current_owner.phone }} )</strong
+        >
+        <br />
+        <br />
+        <strong>اسم النموذج : ( {{ data.form_name }} )</strong>
+        <br />
+        <br />
+        <strong>كود النموذج : ( {{ data.form_code }} )</strong>
         <br />
         <br />
         <strong>اسم العمارة : ( {{ data.exact_apartment_building }} )</strong>
         <br />
         <br />
         <strong>رقم الطابق : ( {{ data.apartment_floor_number }} )</strong>
+        <br />
+        <br />
+        <strong>رقم الشقة : ( {{ data.name }} )</strong>
         <br />
         <br />
         <strong>المساحة الكلية : ( {{ data.total_space }} )</strong>
@@ -82,8 +98,34 @@
         >
         <br />
         <br />
-        <v-container>
-          <strong> {{ t("Apartment components") }} </strong>
+        <v-container v-if="data.form_images">
+          <strong> صور النموذج: </strong>
+          <br />
+          <br />
+          <div>
+            <v-carousel progress-color="primary" hide-delimiters>
+              <v-carousel-item
+                v-for="(img, inde) in data.form_images"
+                :key="inde"
+              >
+                <v-sheet height="100%">
+                  <div class="d-flex fill-height justify-center align-center">
+                    <img
+                      style="width: 100%; height: 100%"
+                      :src="content_url + img"
+                      alt=""
+                    />
+                  </div>
+                </v-sheet>
+              </v-carousel-item>
+            </v-carousel>
+          </div>
+
+          <br />
+          <br />
+          <strong> {{ t("Apartment components") }}: </strong>
+          <br />
+          <br />
           <v-row v-for="(room, indR) in data.rooms" :key="indR">
             <v-col cols="12" md="4" style="padding: 10px">
               <v-card
@@ -184,8 +226,9 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      data: JSON.parse(localStorage.getItem("profileFloor")),
+      data: {},
       loading: false,
+      id: this.$route.params.id,
 
       // message
       dialogData: {
@@ -196,7 +239,29 @@ export default {
       // message
     };
   },
+  created() {
+    this.getApartmentHouse();
+  },
+
   methods: {
+    // Get Data
+    async getApartmentHouse() {
+      try {
+        this.loading = true;
+        const response = await adminApi.getApartmentHouse(this.id);
+        this.data = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
+    // Get Data
+
     async cancelPayingHouse() {
       try {
         this.loading = true;

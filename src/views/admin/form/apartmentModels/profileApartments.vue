@@ -174,6 +174,10 @@
                         الطابق ( {{ item.apartment_floor_number }} )
                         <br />
                         الحالة ( {{ item.status }} )
+                        <br />
+                        <span v-if="item.current_owner_name"
+                          >اسم المالك ( {{ item.current_owner_name }} )</span
+                        >
                       </span>
                     </VTooltip>
                   </v-item>
@@ -335,8 +339,7 @@ export default {
       }
     },
     goHouse(item) {
-      localStorage.setItem("profileFloor", JSON.stringify(item));
-      this.$router.push(`/admin-show-profile-floor`);
+      this.$router.push(`/admin-show-profile-floor/${item._id}`);
     },
   },
 };

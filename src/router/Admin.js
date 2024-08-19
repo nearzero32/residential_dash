@@ -33,7 +33,7 @@ export default [
           import("@/views/admin/form/apartmentModels/showBuilding.vue"),
       },
       {
-        path: "/admin-show-profile-floor",
+        path: "/admin-show-profile-floor/:id",
         name: "admin-show-profile-floor",
         component: () =>
           import("@/views/admin/form/apartmentModels/profileFloor.vue"),

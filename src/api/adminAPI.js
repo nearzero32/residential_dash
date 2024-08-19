@@ -46,6 +46,12 @@ class adminApi {
 
   // form
   // Apartment
+  async getApartmentHouse(id) {
+    const response = await axiosInstance.get(
+      `/center/forms/apartment/house/${id}`
+    );
+    return response;
+  }
   async getApartments() {
     const response = await axiosInstance.get(`/center/forms/apartment/all`);
     return response;
