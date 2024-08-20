@@ -1002,9 +1002,16 @@ class adminApi {
   // Forms
 
   // Owners
-  async getOwners({ page, limit, search, is_deleted, sortBy }) {
+  async getOwners({
+    page,
+    limit,
+    search,
+    is_deleted,
+    sortBy,
+    is_house_received,
+  }) {
     const response = await axiosInstance.get(
-      `/owners?page=${page}&limit=${limit}&search=${search}&is_disabled=${is_deleted}&sortBy=${sortBy}`
+      `/owners?page=${page}&limit=${limit}&search=${search}&is_disabled=${is_deleted}&sortBy=${sortBy}&is_house_received=${is_house_received}`
     );
     return response;
   }
@@ -1116,6 +1123,11 @@ class adminApi {
     const response = await axiosInstance.put(`/owners/disable/owner_id/${id}`, {
       is_disabled: disable,
     });
+    return response;
+  }
+
+  async editOwnerIsHouseReceived({ id }) {
+    const response = await axiosInstance.put(`/owners/IsHouseReceived/${id}`);
     return response;
   }
   // Owners

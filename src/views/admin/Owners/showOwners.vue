@@ -22,6 +22,18 @@
               {{ t("Addition") }}
             </VBtn>
           </VCol>
+          <VCol cols="12" md="3" style="text-align: center">
+            <VSelect
+              density="compact"
+              :items="ownerApartmentType"
+              :label="t('select_owner_type')"
+              item-title="text"
+              item-value="value"
+              v-model="is_house_received"
+              @update:modelValue="getCenter"
+            >
+            </VSelect>
+          </VCol>
         </VRow>
       </VCardText>
     </VCard>
@@ -57,6 +69,7 @@
           @update:options="getCenter"
           @editItems="editItem"
           @emitDisable="emitDisable"
+          @emitConfirmReceivedHouse="emitConfirmReceivedHouse"
           @emitPrintItems="printItem"
         />
       </VCardText>
@@ -893,7 +906,7 @@
           </VBtn>
           <VBtn
             color="primary white--text"
-            :loading="deleteItemLoading"
+            :loading="dialogDelete.loading"
             @click="deleteItemConfirm"
           >
             {{ t("Deactivate") }}
@@ -903,6 +916,34 @@
       </VCard>
     </VDialog>
     <!-- Delete Dialog -->
+
+    <!-- receive house Dialog -->
+    <VDialog v-model="dialogReceivedHouse.open" max-width="600px">
+      <VCard>
+        <VCardTitle class="headline justify-center">
+          {{ t("Are you sure you want to chnage the status to received?") }}
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn
+            color="blue darken-1"
+            text
+            @click="dialogReceivedHouse.open = false"
+          >
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary white--text"
+            :loading="dialogReceivedHouse.loading"
+            @click="confirmReceivedHouse"
+          >
+            {{ t("Received") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- receive house Dialog -->
 
     <!-- Message Dialog -->
     <VDialog v-model="dialogData.open" max-width="500px">
@@ -966,6 +1007,9 @@ export default {
     return {
       // table
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
+
+      is_house_received: null,
+
       tableOptions: {
         itemsPerPage: 10,
         page: 1,
@@ -974,9 +1018,8 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل", "ايقاف", "طباعة"],
+        actions: ["تعديل", "ايقاف", "طباعة", "استلام الوحدة السكنية"],
         search: null,
-        itemsPerPage: 5,
       },
       userData: [],
       action: [],
@@ -1036,6 +1079,14 @@ export default {
         deletedItem: null,
         loading: false,
       },
+
+      // received house
+      dialogReceivedHouse: {
+        open: false,
+        receivedItem: null,
+        loading: false,
+      },
+
       // Delete
 
       // message
@@ -1047,6 +1098,7 @@ export default {
       // message
     };
   },
+
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
     if (userDataString.type !== "admin") {
@@ -1058,6 +1110,7 @@ export default {
     this.getBankAccounts();
     this.getForms();
   },
+
   watch: {
     "dialogEdit.editedItem.form_id": {
       handler(newVal) {
@@ -1069,6 +1122,7 @@ export default {
       immediate: true,
     },
   },
+
   computed: {
     Rules() {
       return {
@@ -1283,10 +1337,20 @@ export default {
       });
       return baseHeaders;
     },
+
+    ownerApartmentType() {
+      return [
+        { text: this.t("All"), value: null },
+        { text: this.t("Received the residential unit"), value: true },
+        { text: this.t("Not received the residential unit"), value: false },
+      ];
+    },
+
     filteredHouses() {
       return this.Houses.filter((House) => House.status !== "تم البيع");
     },
   },
+
   methods: {
     // Get Data
     async getCenter(newOptions) {
@@ -1326,6 +1390,7 @@ export default {
           sortBy: sortByJSON,
           search: this.table.search,
           is_deleted: this.is_deleted,
+          is_house_received: this.is_house_received,
         });
         this.table.Data = response.data.results.data;
         this.table.totalItems = response.data.results.count;
@@ -1708,6 +1773,39 @@ export default {
       this.dialogDelete.deletedItem = { ...item };
       this.dialogDelete.open = true;
     },
+
+    emitConfirmReceivedHouse(item) {
+      this.dialogReceivedHouse.open = true;
+      this.dialogReceivedHouse.receivedItem = { ...item };
+    },
+
+    async confirmReceivedHouse() {
+      this.dialogReceivedHouse.loading = true;
+
+      try {
+        const response = await adminApi.editOwnerIsHouseReceived({
+          id: this.dialogReceivedHouse.receivedItem._id,
+        });
+        this.dialogReceivedHouse.loading = false;
+        this.dialogReceivedHouse.open = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.dialogReceivedHouse.loading = false;
+          this.dialogReceivedHouse.open = false;
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.dialogReceivedHouse.loading = false;
+          this.dialogReceivedHouse.open = false;
+          this.showDialogfunction(error.response.data.results, "#FF5252");
+        }
+      } finally {
+        this.dialogReceivedHouse.loading = false;
+        this.dialogReceivedHouse.open = false;
+      }
+    },
+
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       var is_disabled = null;

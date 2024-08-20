@@ -304,6 +304,28 @@
             <VTooltip
               bottom
               v-if="
+                table.actions.includes('استلام الوحدة السكنية') &&
+                item.selectable.is_house_received == false
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#3F51B5"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitConfirmReceivedHouse(item.selectable)"
+                >
+                  mdi-check
+                </VIcon>
+              </template>
+              <span>استلام الوحدة السكنية</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
                 table.actions.includes('موافقة') &&
                 item.selectable.status == 'معلق'
               "
@@ -672,6 +694,28 @@
             <VTooltip
               bottom
               v-if="
+                table.actions.includes('استلام الوحدة السكنية') &&
+                item.selectable.is_house_received == false
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#3F51B5"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitConfirmReceivedHouse(item.selectable)"
+                >
+                  mdi-check
+                </VIcon>
+              </template>
+              <span>استلام الوحدة السكنية</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
                 table.actions.includes('موافقة') &&
                 item.selectable.status == 'معلق'
               "
@@ -753,6 +797,7 @@ export default {
     };
   },
   created() {
+    console.log(this.table.actions);
     window.addEventListener("resize", this.onResize);
     this.onResize();
     var userDataString = JSON.parse(localStorage.getItem("results"));
@@ -789,6 +834,9 @@ export default {
     },
     emitDisable(item) {
       this.$emit("emitDisable", item);
+    },
+    emitConfirmReceivedHouse(item) {
+      this.$emit("emitConfirmReceivedHouse", item);
     },
     empConfirmIteme(item) {
       this.$emit("empConfirmIteme", item);
