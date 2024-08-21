@@ -125,6 +125,8 @@
   "Please enter a valid number": "من فضلك أدخل رقما صالحا",
   "Are you sure you want to deactivate this account?": "هل انت متأكد من أيقاف هذا الحساب ؟",
   "Are you sure you want to chnage the status to received?": "هل انت متأكد من تغيير الحالة الى استلام الوحدة السكنية ؟",
+  "received_monthly_payment_date": "تاريخ بدء الخدمات الشهرية",
+  "received_date": "تاريخ الاستلام",
   "Deactivate": "ايقاف",
   "Received": "استلام",
   "Queries": "الاستعلامات",

@@ -1126,8 +1126,15 @@ class adminApi {
     return response;
   }
 
-  async editOwnerIsHouseReceived({ id }) {
-    const response = await axiosInstance.put(`/owners/IsHouseReceived/${id}`);
+  async editOwnerIsHouseReceived({
+    id,
+    received_date,
+    received_monthly_payment_date,
+  }) {
+    const response = await axiosInstance.put(`/owners/IsHouseReceived/${id}`, {
+      received_date,
+      received_monthly_payment_date,
+    });
     return response;
   }
   // Owners

@@ -126,6 +126,8 @@
   "Please enter a valid number": "Please enter a valid number",
   "Are you sure you want to deactivate this account?": "Are you sure you want to deactivate this account?",
   "Are you sure you want to chnage the status to received?": "Are you sure you want to chnage the status to received?",
+  "received_monthly_payment_date": "received monthly payment date",
+  "received_date": "received date",
   "Deactivate": "Deactivate",
   "Queries": "Queries",
   "Caller's name": "Caller's name",

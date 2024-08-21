@@ -51,11 +51,25 @@
           <br />
           <h4>رقم بطاقة السكن : {{ data.residence_card_number }}</h4>
           <br />
-          <h4>
-            جهة اصدار بطاقة السكن : {{ data.residence_card_place_of_issue }}
-          </h4>
+          <h4>جهة اصدار بطاقة السكن : {{ data.rec }}</h4>
+
           <br />
           <h4>العنوان الوظيفي : {{ data.owner_title_jop }}</h4>
+          <br />
+          <h4>
+            هل تم استلام الوحدة السكنية :
+            {{ data.is_house_received ? "نعم" : "لا" }}
+          </h4>
+          <br />
+          <h4 v-if="data.is_house_received">
+            تاريخ استلام الوحدة السكنية :
+            {{ data.house_received_data.received_date }}
+          </h4>
+          <br />
+          <h4 v-if="data.is_house_received">
+            تاريخ بدء الخدمات الشهرية :
+            {{ data.house_received_data.received_monthly_payment_date }}
+          </h4>
           <br />
           <div style="width: 100%">
             <h4><strong>صور العقد :</strong></h4>

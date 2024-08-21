@@ -929,18 +929,22 @@
               <VRow>
                 <VCol cols="12">
                   <VTextField
-                    v-model="formattedDate"
+                    v-model="dialogReceivedHouse.data.received_date"
                     :rules="Rules.name"
-                    :label="t(`Owner's name`)"
+                    :label="t('received_date')"
                     outlined
                     type="date"
                   />
                 </VCol>
                 <VCol cols="12">
                   <VTextField
+                    v-model="
+                      dialogReceivedHouse.data.received_monthly_payment_date
+                    "
                     :rules="Rules.name"
-                    :label="t(`Owner's name`)"
+                    :label="t('received_monthly_payment_date')"
                     outlined
+                    type="date"
                   />
                 </VCol>
               </VRow>
@@ -993,6 +997,7 @@
 import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
 import Table from "@/components/table.vue";
+import { getCurrentDateInString } from "@/constant/date";
 
 export default {
   components: {
@@ -1112,7 +1117,7 @@ export default {
         loading: false,
         isFormValid: false,
         data: {
-          received_date: null,
+          received_date: getCurrentDateInString(),
           received_monthly_payment_date: null,
         },
       },
@@ -1378,23 +1383,6 @@ export default {
 
     filteredHouses() {
       return this.Houses.filter((House) => House.status !== "تم البيع");
-    },
-
-    formattedDate: {
-      get() {
-        if (!this.dialogReceivedHouse.data.received_date) return "";
-        const dateParts =
-          this.dialogReceivedHouse.data.received_date.split("-"); // Expected format: yyyy-mm-dd
-        return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`; // Convert to dd/mm/yyyy
-      },
-      set(value) {
-        const parts = value.split("/");
-        if (parts.length === 3) {
-          this.dialogReceivedHouse.data.received_date = `${parts[2]}-${parts[1]}-${parts[0]}`; // Store as yyyy-mm-dd
-        } else {
-          this.dialogReceivedHouse.data.received_date = "";
-        }
-      },
     },
   },
 
@@ -1832,6 +1820,9 @@ export default {
       try {
         const response = await adminApi.editOwnerIsHouseReceived({
           id: this.dialogReceivedHouse.receivedItem._id,
+          received_date: this.dialogReceivedHouse.data.received_date,
+          received_monthly_payment_date:
+            this.dialogReceivedHouse.data.received_monthly_payment_date,
         });
         this.dialogReceivedHouse.loading = false;
         this.dialogReceivedHouse.open = false;
@@ -1904,7 +1895,6 @@ export default {
       this.dialogData.bodyText = bodyText;
       this.dialogData.color = color;
     },
-    // message
   },
 };
 </script>
