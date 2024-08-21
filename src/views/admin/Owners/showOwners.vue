@@ -923,6 +923,30 @@
         <VCardTitle class="headline justify-center">
           {{ t("Are you sure you want to chnage the status to received?") }}
         </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VForm ref="form" v-model="dialogReceivedHouse.isFormValid">
+              <VRow>
+                <VCol cols="12">
+                  <VTextField
+                    v-model="formattedDate"
+                    :rules="Rules.name"
+                    :label="t(`Owner's name`)"
+                    outlined
+                    type="date"
+                  />
+                </VCol>
+                <VCol cols="12">
+                  <VTextField
+                    :rules="Rules.name"
+                    :label="t(`Owner's name`)"
+                    outlined
+                  />
+                </VCol>
+              </VRow>
+            </VForm>
+          </VContainer>
+        </VCardText>
         <VCardActions>
           <VSpacer />
           <VBtn
@@ -936,6 +960,7 @@
             color="primary white--text"
             :loading="dialogReceivedHouse.loading"
             @click="confirmReceivedHouse"
+            :disabled="!dialogReceivedHouse.isFormValid"
           >
             {{ t("Received") }}
           </VBtn>
@@ -1085,6 +1110,11 @@ export default {
         open: false,
         receivedItem: null,
         loading: false,
+        isFormValid: false,
+        data: {
+          received_date: null,
+          received_monthly_payment_date: null,
+        },
       },
 
       // Delete
@@ -1348,6 +1378,23 @@ export default {
 
     filteredHouses() {
       return this.Houses.filter((House) => House.status !== "تم البيع");
+    },
+
+    formattedDate: {
+      get() {
+        if (!this.dialogReceivedHouse.data.received_date) return "";
+        const dateParts =
+          this.dialogReceivedHouse.data.received_date.split("-"); // Expected format: yyyy-mm-dd
+        return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`; // Convert to dd/mm/yyyy
+      },
+      set(value) {
+        const parts = value.split("/");
+        if (parts.length === 3) {
+          this.dialogReceivedHouse.data.received_date = `${parts[2]}-${parts[1]}-${parts[0]}`; // Store as yyyy-mm-dd
+        } else {
+          this.dialogReceivedHouse.data.received_date = "";
+        }
+      },
     },
   },
 

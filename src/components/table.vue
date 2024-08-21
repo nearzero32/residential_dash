@@ -797,7 +797,6 @@ export default {
     };
   },
   created() {
-    console.log(this.table.actions);
     window.addEventListener("resize", this.onResize);
     this.onResize();
     var userDataString = JSON.parse(localStorage.getItem("results"));
