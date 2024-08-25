@@ -14,15 +14,6 @@ export default [
         component: () => import("@/views/admin/Profile/showProfile.vue"),
       },
       // Apartments
-
-      // Accounts Staff
-      {
-        path: "/admin-show-accounts-staff",
-        name: "admin-show-accounts-staff",
-        component: () =>
-          import("@/views/admin/AccountsStaff/showAccountsStaff.vue"),
-      },
-      // Accounts Staff
       {
         path: "/admin-show-apartment-models",
         name: "admin-show-apartment-models",

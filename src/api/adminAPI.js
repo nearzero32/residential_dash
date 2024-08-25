@@ -751,56 +751,6 @@ class adminApi {
   }
   // Employees
 
-  // AccountsStaff
-  async getAccountsStaff({ page, limit, search, sortBy }) {
-    const response = await axiosInstance.get(
-      `/counting/accountant_users?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
-    );
-    return response;
-  }
-  async addAccountsStaff({ name, phone, password_show, email, address }) {
-    const requestData = {
-      name,
-      phone,
-      password_show,
-      email,
-      address,
-    };
-    const response = await axiosInstance.post(
-      `/counting/accountant_users`,
-      requestData
-    );
-    return response;
-  }
-  async editAccountsStaff({
-    emp_id,
-    name,
-    phone,
-    password_show,
-    email,
-    address,
-  }) {
-    const requestData = {
-      name,
-      phone,
-      password_show,
-      email,
-      address,
-    };
-    const response = await axiosInstance.put(
-      `/counting/accountant_users/${emp_id}`,
-      requestData
-    );
-    return response;
-  }
-  async removeAccountsStaff(id) {
-    const response = await axiosInstance.delete(
-      `/counting/accountant_users/${id}`
-    );
-    return response;
-  }
-  // AccountsStaff
-
   // users
   async getUsers({ page, limit, sortBy, search }) {
     return axiosInstance

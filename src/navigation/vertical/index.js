@@ -158,14 +158,6 @@ export default [
     icon: { icon: "mdi-account-group" },
   },
   {
-    title: "Accounts staff",
-    to: { name: "admin-show-accounts-staff" },
-    type: "admin",
-    name: "accounts-staff",
-    building_type: "منازل وشقق",
-    icon: { icon: "mdi-account-multiple" },
-  },
-  {
     title: "Users",
     to: { name: "admin-show-users" },
     type: "admin",
@@ -350,14 +342,6 @@ export default [
     name: "employees",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-account-group" },
-  },
-  {
-    title: "Accounts staff",
-    to: { name: "admin-show-accounts-staff" },
-    type: "assistance",
-    name: "accounts-staff",
-    building_type: "منازل وشقق",
-    icon: { icon: "mdi-account-multiple" },
   },
   {
     title: "Advertisements",
