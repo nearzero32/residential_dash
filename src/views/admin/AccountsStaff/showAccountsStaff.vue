@@ -82,17 +82,17 @@
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="data.email"
-                    :rules="Rules.email"
-                    :label="t('Email')"
+                    v-model="data.phone"
+                    :rules="Rules.phone"
+                    :label="t('Phone number')"
                     outlined
                   />
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="data.phone"
-                    :rules="Rules.phone"
-                    :label="t('Phone number')"
+                    v-model="data.email"
+                    :rules="Rules.email"
+                    :label="t('Email')"
                     outlined
                   />
                 </VCol>
@@ -111,32 +111,6 @@
                     :label="t('Address')"
                     outlined
                   />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VAutocomplete
-                    v-model="data.action"
-                    :rules="Rules.action"
-                    :items="action"
-                    outlined
-                    item-title="text"
-                    item-value="value"
-                    attach
-                    multiple
-                    :label="t('User Permissions')"
-                  ></VAutocomplete>
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VAutocomplete
-                    v-model="data.pages"
-                    :rules="Rules.pages"
-                    :items="pages"
-                    outlined
-                    item-title="text"
-                    item-value="value"
-                    attach
-                    multiple
-                    :label="t('User Pages')"
-                  ></VAutocomplete>
                 </VCol>
               </VRow>
             </VForm>
@@ -179,17 +153,17 @@
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="dialogEdit.editedItem.email"
-                    :rules="Rules.email"
-                    :label="t('Email')"
+                    v-model="dialogEdit.editedItem.phone"
+                    :rules="Rules.phone"
+                    :label="t('Phone number')"
                     outlined
                   />
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="dialogEdit.editedItem.phone"
-                    :rules="Rules.phone"
-                    :label="t('Phone number')"
+                    v-model="dialogEdit.editedItem.email"
+                    :rules="Rules.email"
+                    :label="t('Email')"
                     outlined
                   />
                 </VCol>
@@ -208,32 +182,6 @@
                     :label="t('Address')"
                     outlined
                   />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VAutocomplete
-                    v-model="dialogEdit.editedItem.privileges.actions"
-                    :rules="Rules.action"
-                    :items="action"
-                    outlined
-                    item-title="text"
-                    item-value="value"
-                    attach
-                    multiple
-                    :label="t('User Permissions')"
-                  ></VAutocomplete>
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VAutocomplete
-                    v-model="dialogEdit.editedItem.pages"
-                    :rules="Rules.pages"
-                    :items="pages"
-                    outlined
-                    item-title="text"
-                    item-value="value"
-                    attach
-                    multiple
-                    :label="t('User Pages')"
-                  ></VAutocomplete>
                 </VCol>
               </VRow>
             </VForm>
@@ -315,7 +263,7 @@ export default {
       t,
       // nav
       page: {
-        title: "Users",
+        title: "Accounts staff",
       },
       b: [
         {
@@ -324,7 +272,7 @@ export default {
           to: "/admin-index",
         },
         {
-          text: "Users",
+          text: "Accounts staff",
           disabled: true,
         },
       ],
@@ -344,7 +292,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["حذف", "تعديل", "طباعة"],
+        actions: ["حذف", "تعديل"],
         search: null,
         itemsPerPage: 5,
       },
@@ -361,8 +309,6 @@ export default {
         email: null,
         phone: null,
         password_show: null,
-        action: [],
-        pages: [],
         address: null,
       },
       // add
@@ -405,15 +351,11 @@ export default {
     Rules() {
       return {
         name: [(value) => !!value || this.t("This field is required")],
-        pages: [(value) => !!value || this.t("This field is required")],
-        action: [(value) => !!value || this.t("This field is required")],
-        password_show: [(value) => !!value || this.t("This field is required")],
         email: [
-          (value) => !!value || this.t("This field is required"),
-          (value) =>
-            /.+@.+\..+/.test(value) ||
-            this.t("Please enter a valid email address"),
+          (v) => !!v || "البريد الإلكتروني مطلوب",
+          (v) => /.+@.+\..+/.test(v) || "البريد الإلكتروني غير صالح",
         ],
+        password_show: [(value) => !!value || this.t("This field is required")],
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
@@ -440,6 +382,12 @@ export default {
           key: "name",
         },
         {
+          title: this.t("Phone number"),
+          type: "strong",
+          link: ``,
+          key: "phone",
+        },
+        {
           title: this.t("Email"),
           type: "strong",
           link: ``,
@@ -450,24 +398,6 @@ export default {
           type: "strong",
           link: ``,
           key: "password_show",
-        },
-        {
-          title: this.t("Phone number"),
-          type: "strong",
-          link: ``,
-          key: "phone",
-        },
-        {
-          title: this.t("User Permissions"),
-          type: "privileges.actions",
-          link: ``,
-          key: "privileges.actions",
-        },
-        {
-          title: this.t("User Pages"),
-          type: "strong",
-          link: ``,
-          key: "pages",
         },
         {
           title: this.t("Address"),
@@ -482,55 +412,6 @@ export default {
           type: "strong",
           link: "",
         },
-      ];
-    },
-    action() {
-      return [
-        { text: this.t("Addition"), value: "add" },
-        { text: this.t("Remove"), value: "remove" },
-        { text: this.t("Edit"), value: "edit" },
-      ];
-    },
-    pages() {
-      return [
-        { text: this.t("Home Page"), value: "home" },
-        { text: this.t("Apartment models"), value: "forms-Apartments" },
-        { text: this.t("House Models"), value: "forms" },
-        { text: this.t("Owners"), value: "owners" },
-        { text: this.t("Owners' visits"), value: "visits" },
-        { text: this.t("Sales"), value: "sales" },
-        { text: this.t("Sales staff"), value: "sells-employee" },
-        { text: this.t("Queries"), value: "inquiries" },
-        { text: this.t("Customer attendance form"), value: "call-center" },
-        {
-          text: this.t("Residential Unit Booking Application Form"),
-          value: "application-form",
-        },
-        { text: this.t("Approval Request Form"), value: "confirmations-form" },
-        { text: this.t("Residential Unit Requests"), value: "reservations" },
-        { text: this.t("Sales Contracts"), value: "salesContracts" },
-        {
-          text: this.t("marketing Residentail"),
-          value: "marketing Residentail",
-        },
-
-        { text: this.t("Notifications"), value: "notifications" },
-        { text: this.t("Banks"), value: "bankAccounts" },
-        { text: this.t("After-Sales Services"), value: "After-sales-service" },
-        { text: this.t("Service Bookings"), value: "reservation-service" },
-        { text: this.t("Services"), value: "services" },
-        { text: this.t("Residential Units"), value: "buying-offers" },
-
-        { text: this.t("Guards"), value: "guards" },
-        { text: this.t("Staff"), value: "employees" },
-        { text: this.t("Accounts staff"), value: "accounts-staff" },
-        { text: this.t("Advertisements"), value: "postings" },
-        { text: this.t("Features"), value: "advantages" },
-        {
-          text: this.t("How did you hear about us?"),
-          value: "how_u_hear_about_us",
-        },
-        { text: this.t("Complaints"), value: "complain" },
       ];
     },
   },
@@ -567,11 +448,11 @@ export default {
       }
 
       try {
-        const response = await adminApi.getUsers({
+        const response = await adminApi.getAccountsStaff({
           page,
           limit: itemsPerPage,
-          sortBy: sortByJSON,
           search: this.table.search,
+          sortBy: sortByJSON,
         });
         this.table.Data = response.data.results.data;
         this.table.totalItems = response.data.results.count;
@@ -597,14 +478,12 @@ export default {
         this.addDialog.saveLoading = true;
 
         try {
-          const response = await adminApi.addUsers({
+          const response = await adminApi.addAccountsStaff({
             name: this.data.name,
             email: this.data.email,
             password_show: this.data.password_show,
             phone: this.data.phone,
             address: this.data.address,
-            actions: this.data.action,
-            pages: this.data.pages,
           });
 
           this.addDialog.saveLoading = false;
@@ -613,12 +492,10 @@ export default {
           this.showDialogfunction(response.data.message, "primary");
 
           this.data.name = null;
-          this.data.email = null;
-          this.data.password_show = null;
           this.data.phone = null;
-          this.data.action = [];
+          this.data.title_jop = null;
           this.data.address = null;
-          this.data.pages = [];
+          this.data.salary = null;
         } catch (error) {
           if (error.response && error.response.status === 401) {
             this.$store.dispatch("submitLogout");
@@ -647,15 +524,13 @@ export default {
         this.dialogEdit.loading = true;
 
         try {
-          const response = await adminApi.editUsers({
-            user_id: this.dialogEdit.editedItem._id,
+          const response = await adminApi.editAccountsStaff({
+            emp_id: this.dialogEdit.editedItem._id,
             name: this.dialogEdit.editedItem.name,
             email: this.dialogEdit.editedItem.email,
             password_show: this.dialogEdit.editedItem.password_show,
             phone: this.dialogEdit.editedItem.phone,
             address: this.dialogEdit.editedItem.address,
-            actions: this.dialogEdit.editedItem.privileges.actions,
-            pages: this.dialogEdit.editedItem.pages,
           });
 
           this.dialogEdit.open = false;
@@ -685,7 +560,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeUsers(
+        const response = await adminApi.removeAccountsStaff(
           this.dialogDelete.deletedItem._id
         );
         this.dialogDelete.loading = false;
@@ -718,6 +593,26 @@ export default {
       window.open(routeData.href, "_blank");
     },
     // printItem
+
+    isNumber(evt) {
+      const keysAllowed = [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        ".",
+      ];
+      const keyPressed = evt.key;
+      if (!keysAllowed.includes(keyPressed)) {
+        evt.preventDefault();
+      }
+    },
 
     // message
     showDialogfunction(bodyText, color) {

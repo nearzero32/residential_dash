@@ -422,6 +422,8 @@ const store = createStore({
             router.push(this.returnUrl || "/admin-show-guards");
           } else if (pages == "employees") {
             router.push(this.returnUrl || "/admin-show-staff");
+          } else if (pages == "accounts-staff") {
+            router.push(this.returnUrl || "/admin-show-accounts-staff");
           } else if (pages == "postings") {
             router.push(this.returnUrl || "/admin-show-advertisements");
           } else if (pages == "advantages") {
