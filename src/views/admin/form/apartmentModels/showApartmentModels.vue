@@ -156,7 +156,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل", "بحث", "حذف"],
+        actions: ["تعديل", "بحث"],
         search: null,
         itemsPerPage: 5,
       },

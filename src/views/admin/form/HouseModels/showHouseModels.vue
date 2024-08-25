@@ -263,7 +263,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["حذف", "تعديل", "عرض"],
+        actions: ["تعديل", "عرض"],
         search: null,
         itemsPerPage: 5,
       },

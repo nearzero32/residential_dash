@@ -55,7 +55,7 @@
           </VBtn>
           <VBtn
             color="primary white--text"
-            :loading="deleteItemLoading"
+            :loading="dialogDelete.loading"
             @click="deleteItemConfirm"
           >
             {{ t("Delete") }}
