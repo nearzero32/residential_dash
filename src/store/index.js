@@ -164,8 +164,7 @@ const store = createStore({
           }
         } else if (currentPath == "admin.alfakhertowers.com") {
           if (
-            response.data.results.center_id.name == "مجمع الفاخر السكني" ||
-            response.data.results.center_id.name == "مجمع الفاخر السكني 1"
+            response.data.results.center_id._id == "66393d1a260d48b063586101"
           ) {
             commit("SET_AUTHENTICATED", true);
             localStorage.setItem("accessToken", response.data.results.token);
