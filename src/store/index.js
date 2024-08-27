@@ -302,6 +302,8 @@ const store = createStore({
                 router.push(
                   this.returnUrl || "/admin-show-customer-attendance-form"
                 );
+              } else if (response.data.results.pages[1] == "salesContracts") {
+                router.push(this.returnUrl || "/admin-show-sales-contracts");
               } else if (response.data.results.pages[1] == "inquiries") {
                 router.push(this.returnUrl || "/admin-show-queries");
               } else if (response.data.results.pages[1] == "application-form") {
