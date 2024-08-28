@@ -22,6 +22,13 @@
               {{ t("Addition") }}
             </VBtn>
           </VCol>
+        </VRow>
+      </VCardText>
+    </VCard>
+    <VCard class="mb-6">
+      <VCardTitle style="text-align: center">{{ t("Filter") }}</VCardTitle>
+      <VCardText>
+        <VRow style="justify-content: space-between">
           <VCol cols="12" md="3" style="text-align: center">
             <VSelect
               density="compact"
