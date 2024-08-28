@@ -18,7 +18,15 @@ class superAPI {
     const response = await axiosInstance.post(`/admin/centers`, requestData);
     return response;
   }
-  async editCenter({ center_id, name, phone, building_type, address, qr, is_dollar }) {
+  async editCenter({
+    center_id,
+    name,
+    phone,
+    building_type,
+    address,
+    qr,
+    is_dollar,
+  }) {
     const requestData = {
       center_id,
       name,
@@ -134,5 +142,51 @@ class superAPI {
     return response;
   }
   // AboutUsLamassu
+
+  // AppsVersions
+  async getAppsVersions() {
+    axiosInstance.defaults.headers.common.Authorization =
+      localStorage.getItem("accessToken");
+
+    const response = await axiosInstance.get(`/admin/app_versions`);
+
+    return response;
+  }
+  async getAppsVersionsNames() {
+    axiosInstance.defaults.headers.common.Authorization =
+      localStorage.getItem("accessToken");
+
+    const response = await axiosInstance.get(`/admin/app_versions/names`);
+
+    return response;
+  }
+  async removeAppsVersions(_id) {
+    axiosInstance.defaults.headers.common.Authorization =
+      localStorage.getItem("accessToken");
+
+    const response = await axiosInstance.delete(`/admin/app_versions/${_id}`);
+
+    return response;
+  }
+  async addAppsVersions(formData) {
+    axiosInstance.defaults.headers.common.Authorization =
+      localStorage.getItem("accessToken");
+
+    const response = await axiosInstance.post("/admin/app_versions", formData);
+
+    return response;
+  }
+  async editAppsVersions({ id, formData }) {
+    axiosInstance.defaults.headers.common.Authorization =
+      localStorage.getItem("accessToken");
+
+    const response = await axiosInstance.put(
+      `admin/app_versions/${id}`,
+      formData
+    );
+
+    return response;
+  }
+  // AppsVersions
 }
 export default new superAPI();

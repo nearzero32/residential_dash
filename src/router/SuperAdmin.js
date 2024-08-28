@@ -32,6 +32,15 @@ export default [
         component: () =>
           import("@/views/superAdmin/AboutUsLamassu/AboutUsLamassu.vue"),
       },
+
+      // appsVersions
+      {
+        path: "/admin-apps-versions",
+        name: "admin-apps-versions",
+        component: () =>
+          import("@/views/superAdmin/appsVersions/showAppsVersions.vue"),
+      },
+      // appsVersions
     ],
   },
 ];

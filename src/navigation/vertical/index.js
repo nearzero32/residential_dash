@@ -22,6 +22,14 @@ export default [
     icon: { icon: "mdi-compare-horizontal" },
   },
   {
+    title: "إصدارات تطبيقات",
+    to: { name: "admin-apps-versions" },
+    type: "super_admin",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-apps" },
+  },
+
+  {
     title: "About us lamassu",
     to: { name: "super-admin-show-about-us-lamassu" },
     type: "super_admin",
