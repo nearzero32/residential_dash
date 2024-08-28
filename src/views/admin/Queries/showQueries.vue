@@ -362,6 +362,12 @@ export default {
           key: "employee_name",
         },
         {
+          title: this.t("Date"),
+          type: "createdAt",
+          link: ``,
+          key: "createdAt",
+        },
+        {
           title: this.t("Operations"),
           key: "actions",
           sortable: false,

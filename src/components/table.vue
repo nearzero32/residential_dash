@@ -98,6 +98,16 @@
           <div v-else-if="header.key === 'buyer_info.customer_phone'">
             {{ item.selectable.buyer_info.customer_phone }}
           </div>
+          <div v-else-if="header.type === 'createdAt'">
+            {{
+              new Date(item.selectable.createdAt).toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            }}
+          </div>
+
           <div v-else-if="header.key === 'buyer_info.customer_phone_two'">
             {{ item.selectable.buyer_info.customer_phone_two }}
           </div>
@@ -416,6 +426,16 @@
               "
             />
           </div>
+          <div v-else-if="header.type === 'createdAt'" class="l">
+            {{
+              new Date(item.selectable.createdAt).toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            }}
+          </div>
+
           <div v-else-if="header.type === 'imgs'" class="l">
             <img
               v-if="item.selectable.imgs"
