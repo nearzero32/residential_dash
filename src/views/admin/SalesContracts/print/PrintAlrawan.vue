@@ -139,7 +139,7 @@
                   "
                 >
                   <thead>
-                    <tr style="background-color: rgb(217 217 217)">
+                    <tr style="background-color: rgb(186 217 227)">
                       <th>رقم الدفعة</th>
                       <th>تاريخ الاستحقاق</th>
                       <th>مقدار الدفعة رقما</th>
@@ -153,13 +153,13 @@
                       :key="index"
                     >
                       <td
-                        style="background-color: rgb(217 217 217)"
+                        style="background-color: rgb(186 217 227)"
                         v-if="salary_payment.payment_position == 'مقدم'"
                       >
                         دفعة المقدمة
                       </td>
                       <td
-                        style="background-color: rgb(217 217 217)"
+                        style="background-color: rgb(186 217 227)"
                         v-else-if="
                           salary_payment.payment_position == 'دفعة الهيكل'
                         "
@@ -167,14 +167,14 @@
                         دفعة الهيكل
                       </td>
                       <td
-                        style="background-color: rgb(217 217 217)"
+                        style="background-color: rgb(186 217 227)"
                         v-else-if="
                           salary_payment.payment_position == 'اخر دفعة'
                         "
                       >
                         الدفعة (دفعة التسليم)
                       </td>
-                      <td style="background-color: rgb(217 217 217)" v-else>
+                      <td style="background-color: rgb(186 217 227)" v-else>
                         الدفعة ({{ getAdjustedIndex(index) }})
                       </td>
                       <td>{{ salary_payment.date }}</td>
@@ -252,30 +252,37 @@
             <div>
               <p style="margin-bottom: 20px; color: red">
                 الطرف الثاني المشتري السيد:
-                <strong>{{ data.owner_name }}</strong>
+                <strong style="color: black">{{ data.owner_name }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
                 اسم المشتري الثلاثي السيد:
-                <strong>{{ data.owner_name }}</strong>
+                <strong style="color: black">{{ data.owner_name }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
                 رقم البطاقة الشخصية :
-                <strong>{{ data.owner_id_number }}</strong>
+                <strong style="color: black">{{ data.owner_id_number }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
                 جهة الاصدار :
-                <strong>{{ data.owner_id_place_of_issue }}</strong>
+                <strong style="color: black">{{
+                  data.owner_id_place_of_issue
+                }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
-                تاريخ الإصدار : <strong>{{ data.owner_id_issue_date }}</strong>
+                تاريخ الإصدار :
+                <strong style="color: black">{{
+                  data.owner_id_issue_date
+                }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
                 رقم بطاقة السكن :
-                <strong>{{ data.owner_id_residence_card_number }}</strong>
+                <strong style="color: black">{{
+                  data.owner_id_residence_card_number
+                }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
                 عنوان بطاقة السكن :
-                <strong>
+                <strong style="color: black">
                   محلة (<span style="margin-inline: 60px"></span>) ز (<span
                     style="margin-inline: 60px"
                   ></span
@@ -283,11 +290,12 @@
                 </strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
-                رقم الموبايل : <strong>{{ data.owner_phone }}</strong>
+                رقم الموبايل :
+                <strong style="color: black">{{ data.owner_phone }}</strong>
               </p>
               <p style="margin-bottom: 20px; color: red">
                 العنوان الوظيفي او المهنة :
-                <strong>{{ data.owner_title_jop }}</strong>
+                <strong style="color: black">{{ data.owner_title_jop }}</strong>
               </p>
               <p style="margin-bottom: 20px">
                 في حال تعذر الوصول الى المشتري يتم الاتصال على:
