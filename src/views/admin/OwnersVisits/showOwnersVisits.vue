@@ -151,16 +151,10 @@ export default {
           key: "owner_phone",
         },
         {
-          title: this.t("Form name"),
+          title: this.t("Form Code"),
           type: "strong",
           link: ``,
-          key: "form_name",
-        },
-        {
-          title: this.t("Residential unit name"),
-          type: "strong",
-          link: ``,
-          key: "house_name",
+          key: "form_code",
         },
         {
           title: this.t("Guard's name"),
