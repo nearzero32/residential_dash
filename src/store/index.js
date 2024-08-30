@@ -375,7 +375,7 @@ const store = createStore({
         if (account_type == "super_admin") {
           router.push("/super-admin-home");
         } else if (account_type === "admin") {
-          router.push("/manager-home");
+          router.push("/admin-index");
         } else if (account_type === "assistance") {
           const pages = JSON.parse(localStorage.getItem("pages"));
 
