@@ -41,7 +41,7 @@
                 "
               >
                 <strong style="font-size: 14px"
-                  >أستفسار الزبون ( {{ data.caller_name }} )</strong
+                  >استمارة حضور زبون ( {{ data.caller_name }} )</strong
                 >
               </div>
             </v-col>
@@ -86,9 +86,6 @@
                 <p v-if="data && data.current_employee">
                   <strong>الموظف الحالي : </strong>
                   {{ data.current_employee.name }}
-                </p>
-                <p>
-                  <strong>نتائج المكالمة : </strong> {{ data.results_of_call }}
                 </p>
                 <p>
                   <strong>موظفين المبيعات السابقين : </strong>

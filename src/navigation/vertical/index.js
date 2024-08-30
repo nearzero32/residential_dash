@@ -71,10 +71,20 @@ export default [
   },
   {
     title: "Owners",
-    to: { name: "admin-show-owners" },
     type: "admin",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-account-tie" },
+    children: [
+      { title: "All", to: "admin-show-owners" },
+      {
+        title: "Received the residential unit",
+        to: "admin-show-owners-recipients",
+      },
+      {
+        title: "Not received the residential unit",
+        to: "admin-show-owners-non-recipients",
+      },
+    ],
   },
   {
     title: "Owners' visits",
@@ -147,7 +157,15 @@ export default [
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
       { title: "Service Bookings", to: "admin-show-service-bookings" },
-      { title: "Services", to: "admin-show-services" },
+      {
+        title: "Services",
+        type: "admin",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Shipping", to: "admin-show-services" },
+          { title: "Maintenance", to: "admin-show-services-maintenance" },
+        ],
+      },
       { title: "Residential Units", to: "admin-show-residential-units" },
     ],
   },
@@ -229,11 +247,20 @@ export default [
   },
   {
     title: "Owners",
-    to: { name: "admin-show-owners" },
     type: "assistance",
-    name: "owners",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-account-tie" },
+    children: [
+      { title: "All", to: "admin-show-owners" },
+      {
+        title: "Received the residential unit",
+        to: "admin-show-owners-recipients",
+      },
+      {
+        title: "Not received the residential unit",
+        to: "admin-show-owners-non-recipients",
+      },
+    ],
   },
   {
     title: "Owners' visits",
@@ -317,22 +344,21 @@ export default [
   {
     title: "After-Sales Services",
     type: "assistance",
-    name: "After-sales-service",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-cogs" },
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
+      { title: "Service Bookings", to: "admin-show-service-bookings" },
       {
-        title: "Service Bookings",
-        name: "reservation-service",
-        to: "admin-show-service-bookings",
+        title: "Services",
+        type: "assistance",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Shipping", to: "admin-show-services" },
+          { title: "Maintenance", to: "admin-show-services-maintenance" },
+        ],
       },
-      { title: "Services", name: "services", to: "admin-show-services" },
-      {
-        title: "Residential Units",
-        name: "buying-offers",
-        to: "admin-show-residential-units",
-      },
+      { title: "Residential Units", to: "admin-show-residential-units" },
     ],
   },
   {

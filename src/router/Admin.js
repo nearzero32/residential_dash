@@ -191,6 +191,12 @@ export default [
         name: "admin-show-services",
         component: () => import("@/views/admin/Services/showServices.vue"),
       },
+      {
+        path: "/admin-show-services-maintenance",
+        name: "admin-show-services-maintenance",
+        component: () =>
+          import("@/views/admin/Services/showServicesMaintenance.vue"),
+      },
       // Services
 
       // ResidentialUnits
@@ -267,6 +273,18 @@ export default [
         path: "/admin-show-owners",
         name: "admin-show-owners",
         component: () => import("@/views/admin/Owners/showOwners.vue"),
+      },
+      {
+        path: "/admin-show-owners-recipients",
+        name: "admin-show-owners-recipients",
+        component: () =>
+          import("@/views/admin/Owners/showOwnersRecipients.vue"),
+      },
+      {
+        path: "/admin-show-owners-non-recipients",
+        name: "admin-show-owners-non-recipients",
+        component: () =>
+          import("@/views/admin/Owners/showOwnersNonRecipients.vue"),
       },
       {
         path: "/admin-profile-owner",

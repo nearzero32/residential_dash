@@ -352,7 +352,7 @@ export default {
       t,
       // nav
       page: {
-        title: "Shipping",
+        title: "Maintenance",
       },
       b: [
         {
@@ -361,7 +361,7 @@ export default {
           to: "/admin-index",
         },
         {
-          text: "Shipping",
+          text: "Maintenance",
           disabled: true,
         },
       ],
@@ -371,7 +371,7 @@ export default {
   data() {
     return {
       // table
-      Type_of_Service: "شحن",
+      Type_of_Service: "صيانة",
       is_available: true,
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
       tableOptions: {

@@ -119,11 +119,6 @@
             >
           </v-col>
           <v-col cols="12" md="12" style="padding: 10px">
-            <strong
-              >{{ t("Call results") }} : ( {{ data.results_of_call }} )</strong
-            >
-          </v-col>
-          <v-col cols="12" md="12" style="padding: 10px">
             <strong>{{ t("Former sales employees") }} : </strong>
             <strong
               v-for="(old_employees, index) in data.old_employees"

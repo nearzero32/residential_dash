@@ -64,16 +64,6 @@
               @update:modelValue="getCenter"
             ></VAutocomplete>
           </VCol>
-          <VCol cols="12" md="4">
-            <VAutocomplete
-              v-model="is_deleted"
-              :label="t('Data type')"
-              :items="itemss"
-              item-title="text"
-              item-value="value"
-              @update:modelValue="getCenter"
-            ></VAutocomplete>
-          </VCol>
         </VRow>
       </VCardText>
     </VCard>
