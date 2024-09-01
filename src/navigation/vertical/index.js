@@ -254,6 +254,7 @@ export default [
   {
     title: "Owners",
     type: "assistance",
+    name: "owners",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-account-tie" },
     children: [
@@ -349,6 +350,7 @@ export default [
   },
   {
     title: "After-Sales Services",
+    name: "After-sales-service",
     type: "assistance",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-cogs" },

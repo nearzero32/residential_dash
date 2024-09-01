@@ -113,9 +113,13 @@ if (accountType === "assistance") {
   filteredNavItems = filteredNavItems
     .map((item) => {
       if (item.children) {
-        item.children = item.children.filter((child) =>
-          pages.includes(child.name)
-        );
+        item.children = item.children.filter((child) => {
+          if (child.hasOwnProperty("name")) {
+            return pages.includes(child.name);
+          } else {
+            return true;
+          }
+        });
       }
       return item;
     })
