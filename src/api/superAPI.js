@@ -97,6 +97,45 @@ class superAPI {
   // CenterUsers
   // Center
 
+  // DashboardUpdates
+  async getDashboardUpdates(page, limit) {
+    const response = await axiosInstance.get(
+      `/admin/dashboard_versions?page=${page}&limit=${limit}`
+    );
+    return response;
+  }
+  async addDashboardUpdates({ version, description, type }) {
+    const requestData = {
+      version,
+      description,
+      type,
+    };
+    const response = await axiosInstance.post(
+      `/admin/dashboard_versions`,
+      requestData
+    );
+    return response;
+  }
+  async editDashboardUpdates({ id, version, description }) {
+    const requestData = {
+      version,
+      description,
+    };
+    const response = await axiosInstance.put(
+      `/admin/dashboard_versions/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeDashboardUpdates(id) {
+    const response = await axiosInstance.delete(
+      `/admin/dashboard_versions/${id}`
+    );
+
+    return response;
+  }
+  // DashboardUpdates
+
   // Complain
   async getComplain({ page, limit, search }) {
     const response = await axiosInstance.get(

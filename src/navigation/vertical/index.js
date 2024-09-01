@@ -28,7 +28,13 @@ export default [
     building_type: "منازل وشقق",
     icon: { icon: "mdi-apps" },
   },
-
+  {
+    title: "تحديثات الداشبورد",
+    to: { name: "admin-show-dashboard-updates" },
+    type: "super_admin",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-apps" },
+  },
   {
     title: "About us lamassu",
     to: { name: "super-admin-show-about-us-lamassu" },

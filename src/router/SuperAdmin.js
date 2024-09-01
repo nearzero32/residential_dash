@@ -41,6 +41,17 @@ export default [
           import("@/views/superAdmin/appsVersions/showAppsVersions.vue"),
       },
       // appsVersions
+
+      // DashboardUpdates
+      {
+        path: "/admin-show-dashboard-updates",
+        name: "admin-show-dashboard-updates",
+        component: () =>
+          import(
+            "@/views/superAdmin/DashboardUpdates/showDashboardUpdates.vue"
+          ),
+      },
+      // DashboardUpdates
     ],
   },
 ];
