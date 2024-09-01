@@ -72,7 +72,7 @@
               <VRow>
                 <VCol cols="12" md="6">
                   <v-select
-                    v-model="data.name"
+                    v-model="data.type"
                     :items="items"
                     item-title="text"
                     item-value="value"

@@ -1,5 +1,4 @@
 import login from "@/api/login.js";
-import adminApi from "@/api/adminApi.js";
 import router from "@/router/index";
 import { getMessaging, getToken } from "firebase/messaging";
 import { createStore } from "vuex";
@@ -12,7 +11,6 @@ const store = createStore({
     logo: localStorage.getItem("logo"),
     Message: false,
     currentPath: "",
-    isVersionEqual: null,
   },
   mutations: {
     SET_AUTHENTICATED(state, payload) {
@@ -29,9 +27,6 @@ const store = createStore({
     },
     SET_CURRENT_PATH(state, path) {
       state.currentPath = path;
-    },
-    SET_VERSION_EQUAL(state, value) {
-      state.isVersionEqual = value;
     },
   },
   actions: {
@@ -451,37 +446,6 @@ const store = createStore({
       localStorage.clear("account_type");
       localStorage.clear("results");
       router.replace("/login");
-    },
-    async checkDash({ commit }) {
-      function isLoggedIn() {
-        return !!localStorage.getItem("accessToken");
-      }
-
-      if (isLoggedIn()) {
-        const response = await adminApi.getDashboardVersions();
-        let isVersionEqual = false;
-
-        if (response.data.results !== null) {
-          const storedData = localStorage.getItem("checkDash");
-          const newData = response.data.results;
-
-          if (storedData) {
-            const parsedStoredData = JSON.parse(storedData);
-
-            if (parsedStoredData.version === newData.version) {
-              isVersionEqual = true;
-            } else {
-              localStorage.setItem("checkDash", JSON.stringify(newData));
-              isVersionEqual = false;
-            }
-          } else {
-            localStorage.setItem("checkDash", JSON.stringify(newData));
-            isVersionEqual = false;
-          }
-        }
-
-        commit("SET_VERSION_EQUAL", isVersionEqual);
-      }
     },
   },
 });
