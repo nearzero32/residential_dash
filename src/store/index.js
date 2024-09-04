@@ -66,7 +66,10 @@ const store = createStore({
 
         const currentPath = window.location.hostname;
         localStorage.setItem("currentPath", currentPath);
-        if (response.data.results.type === "agent") {
+        if (
+          response.data.results.type === "agent" ||
+          response.data.results.type === "accountant_users"
+        ) {
           commit(
             "SET_EREORM",
             "خطأ: لا يمكن تسجيل الحساب في الادمن الرئيسي يمكنك تسجيل الدخول في الحسابات فقط"
