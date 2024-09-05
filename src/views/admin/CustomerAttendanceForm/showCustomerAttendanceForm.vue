@@ -384,7 +384,7 @@ export default {
           key: "current_employeeName",
         },
         {
-          title: "تاريخ الاستمارة",
+          title: this.t("Form Date"),
           type: "strong",
           link: ``,
           key: "createdAt",
