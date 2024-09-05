@@ -76,7 +76,9 @@ const store = createStore({
           );
         } else {
           if (currentPath == "admin.alrawan.net") {
-            if (response.data.results.center_id.name == "مجمع الروان السكني") {
+            if (
+              response.data.results.center_id._id == "66656b164cdec95cab679181"
+            ) {
               commit("SET_AUTHENTICATED", true);
               localStorage.setItem("accessToken", response.data.results.token);
               localStorage.setItem("account_type", response.data.results.type);

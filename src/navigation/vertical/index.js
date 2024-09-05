@@ -1,3 +1,5 @@
+const currentPath = window.location.hostname;
+
 export default [
   // super_admin
   {
@@ -54,7 +56,10 @@ export default [
   },
   {
     title: "Accounts",
-    href: "https://counting.myexperience.center/ownerBills",
+    href:
+      currentPath == "admin.alrawan.net"
+        ? "https://counting.alrawan.net/login"
+        : "https://counting.myexperience.center/ownerBills",
     type: "admin",
     target: "_blank",
     type: "admin",
