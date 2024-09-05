@@ -437,13 +437,13 @@ export default {
           title: this.t("Number of Customer Attendance Forms"),
           type: "strong",
           link: ``,
-          key: "application_form_count",
+          key: "call_center_count",
         },
         {
           title: this.t("Number of Booking Forms"),
           type: "strong",
           link: ``,
-          key: "call_center_count",
+          key: "application_form_count",
         },
         {
           title: this.t("Number of approval requests"),
