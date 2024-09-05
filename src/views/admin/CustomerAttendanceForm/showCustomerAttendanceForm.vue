@@ -384,7 +384,7 @@ export default {
           key: "current_employeeName",
         },
         {
-          title: this.t("Call date"),
+          title: "تاريخ الاستمارة",
           type: "strong",
           link: ``,
           key: "createdAt",
@@ -574,35 +574,31 @@ export default {
     },
     async handleDownload() {
       const header = [
-        "تاريخ المكالمة",
         "أسم الزبون",
         "وظيفة الزبون",
         "هاتف الزبون",
         "عنوان الزبون",
         "أفراد عائلة الزبون",
         "كيف سمع عنا",
+        "تاريخ الاستمارة",
         "المساحة المطلوبة",
-        "سبب المكالمة",
         "اسم النموذج",
         "الموظف الذي تبعه",
-        "نتائج المكالمة",
       ];
 
       const dataForExcel = [
         header,
         ...this.xlsxData.allData.map((item) => [
-          item.createdAt,
           item.caller_name,
           item.caller_job,
           item.caller_phone,
           item.caller_address,
           item.caller_family_members,
           item.how_he_hear_about_us,
+          item.createdAt,
           item.space_required,
-          item.call_reason,
           item.form_name,
           item.current_employee.name,
-          item.results_of_call,
         ]),
       ];
 
