@@ -1,5 +1,4 @@
 const currentPath = window.location.hostname;
-console.log(currentPath);
 
 export default [
   // super_admin
