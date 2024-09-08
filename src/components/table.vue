@@ -111,20 +111,35 @@
           <div v-else-if="header.key === 'buyer_info.customer_phone_two'">
             {{ item.selectable.buyer_info.customer_phone_two }}
           </div>
-          <div v-else-if="header.key === 'service.name'">
+          <div
+            v-else-if="item.selectable.service && header.key === 'service.name'"
+          >
             {{ item.selectable.service.name }}
           </div>
-          <div v-else-if="header.key === 'service.price'">
+          <div
+            v-else-if="
+              item.selectable.service && header.key === 'service.price'
+            "
+          >
             {{ item.selectable.service.price }}
           </div>
-          <div v-else-if="header.key === 'service.type'">
+          <div
+            v-else-if="item.selectable.service && header.key === 'service.type'"
+          >
             {{ item.selectable.service.type }}
           </div>
           <div v-else-if="header.key === 'money'">
             {{ numberWithComma(item.selectable.money) }}
           </div>
           <div v-else-if="header.key === 'is_available'">
-            <p v-if="item.selectable.service.is_available == true">مفعلة</p>
+            <p
+              v-if="
+                item.selectable.service &&
+                item.selectable.service.is_available == true
+              "
+            >
+              مفعلة
+            </p>
             <p v-else>غير مفعلة</p>
           </div>
           <div v-else-if="header.key === 'is_availablee'">
@@ -186,7 +201,10 @@
           </div>
           <div v-else-if="header.key === 'service.image'">
             <img
-              v-if="item.selectable.service.image !== null"
+              v-if="
+                item.selectable.service &&
+                item.selectable.service.image !== null
+              "
               @click="emitShowImage(item)"
               :src="`${content_urll}${item.selectable.service.image}`"
               style="
@@ -511,7 +529,10 @@
           </div>
           <div v-else-if="header.key === 'service.image'" class="l">
             <img
-              v-if="item.selectable.service.image !== null"
+              v-if="
+                item.selectable.service &&
+                item.selectable.service.image !== null
+              "
               @click="emitShowImage(item)"
               :src="`${content_urll}${item.selectable.service.image}`"
               style="
@@ -521,17 +542,35 @@
               "
             />
           </div>
-          <div v-else-if="header.key === 'service.name'" class="l">
+          <div
+            v-else-if="item.selectable.service && header.key === 'service.name'"
+            class="l"
+          >
             {{ item.selectable.service.name }}
           </div>
-          <div v-else-if="header.key === 'service.price'" class="l">
+          <div
+            v-else-if="
+              item.selectable.service && header.key === 'service.price'
+            "
+            class="l"
+          >
             {{ item.selectable.service.price }}
           </div>
-          <div v-else-if="header.key === 'service.type'" class="l">
+          <div
+            v-else-if="item.selectable.service && header.key === 'service.type'"
+            class="l"
+          >
             {{ item.selectable.service.type }}
           </div>
           <div v-else-if="header.key === 'is_available'" class="l">
-            <p v-if="item.selectable.service.is_available == true">مفعلة</p>
+            <p
+              v-if="
+                item.selectable.service &&
+                item.selectable.service.is_available == true
+              "
+            >
+              مفعلة
+            </p>
             <p v-else>غير مفعلة</p>
           </div>
           <div v-else-if="header.key === 'is_availablee'" class="l">

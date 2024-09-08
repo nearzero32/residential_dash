@@ -216,7 +216,7 @@ export default {
   },
   computed: {
     headers() {
-      return [
+      const headersArray = [
         {
           title: "#",
           type: "strong",
@@ -271,14 +271,20 @@ export default {
           link: ``,
           key: "createdAt",
         },
-        {
+      ];
+
+      // إضافة العمود بناءً على الشرط
+      if (this.is_deleted == false) {
+        headersArray.push({
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
           type: "strong",
           link: "",
-        },
-      ];
+        });
+      }
+
+      return headersArray;
     },
     itemss() {
       return [
