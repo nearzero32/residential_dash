@@ -42,6 +42,7 @@
               hide-details
               single-line
               @click:clear="getCenter"
+              @input="getCenter"
               clearable
             />
           </VCol>
