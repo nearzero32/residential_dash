@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container id="pri">
+    <v-container id="pri" v-if="data !== null">
       <v-card>
         <v-row
           style="
@@ -127,8 +127,9 @@
             ></v-col>
             <v-col cols="8" md="8">
               المحافظة :
-              <span style="border-bottom: none; margin-inline: 10px"
-                >..................................</span
+              <span style="border-bottom: none; margin-inline: 10px">{{
+                data.buyer_info.address.street
+              }}</span
               >المدينة :
               <span style="border-bottom: none; margin-inline: 10px"
                 >..............................</span
@@ -149,7 +150,7 @@
             <v-col cols="7" md="7">
               المحلة :
               <span style="border-bottom: none; margin-inline: 10px">
-                {{ data.buyer_info.address.street }} </span
+                {{ data.buyer_info.address.city }} </span
               >الزقاق :
               <span style="border-bottom: none; margin-inline: 10px">{{
                 data.buyer_info.address.state
@@ -311,7 +312,9 @@
                   padding-inline: 30px;
                   border-radius: 5px;
                 "
-              ></span
+                ><v-icon v-if="data.payment_info.payment_type !== 'دفعات'">
+                  mdi-check</v-icon
+                ></span
               >اقساط:
               <span
                 style="
@@ -319,8 +322,11 @@
                   padding-inline: 30px;
                   border-radius: 5px;
                 "
-              ></span
-            ></v-col>
+                ><v-icon v-if="data.payment_info.payment_type == 'دفعات'">
+                  mdi-check</v-icon
+                ></span
+              ></v-col
+            >
           </v-row>
           <v-row>
             <v-col cols="6" md="6">
@@ -331,8 +337,9 @@
                   padding-inline: 29%;
                   border-radius: 5px;
                 "
-              ></span
-            ></v-col>
+                >{{ numberWithComma(data.house_info.price) }}</span
+              ></v-col
+            >
             <v-col cols="6" md="6">
               الدفعة المقدمة:
               <span
@@ -341,8 +348,9 @@
                   padding-inline: 29%;
                   border-radius: 5px;
                 "
-              ></span
-            ></v-col>
+                >{{ numberWithComma(data.payment_info.first_payment) }}</span
+              ></v-col
+            >
           </v-row>
         </v-container>
         <v-container>
@@ -420,7 +428,9 @@
           </v-row>
           <v-row style="background: #936647">
             <v-col cols="6" md="6">
-              <span style="color: black">موظف المبيعات : </span></v-col
+              <span style="color: black"
+                >موظف المبيعات : {{ data.employee_name }}</span
+              ></v-col
             >
             <v-col cols="6" md="6">
               <span style="color: black">التوقيع : </span></v-col
@@ -437,6 +447,7 @@ import { getCurrentDateInString } from "@/constant/date";
 import numberWithComma from "@/constant/number";
 import logo1 from "@/assets/logo/41412d.png";
 import logo2 from "@/assets/logo/1.jpg";
+import adminApi from "@/api/adminApi";
 
 export default {
   data() {
@@ -444,23 +455,38 @@ export default {
       logo1,
       logo2,
       data: null,
+      id: JSON.parse(localStorage.getItem("printApplicationFormAlrtaj"))._id,
       user: null,
       dataResidential: null,
       date: getCurrentDateInString(),
     };
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("printApplicationFormAlrtaj"));
     var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
     this.user = userDataString;
-  },
-  mounted() {
-    setTimeout(() => {
-      this.printElement();
-    }, 1000);
+    this.getData();
   },
   methods: {
+    async getData() {
+      try {
+        const response = await adminApi.getOneApplicationForm(this.id);
+
+        this.data = response.data.results;
+        setTimeout(() => {
+          this.printElement();
+        }, 1000);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.status === 400) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
+
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;

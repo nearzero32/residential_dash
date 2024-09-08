@@ -358,6 +358,11 @@ class adminApi {
 
     return response;
   }
+  async getOneApplicationForm(id) {
+    const response = await axiosInstance.get(`/application_form/${id}`);
+
+    return response;
+  }
   async cancelApplicationForm(id) {
     const response = await axiosInstance.put(`/application_form/cancel/${id}`);
 

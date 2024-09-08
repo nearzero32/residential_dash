@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container id="pri">
+    <v-container id="pri" v-if="data !== null">
       <v-card>
         <v-row
           style="
@@ -366,7 +366,8 @@
                     margin-left: 0px;
                     height: 32px;
                   "
-                ></span>
+                  >{{ data.buyer_info.address.street }}</span
+                >
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
@@ -474,7 +475,7 @@
                     margin-left: 0px;
                     height: 32px;
                   "
-                  >{{ data.buyer_info.address.street }}</span
+                  >{{ data.buyer_info.address.city }}</span
                 >
               </div>
             </v-col>
@@ -610,7 +611,8 @@
                     margin-left: 0px;
                     height: 32px;
                   "
-                ></span>
+                  >{{ data.apartment_floor_number }}</span
+                >
               </div>
             </v-col>
             <v-col cols="3" md="3" style="padding-inline: 0px">
@@ -832,8 +834,12 @@
               يسقط حقي بالمطالبة بالوحدة السكنية بدون الرجوع للمحاكم المختصة
               (المبلغ المدفوع غير مسترد)
             </v-col>
-            <v-col cols="6" md="6"> اسم وتوقيع المشتري : </v-col>
-            <v-col cols="6" md="6">موظف المبيعات : </v-col>
+            <v-col cols="6" md="6">
+              اسم وتوقيع المشتري : {{ data.buyer_info.customer_name }}</v-col
+            >
+            <v-col cols="6" md="6"
+              >موظف المبيعات : {{ data.employee_name }}</v-col
+            >
           </v-row>
         </v-container>
       </v-card>
@@ -846,6 +852,7 @@ import { getCurrentDateInString } from "@/constant/date";
 import numberWithComma from "@/constant/number";
 import logo1 from "@/assets/logo/41412d.png";
 import logo2 from "@/assets/logo/qaiwan-logo.png";
+import adminApi from "@/api/adminApi";
 
 export default {
   data() {
@@ -853,23 +860,38 @@ export default {
       logo1,
       logo2,
       data: null,
+      id: JSON.parse(localStorage.getItem("printApplicationFormAbasly"))._id,
       user: null,
       dataResidential: null,
       date: getCurrentDateInString(),
     };
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("printApplicationFormAbasly"));
     var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
     this.user = userDataString;
-  },
-  mounted() {
-    setTimeout(() => {
-      this.printElement();
-    }, 1000);
+    this.getData();
   },
   methods: {
+    async getData() {
+      try {
+        const response = await adminApi.getOneApplicationForm(this.id);
+
+        this.data = response.data.results;
+        setTimeout(() => {
+          this.printElement();
+        }, 1000);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$router.push("/login");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.status === 400) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
+
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;
