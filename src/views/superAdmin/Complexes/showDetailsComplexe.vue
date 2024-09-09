@@ -111,6 +111,17 @@
                     outlined
                   />
                 </VCol>
+                <VCol cols="12" md="6">
+                  <VSelect
+                    :items="items"
+                    v-model="data.type"
+                    :rules="Rules.address"
+                    item-title="text"
+                    item-value="value"
+                    label="النوع"
+                    outlined
+                  />
+                </VCol>
               </VRow>
             </VForm>
           </VContainer>
@@ -179,6 +190,17 @@
                     v-model="dialogEdit.editedItem.address"
                     :rules="Rules.address"
                     :label="t('Address')"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VSelect
+                    :items="items"
+                    v-model="dialogEdit.editedItem.type"
+                    :rules="Rules.address"
+                    item-title="text"
+                    item-value="value"
+                    label="النوع"
                     outlined
                   />
                 </VCol>
@@ -303,6 +325,10 @@ export default {
       // table
 
       // add
+      items: [
+        { text: "ادمن", value: "admin" },
+        { text: "محاسب", value: "manager_accountant" },
+      ],
       addDialog: {
         open: false,
         saveLoading: false,
@@ -314,6 +340,7 @@ export default {
         password_show: "",
         phone: "",
         address: "",
+        type: null,
       },
       // add
 
@@ -467,7 +494,11 @@ export default {
             password_show: this.data.password_show,
             phone: this.data.phone,
             address: this.data.address,
+            type: this.data.type,
           });
+          await this.getCenter();
+          this.addDialog.open = false;
+          this.showDialogfunction(response.data.message, "primary");
 
           this.addDialog.saveLoading = false;
           this.data.name = "";
@@ -475,9 +506,7 @@ export default {
           this.data.email = "";
           this.data.password_show = "";
           this.data.address = "";
-          await this.getCenter();
-          this.addDialog.open = false;
-          this.showDialogfunction(response.data.message, "primary");
+          this.data.type = null;
         } catch (error) {
           if (error.response && error.response.status === 401) {
             this.$store.dispatch("submitLogout");
@@ -504,7 +533,7 @@ export default {
 
       if (valid) {
         this.dialogEdit.loading = true;
-
+        console.log(this.dialogEdit.editedItem.type);
         try {
           const response = await superAPI.editCenterUsers({
             account_id: this.dialogEdit.editedItem._id,
@@ -513,6 +542,7 @@ export default {
             password_show: this.dialogEdit.editedItem.password_show,
             phone: this.dialogEdit.editedItem.phone,
             address: this.dialogEdit.editedItem.address,
+            type: this.dialogEdit.editedItem.type,
           });
 
           this.dialogEdit.open = false;

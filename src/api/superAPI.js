@@ -53,6 +53,7 @@ class superAPI {
     password_show,
     phone,
     address,
+    type,
   }) {
     const requestData = {
       center_id,
@@ -61,6 +62,7 @@ class superAPI {
       password_show,
       phone,
       address,
+      type,
     };
     const response = await axiosInstance.post(
       `/admin/centerUsers`,
@@ -75,6 +77,7 @@ class superAPI {
     password_show,
     phone,
     address,
+    type,
   }) {
     const requestData = {
       account_id,
@@ -83,6 +86,7 @@ class superAPI {
       password_show,
       phone,
       address,
+      type,
     };
     const response = await axiosInstance.put(`/admin/centerUsers`, requestData);
     return response;
