@@ -224,11 +224,25 @@ export default {
         itemsPerPage = 10;
       }
 
+      const key =
+        this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+          ? this.tableOptions.sortBy[0]
+          : "createdAt";
+      const order =
+        this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+          ? this.tableOptions.sortDesc[0]
+            ? "desc"
+            : "asc"
+          : "desc";
+
+      const sortByJSON = JSON.stringify({ key, order });
+
       try {
         const response = await adminApi.getVisits({
           page,
           limit: itemsPerPage,
           search: this.table.search,
+          sortBy: sortByJSON,
         });
 
         this.table.Data = response.data.results.data;

@@ -148,9 +148,9 @@ class adminApi {
   // form
 
   // Owners' visits
-  async getVisits({ page, limit, search }) {
+  async getVisits({ page, limit, search, sortBy }) {
     const response = await axiosInstance.get(
-      `/visits?page=${page}&limit=${limit}&search=${search}`
+      `/visits?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
     );
     return response;
   }
