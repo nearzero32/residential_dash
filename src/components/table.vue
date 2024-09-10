@@ -34,6 +34,61 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'id_img_back'">
+            <img
+              v-if="item.selectable.id_img_back"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.id_img_back"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.id_img_back)"
+            />
+          </div>
+          <div v-else-if="header.type === 'id_img_front'">
+            <img
+              v-if="item.selectable.id_img_front"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.id_img_front"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.id_img_front)"
+            />
+          </div>
+          <div v-else-if="header.type === 'location_img_back'">
+            <img
+              v-if="item.selectable.location_img_back"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.location_img_back"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.location_img_back)"
+            />
+          </div>
+          <div v-else-if="header.type === 'location_img_front'">
+            <img
+              v-if="item.selectable.location_img_front"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.location_img_front"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.location_img_front)"
+            />
+          </div>
+          <div v-else-if="header.type === 'passport_img'">
+            <img
+              v-if="item.selectable.passport_img"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.passport_img"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.passport_img)"
+            />
+          </div>
           <div v-else-if="header.type === 'images'">
             <img
               v-if="item.selectable[header.key][0]"
@@ -313,7 +368,13 @@
               </template>
               <span>طباعة</span>
             </VTooltip>
-            <VTooltip bottom v-if="table.actions.includes('ايقاف')">
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('ايقاف') &&
+                item.selectable.is_disabled == false
+              "
+            >
               <template v-slot:activator="{ props }">
                 <VIcon
                   style="margin-inline: 3px"
@@ -328,6 +389,28 @@
                 </VIcon>
               </template>
               <span>ايقاف</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('اعادة تفعيل') &&
+                item.selectable.is_disabled == true
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#4caf50"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-account-reactivate
+                </VIcon>
+              </template>
+              <span>اعادة تفعيل</span>
             </VTooltip>
             <VTooltip
               bottom
@@ -432,6 +515,62 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'id_img_back'" class="l">
+            <img
+              v-if="item.selectable.id_img_back"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.id_img_back"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.id_img_back)"
+            />
+          </div>
+          <div v-else-if="header.type === 'id_img_front'" class="l">
+            <img
+              v-if="item.selectable.id_img_front"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.id_img_front"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.id_img_front)"
+            />
+          </div>
+          <div v-else-if="header.type === 'location_img_back'" class="l">
+            <img
+              v-if="item.selectable.location_img_back"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.location_img_back"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.location_img_back)"
+            />
+          </div>
+          <div v-else-if="header.type === 'location_img_front'" class="l">
+            <img
+              v-if="item.selectable.location_img_front"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.location_img_front"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.location_img_front)"
+            />
+          </div>
+          <div v-else-if="header.type === 'passport_img'" class="l">
+            <img
+              v-if="item.selectable.passport_img"
+              class="teacher_image_table"
+              :src="content_urll + item.selectable.passport_img"
+              alt
+              width="50"
+              height="50"
+              @click="emitShowImgs(item.selectable.passport_img)"
+            />
+          </div>
+
           <div v-else-if="header.type === 'images'" class="l">
             <img
               v-if="item.selectable[header.key][0]"
@@ -696,6 +835,28 @@
               </template>
               <span>عرض المنازل</span>
             </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('اعادة تفعيل') &&
+                item.selectable.is_disabled == true
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#4caf50"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-account-reactivate
+                </VIcon>
+              </template>
+              <span>اعادة تفعيل</span>
+            </VTooltip>
 
             <VTooltip
               bottom
@@ -734,7 +895,13 @@
               </template>
               <span>طباعة</span>
             </VTooltip>
-            <VTooltip bottom v-if="table.actions.includes('ايقاف')">
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('ايقاف') &&
+                item.selectable.is_disabled == false
+              "
+            >
               <template v-slot:activator="{ props }">
                 <VIcon
                   style="margin-inline: 3px"

@@ -1156,6 +1156,12 @@ class adminApi {
     );
     return response;
   }
+  async getTenants({ id, page, limit, search, sortBy, is_disabled }) {
+    const response = await axiosInstance.get(
+      `/tenants/owner_id/${id}?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&is_disabled=${is_disabled}`
+    );
+    return response;
+  }
   async addAnotherOwner({
     owner_id,
     name,
@@ -1190,6 +1196,108 @@ class adminApi {
     };
     const response = await axiosInstance.post(
       `/owners/another_owners`,
+      requestData
+    );
+    return response;
+  }
+  async addTenants({
+    owner_id,
+    name,
+    phone,
+    password_show,
+    email,
+    address,
+    house_id,
+    form_id,
+    id_number,
+    id_place_of_issue,
+    id_issue_date,
+    residence_card_number,
+    residence_card_issue_date,
+    residence_card_place_of_issue,
+    owner_title_jop,
+    id_img_front,
+    id_img_back,
+    location_img_front,
+    location_img_back,
+    passport_img,
+    bank_id,
+  }) {
+    const requestData = {
+      owner_id,
+      name,
+      phone,
+      password_show,
+      email,
+      address,
+      house_id,
+      form_id,
+      id_number,
+      id_place_of_issue,
+      id_issue_date,
+      residence_card_number,
+      residence_card_issue_date,
+      residence_card_place_of_issue,
+      owner_title_jop,
+      id_img_front,
+      id_img_back,
+      location_img_front,
+      location_img_back,
+      passport_img,
+      bank_id,
+    };
+    const response = await axiosInstance.post(`/tenants`, requestData);
+    return response;
+  }
+  async editTenants({
+    id,
+    owner_id,
+    name,
+    phone,
+    email,
+    password_show,
+    bank_id,
+    address,
+    id_place_of_issue,
+    id_issue_date,
+    residence_card_number,
+    residence_card_issue_date,
+    residence_card_place_of_issue,
+    owner_title_jop,
+    id_img_front,
+    id_img_back,
+    location_img_front,
+    location_img_back,
+    passport_img,
+  }) {
+    const requestData = {
+      tenant_id: id,
+      owner_id,
+      name,
+      phone,
+      email,
+      password_show,
+      bank_id,
+      address,
+      id_place_of_issue,
+      id_issue_date,
+      residence_card_number,
+      residence_card_issue_date,
+      residence_card_place_of_issue,
+      owner_title_jop,
+      id_img_front,
+      id_img_back,
+      location_img_front,
+      location_img_back,
+      passport_img,
+    };
+    const response = await axiosInstance.put(`/tenants`, requestData);
+    return response;
+  }
+  async disabledTenants(id, is_disabled) {
+    const requestData = { is_disabled };
+    const response = await axiosInstance.put(
+      `/tenants/disable/tenant_id/${id}`,
       requestData
     );
     return response;
