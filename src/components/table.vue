@@ -34,6 +34,29 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'receiver_type'">
+            <strong>{{ item.selectable.receiver_type }}</strong>
+            <template
+              v-if="
+                item.selectable.receiver_type === 'حارس محدد' ||
+                item.selectable.receiver_type === 'مالك محدد' ||
+                item.selectable.receiver_type === 'موظف مبيعات محدد' ||
+                item.selectable.receiver_type === 'مستاجر محدد'
+              "
+            >
+              <details>
+                <summary class="button-like">عرض</summary>
+                <ul>
+                  <li
+                    v-for="(user, index) in item.selectable.receivers"
+                    :key="index"
+                  >
+                    {{ user.name }}
+                  </li>
+                </ul>
+              </details>
+            </template>
+          </div>
           <div v-else-if="header.type === 'id_img_back'">
             <img
               v-if="item.selectable.id_img_back"
@@ -514,6 +537,29 @@
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'receiver_type'" class="l">
+            <strong>{{ item.selectable.receiver_type }}</strong>
+            <template
+              v-if="
+                item.selectable.receiver_type === 'حارس محدد' ||
+                item.selectable.receiver_type === 'مالك محدد' ||
+                item.selectable.receiver_type === 'موظف مبيعات محدد' ||
+                item.selectable.receiver_type === 'مستاجر محدد'
+              "
+            >
+              <details>
+                <summary class="button-like">عرض</summary>
+                <ul>
+                  <li
+                    v-for="(user, index) in item.selectable.receivers"
+                    :key="index"
+                  >
+                    {{ user.name }}
+                  </li>
+                </ul>
+              </details>
+            </template>
           </div>
           <div v-else-if="header.type === 'id_img_back'" class="l">
             <img
@@ -1114,7 +1160,7 @@ export default {
 }
 
 .button-like:hover {
-  background-color: #9155fd;
+  background-color: #76abae;
 }
 
 .button-like:focus {

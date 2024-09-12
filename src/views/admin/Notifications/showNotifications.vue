@@ -48,7 +48,7 @@
           </VCol>
         </VRow>
       </VCardTitle>
-      <VCardText>
+      <VCardText class="custom-table-page">
         <Table
           :table="table"
           :content_url="content_url"
@@ -148,6 +148,42 @@
                     chips
                     multiple
                     :label="t(`Sales staff`)"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="4"
+                  v-else-if="data.receiver_type == 'حارس محدد'"
+                >
+                  <VAutocomplete
+                    v-model="data.receivers"
+                    :rules="Rules.receivers"
+                    :items="GuardsAll"
+                    outlined
+                    item-title="name"
+                    item-value="_id"
+                    attach
+                    chips
+                    multiple
+                    :label="t(`Guard's name`)"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="4"
+                  v-else-if="data.receiver_type == 'مستاجر محدد'"
+                >
+                  <VAutocomplete
+                    v-model="data.receivers"
+                    :rules="Rules.receivers"
+                    :items="TenantsAll"
+                    outlined
+                    item-title="name"
+                    item-value="_id"
+                    attach
+                    chips
+                    multiple
+                    :label="t(`Tenant Name`)"
                   ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="4">
@@ -314,7 +350,9 @@ export default {
 
       // add
       file: null,
+      TenantsAll: [],
       OwnersAll: [],
+      GuardsAll: [],
       SellsEmployee: [],
       addDialog: {
         open: false,
@@ -363,6 +401,8 @@ export default {
     }
     this.getSellsEmployee();
     this.getOwnersAll();
+    this.getTenantsAll();
+    this.getGuardsAll();
   },
   computed: {
     Rules() {
@@ -395,7 +435,7 @@ export default {
         },
         {
           title: this.t("Recipient Type"),
-          type: "strong",
+          type: "receiver_type",
           link: ``,
           key: "receiver_type",
         },
@@ -427,6 +467,10 @@ export default {
         { text: this.t("Specific Owner"), value: "مالك محدد" },
         { text: this.t("All Sales Staff"), value: "جميع موظفي المبيعات" },
         { text: this.t("Specific Sales Staff"), value: "موظف مبيعات محدد" },
+        { text: this.t("All guards"), value: "جميع الحراس" },
+        { text: this.t("Specified guard"), value: "حارس محدد" },
+        { text: this.t("All tenants"), value: "جميع المستاجرين" },
+        { text: this.t("Specified tenant"), value: "مستاجر محدد" },
       ];
     },
   },
@@ -522,6 +566,74 @@ export default {
         this.table.loading = false;
       }
     },
+    async getGuardsAll() {
+      try {
+        const key =
+          this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
+        const order =
+          this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+            ? this.tableOptions.sortDesc[0]
+              ? "desc"
+              : "asc"
+            : "desc";
+
+        const sortByJSON = JSON.stringify({ key, order });
+
+        const response = await adminApi.getGuards({
+          page: 1,
+          limit: 9999999999999,
+          sortBy: sortByJSON,
+          search: null,
+          is_deleted: false,
+        });
+
+        this.GuardsAll = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
+    async getTenantsAll() {
+      try {
+        const key =
+          this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+            ? this.tableOptions.sortBy[0]
+            : "createdAt";
+        const order =
+          this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+            ? this.tableOptions.sortDesc[0]
+              ? "desc"
+              : "asc"
+            : "desc";
+
+        const sortByJSON = JSON.stringify({ key, order });
+
+        const response = await adminApi.getGuards({
+          page: 1,
+          limit: 9999999999999,
+          sortBy: sortByJSON,
+          search: null,
+          is_deleted: false,
+        });
+
+        this.TenantsAll = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     // Get Data
 
     // Add Data
@@ -551,6 +663,16 @@ export default {
         } else if (this.data.receiver_type === "مالك محدد") {
           if (this.data.receivers.length === 0) {
             this.showDialogfunction("يرجى اختيار مالك", "#FF5252");
+            return;
+          }
+        } else if (this.data.receiver_type === "حارس محدد") {
+          if (this.data.receivers.length === 0) {
+            this.showDialogfunction("يرجى اختيار حارس", "#FF5252");
+            return;
+          }
+        } else if (this.data.receiver_type === "مستاجر محدد") {
+          if (this.data.receivers.length === 0) {
+            this.showDialogfunction("يرجى اختيار مستاجر", "#FF5252");
             return;
           }
         }
@@ -641,3 +763,41 @@ export default {
   },
 };
 </script>
+
+
+<style>
+.custom-table-page
+  .v-table--density-default
+  > .v-table__wrapper
+  > table
+  > tbody
+  > tr
+  > td,
+.custom-table-page
+  .v-table--density-default
+  > .v-table__wrapper
+  > table
+  > thead
+  > tr
+  > td,
+.custom-table-page
+  .v-table--density-default
+  > .v-table__wrapper
+  > table
+  > tfoot
+  > tr
+  > td {
+  block-size: auto !important;
+  min-height: 40px;
+}
+.custom-table-page
+  .v-table
+  .v-table__wrapper
+  table
+  .v-data-table__tbody
+  tr
+  td
+  div {
+  padding-block: 10px;
+}
+</style>
