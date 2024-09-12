@@ -687,6 +687,16 @@ class adminApi {
         return error.response;
       });
   }
+  async getAllTenants() {
+    return axiosInstance
+      .get(`/tenants/all`)
+      .then((Response) => Response)
+      .catch((error) => {
+        console.log("error", error);
+
+        return error.response;
+      });
+  }
   async addGuards({ name, email, password_show, phone, address, salary }) {
     const requestData = {
       name,

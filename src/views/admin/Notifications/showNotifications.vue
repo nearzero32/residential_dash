@@ -602,28 +602,9 @@ export default {
     },
     async getTenantsAll() {
       try {
-        const key =
-          this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
-            ? this.tableOptions.sortBy[0]
-            : "createdAt";
-        const order =
-          this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
-            ? this.tableOptions.sortDesc[0]
-              ? "desc"
-              : "asc"
-            : "desc";
+        const response = await adminApi.getAllTenants();
 
-        const sortByJSON = JSON.stringify({ key, order });
-
-        const response = await adminApi.getGuards({
-          page: 1,
-          limit: 9999999999999,
-          sortBy: sortByJSON,
-          search: null,
-          is_deleted: false,
-        });
-
-        this.TenantsAll = response.data.results.data;
+        this.TenantsAll = response.data.results;
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
