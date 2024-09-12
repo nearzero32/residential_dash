@@ -53,10 +53,6 @@ const store = createStore({
           token_firebase = null;
         }
         var i = 1;
-        console.log(`token_firebase-${i++} : ${token_firebase}`);
-        setInterval(() => {
-          console.log(`token_firebase-${i} : ${token_firebase}`);
-        }, 120000);
       } catch (error) {
         console.error("Error logging in:", error);
       }
