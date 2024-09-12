@@ -7,7 +7,7 @@
     ></BaseBreadcrumb>
     <br />
     <br />
-    <VCard class="mb-6">
+    <!-- <VCard class="mb-6">
       <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
       <VCardText>
         <VRow style="justify-content: space-between">
@@ -23,7 +23,7 @@
           </VCol>
         </VRow>
       </VCardText>
-    </VCard>
+    </VCard> -->
 
     <VCard>
       <VCardTitle>
@@ -54,8 +54,9 @@
           :tableOptions="tableOptions"
           :headers="headers"
           @update:options="getCenter"
-          @deleteItems="deleteItem"
-          @showImages="showImage"
+          @empConfirmIteme="ConfirmIteme"
+          @empConsentIteme="RejectIteme"
+          @empFinishIteme="FinishIteme"
         />
       </VCardText>
     </VCard>
@@ -88,22 +89,149 @@
     <!-- image -->
 
     <!-- Delete Dialog -->
-    <VDialog v-model="dialogDelete.open" max-width="500px">
-      <VCard>
+    <VDialog v-model="dialogConfirmIteme.open" max-width="1000px">
+      <VCard style="height: 700px">
         <VCardTitle class="headline justify-center">
-          {{ t("Are you sure you want to delete?") }}
+          الموافقة على الطلب
         </VCardTitle>
+        <VCardText>
+          <VForm>
+            <VRow>
+              <VCol cols="12" md="12">
+                <VSelect
+                  v-model="employee_id"
+                  :items="Employees"
+                  :rules="Rules.required"
+                  item-title="name"
+                  item-value="_id"
+                  label="موظف الصيانة"
+                />
+              </VCol>
+              <VCol cols="12" md="12">
+                <VueDatePicker
+                  :format="format"
+                  :rules="Rules.required"
+                  v-model="date_to_work"
+                  :type="datetime"
+                  density="compact"
+                  label="تاريخ ووقت العمل"
+                  outlined
+                  required
+                  dense
+                  :is24hr="false"
+                ></VueDatePicker>
+              </VCol>
+              <VCol cols="12" md="12">
+                <VTextarea
+                  rows="5"
+                  style="height: 379px"
+                  label="الملاحظة ( اختياري )"
+                  v-model="note"
+                />
+              </VCol>
+            </VRow>
+          </VForm>
+        </VCardText>
         <VCardActions>
           <VSpacer />
-          <VBtn color="blue darken-1" text @click="dialogDelete.open = false">
+          <VBtn
+            color="blue darken-1"
+            text
+            @click="dialogConfirmIteme.open = false"
+          >
             {{ t("Cancel") }}
           </VBtn>
           <VBtn
             color="primary white--text"
-            :loading="dialogDelete.loading"
-            @click="deleteItemConfirm"
+            :loading="dialogConfirmIteme.loading"
+            @click="ConfirmItemeItemConfirm"
           >
-            {{ t("Delete") }}
+            {{ t("Approval") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Delete Dialog -->
+
+    <!-- dialogRejectIteme -->
+    <VDialog v-model="dialogRejectIteme.open" max-width="1000px">
+      <VCard>
+        <VCardTitle class="headline justify-center"> رفض الطلب </VCardTitle>
+        <VCardText>
+          <VForm>
+            <VRow>
+              <VCol cols="12" md="12">
+                <VTextarea
+                  rows="5"
+                  label="سبب الرفض"
+                  v-model="dialogRejectIteme.reason_to_reject"
+                />
+              </VCol>
+              <VCol cols="12" md="12">
+                <VTextarea
+                  rows="5"
+                  label="الملاحظة ( اختياري )"
+                  v-model="dialogRejectIteme.note"
+                />
+              </VCol>
+            </VRow>
+          </VForm>
+        </VCardText>
+        <VCardActions>
+          <VSpacer />
+          <VBtn
+            color="blue darken-1"
+            text
+            @click="dialogRejectIteme.open = false"
+          >
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary white--text"
+            :loading="dialogRejectIteme.loading"
+            @click="RejectItemeConfirm"
+          >
+            {{ t("Refusal") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Delete Dialog -->
+
+    <!-- dialogFinishIteme -->
+    <VDialog v-model="dialogFinishIteme.open" max-width="1000px">
+      <VCard>
+        <VCardTitle class="headline justify-center"> انهاء الطلب </VCardTitle>
+        <VCardText>
+          <VForm>
+            <VRow>
+              <VCol cols="12" md="12">
+                <VTextarea
+                  rows="5"
+                  label="الملاحظة ( اختياري )"
+                  v-model="dialogFinishIteme.note"
+                />
+              </VCol>
+            </VRow>
+          </VForm>
+        </VCardText>
+        <VCardActions>
+          <VSpacer />
+          <VBtn
+            color="blue darken-1"
+            text
+            @click="dialogFinishIteme.open = false"
+          >
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary white--text"
+            :loading="dialogFinishIteme.loading"
+            @click="FinishItemeConfirm"
+          >
+            {{ t("Finish") }}
           </VBtn>
           <VSpacer />
         </VCardActions>
@@ -134,6 +262,7 @@
 import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
 import Table from "@/components/table.vue";
+import { format as formatDate } from "date-fns";
 
 export default {
   components: {
@@ -141,7 +270,6 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-
     return {
       t,
       // nav
@@ -175,7 +303,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["حذف"],
+        actions: ["موافقه", "رفض", "انهاء"],
         search: null,
         itemsPerPage: 5,
       },
@@ -189,13 +317,37 @@ export default {
       },
       // Image
 
-      // Delete
-      dialogDelete: {
+      // dialogConfirmIteme
+      Employees: [],
+      employee_id: null,
+      date_to_work: null,
+      note: null,
+      isoDatee: null,
+      dialogConfirmIteme: {
         open: false,
         deletedItem: null,
         loading: false,
       },
-      // Delete
+      // dialogConfirmIteme
+
+      // dialogRejectIteme
+      dialogRejectIteme: {
+        open: false,
+        deletedItem: null,
+        loading: false,
+        reason_to_reject: null,
+        note: null,
+      },
+      // dialogRejectIteme
+
+      // dialogFinishIteme
+      dialogFinishIteme: {
+        open: false,
+        deletedItem: null,
+        loading: false,
+        note: null,
+      },
+      // dialogRejectIteme
 
       // message
       dialogData: {
@@ -213,6 +365,7 @@ export default {
     } else {
       this.userData = ["add", "edit", "remove"];
     }
+    this.getMaintenanceEmployee();
   },
   computed: {
     headers() {
@@ -225,8 +378,8 @@ export default {
         },
         {
           title: this.t("Owner's name"),
-          type: "strong",
-          link: ``,
+          type: "link",
+          link: `/admin-show-service-one-bookings`,
           key: "name",
         },
         {
@@ -248,16 +401,16 @@ export default {
           key: "service.price",
         },
         {
-          title: this.t("Status"),
+          title: this.t("Completion has been achieved"),
           type: "strong",
           link: ``,
-          key: "is_available",
+          key: "current_status",
         },
         {
-          title: this.t("The image"),
-          type: "strong",
+          title: this.t("Refusal"),
+          type: "current_status",
           link: ``,
-          key: "service.image",
+          key: "current_status.type",
         },
         {
           title: this.t("The type"),
@@ -271,18 +424,14 @@ export default {
           link: ``,
           key: "createdAt",
         },
-      ];
-
-      // إضافة العمود بناءً على الشرط
-      if (this.is_deleted == false) {
-        headersArray.push({
+        {
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
           type: "strong",
           link: "",
-        });
-      }
+        },
+      ];
 
       return headersArray;
     },
@@ -291,6 +440,19 @@ export default {
         { text: this.t("Deleted"), value: true },
         { text: this.t("Not deleted"), value: false },
       ];
+    },
+    Rules() {
+      return {
+        required: [(value) => !!value || this.t("This field is required")],
+      };
+    },
+  },
+  watch: {
+    date_to_work(val) {
+      if (val) {
+        const isoDate = val.toISOString();
+        this.isoDatee = isoDate;
+      }
     },
   },
   methods: {
@@ -348,46 +510,156 @@ export default {
         this.table.loading = false;
       }
     },
+    async getMaintenanceEmployee(newOptions) {
+      const key =
+        this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+          ? this.tableOptions.sortBy[0]
+          : "createdAt";
+      const order =
+        this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+          ? this.tableOptions.sortDesc[0]
+            ? "desc"
+            : "asc"
+          : "desc";
+
+      const sortByJSON = JSON.stringify({ key, order });
+
+      try {
+        const response = await adminApi.getMaintenanceEmployee({
+          page: 1,
+          limit: 999999999999,
+          search: null,
+          is_deleted: false,
+          sortBy: sortByJSON,
+        });
+        this.Employees = response.data.results.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     // Get Data
 
-    // deleteItem
-    deleteItem(item) {
-      this.dialogDelete.deletedItem = { ...item };
-      this.dialogDelete.open = true;
+    // ConfirmIteme
+    format(date) {
+      const options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      };
+
+      return new Intl.DateTimeFormat("en-EG", options).format(date);
     },
-    async deleteItemConfirm() {
-      this.dialogDelete.loading = true;
+    ConfirmIteme(item) {
+      this.dialogConfirmIteme.deletedItem = { ...item };
+      this.dialogConfirmIteme.open = true;
+    },
+    async ConfirmItemeItemConfirm() {
+      this.dialogConfirmIteme.loading = true;
       try {
-        const response = await adminApi.removeReservationsService(
-          this.dialogDelete.deletedItem._id
-        );
-        this.dialogDelete.loading = false;
-        this.dialogDelete.open = false;
+        const response = await adminApi.acceptService({
+          id: this.dialogConfirmIteme.deletedItem._id,
+          employee_id: this.employee_id,
+          date_to_work: this.isoDatee,
+          note: this.note,
+        });
+        this.dialogConfirmIteme.loading = false;
+        this.dialogConfirmIteme.open = false;
         this.getCenter();
         this.showDialogfunction(response.data.message, "primary");
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          this.dialogDelete.loading = false;
-          this.dialogDelete.open = false;
+          this.dialogConfirmIteme.loading = false;
+          this.dialogConfirmIteme.open = false;
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
-          this.dialogDelete.loading = false;
-          this.dialogDelete.open = false;
+          this.dialogConfirmIteme.loading = false;
+          this.dialogConfirmIteme.open = false;
           this.showDialogfunction(error.response.data.results, "#FF5252");
         }
       } finally {
-        this.dialogDelete.loading = false;
-        this.dialogDelete.open = false;
+        this.dialogConfirmIteme.loading = false;
+        this.dialogConfirmIteme.open = false;
       }
     },
-    // deleteItem
+    // ConfirmIteme
 
-    // showImage
-    showImage(item) {
-      this.Image.showImageDailog = true;
-      this.Image.imageUrlForShow = item.selectable.service.image;
+    // RejectIteme
+    RejectIteme(item) {
+      this.dialogRejectIteme.deletedItem = { ...item };
+      this.dialogRejectIteme.open = true;
     },
-    // showImage
+    async RejectItemeConfirm() {
+      this.dialogRejectIteme.loading = true;
+      try {
+        const response = await adminApi.rejectService({
+          id: this.dialogRejectIteme.deletedItem._id,
+          reason_to_reject: this.dialogRejectIteme.reason_to_reject,
+          note: this.dialogRejectIteme.note,
+        });
+        this.dialogRejectIteme.loading = false;
+        this.dialogRejectIteme.open = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.dialogRejectIteme.loading = false;
+          this.dialogRejectIteme.open = false;
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.dialogRejectIteme.loading = false;
+          this.dialogRejectIteme.open = false;
+          this.showDialogfunction(error.response.data.results, "#FF5252");
+        }
+      } finally {
+        this.dialogRejectIteme.loading = false;
+        this.dialogRejectIteme.open = false;
+      }
+    },
+    // RejectIteme
+
+    // FinishIteme
+    FinishIteme(item) {
+      this.dialogFinishIteme.deletedItem = { ...item };
+      this.dialogFinishIteme.open = true;
+    },
+    async FinishItemeConfirm() {
+      this.dialogFinishIteme.loading = true;
+      try {
+        const response = await adminApi.FinishService({
+          id: this.dialogFinishIteme.deletedItem._id,
+          note: this.dialogFinishIteme.note,
+        });
+        this.dialogFinishIteme.loading = false;
+        this.dialogFinishIteme.open = false;
+        this.getCenter();
+        this.showDialogfunction(response.data.message, "primary");
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.dialogFinishIteme.loading = false;
+          this.dialogFinishIteme.open = false;
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.dialogFinishIteme.loading = false;
+          this.dialogFinishIteme.open = false;
+          this.showDialogfunction(error.response.data.results, "#FF5252");
+        }
+      } finally {
+        this.dialogFinishIteme.loading = false;
+        this.dialogFinishIteme.open = false;
+      }
+    },
+    // RejectIteme
 
     // message
     showDialogfunction(bodyText, color) {

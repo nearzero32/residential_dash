@@ -183,6 +183,12 @@ export default [
         component: () =>
           import("@/views/admin/ServiceBookings/showServiceBookings.vue"),
       },
+      {
+        path: "/admin-show-service-one-bookings",
+        name: "admin-show-service-one-bookings",
+        component: () =>
+          import("@/views/admin/ServiceBookings/showServiceOneBookings.vue"),
+      },
       // ServiceBookings
 
       // Services

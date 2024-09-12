@@ -68,6 +68,21 @@
               @click="emitShowImgs(item.selectable.id_img_back)"
             />
           </div>
+          <div v-else-if="header.key === 'current_status'">
+            <span v-if="item.selectable.current_status.type == 'تم الانتهاء'">
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
+              ><br />
+              <span> {{ item.selectable.current_status.createdAt }} </span>
+            </span>
+          </div>
+          <div v-else-if="header.type === 'current_status'">
+            <span v-if="item.selectable.current_status.type == 'رفض'">
+              <v-icon color="rgb(175 76 76)" size="40px"
+                >mdi-close-octagon-outline</v-icon
+              ><br />
+              <span> {{ item.selectable.current_status.createdAt }} </span>
+            </span>
+          </div>
           <div v-else-if="header.type === 'id_img_front'">
             <img
               v-if="item.selectable.id_img_front"
@@ -482,6 +497,75 @@
             <VTooltip
               bottom
               v-if="
+                table.actions.includes('موافقه') &&
+                item.selectable.current_status.type == 'قيد الموافقة'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="success"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empConfirmIteme(item.selectable)"
+                >
+                  mdi-check
+                </VIcon>
+              </template>
+              <span>موافقة</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                (table.actions.includes('رفض') &&
+                  item.selectable.current_status &&
+                  item.selectable.current_status.type === 'قيد الموافقة') ||
+                (item.selectable.current_status &&
+                  item.selectable.current_status.type === 'تم الموافقة')
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="error"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empConsentIteme(item.selectable)"
+                >
+                  mdi-close-octagon-outline
+                </VIcon>
+              </template>
+              <span>رفض</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('انهاء') &&
+                item.selectable.current_status.type == 'تم الموافقة'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="success"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empFinishIteme(item.selectable)"
+                >
+                  mdi-check-underline-circle
+                </VIcon>
+              </template>
+              <span>إنهاء</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
                 table.actions.includes('الغاء') &&
                 item.selectable.status == 'معلق'
               "
@@ -537,6 +621,21 @@
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
+          </div>
+          <div v-else-if="header.key === 'current_status'" class="l">
+            <span v-if="item.selectable.current_status.type == 'تم الانتهاء'">
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
+              ><br />
+              <span> {{ item.selectable.current_status.createdAt }} </span>
+            </span>
+          </div>
+          <div v-else-if="header.type === 'current_status'" class="l">
+            <span v-if="item.selectable.current_status.type == 'رفض'">
+              <v-icon color="rgb(175 76 76)" size="40px"
+                >mdi-close-octagon-outline</v-icon
+              ><br />
+              <span> {{ item.selectable.current_status.createdAt }} </span>
+            </span>
           </div>
           <div v-else-if="header.type === 'receiver_type'" class="l">
             <strong>{{ item.selectable.receiver_type }}</strong>
@@ -616,7 +715,6 @@
               @click="emitShowImgs(item.selectable.passport_img)"
             />
           </div>
-
           <div v-else-if="header.type === 'images'" class="l">
             <img
               v-if="item.selectable[header.key][0]"
@@ -638,7 +736,6 @@
               })
             }}
           </div>
-
           <div v-else-if="header.type === 'imgs'" class="l">
             <img
               v-if="item.selectable.imgs"
@@ -839,7 +936,6 @@
           <div v-else-if="header.type === 'floors'" class="l">
             {{ item.selectable.floors.length }}
           </div>
-
           <div v-else>
             {{ item.selectable[header.key] }}
           </div>
@@ -903,7 +999,6 @@
               </template>
               <span>اعادة تفعيل</span>
             </VTooltip>
-
             <VTooltip
               bottom
               v-if="
@@ -1006,6 +1101,75 @@
                 </VIcon>
               </template>
               <span>موافقة</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('موافقه') &&
+                item.selectable.current_status.type == 'قيد الموافقة'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="success"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empConfirmIteme(item.selectable)"
+                >
+                  mdi-check
+                </VIcon>
+              </template>
+              <span>موافقة</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                (table.actions.includes('رفض') &&
+                  item.selectable.current_status &&
+                  item.selectable.current_status.type === 'قيد الموافقة') ||
+                (item.selectable.current_status &&
+                  item.selectable.current_status.type === 'تم الموافقة')
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="error"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empConsentIteme(item.selectable)"
+                >
+                  mdi-close-octagon-outline
+                </VIcon>
+              </template>
+              <span>رفض</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
+                table.actions.includes('انهاء') &&
+                item.selectable.current_status.type == 'تم الموافقة'
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="success"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empFinishIteme(item.selectable)"
+                >
+                  mdi-check-underline-circle
+                </VIcon>
+              </template>
+              <span>إنهاء</span>
             </VTooltip>
             <VTooltip
               bottom
@@ -1120,6 +1284,12 @@ export default {
     },
     empShowIteme(item) {
       this.$emit("empShowIteme", item);
+    },
+    empConsentIteme(item) {
+      this.$emit("empConsentIteme", item);
+    },
+    empFinishIteme(item) {
+      this.$emit("empFinishIteme", item);
     },
     numberWithComma,
   },

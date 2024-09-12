@@ -556,6 +556,45 @@ class adminApi {
     );
     return response;
   }
+  async getReservationsServiceOne(id) {
+    const response = await axiosInstance.get(
+      `/reservations/service/get_one/${id}`
+    );
+    return response;
+  }
+  async acceptService({ id, employee_id, date_to_work, note }) {
+    const requestData = {
+      employee_id,
+      date_to_work,
+      note,
+    };
+    const response = await axiosInstance.put(
+      `/reservations/service/accept/reserve_id/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async rejectService({ id, reason_to_reject, note }) {
+    const requestData = {
+      reason_to_reject,
+      note,
+    };
+    const response = await axiosInstance.put(
+      `/reservations/service/reject/reserve_id/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async FinishService({ id, note }) {
+    const requestData = {
+      note,
+    };
+    const response = await axiosInstance.put(
+      `/reservations/service/finish/reserve_id/${id}`,
+      requestData
+    );
+    return response;
+  }
   // Reservations
 
   // Services
