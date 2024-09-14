@@ -1965,7 +1965,7 @@ export default {
           title: this.t("Bank Name"),
           type: "strong",
           link: ``,
-          key: "bank_account_name",
+          key: "bank_name",
         },
         {
           title: this.t("Password"),
