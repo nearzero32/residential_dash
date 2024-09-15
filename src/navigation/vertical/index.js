@@ -87,6 +87,7 @@ export default [
     icon: { icon: "mdi-account-tie" },
     children: [
       { title: "All", to: "admin-show-owners" },
+      { title: "All tenants", to: "admin-show-all-tenants" },
       {
         title: "Received the residential unit",
         to: "admin-show-owners-recipients",

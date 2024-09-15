@@ -4,7 +4,7 @@
     class="elevation-1"
     :headers="isMobile ? [] : headers"
     :items="table.Data"
-    :search="table.actions.includes('بحث') ? table.search : ''"
+    :search="table.actions.includes('بحث') ? search : null"
     :loading="table.loading"
     :options="tableOptions"
     :items-per-page="tableOptions.itemsPerPage"
@@ -1231,6 +1231,8 @@ export default {
     content_url: String,
     tableOptions: Object,
     headers: Object,
+    search: String,
+    dataSerch: String,
   },
   data() {
     return {
@@ -1239,6 +1241,13 @@ export default {
       content_urll: JSON.parse(localStorage.getItem("results")).content_url,
       userData: [],
     };
+  },
+  watch: {
+    search(newSearch) {
+      if (this.table.actions.includes("بحث")) {
+        this.handleSearch(newSearch);
+      }
+    },
   },
   created() {
     window.addEventListener("resize", this.onResize);
@@ -1254,6 +1263,23 @@ export default {
     window.removeEventListener("resize", this.onResize);
   },
   methods: {
+    handleSearch(newSearch) {
+      this.table.Data = this.dataSerch;
+      const filteredData = this.table.Data.filter((item) => {
+        return this.headers.some((header) => {
+          const value = this.getNestedValue(item, header.key);
+          return (
+            value &&
+            value.toString().toLowerCase().includes(newSearch.toLowerCase())
+          );
+        });
+      });
+
+      this.table.Data = filteredData;
+    },
+    getNestedValue(obj, path) {
+      return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+    },
     onResize() {
       this.isMobile = window.innerWidth < 769;
     },

@@ -736,6 +736,18 @@ class adminApi {
         return error.response;
       });
   }
+  async getShowAllTenants({ page, limit, sortBy, search }) {
+    return axiosInstance
+      .get(
+        `/tenants/show?page=${page}&limit=${limit}&sortBy=${sortBy}&search=${search}`
+      )
+      .then((Response) => Response)
+      .catch((error) => {
+        console.log("error", error);
+
+        return error.response;
+      });
+  }
   async addGuards({ name, email, password_show, phone, address, salary }) {
     const requestData = {
       name,

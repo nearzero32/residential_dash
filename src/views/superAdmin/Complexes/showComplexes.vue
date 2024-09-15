@@ -54,7 +54,8 @@
           :content_url="content_url"
           :tableOptions="tableOptions"
           :headers="headers"
-          @update:options="getCenter"
+          :dataSerch="dataSerch"
+          :search="table.search"
           @editItems="editItem"
         />
       </VCardText>
@@ -344,6 +345,7 @@ export default {
         search: null,
         itemsPerPage: 5,
       },
+      dataSerch: [],
       // table
 
       // add
@@ -456,30 +458,17 @@ export default {
       ];
     },
   },
-
+  mounted() {
+    this.getCenter();
+  },
   methods: {
     // Get Data
-    async getCenter(newOptions) {
-      if (newOptions) {
-        if (JSON.stringify(newOptions) !== JSON.stringify(this.tableOptions)) {
-          this.tableOptions = { ...newOptions };
-        }
-      }
-
-      this.table.loading = true;
-      let { page, itemsPerPage } = this.tableOptions;
-
-      if (!page) {
-        page = 1;
-      }
-      if (!itemsPerPage) {
-        itemsPerPage = 10;
-      }
-
+    async getCenter() {
       try {
         const response = await superAPI.getCenter();
 
         this.table.Data = response.data.results;
+        this.dataSerch = response.data.results;
         this.table.totalItems = response.data.results.length;
         this.table.loading = false;
       } catch (error) {

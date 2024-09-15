@@ -276,6 +276,11 @@ export default [
 
       // Owners
       {
+        path: "/admin-show-all-tenants",
+        name: "admin-show-all-tenants",
+        component: () => import("@/views/admin/Owners/showAllTenants.vue"),
+      },
+      {
         path: "/admin-show-owners",
         name: "admin-show-owners",
         component: () => import("@/views/admin/Owners/showOwners.vue"),
