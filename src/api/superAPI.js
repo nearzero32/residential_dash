@@ -2,8 +2,10 @@ import axiosInstance from "@/plugins/axios.js";
 
 class superAPI {
   // Center
-  async getCenter() {
-    const response = await axiosInstance.get(`/admin/centers`);
+  async getCenter({ page, limit, search }) {
+    const response = await axiosInstance.get(
+      `/admin/centers?page=${page}&limit=${limit}&search=${search}`
+    );
     return response;
   }
   async addCenter({ name, phone, building_type, address, qr, is_dollar }) {

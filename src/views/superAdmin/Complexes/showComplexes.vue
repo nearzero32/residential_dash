@@ -42,6 +42,7 @@
               hide-details
               single-line
               @click:clear="getCenter"
+              @input="getCenter"
               clearable
             />
           </VCol>
@@ -54,8 +55,7 @@
           :content_url="content_url"
           :tableOptions="tableOptions"
           :headers="headers"
-          :dataSerch="dataSerch"
-          :search="table.search"
+          @update:options="getCenter"
           @editItems="editItem"
         />
       </VCardText>
@@ -341,7 +341,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل", "بحث"],
+        actions: ["تعديل"],
         search: null,
         itemsPerPage: 5,
       },
@@ -458,18 +458,33 @@ export default {
       ];
     },
   },
-  mounted() {
-    this.getCenter();
-  },
   methods: {
     // Get Data
-    async getCenter() {
-      try {
-        const response = await superAPI.getCenter();
+    async getCenter(newOptions) {
+      if (newOptions) {
+        if (JSON.stringify(newOptions) !== JSON.stringify(this.tableOptions)) {
+          this.tableOptions = { ...newOptions };
+        }
+      }
 
-        this.table.Data = response.data.results;
-        this.dataSerch = response.data.results;
-        this.table.totalItems = response.data.results.length;
+      this.table.loading = true;
+      let { page, itemsPerPage } = this.tableOptions;
+
+      if (!page) {
+        page = 1;
+      }
+      if (!itemsPerPage) {
+        itemsPerPage = 10;
+      }
+
+      try {
+        const response = await superAPI.getCenter({
+          page,
+          limit: itemsPerPage,
+          search: this.table.search,
+        });
+        this.table.Data = response.data.results.data;
+        this.table.totalItems = response.data.results.count;
         this.table.loading = false;
       } catch (error) {
         if (error.response && error.response.status === 401) {
