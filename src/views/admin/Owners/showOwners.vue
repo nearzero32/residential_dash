@@ -1252,7 +1252,7 @@ export default {
         },
         {
           title: this.t("Owner's name"),
-          type: "link",
+          type: "linkk",
           link: `/admin-profile-owner`,
           key: "name",
         },

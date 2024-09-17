@@ -736,6 +736,16 @@ class adminApi {
         return error.response;
       });
   }
+  async getOneTenant(id) {
+    return axiosInstance
+      .get(`/tenants/tenant_id/${id}`)
+      .then((Response) => Response)
+      .catch((error) => {
+        console.log("error", error);
+
+        return error.response;
+      });
+  }
   async getShowAllTenants({ page, limit, sortBy, search }) {
     return axiosInstance
       .get(

@@ -281,6 +281,11 @@ export default [
         component: () => import("@/views/admin/Owners/showAllTenants.vue"),
       },
       {
+        path: "/admin-profile-tenant",
+        name: "admin-profile-tenant",
+        component: () => import("@/views/admin/Owners/profileTenant.vue"),
+      },
+      {
         path: "/admin-show-owners",
         name: "admin-show-owners",
         component: () => import("@/views/admin/Owners/showOwners.vue"),
@@ -470,5 +475,10 @@ export default [
     path: "/admin-print-owner",
     name: "admin-print-owner",
     component: () => import("@/views/admin/Owners/printOwner.vue"),
+  },
+  {
+    path: "/admin-print-tenant",
+    name: "admin-print-tenant",
+    component: () => import("@/views/admin/Owners/PrintTenant.vue"),
   },
 ];

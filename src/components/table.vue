@@ -34,6 +34,14 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'linkk'">
+            <RouterLink
+              :to="header.link"
+              @click.native.prevent="emitGoToPagee(item.selectable)"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
           <div v-else-if="header.type === 'receiver_type'">
             <strong>{{ item.selectable.receiver_type }}</strong>
             <template
@@ -622,6 +630,14 @@
             <RouterLink
               :to="header.link"
               @click.native.prevent="emitGoToPage(item.selectable)"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'linkk'" class="l">
+            <RouterLink
+              :to="header.link"
+              @click.native.prevent="emitGoToPagee(item.selectable)"
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
@@ -1291,6 +1307,9 @@ export default {
     },
     emitGoToPage(item) {
       sessionStorage.setItem("pageData", JSON.stringify(item));
+    },
+    emitGoToPagee(item) {
+      sessionStorage.setItem("pageDataa", JSON.stringify(item));
     },
     emitDeleteItems(item) {
       this.$emit("deleteItems", item);

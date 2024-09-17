@@ -39,6 +39,7 @@
           @update:options="getCenter"
           @editItems="editItemTenants"
           @emitDisable="emitDisableTenants"
+          @emitPrintItems="printItem"
         />
       </VCardText>
     </VCard>
@@ -122,7 +123,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: [],
+        actions: ["طباعة"],
         search: null,
         itemsPerPage: 5,
       },
@@ -156,9 +157,15 @@ export default {
         },
         {
           title: this.t("Tenant Name"),
+          type: "link",
+          link: `/admin-profile-tenant`,
+          key: "name",
+        },
+        {
+          title: this.t("Phone number"),
           type: "strong",
           link: ``,
-          key: "name",
+          key: "phone",
         },
         {
           title: this.t("Email"),
@@ -167,82 +174,22 @@ export default {
           key: "email",
         },
         {
-          title: this.t("Address"),
-          type: "strong",
-          link: ``,
-          key: "address",
-        },
-        {
-          title: this.t("Bank Name"),
-          type: "strong",
-          link: ``,
-          key: "bank_name",
-        },
-        {
           title: this.t("Password"),
           type: "strong",
           link: ``,
           key: "password_show",
         },
         {
-          title: this.t("Owner's phone number"),
+          title: this.t("Address"),
           type: "strong",
           link: ``,
-          key: "phone",
+          key: "address",
         },
         {
-          title: this.t("Front Side of the ID"),
-          type: "id_img_front",
-          link: ``,
-          key: "id_img_front",
-        },
-        {
-          title: this.t("Back Side of the ID"),
-          type: "id_img_back",
-          link: ``,
-          key: "id_img_back",
-        },
-        {
-          title: this.t("Date of Issuance of the Identification Card"),
+          title: this.t("Form Code"),
           type: "strong",
           link: ``,
-          key: "id_issue_date",
-        },
-        {
-          title: this.t("Issuing Authority of the Identification Card"),
-          type: "strong",
-          link: ``,
-          key: "id_place_of_issue",
-        },
-        {
-          title: this.t("Front Side of the Residence Card"),
-          type: "location_img_front",
-          link: ``,
-          key: "location_img_front",
-        },
-        {
-          title: this.t("Back Side of the Residence Card"),
-          type: "location_img_back",
-          link: ``,
-          key: "location_img_back",
-        },
-        {
-          title: this.t("Residence Card Number"),
-          type: "strong",
-          link: ``,
-          key: "residence_card_number",
-        },
-        {
-          title: this.t("Issuing Authority of the Residence Card"),
-          type: "strong",
-          link: ``,
-          key: "residence_card_place_of_issue",
-        },
-        {
-          title: this.t("Date of Issuance of the Residence Card"),
-          type: "strong",
-          link: ``,
-          key: "residence_card_issue_date",
+          key: "form_code",
         },
         {
           title: this.t("Job Title"),
@@ -251,18 +198,12 @@ export default {
           key: "owner_title_jop",
         },
         {
-          title: this.t("Passport Photo"),
-          type: "passport_img",
-          link: ``,
-          key: "passport_img",
+          title: this.t("Operations"),
+          key: "actions",
+          sortable: false,
+          type: "strong",
+          link: "",
         },
-        // {
-        //   title: this.t("Operations"),
-        //   key: "actions",
-        //   sortable: false,
-        //   type: "strong",
-        //   link: "",
-        // },
       ];
     },
   },
@@ -321,6 +262,16 @@ export default {
       }
     },
     // Get Data
+
+    // printItem
+    printItem(item) {
+      localStorage.setItem("PrintTenant", item._id);
+      let routeData = this.$router.resolve({
+        name: `admin-print-tenant`,
+      });
+      window.open(routeData.href, "_blank");
+    },
+    // printItem
 
     // message
     showDialogfunction(bodyText, color) {
