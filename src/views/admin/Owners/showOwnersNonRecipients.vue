@@ -1224,7 +1224,7 @@ export default {
         },
         {
           title: this.t("Owner's name"),
-          type: "link",
+          type: "linkk",
           link: `/admin-profile-owner`,
           key: "name",
         },
@@ -1235,139 +1235,19 @@ export default {
           key: "phone",
         },
         {
-          title: this.t("The block"),
+          title: this.t("Form Code"),
           type: "strong",
           link: ``,
-          key: "form_block_number",
+          key: "form_code",
+        },
+        {
+          title: this.t("Operations"),
+          key: "actions",
+          sortable: false,
+          type: "strong",
+          link: "",
         },
       ];
-
-      if (buildingType === "شقق") {
-        baseHeaders.push(
-          {
-            title: this.t("Form name"),
-            type: "strong",
-            link: ``,
-            key: "form_name",
-          },
-          {
-            title: this.t("Form Code"),
-            type: "strong",
-            link: ``,
-            key: "form_code",
-          },
-          {
-            title: this.t("Architecture name"),
-            type: "strong",
-            link: ``,
-            key: "exact_apartment_building",
-          },
-          {
-            title: this.t("Floor number"),
-            type: "strong",
-            link: ``,
-            key: "house_apartment_floor_number",
-          },
-          {
-            title: this.t("Residential unit name"),
-            type: "strong",
-            link: ``,
-            key: "house_name",
-          }
-        );
-      } else if (buildingType === "منازل") {
-        baseHeaders.push(
-          {
-            title: this.t("Form name"),
-            type: "strong",
-            link: ``,
-            key: "form_name",
-          },
-          {
-            title: this.t("Form Code"),
-            type: "strong",
-            link: ``,
-            key: "form_code",
-          },
-          {
-            title: this.t("Residential unit name"),
-            type: "strong",
-            link: ``,
-            key: "house_name",
-          },
-          {
-            title: this.t("Number of Floors"),
-            type: "strong",
-            link: ``,
-            key: "house_apartment_floor_number",
-          },
-          {
-            title: this.t("Architecture name"),
-            type: "strong",
-            link: ``,
-            key: "exact_apartment_building",
-          },
-          {
-            title: this.t("Category"),
-            type: "strong",
-            link: ``,
-            key: "form_category",
-          },
-          {
-            title: this.t("Number of Floors"),
-            type: "strong",
-            link: ``,
-            key: "floors",
-          }
-        );
-      } else {
-        baseHeaders.push(
-          {
-            title: this.t("Form name"),
-            type: "strong",
-            link: ``,
-            key: "form_name",
-          },
-          {
-            title: this.t("Form Code"),
-            type: "strong",
-            link: ``,
-            key: "form_code",
-          },
-          {
-            title: this.t("Residential unit name"),
-            type: "strong",
-            link: ``,
-            key: "house_name",
-          },
-          {
-            title: this.t("Architecture name"),
-            type: "strong",
-            link: ``,
-            key: "exact_apartment_building",
-          },
-          {
-            title: this.t("Floor number"),
-            type: "strong",
-            link: ``,
-            key: "house_apartment_floor_number",
-          },
-          {
-            title: this.t("Number of Floors"),
-            type: "strong",
-            link: ``,
-            key: "floors",
-          }
-        );
-      }
-
-      baseHeaders.push({
-        title: this.t("Operations"),
-        key: "actions",
-        sortable: false,
-        type: "strong",
-        link: "",
-      });
       return baseHeaders;
     },
 

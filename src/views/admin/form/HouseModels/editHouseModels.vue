@@ -901,6 +901,16 @@ export default {
     },
     deleteSpace(index) {
       var item = this.data.Spaces[index];
+      const targetBuildingSpace = item.building_space;
+      const targetTotalSpace = item.total_space;
+
+      this.data.houses = this.data.houses.filter((house) => {
+        return !(
+          house.building_space === targetBuildingSpace &&
+          house.total_space === targetTotalSpace
+        );
+      });
+
       this.data.Spaces.splice(index, 1);
     },
     addS(index) {
@@ -1185,8 +1195,7 @@ export default {
 
     // Add Data
     async addCenter() {
-      // this.saveLoading = true;
-
+      this.saveLoading = true;
       if (this.data.Spaces.length <= 0) {
         this.saveLoading = false;
         this.showDialogfunction(
@@ -1199,7 +1208,6 @@ export default {
       const buildingSpace = this.data.Spaces.map(
         (Space) => Space.building_space
       );
-
       var Spaces = this.data.houses;
       var houses = [];
       for (let index = 0; index < Spaces.length; index++) {
@@ -1217,7 +1225,6 @@ export default {
           });
         }
       }
-
       try {
         const response = await adminApi.editForms({
           id: this.id,
