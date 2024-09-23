@@ -16,6 +16,10 @@ const i18nCompLanguages = [
     label: "Arabic",
     i18nLang: "ar",
   },
+  {
+    label: "Kurdish",
+    i18nLang: "kr",
+  },
 ];
 var t = document.getElementById("ti");
 
@@ -23,31 +27,35 @@ onMounted(() => {
   const storedLang = localStorage.getItem("selectedLanguage");
   if (storedLang) {
     locale.value = storedLang;
-    isAppRtl.value = storedLang === "ar";
-    t.innerText = "المجمعات السكنية";
-
+    isAppRtl.value = storedLang === "ar" || storedLang === "kr"; // اجعل الكردية RTL
+    t.innerText =
+      storedLang === "ar"
+        ? "المجمعات السكنية"
+        : storedLang === "kr"
+        ? "Kompleksên malî"
+        : "Housing complexes";
   } else {
     const defaultLang = "ar";
     locale.value = defaultLang;
     isAppRtl.value = defaultLang === "ar";
     localStorage.setItem("selectedLanguage", defaultLang);
     t.innerText = "Housing complexes";
-
   }
 });
 
 const handleLangChange = (lang) => {
   locale.value = lang;
-  isAppRtl.value = lang === "ar";
+  isAppRtl.value = lang === "ar" || lang === "kr"; // اجعل الكردية RTL
   localStorage.setItem("selectedLanguage", lang);
   if (lang) {
     if (lang === "ar") {
       t.innerText = "المجمعات السكنية";
+    } else if (lang === "kr") {
+      t.innerText = "Kompleksên malî"; // استخدم الترجمة المناسبة
     } else {
       t.innerText = "Housing complexes";
     }
   }
-
 };
 </script>
 
