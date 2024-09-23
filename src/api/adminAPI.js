@@ -544,9 +544,16 @@ class adminApi {
   // MaintenanceEmployee
 
   // ReservationsService
-  async getReservationsService({ page, limit, search, is_deleted, sortBy }) {
+  async getReservationsService({
+    page,
+    limit,
+    search,
+    is_deleted,
+    sortBy,
+    type,
+  }) {
     const response = await axiosInstance.get(
-      `/reservations/service?page=${page}&limit=${limit}&search=${search}&is_deleted=${is_deleted}&sortBy=${sortBy}`
+      `/reservations/service?page=${page}&limit=${limit}&search=${search}&is_deleted=${is_deleted}&type=${type}&sortBy=${sortBy}`
     );
     return response;
   }

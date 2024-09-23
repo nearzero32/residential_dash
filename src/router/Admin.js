@@ -178,10 +178,18 @@ export default [
 
       // ServiceBookings
       {
-        path: "/admin-show-service-bookings",
-        name: "admin-show-service-bookings",
+        path: "/admin-show-service-bookings-shipping",
+        name: "admin-show-service-bookings-shipping",
         component: () =>
           import("@/views/admin/ServiceBookings/showServiceBookings.vue"),
+      },
+      {
+        path: "/admin-show-service-bookings-maintenance",
+        name: "admin-show-service-bookings-maintenance",
+        component: () =>
+          import(
+            "@/views/admin/ServiceBookings/showServiceBookingsMaintenance.vue"
+          ),
       },
       {
         path: "/admin-show-service-one-bookings",

@@ -168,7 +168,18 @@ export default [
     icon: { icon: "mdi-cogs" },
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
-      { title: "Service Bookings", to: "admin-show-service-bookings" },
+      {
+        title: "Service Bookings",
+        type: "admin",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Shipping", to: "admin-show-service-bookings-shipping" },
+          {
+            title: "Maintenance",
+            to: "admin-show-service-bookings-maintenance",
+          },
+        ],
+      },
       {
         title: "Services",
         type: "admin",
@@ -362,7 +373,18 @@ export default [
     icon: { icon: "mdi-cogs" },
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
-      { title: "Service Bookings", to: "admin-show-service-bookings" },
+      {
+        title: "Service Bookings",
+        type: "admin",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Shipping", to: "admin-show-service-bookings-shipping" },
+          {
+            title: "Maintenance",
+            to: "admin-show-service-bookings-maintenance",
+          },
+        ],
+      },
       {
         title: "Services",
         type: "assistance",

@@ -500,7 +500,7 @@ export default {
           search: this.table.search,
           is_deleted: this.is_deleted,
           sortBy: sortByJSON,
-          type: "شحن",
+          type: "صيانة",
         });
         this.table.Data = response.data.results.data;
         this.table.totalItems = response.data.results.count;
