@@ -159,7 +159,8 @@
                       </v-btn>
                     </template>
                     <span
-                      >الحالة : {{ item.status }} <br />اسم المالك :
+                      >{{ t("Status") }} : {{ item.status }} <br />
+                      {{ t("Owner's name") }}:
                       {{ item.current_owner_name }}</span
                     >
                   </VTooltip>
