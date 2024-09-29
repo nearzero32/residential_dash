@@ -13,7 +13,7 @@
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
-              <strong>أسم النموذج <br />( {{ data.name }} )</strong>
+              <strong>{{ t("Form name") }} <br />( {{ data.name }} )</strong>
             </h5>
             <img style="width: 70px; margin-block: 12px" :src="domain" alt="" />
           </v-card-text>
@@ -23,7 +23,9 @@
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
-              <strong>المساحة الكلية <br />( {{ data.total_space }} )</strong>
+              <strong
+                >{{ t("Total area") }} <br />( {{ data.total_space }} )</strong
+              >
             </h5>
             <img style="width: 70px; margin-block: 12px" :src="space" alt="" />
           </v-card-text>
@@ -34,7 +36,7 @@
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
               <strong
-                >مساحات البناء <br />
+                >{{ t("Building areas") }} <br />
                 ( {{ data.building_space }} )</strong
               >
             </h5>
@@ -50,7 +52,10 @@
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
-              <strong>اسماء العمارات ( {{ data.apartment_building }} )</strong>
+              <strong
+                >{{ t("Architecture name") }} (
+                {{ data.apartment_building }} )</strong
+              >
             </h5>
             <img
               style="width: 70px; margin-block: 12px"
@@ -64,7 +69,7 @@
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
-              <strong>البلوك ( {{ data.block_number }} )</strong>
+              <strong>{{ t("The block") }} ( {{ data.block_number }} )</strong>
             </h5>
             <img style="width: 70px; margin-block: 12px" :src="street" alt="" />
           </v-card-text>
@@ -81,7 +86,7 @@
             border-bottom: solid 2px;
             padding-bottom: 9px;
           "
-          >صور النموذج</strong
+          >{{ t("Model images") }}</strong
         >
       </VCardTitle>
       <VCardText>
@@ -110,7 +115,7 @@
             border-bottom: solid 2px;
             padding-bottom: 9px;
           "
-          >تفاصيل مساحات النموذج</strong
+          >{{ t("Details of model areas") }}</strong
         >
       </VCardTitle>
       <VCardText>
@@ -122,16 +127,16 @@
         >
           <VCardText>
             <strong
-              >{{ ind + 1 }} - ( المساحة الكلية {{ space.total_space }} - مساحة
-              البناء {{ space.building_space }} )</strong
+              >{{ ind + 1 }} - ( {{ t("Total area") }} {{ space.total_space }} -
+              {{ t("Building area") }} {{ space.building_space }} )</strong
             >
             <VContainer>
-              <strong>الوحدات السكنية</strong>
+              <strong>{{ t("Residential Units") }}</strong>
               <div
                 v-for="(houses, floor) in groupHousesByFloor(space.houses)"
                 :key="floor"
               >
-                <h3>الطابق ( {{ floor }} )</h3>
+                <h3>{{ t("Floor number") }} ( {{ floor }} )</h3>
                 <v-item-group
                   class="d-flex justify-sm-space-between px-6 pt-2 pb-6"
                   style="
@@ -171,19 +176,21 @@
                         </v-btn>
                       </template>
                       <span>
-                        الطابق ( {{ item.apartment_floor_number }} )
+                        {{ t("Floor number") }} (
+                        {{ item.apartment_floor_number }} )
                         <br />
-                        الحالة ( {{ item.status }} )
+                        {{ t("Status") }} ( {{ item.status }} )
                         <br />
                         <span v-if="item.current_owner_name"
-                          >اسم المالك ( {{ item.current_owner_name }} )</span
+                          >{{ t("Owner's name") }} (
+                          {{ item.current_owner_name }} )</span
                         >
                       </span>
                     </VTooltip>
                   </v-item>
                 </v-item-group>
               </div>
-              <strong>المكونات</strong>
+              <strong>{{ t("Components") }}</strong>
               <br />
               <br />
               <v-row v-for="(room, indR) in space.rooms" :key="indR">
@@ -198,7 +205,7 @@
                   <v-card
                     class="mx-auto"
                     style="height: 100%; display: grid; place-items: center"
-                    >مساحة {{ room.space }}</v-card
+                    >{{ t("The area") }} {{ room.space }}</v-card
                   >
                 </v-col>
                 <v-col cols="12" md="4" style="padding: 10px">

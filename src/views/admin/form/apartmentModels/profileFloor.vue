@@ -30,34 +30,43 @@
     <VCard class="mb-6">
       <VCardText>
         <strong v-if="data.current_owner && data.current_owner.name"
-          >اسم المالك : ( {{ data.current_owner.name }} )</strong
+          >{{ t("Owner's name") }} : ( {{ data.current_owner.name }} )</strong
         >
         <br />
         <br />
         <strong v-if="data.current_owner && data.current_owner.phone"
-          >هاتف المالك : ( {{ data.current_owner.phone }} )</strong
+          >{{ t("Owner's phone number") }} : (
+          {{ data.current_owner.phone }} )</strong
         >
         <br />
         <br />
-        <strong>اسم النموذج : ( {{ data.form_name }} )</strong>
+        <strong>{{ t("Form name") }} : ( {{ data.form_name }} )</strong>
         <br />
         <br />
-        <strong>كود النموذج : ( {{ data.form_code }} )</strong>
+        <strong>{{ t("Form Code") }} : ( {{ data.form_code }} )</strong>
         <br />
         <br />
-        <strong>اسم العمارة : ( {{ data.exact_apartment_building }} )</strong>
+        <strong
+          >{{ t("Architecture name") }} : (
+          {{ data.exact_apartment_building }} )</strong
+        >
         <br />
         <br />
-        <strong>رقم الطابق : ( {{ data.apartment_floor_number }} )</strong>
+        <strong
+          >{{ t("Floor number") }} : (
+          {{ data.apartment_floor_number }} )</strong
+        >
         <br />
         <br />
-        <strong>رقم الشقة : ( {{ data.name }} )</strong>
+        <strong>{{ t("Apartment numberr") }} : ( {{ data.name }} )</strong>
         <br />
         <br />
-        <strong>المساحة الكلية : ( {{ data.total_space }} )</strong>
+        <strong>{{ t("Total area") }} : ( {{ data.total_space }} )</strong>
         <br />
         <br />
-        <strong>مساحة البناء : ( {{ data.building_space }} )</strong>
+        <strong
+          >{{ t("Building area") }} : ( {{ data.building_space }} )</strong
+        >
         <br />
         <br />
         <strong>{{ t("Status") }} : ( {{ data.status }} )</strong>
@@ -87,7 +96,9 @@
                   justify-content: flex-start;
                 "
               >
-                <p style="margin-left: 83px">الأسم : {{ item.name }}</p>
+                <p style="margin-left: 83px">
+                  {{ t("The name") }} : {{ item.name }}
+                </p>
                 <p>{{ t("Phone number") }} : {{ item.phone }}</p>
               </div>
             </li>
@@ -99,7 +110,7 @@
         <br />
         <br />
         <v-container v-if="data.form_images">
-          <strong> صور النموذج: </strong>
+          <strong> {{ t("Model images") }}: </strong>
           <br />
           <br />
           <div>

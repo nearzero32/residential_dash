@@ -13,9 +13,9 @@
           <v-row>
             <v-col cols="12" md="6">
               <div>
-                <strong>أسم المالك : {{ data.name }}</strong>
+                <strong>{{ t("Owner's name") }} : {{ data.name }}</strong>
                 <br />
-                <strong>رقم الهاتف : {{ data.phone }}</strong>
+                <strong>{{ t("Phone number") }} : {{ data.phone }}</strong>
               </div>
             </v-col>
             <v-col cols="12" md="6" id="ImgO">
@@ -26,7 +26,7 @@
                   :src="content_url + data.image"
                   :alt="data.name"
                 />
-                <div v-else>لا توجد صورة شخصية</div>
+                <div v-else>{{ t("No profile picture") }}</div>
               </div>
             </v-col>
           </v-row>
@@ -35,44 +35,58 @@
         <v-card-text
           style="display: flex; flex-direction: column; align-items: flex-start"
         >
-          <h4>تفاصيل المالك :-</h4>
+          <h4>{{ t("Owner details") }} :-</h4>
           <br />
-          <h4>البريد الألكتروني : {{ data.email }}</h4>
+          <h4>{{ t("Email") }} : {{ data.email }}</h4>
           <br />
-          <h4>العنوان : {{ data.address }}</h4>
+          <h4>{{ t("Address") }} : {{ data.address }}</h4>
           <br />
-          <h4>كلمة المرور : {{ data.password_show }}</h4>
-          <br />
-          <h4>رقم الهوية : {{ data.id_number }}</h4>
-          <br />
-          <h4>جهة اصدار الهوية : {{ data.id_place_of_issue }}</h4>
-          <br />
-          <h4>تاريخ اصدار الهوية : {{ data.id_issue_date }}</h4>
-          <br />
-          <h4>رقم بطاقة السكن : {{ data.residence_card_number }}</h4>
-          <br />
-          <h4>جهة اصدار بطاقة السكن : {{ data.rec }}</h4>
-
-          <br />
-          <h4>العنوان الوظيفي : {{ data.owner_title_jop }}</h4>
+          <h4>{{ t("Password") }} : {{ data.password_show }}</h4>
           <br />
           <h4>
-            هل تم استلام الوحدة السكنية :
+            {{ t("National Identification Number") }} : {{ data.id_number }}
+          </h4>
+          <br />
+          <h4>
+            {{ t("Issuing Authority of the Identification Card") }} :
+            {{ data.id_place_of_issue }}
+          </h4>
+          <br />
+          <h4>
+            {{ t("Date of Issuance of the Identification Card") }} :
+            {{ data.id_issue_date }}
+          </h4>
+          <br />
+          <h4>
+            {{ t("Residence Card Number") }} : {{ data.residence_card_number }}
+          </h4>
+          <br />
+          <h4>
+            {{ t("Issuing Authority of the Residence Card") }} : {{ data.rec }}
+          </h4>
+
+          <br />
+          <h4>{{ t("Job Title") }} : {{ data.owner_title_jop }}</h4>
+          <br />
+          <h4>
+            {{ t("Has the housing unit been received?") }} :
             {{ data.is_house_received ? "نعم" : "لا" }}
           </h4>
           <br />
           <h4 v-if="data.is_house_received">
-            تاريخ استلام الوحدة السكنية :
+            {{ t("Housing unit reception date") }} :
             {{ data.house_received_data.received_date }}
           </h4>
           <br />
           <h4 v-if="data.is_house_received">
-            تاريخ بدء الخدمات الشهرية :
+            {{ t("received_monthly_payment_date") }} :
             {{ data.house_received_data.received_monthly_payment_date }}
           </h4>
           <br />
           <div style="width: 100%">
-            <h4><strong>صور العقد :</strong></h4>
+            <h4>
+              <strong>{{ t("Contract Photos") }} :</strong>
+            </h4>
             <v-row v-if="data.contract_imgs" style="margin: 0px">
               <v-col
                 cols="12"
@@ -87,7 +101,7 @@
                 />
               </v-col>
             </v-row>
-            <div v-else>لا يوجد</div>
+            <div v-else>{{ t("Not available") }}</div>
           </div>
           <br />
           <div style="width: 100%">
@@ -96,7 +110,9 @@
                 <VCard>
                   <v-row style="flex-direction: column; margin: 0px">
                     <v-col cols="12" md="12">
-                      <h4><strong>صور الهوية :</strong></h4>
+                      <h4>
+                        <strong>{{ t("ID pictures") }} :</strong>
+                      </h4>
                     </v-col>
                     <v-col cols="12" md="12" style="text-align: center">
                       <img
@@ -105,14 +121,18 @@
                         style="margin-inline: 10px; width: 40%; height: auto"
                         alt="صورة الهوية"
                       />
-                      <div v-else style="margin-inline: 10px">لا يوجد</div>
+                      <div v-else style="margin-inline: 10px">
+                        {{ t("Not available") }}
+                      </div>
                       <img
                         v-if="data.id_img_back"
                         :src="content_url + data.id_img_back"
                         style="margin-inline: 10px; width: 40%; height: auto"
                         alt="صورة الهوية"
                       />
-                      <div v-else style="margin-inline: 10px">لا يوجد</div>
+                      <div v-else style="margin-inline: 10px">
+                        {{ t("Not available") }}
+                      </div>
                     </v-col>
                   </v-row>
                 </VCard>
@@ -121,7 +141,9 @@
                 <VCard>
                   <v-row style="flex-direction: column; margin: 0px">
                     <v-col cols="12" md="12">
-                      <h4><strong>صور بطاقة السكن :</strong></h4>
+                      <h4>
+                        <strong>{{ t("Housing card pictures") }} :</strong>
+                      </h4>
                     </v-col>
                     <v-col cols="12" md="12" style="text-align: center">
                       <img
@@ -130,14 +152,18 @@
                         style="margin-inline: 10px; width: 40%; height: auto"
                         alt="صور بطاقة السكن"
                       />
-                      <div v-else style="margin-inline: 10px">لا يوجد</div>
+                      <div v-else style="margin-inline: 10px">
+                        {{ t("Not available") }}
+                      </div>
                       <img
                         v-if="data.location_img_back"
                         :src="content_url + data.location_img_back"
                         style="margin-inline: 10px; width: 40%; height: auto"
                         alt="صور بطاقة السكن"
                       />
-                      <div v-else style="margin-inline: 10px">لا يوجد</div>
+                      <div v-else style="margin-inline: 10px">
+                        {{ t("Not available") }}
+                      </div>
                     </v-col>
                   </v-row>
                 </VCard>
@@ -146,7 +172,9 @@
                 <VCard>
                   <v-row style="flex-direction: column; margin: 0px">
                     <v-col cols="12" md="12">
-                      <h4><strong>صورة الجواز :</strong></h4>
+                      <h4>
+                        <strong>{{ t("Passport Photo") }} :</strong>
+                      </h4>
                     </v-col>
                     <v-col cols="12" md="12" style="text-align: center">
                       <img
@@ -155,7 +183,9 @@
                         style="margin-inline: 10px; width: 40%; height: auto"
                         alt="صورة الجواز"
                       />
-                      <div v-else style="margin-inline: 10px">لا يوجد</div>
+                      <div v-else style="margin-inline: 10px">
+                        {{ t("Not available") }}
+                      </div>
                     </v-col>
                   </v-row>
                 </VCard>
@@ -306,7 +336,7 @@
                     fa-trash
                   </VIcon>
                 </template>
-                <span>حذف</span>
+                <span>{{ t("Delete") }}</span>
               </VTooltip>
               <VTooltip bottom v-if="userData.includes('edit')">
                 <template v-slot:activator="{ props }">
@@ -322,7 +352,7 @@
                     fa-edit
                   </VIcon>
                 </template>
-                <span>تعديل</span>
+                <span>{{ t("Edit") }}</span>
               </VTooltip>
             </template>
           </v-data-table>
@@ -336,7 +366,7 @@
             style="align-items: center; margin-bottom: 15px"
           >
             <VCol cols="12" sm="12" md="12">
-              <h4 style="text-align: center">المستأجرين</h4>
+              <h4 style="text-align: center">{{ t("Tenants") }}</h4>
             </VCol>
             <VCol cols="12" sm="4" md="4">
               <VSelect
@@ -1563,7 +1593,7 @@
           {{ t("Are you sure you want to deactivate this account?") }}
         </VCardTitle>
         <VCardTitle class="headline justify-center" v-else>
-          هل انت متأكد من تفعيل الحساب ؟
+          {{ t("Are you sure the account is activated?") }}
         </VCardTitle>
         <VCardActions>
           <VSpacer />
@@ -1578,7 +1608,7 @@
             <span v-if="dialogDisable.deletedItem.is_disabled == false">{{
               t("Deactivate")
             }}</span>
-            <span v-else>تفعيل</span>
+            <span v-else>{{ t("Activation") }}</span>
           </VBtn>
           <VSpacer />
         </VCardActions>

@@ -8,31 +8,31 @@
     <br />
     <br />
     <VCard :loading="loading" v-if="Data">
-      <VCardTitle> تفاصيل حجز المالك : ( {{ Data.name }} ) </VCardTitle>
+      <VCardTitle> {{ t("Owner reservation details") }} : ( {{ Data.name }} ) </VCardTitle>
       <VCardText>
-        <p>اسم المالك : {{ Data.name }}</p>
+        <p>{{ t("Owner's name") }} : {{ Data.name }}</p>
         <br />
-        <p>هاتف المالك : {{ Data.phone }}</p>
+        <p>{{ t("Owner's phone number") }} : {{ Data.phone }}</p>
         <br />
-        <p>عنوان المالك : {{ Data.address }}</p>
+        <p>{{ t("Address") }} : {{ Data.address }}</p>
         <br />
-        <p>اسم الخدمة : {{ Data.service.name }}</p>
+        <p>{{ t("Service Name") }} : {{ Data.service.name }}</p>
         <br />
-        <p>مبلغ الخدمة : {{ Data.service.price }}</p>
+        <p>{{ t("Service Amount") }} : {{ Data.service.price }}</p>
         <br />
-        <p>نوع الخدمة : {{ Data.service.type }}</p>
+        <p>{{ t("Service type") }} : {{ Data.service.type }}</p>
         <br />
-        <p>تاريخ طلب الخدمة : {{ Data.createdAt }}</p>
+        <p>{{ t("Service request date") }} : {{ Data.createdAt }}</p>
         <br />
-        <p>حالات الخدمة : 
+        <p>{{ t("Service status") }} : 
             <ul style="margin-inline: 10%;">
                 <li v-for="(item, index) in Data.status" :key="index">
                     <ul style="margin-block: 10px;
     border-bottom: solid 1px;
     padding-bottom: 10px;">
-                        <li style="margin-bottom: 6px;">الحالة : {{ item.type }}</li>
-                        <li style="margin-bottom: 6px;">تاريخ الحالة : {{ item.createdAt }}</li>
-                        <li style="margin-bottom: 6px;">الملاحظة : {{ item.note }}</li>
+                        <li style="margin-bottom: 6px;">{{ t("Status") }} : {{ item.type }}</li>
+                        <li style="margin-bottom: 6px;">{{ t("Status date") }} : {{ item.createdAt }}</li>
+                        <li style="margin-bottom: 6px;">{{ t("Note") }} : {{ item.note }}</li>
                     </ul>
                 </li>
             </ul>

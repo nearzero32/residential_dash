@@ -19,7 +19,7 @@
               :loading="xlsxData.listLoading"
               @click="getAllDataAxios"
             >
-              تحميل اكسل
+              {{ t("Download Excel") }}
             </VBtn>
           </VCol>
         </VRow>
