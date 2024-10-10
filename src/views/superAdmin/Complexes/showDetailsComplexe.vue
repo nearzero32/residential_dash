@@ -328,6 +328,7 @@ export default {
       items: [
         { text: "ادمن", value: "admin" },
         { text: "محاسب", value: "manager_accountant" },
+        { text: "أداري مجمع", value: "resident_manager" },
       ],
       addDialog: {
         open: false,
@@ -429,6 +430,12 @@ export default {
           type: "strong",
           link: ``,
           key: "address",
+        },
+        {
+          title: this.t("النوع"),
+          type: "typeAdmin",
+          link: ``,
+          key: "type",
         },
         {
           title: this.t("Operations"),

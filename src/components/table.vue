@@ -83,6 +83,17 @@
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
+          <div v-else-if="header.type === 'typeAdmin'">
+            <span v-if="item.selectable.type == 'admin'">
+              <span> ادمن </span>
+            </span>
+            <span v-else-if="item.selectable.type == 'manager_accountant'">
+              <span> محاسب </span>
+            </span>
+            <span v-else-if="item.selectable.type == 'resident_manager'">
+              <span> أداري مجمع </span>
+            </span>
+          </div>
           <div v-else-if="header.type === 'current_status'">
             <span v-if="item.selectable.current_status.type == 'رفض'">
               <v-icon color="rgb(175 76 76)" size="40px"
@@ -633,6 +644,17 @@
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'typeAdmin'" class="l">
+            <span v-if="item.selectable.type == 'admin'">
+              <span> ادمن </span>
+            </span>
+            <span v-else-if="item.selectable.type == 'manager_accountant'">
+              <span> محاسب </span>
+            </span>
+            <span v-else-if="item.selectable.type == 'resident_manager'">
+              <span> أداري مجمع </span>
+            </span>
           </div>
           <div v-else-if="header.type === 'linkk'" class="l">
             <RouterLink
