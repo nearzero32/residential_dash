@@ -8,7 +8,25 @@
     <br />
     <br />
     <VContainer>
-      <VRow style="justify-content: center">
+      <CrmSalesOverview
+        :key="componentKey"
+        :allHouses="
+          data && data.houses && data.houses.allHouses
+            ? data.houses.allHouses
+            : 0
+        "
+        :allOwners="data && data.allOwners ? data.allOwners : 0"
+        :allReceivedOwners="
+          data && data.allReceivedOwners ? data.allReceivedOwners : 0
+        "
+        :allUnReceivedOwners="
+          data && data.allUnReceivedOwners ? data.allUnReceivedOwners : 0
+        "
+      ></CrmSalesOverview>
+
+      <br />
+      <br />
+      <!-- <VRow style="justify-content: center">
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
@@ -79,7 +97,7 @@
             </VCardText>
           </VCard>
         </VCol>
-        <!-- <VCol cols="12" md="3">
+        <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
               <img
@@ -89,7 +107,7 @@
               <strong>عدد عقود المبيعات <br />( لا يوجد )</strong>
             </VCardText>
           </VCard>
-        </VCol> -->
+        </VCol>
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
@@ -294,7 +312,7 @@
             </VCardText>
           </VCard>
         </VCol>
-      </VRow>
+      </VRow> -->
     </VContainer>
 
     <!-- Message Dialog -->
@@ -319,8 +337,12 @@
 <script>
 import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
+import CrmSalesOverview from "@/components/CrmSalesOverview.vue";
 
 export default {
+  components: {
+    CrmSalesOverview,
+  },
   setup() {
     const { t } = useI18n();
 
@@ -358,7 +380,15 @@ export default {
   created() {
     this.getCenter();
   },
-
+  watch: {
+    data: {
+      handler(newData) {
+        this.componentKey++;
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   methods: {
     async getCenter() {
       try {
