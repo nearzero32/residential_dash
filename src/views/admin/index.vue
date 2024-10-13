@@ -6,8 +6,8 @@
       :breadcrumbs="b.map((crumb) => ({ ...crumb, text: t(crumb.text) }))"
     ></BaseBreadcrumb>
     <br />
-    <br />
     <VContainer>
+      <br />
       <CrmSalesOverview
         :key="componentKey"
         :allHouses="
@@ -23,10 +23,45 @@
           data && data.allUnReceivedOwners ? data.allUnReceivedOwners : 0
         "
       ></CrmSalesOverview>
+      <br />
+      <VCard>
+        <VCardText class="d-flex flex-wrap justify-space-between gap-4">
+          <VRow>
+            <VCol cols="12" md="5">
+              <VCardTitle>مخطط بياني لزوار الملاك</VCardTitle>
+              <VCardSubtitle>السنوي &amp; السهري &amp; اليومي</VCardSubtitle>
+            </VCol>
+            <VCol cols="12" md="2">
+              <div class="d-flex align-center" style="justify-content: center">
+                <VueDatePicker v-model="year" year-picker />
+              </div>
+            </VCol>
+            <VCol cols="12" md="5">
+              <div class="d-flex align-center" style="justify-content: center">
+                <h6 class="text-h6 me-3">
+                  عدد الزوار الكلي لسنة ( {{ year }} ) 401
+                </h6>
+                <VChip label color="success" class="font-weight-medium">
+                  <VIcon start icon="mdi-arrow-up" size="15" />
+                  <span>22%</span>
+                </VChip>
+              </div>
+            </VCol>
+          </VRow>
+        </VCardText>
 
+        <VCardText>
+          <ApexChartBalance :visits="visits" />
+        </VCardText>
+      </VCard>
       <br />
-      <br />
-      <!-- <VRow style="justify-content: center">
+      <VRow style="justify-content: center">
+        <VCol cols="12" sm="6" md="4" lg="2">
+          <CrmAreaCharts
+            :key="componentKey"
+            :allCallCenter="data.allCallCenter"
+          />
+        </VCol>
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
@@ -37,20 +72,6 @@
               <strong
                 >{{ t("Number of sales staff") }} <br />(
                 {{ data.allSalesEmployee }} )</strong
-              >
-            </VCardText>
-          </VCard>
-        </VCol>
-        <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
-            <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/phone.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{ t("Number of customer inquiries") }} <br />(
-                {{ data.allCallCenter }} )</strong
               >
             </VCardText>
           </VCard>
@@ -312,7 +333,7 @@
             </VCardText>
           </VCard>
         </VCol>
-      </VRow> -->
+      </VRow>
     </VContainer>
 
     <!-- Message Dialog -->
@@ -338,16 +359,23 @@
 import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
 import CrmSalesOverview from "@/components/CrmSalesOverview.vue";
+import ApexChartBalance from "@/components/ApexChartBalance.vue";
+import CrmAreaCharts from "@/components/CrmAreaCharts.vue";
 
 export default {
   components: {
     CrmSalesOverview,
+    ApexChartBalance,
+    CrmAreaCharts,
   },
   setup() {
     const { t } = useI18n();
 
+    const year = ref(new Date().getFullYear());
+
     return {
       t,
+      year,
       // nav
       page: {
         title: "Home Page",
@@ -367,7 +395,66 @@ export default {
       loading: false,
       data: {},
       //data
-
+      visits: [
+        {
+          date: "2024-10",
+          visits: 49,
+          days: [
+            { day: "10-1", number: 9 },
+            { day: "10-2", number: 3 },
+            { day: "10-3", number: 30 },
+            { day: "10-4", number: 7 },
+            { day: "10-5", number: 0 },
+          ],
+        },
+        {
+          date: "2024-11",
+          visits: 50,
+          days: [
+            { day: "11-1", number: 10 },
+            { day: "11-2", number: 3 },
+            { day: "11-3", number: 30 },
+            { day: "11-4", number: 7 },
+            { day: "11-5", number: 0 },
+          ],
+        },
+        {
+          date: "2024-12",
+          visits: 48,
+          days: [
+            { day: "12-1", number: 8 },
+            { day: "12-2", number: 4 },
+            { day: "12-3", number: 30 },
+            { day: "12-4", number: 7 },
+            { day: "12-5", number: 0 },
+            { day: "12-6", number: 8 },
+            { day: "12-7", number: 3 },
+            { day: "12-8", number: 30 },
+            { day: "12-9", number: 7 },
+            { day: "12-10", number: 0 },
+            { day: "12-11", number: 81 },
+            { day: "12-12", number: 31 },
+            { day: "12-13", number: 310 },
+            { day: "12-14", number: 71 },
+            { day: "12-15", number: 1 },
+            { day: "12-16", number: 18 },
+            { day: "12-17", number: 13 },
+            { day: "12-18", number: 130 },
+            { day: "12-19", number: 17 },
+            { day: "12-20", number: 10 },
+            { day: "12-21", number: 18 },
+            { day: "12-22", number: 13 },
+            { day: "12-23", number: 130 },
+            { day: "12-24", number: 17 },
+            { day: "12-25", number: 10 },
+            { day: "12-26", number: 18 },
+            { day: "12-27", number: 13 },
+            { day: "12-28", number: 10 },
+            { day: "12-29", number: 17 },
+            { day: "12-30", number: 10 },
+          ],
+        },
+      ],
       // message
       dialogData: {
         open: false,
