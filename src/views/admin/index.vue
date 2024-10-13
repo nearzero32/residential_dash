@@ -55,6 +55,8 @@
         </VCardText>
       </VCard>
       <br />
+      <hr style="margin-block: 20px" />
+
       <VRow style="justify-content: center">
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
