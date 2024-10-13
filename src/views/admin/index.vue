@@ -137,7 +137,7 @@
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <!-- <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
               <img
@@ -150,8 +150,8 @@
               >
             </VCardText>
           </VCard>
-        </VCol>
-        <VCol cols="12" md="3">
+        </VCol> -->
+        <!-- <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
               <img
@@ -164,68 +164,7 @@
               >
             </VCardText>
           </VCard>
-        </VCol>
-      </VRow>
-      <hr style="margin-block: 20px" />
-      <VRow style="justify-content: center">
-        <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
-            <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/house-owner.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{ t("Number of property owners") }} <br />(
-                {{ data.allOwners }} )</strong
-              >
-            </VCardText>
-          </VCard>
-        </VCol>
-        <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
-            <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/visitors.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{ t("Number of property owners' visitors") }} <br />(
-                {{ data.allOwnersVisits }} )</strong
-              >
-            </VCardText>
-          </VCard>
-        </VCol>
-        <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
-            <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/recipient.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{ t("Number of owners who received the housing unit") }}
-                <br />( {{ data.allReceivedOwners }} )</strong
-              >
-            </VCardText>
-          </VCard>
-        </VCol>
-        <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
-            <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/not-received.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{
-                  t("Number of owners who have not received the housing unit")
-                }}
-                <br />( {{ data.allUnReceivedOwners }} )</strong
-              >
-            </VCardText>
-          </VCard>
-        </VCol>
+        </VCol> -->
       </VRow>
       <hr style="margin-block: 20px" />
       <VRow style="justify-content: center">
