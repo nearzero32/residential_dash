@@ -29,10 +29,10 @@ const options = controlledComputed(theme, () => {
   return {
     chart: { sparkline: { enabled: true } },
     colors: [
-      currentTheme.value.primary,
-      `rgba(${hexToRgb(currentTheme.value.primary)}, 0.7)`,
-      `rgba(${hexToRgb(currentTheme.value.primary)}, 0.5)`,
-      currentTheme.value["grey-100"],
+      "#00c8c8", // لون الوحدات المباعة
+      "#31cd00", // لون المستلمين
+      "#fdbf00", // لون غير المستلمين
+      "#ff637b", // لون الوحدات غير المباعة
     ],
     stroke: { width: 0 },
     legend: { show: false },
@@ -97,14 +97,17 @@ const salesOverviews = [
   {
     product: "عدد الملاك",
     sales: props.allOwners,
+    color: "#00c8c8", // لون مخصص
   },
   {
     product: "عدد الملاك المستلمين للوحدة السكنية",
     sales: props.allReceivedOwners,
+    color: "#31cd00", // لون مخصص
   },
   {
     product: "عدد الملاك الغير مستلمين للوحدة السكنية",
     sales: props.allUnReceivedOwners,
+    color: "#fdbf00", // لون مخصص
   },
 ];
 </script>
@@ -155,7 +158,7 @@ const salesOverviews = [
                 <p class="mb-1">
                   <VIcon
                     icon="mdi-checkbox-blank-circle"
-                    color="primary"
+                    :color="sale.color"
                     size="12"
                     class="me-2"
                   />
