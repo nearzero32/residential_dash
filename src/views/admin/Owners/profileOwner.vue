@@ -2481,6 +2481,7 @@ export default {
             this.showDialogfunction(error.response.data.message, "#FF5252");
           } else {
             this.addTenant.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.addTenant.saveLoading = false;

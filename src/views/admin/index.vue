@@ -56,11 +56,19 @@
       </VCard>
       <br />
       <VRow style="justify-content: center">
-        <VCol cols="12" sm="6" md="4" lg="2">
-          <CrmAreaCharts
-            :key="componentKey"
-            :allCallCenter="data.allCallCenter"
-          />
+        <VCol cols="12" md="3">
+          <VCard elevation="16" :loading="loading" outlined shaped>
+            <VCardText style="text-align: center">
+              <img
+                src="@/assets/images/icon/phone.png"
+                style="width: 35px"
+              /><br />
+              <strong
+                >{{ t("Number of customer inquiries") }} <br />(
+                {{ data.allCallCenter }} )</strong
+              >
+            </VCardText>
+          </VCard>
         </VCol>
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
