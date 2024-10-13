@@ -86,6 +86,12 @@ export const getLineChartSimpleConfig = (themeColors, visits) => {
   const { themeBorderColor, themeDisabledTextColor } =
     colorVariables(themeColors);
 
+  // تحديد الألوان المناسبة بناءً على الثيم
+  const isDarkTheme = themeColors.dark; // افترض أن themeColors تحتوي على خاصية dark
+  const primaryColor = isDarkTheme ? "#76ABAE" : "#002B5B"; // اللون الأساسي
+  const successColor = "#56CA00"; // لون النجاح ثابت
+  const warningColor = "#FFB400"; // لون التحذير ثابت
+
   return {
     chart: {
       parentHeightOffset: 0,
@@ -107,8 +113,8 @@ export const getLineChartSimpleConfig = (themeColors, visits) => {
         csv: {
           filename: undefined,
           columnDelimiter: ",",
-          headerCategory: "تاريخ", // تغيير اسم العمود هنا
-          headerValue: "عدد الزوار", // تغيير اسم العمود هنا
+          headerCategory: "تاريخ",
+          headerValue: "عدد الزوار",
           categoryFormatter(x) {
             return new Date(x).toDateString();
           },
@@ -124,13 +130,13 @@ export const getLineChartSimpleConfig = (themeColors, visits) => {
         },
       },
     },
-    colors: ["#ff9f43"],
+    colors: [primaryColor, successColor, warningColor], // تحديث الألوان هنا
     stroke: { curve: "smooth" },
     dataLabels: { enabled: true },
     markers: {
       strokeWidth: 7,
       strokeOpacity: 1,
-      colors: ["#ff9f43"],
+      colors: [primaryColor],
       strokeColors: ["#fff"],
     },
     grid: {
@@ -141,14 +147,23 @@ export const getLineChartSimpleConfig = (themeColors, visits) => {
       },
     },
     tooltip: {
+      style: {
+        background: themeColors.dark ? "#E7E3FC" : "#3A3541",
+        color: themeColors.dark ? "#2C2942" : "#F4F5FA",
+      },
       custom(data) {
-        return `<div class='bar-chart pa-2'>
-          <span>عدد الزوار  (${
-            data.series[data.seriesIndex][data.dataPointIndex]
-          })</span>
+        return `<div class='bar-chart pa-2' style="color: ${
+          themeColors.dark ? "#E7E3FC" : "#3A3541"
+        };">
+          <span style="color: ${
+            themeColors.dark ? "#3A3541" : "#3A3541"
+          };">عدد الزوار  (${
+          data.series[data.seriesIndex][data.dataPointIndex]
+        })</span>
         </div>`;
       },
     },
+
     yaxis: {
       labels: {
         style: { colors: themeDisabledTextColor },
