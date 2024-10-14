@@ -20,6 +20,9 @@
           <div v-else-if="url == 'admin.alrawan.net'">
             تسجيل الدخول الى مجمع الروان السكني
           </div>
+          <div v-else-if="url == 'admin.karambaghdad.com'">
+            تسجيل الدخول الى مجمع كرم بغداد
+          </div>
           <div v-else>تسجيل الدخول</div>
         </v-card-title>
         <hr />

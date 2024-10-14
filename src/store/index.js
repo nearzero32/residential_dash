@@ -288,6 +288,112 @@ const store = createStore({
             } else {
               commit("SET_EREORM", "خطأ, الرجاء ادخال حساب مجمع الفاخر");
             }
+          } else if (currentPath == "admin.karambaghdad.com") {
+            if (
+              response.data.results.center_id._id == "66e2c810dec89fdfea71c92b"
+            ) {
+              commit("SET_AUTHENTICATED", true);
+              localStorage.setItem("accessToken", response.data.results.token);
+              localStorage.setItem("account_type", response.data.results.type);
+              localStorage.setItem(
+                "results",
+                JSON.stringify(response.data.results)
+              );
+              localStorage.setItem(
+                "pages",
+                JSON.stringify(response.data.results.pages)
+              );
+              if (
+                response.data.results.center_id &&
+                response.data.results.center_id.logo !== null
+              ) {
+                commit("SET_LOGO", response.data.results.center_id.logo);
+                localStorage.setItem(
+                  "logo",
+                  response.data.results.center_id.logo
+                );
+              }
+              if (response.data.results.type === "super_admin") {
+                router.push("/super-admin-home");
+              } else if (response.data.results.type === "resident_manager") {
+                router.push("/admin-index");
+              } else if (response.data.results.type === "admin") {
+                router.push("/admin-index");
+              } else if (response.data.results.type === "assistance") {
+                var pages = response.data.results.pages[0];
+                if (pages == "home") {
+                  router.push(this.returnUrl || "/admin-index");
+                } else if (pages == "forms-Apartments") {
+                  router.push(this.returnUrl || "/admin-show-apartment-models");
+                } else if (pages == "forms") {
+                  router.push(this.returnUrl || "/admin-show-house-models");
+                } else if (pages == "owners") {
+                  router.push(this.returnUrl || "/admin-show-owners");
+                } else if (pages == "visits") {
+                  router.push(this.returnUrl || "/admin-show-owners-visits");
+                } else if (pages == "sales") {
+                  if (response.data.results.pages[1] == "sells-employee") {
+                    router.push(this.returnUrl || "/admin-show-sales-staff");
+                  } else if (response.data.results.pages[1] == "call-center") {
+                    router.push(
+                      this.returnUrl || "/admin-show-customer-attendance-form"
+                    );
+                  } else if (response.data.results.pages[1] == "inquiries") {
+                    router.push(this.returnUrl || "/admin-show-queries");
+                  } else if (
+                    response.data.results.pages[1] == "application-form"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-application-form"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "confirmations-form"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-approval-request-form"
+                    );
+                  } else if (response.data.results.pages[1] == "reservations") {
+                    router.push(
+                      this.returnUrl || "/admin-show-residential-unit-requests"
+                    );
+                  }
+                } else if (pages == "notifications") {
+                  router.push(this.returnUrl || "/admin-show-notifications");
+                } else if (pages == "notifications") {
+                  router.push(this.returnUrl || "/admin-show-notifications");
+                } else if (pages == "marketing Residentail") {
+                  if (response.data.results.pages[1] == "admin-show-units") {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-bookings"
+                    );
+                  } else if (response.data.results.pages[1] == "services") {
+                    router.push(this.returnUrl || "/admin-show-services");
+                  } else if (
+                    response.data.results.pages[1] == "buying-offers"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-residential-units"
+                    );
+                  }
+                } else if (pages == "guards") {
+                  router.push(this.returnUrl || "/admin-show-guards");
+                } else if (pages == "employees") {
+                  router.push(this.returnUrl || "/admin-show-staff");
+                } else if (pages == "postings") {
+                  router.push(this.returnUrl || "/admin-show-advertisements");
+                } else if (pages == "advantages") {
+                  router.push(this.returnUrl || "/admin-show-features");
+                } else if (pages == "how_u_hear_about_us") {
+                  router.push(
+                    this.returnUrl || "/admin-show-how-did-you-hear-about-us"
+                  );
+                } else if (pages == "complain") {
+                  router.push(this.returnUrl || "/admin-show-complaints");
+                }
+              }
+            } else {
+              commit("SET_EREORM", "خطأ, الرجاء ادخال حساب مجمع كرم بغداد");
+            }
           } else {
             commit("SET_AUTHENTICATED", true);
             localStorage.setItem("accessToken", response.data.results.token);
