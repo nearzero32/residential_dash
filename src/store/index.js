@@ -184,7 +184,7 @@ const store = createStore({
             }
           } else if (currentPath == "admin.alfakhertowers.com") {
             if (
-              response.data.results.center_id._id == "66393d1a260d48b063586101"
+              response.data.results.center_id._id == "66e9376b2dcd8ef700ac5f01"
             ) {
               commit("SET_AUTHENTICATED", true);
               localStorage.setItem("accessToken", response.data.results.token);
