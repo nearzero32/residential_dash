@@ -493,7 +493,7 @@ export default {
           name: `admin-print-application-form-alnahdaa`,
         });
         window.open(routeData.href, "_blank");
-      } else if (results.center_id._id === "66393d1a260d48b063586101") {
+      } else if (results.center_id._id === "66e9376b2dcd8ef700ac5f01") {
         localStorage.setItem(
           "printApplicationFormAlfakher",
           JSON.stringify(item)
@@ -527,6 +527,15 @@ export default {
         );
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-alrtaj`,
+        });
+        window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "66e2c810dec89fdfea71c92b") {
+        localStorage.setItem(
+          "printApplicationFormKaramBagdad",
+          JSON.stringify(item)
+        );
+        let routeData = this.$router.resolve({
+          name: `admin-print-application-form-karam-bagdad`,
         });
         window.open(routeData.href, "_blank");
       }

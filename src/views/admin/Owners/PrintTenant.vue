@@ -213,7 +213,7 @@
           <v-col
             cols="12"
             md="12"
-            v-else-if="user.center_id._id == '66393d1a260d48b063586101'"
+            v-else-if="user.center_id._id == '66e9376b2dcd8ef700ac5f01'"
           >
             <hr style="width: 100%" />
             <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الفاخر</p>
@@ -265,6 +265,93 @@
             <p style="margin-bottom: 0px">كلمة المرور</p>
             <p style="margin-bottom: 0px">
               باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الفاخر
+              السكني بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
+            </p>
+            <p style="margin-bottom: 0px">
+              - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل
+              وحدة سكنية.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار والإعلانات.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر
+              التطبيق.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير
+              الشحن.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات
+              السكنية في حال وجود أقساط.
+            </p>
+            <p style="margin-bottom: 0px">
+              نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم
+              اليومية.
+            </p>
+          </v-col>
+          <v-col
+            cols="12"
+            md="12"
+            v-else-if="user.center_id._id == '66e2c810dec89fdfea71c92b'"
+          >
+            <hr style="width: 100%" />
+            <p style="margin-bottom: 0px">مرحبًا بسكان مجمع كرم بغداد</p>
+            <p style="margin-bottom: 0px">
+              يمكنكم الآن تحميل تطبيق مجمع كرم بغداد السكني وبدء استخدامه باتباع
+              الخطوات التالية:
+            </p>
+            <p
+              style="
+                text-align: center;
+                background-color: rgb(255 209 71);
+                color: #000000;
+                padding: 0px 20px;
+                border-radius: 10px;
+                margin-bottom: 0px;
+              "
+            >
+              لتحميل التطبيق:
+            </p>
+            <p style="margin-bottom: 0px">
+              - الرجاء تصوير رمز الاستجابة السريعة (QR) المرفق لتحميل التطبيق.
+            </p>
+            <div style="text-align: center; margin-block: 10px">
+              <img
+                style="width: 120px"
+                :src="
+                  dataResidential.content_url + dataResidential.center_id.qr
+                "
+                alt=""
+              />
+            </div>
+
+            <p
+              style="
+                text-align: center;
+                background-color: rgb(255 209 71);
+                color: #000000;
+                padding: 0px 20px;
+                border-radius: 10px;
+                margin-bottom: 0px;
+              "
+            >
+              لتسجيل الدخول:
+            </p>
+            <p style="margin-bottom: 0px">
+              1. بعد تحميل التطبيق وتثبيته، افتح التطبيق.
+            </p>
+            <p style="margin-bottom: 0px">البريد الإلكتروني</p>
+            <p style="margin-bottom: 0px">كلمة المرور</p>
+            <p style="margin-bottom: 0px">
+              باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع كرم بغداد
               السكني بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
             </p>
             <p style="margin-bottom: 0px">

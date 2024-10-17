@@ -422,6 +422,14 @@ export default [
       ),
   },
   {
+    path: "/admin-print-application-form-karam-bagdad",
+    name: "admin-print-application-form-karam-bagdad",
+    component: () =>
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormKaramBagdad.vue"
+      ),
+  },
+  {
     path: "/admin-print-approval-request-form",
     name: "admin-print-approval-request-form",
     component: () =>

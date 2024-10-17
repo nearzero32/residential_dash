@@ -235,7 +235,7 @@ export default {
           name: `admin-print-sales-contracts-alnahdaa`,
         });
         window.open(routeData.href, "_blank");
-      } else if (results.center_id._id === "66393d1a260d48b063586101") {
+      } else if (results.center_id._id === "66e9376b2dcd8ef700ac5f01") {
         localStorage.setItem("PrintAlfakher", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-sales-contracts-alfakher`,

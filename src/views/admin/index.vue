@@ -39,12 +39,13 @@
             <VCol cols="12" md="5">
               <div class="d-flex align-center" style="justify-content: center">
                 <h6 class="text-h6 me-3">
-                  عدد الزوار الكلي لسنة ( {{ year }} ) 401
+                  عدد الزوار الكلي لسنة ( {{ year }} )
+                  <!-- 401 -->
                 </h6>
-                <VChip label color="success" class="font-weight-medium">
+                <!-- <VChip label color="success" class="font-weight-medium">
                   <VIcon start icon="mdi-arrow-up" size="15" />
-                  <span>22%</span>
-                </VChip>
+                   <span>22%</span>
+                </VChip> -->
               </div>
             </VCol>
           </VRow>
