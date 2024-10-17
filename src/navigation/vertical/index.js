@@ -57,12 +57,15 @@ export default [
   {
     title: "Accounts",
     href:
-      currentPath == "admin.alrawan.net"
+      currentPath === "admin.alrawan.net"
         ? "https://counting.alrawan.net/login"
-        : "https://counting.myexperience.center/ownerBills",
+        : currentPath === "admin.karambaghdad.com"
+        ? "https://counting.karambaghdad.com/login"
+        : currentPath === "admin.alfakhertowers.com"
+        ? "https://counting.alfakhertowers.com/login"
+        : "https://counting.myexperience.center/login",
     type: "admin",
     target: "_blank",
-    type: "admin",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-cash-multiple" },
   },
@@ -254,11 +257,15 @@ export default [
   {
     title: "Accounts",
     href:
-      currentPath == "admin.alrawan.net"
+      currentPath === "admin.alrawan.net"
         ? "https://counting.alrawan.net/login"
-        : "https://counting.myexperience.center/ownerBills",
+        : currentPath === "admin.karambaghdad.com"
+        ? "https://counting.karambaghdad.com/login"
+        : currentPath === "admin.alfakhertowers.com"
+        ? "https://counting.alfakhertowers.com/login"
+        : "https://counting.myexperience.center/login",
+    type: "admin",
     target: "_blank",
-    type: "resident_manager",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-cash-multiple" },
   },
