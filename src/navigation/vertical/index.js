@@ -264,7 +264,7 @@ export default [
         : currentPath === "admin.alfakhertowers.com"
         ? "https://counting.alfakhertowers.com/login"
         : "https://counting.myexperience.center/login",
-    type: "admin",
+    type: "resident_manager",
     target: "_blank",
     building_type: "منازل وشقق",
     icon: { icon: "mdi-cash-multiple" },
