@@ -16,11 +16,11 @@
         <br />
         <p>{{ t("Address") }} : {{ Data.address }}</p>
         <br />
-        <p>{{ t("Service Name") }} : {{ Data.service.name }}</p>
+        <p>{{ t("Service Name") }} : {{ Data.service ? Data.service.name : '' }}</p>
         <br />
-        <p>{{ t("Service Amount") }} : {{ Data.service.price }}</p>
+        <p>{{ t("Service Amount") }} : {{ Data.service ? Data.service.price : '' }}</p>
         <br />
-        <p>{{ t("Service type") }} : {{ Data.service.type }}</p>
+        <p>{{ t("Service type") }} : {{ Data.service ? Data.service.type : '' }}</p>
         <br />
         <p>{{ t("Service request date") }} : {{ Data.createdAt }}</p>
         <br />
