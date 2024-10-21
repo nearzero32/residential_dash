@@ -395,6 +395,24 @@ export default {
           key: "service.name",
         },
         {
+          title: this.t("Device Name"),
+          type: "strong",
+          link: ``,
+          key: "machine_name",
+        },
+        {
+          title: this.t("Room Name"),
+          type: "strong",
+          link: ``,
+          key: "room_name",
+        },
+        {
+          title: this.t("Type of Repair"),
+          type: "strong",
+          link: ``,
+          key: "fix_type",
+        },
+        {
           title: this.t("Service Amount"),
           type: "strong",
           link: ``,
