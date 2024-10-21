@@ -482,6 +482,41 @@ class adminApi {
   }
   // bankAccounts
 
+  // bankAccounts
+  async getMachines({ search, sortBy }) {
+    const response = await axiosInstance.get(
+      `reservations/service/machines?search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  async addMachines({ name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.post(
+      `/reservations/service/machines`,
+      requestData
+    );
+    return response;
+  }
+  async editMachines({ id, name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.put(
+      `/reservations/service/machines/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeMachines(id) {
+    const response = await axiosInstance.delete(
+      `/reservations/service/machines/${id}`
+    );
+    return response;
+  }
+  // Machines
+
   // MaintenanceEmployee
   async getMaintenanceEmployee({ page, limit, search, is_deleted, sortBy }) {
     const response = await axiosInstance.get(

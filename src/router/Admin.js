@@ -167,6 +167,17 @@ export default [
       },
       // Banks
 
+      // Maintenance of Devices
+      {
+        path: "/admin-show-maintenance-of-devices",
+        name: "admin-show-maintenance-of-devices",
+        component: () =>
+          import(
+            "@/views/admin/MaintenanceOfDevices/showMaintenanceOfDevices.vue"
+          ),
+      },
+      // Maintenance of Devices
+
       // MaintenanceStaff
       {
         path: "/admin-show-maintenance-staff",

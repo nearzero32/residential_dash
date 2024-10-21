@@ -172,6 +172,10 @@ export default [
     children: [
       { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
       {
+        title: "Maintenance of Devices",
+        to: "admin-show-maintenance-of-devices",
+      },
+      {
         title: "Service Bookings",
         type: "admin",
         building_type: "منازل وشقق",

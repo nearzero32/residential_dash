@@ -8,53 +8,74 @@
     <br />
     <VContainer>
       <br />
-      <CrmSalesOverview
-        :key="componentKey"
-        :allHouses="
-          data && data.houses && data.houses.allHouses
-            ? data.houses.allHouses
-            : 0
-        "
-        :allOwners="data && data.allOwners ? data.allOwners : 0"
-        :allReceivedOwners="
-          data && data.allReceivedOwners ? data.allReceivedOwners : 0
-        "
-        :allUnReceivedOwners="
-          data && data.allUnReceivedOwners ? data.allUnReceivedOwners : 0
-        "
-      ></CrmSalesOverview>
+      <v-expansion-panels v-model="panell">
+        <v-expansion-panel title="مخطط بياني للوحدات السكنية">
+          <v-expansion-panel-text>
+            <CrmSalesOverview
+              :key="componentKey"
+              :allHouses="
+                data && data.houses && data.houses.allHouses
+                  ? data.houses.allHouses
+                  : 0
+              "
+              :allOwners="data && data.allOwners ? data.allOwners : 0"
+              :allReceivedOwners="
+                data && data.allReceivedOwners ? data.allReceivedOwners : 0
+              "
+              :allUnReceivedOwners="
+                data && data.allUnReceivedOwners ? data.allUnReceivedOwners : 0
+              "
+            ></CrmSalesOverview>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
       <br />
-      <VCard>
-        <VCardText class="d-flex flex-wrap justify-space-between gap-4">
-          <VRow>
-            <VCol cols="12" md="5">
-              <VCardTitle>مخطط بياني لزوار الملاك</VCardTitle>
-              <VCardSubtitle>السنوي &amp; السهري &amp; اليومي</VCardSubtitle>
-            </VCol>
-            <VCol cols="12" md="2">
-              <div class="d-flex align-center" style="justify-content: center">
-                <VueDatePicker v-model="year" year-picker />
-              </div>
-            </VCol>
-            <VCol cols="12" md="5">
-              <div class="d-flex align-center" style="justify-content: center">
-                <h6 class="text-h6 me-3">
-                  عدد الزوار الكلي لسنة ( {{ year }} )
-                  <!-- 401 -->
-                </h6>
-                <!-- <VChip label color="success" class="font-weight-medium">
+      <v-expansion-panels v-model="panel">
+        <v-expansion-panel title="مخطط بياني لزوار الملاك">
+          <v-expansion-panel-text>
+            <VCard>
+              <VCardText class="d-flex flex-wrap justify-space-between gap-4">
+                <VRow>
+                  <VCol cols="12" md="5">
+                    <VCardTitle>مخطط بياني لزوار الملاك</VCardTitle>
+                    <VCardSubtitle
+                      >السنوي &amp; السهري &amp; اليومي</VCardSubtitle
+                    >
+                  </VCol>
+                  <VCol cols="12" md="2">
+                    <div
+                      class="d-flex align-center"
+                      style="justify-content: center"
+                    >
+                      <VueDatePicker v-model="year" year-picker />
+                    </div>
+                  </VCol>
+                  <VCol cols="12" md="5">
+                    <div
+                      class="d-flex align-center"
+                      style="justify-content: center"
+                    >
+                      <h6 class="text-h6 me-3">
+                        عدد الزوار الكلي لسنة ( {{ year }} )
+                        <!-- 401 -->
+                      </h6>
+                      <!-- <VChip label color="success" class="font-weight-medium">
                   <VIcon start icon="mdi-arrow-up" size="15" />
                    <span>22%</span>
                 </VChip> -->
-              </div>
-            </VCol>
-          </VRow>
-        </VCardText>
+                    </div>
+                  </VCol>
+                </VRow>
+              </VCardText>
 
-        <VCardText>
-          <ApexChartBalance :visits="visits" />
-        </VCardText>
-      </VCard>
+              <VCardText>
+                <ApexChartBalance :visits="visits" />
+              </VCardText>
+            </VCard>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+
       <br />
       <hr style="margin-block: 20px" />
 
@@ -341,6 +362,8 @@ export default {
   },
   data() {
     return {
+      panel: [1],
+      panell: [1],
       //data
       loading: false,
       data: {},
