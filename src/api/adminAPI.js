@@ -482,6 +482,41 @@ class adminApi {
   }
   // bankAccounts
 
+  // ServiceRoomNames
+  async getServiceRoomNames({ search, sortBy }) {
+    const response = await axiosInstance.get(
+      `reservations/service/room_names?search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  async addServiceRoomNames({ name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.post(
+      `/reservations/service/room_names`,
+      requestData
+    );
+    return response;
+  }
+  async editServiceRoomNames({ id, name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.put(
+      `/reservations/service/room_names/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeServiceRoomNames(id) {
+    const response = await axiosInstance.delete(
+      `/reservations/service/room_names/${id}`
+    );
+    return response;
+  }
+  // ServiceRoomNames
+
   // bankAccounts
   async getMachines({ search, sortBy }) {
     const response = await axiosInstance.get(

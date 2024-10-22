@@ -176,6 +176,10 @@ export default [
         to: "admin-show-maintenance-of-devices",
       },
       {
+        title: "Service Room Names",
+        to: "admin-show-service-room-names",
+      },
+      {
         title: "Service Bookings",
         type: "admin",
         building_type: "منازل وشقق",
@@ -378,6 +382,10 @@ export default [
       {
         title: "Maintenance of Devices",
         to: "admin-show-maintenance-of-devices",
+      },
+      {
+        title: "Service Room Names",
+        to: "admin-show-service-room-names",
       },
       {
         title: "Service Bookings",
@@ -587,6 +595,10 @@ export default [
       {
         title: "Maintenance of Devices",
         to: "admin-show-maintenance-of-devices",
+      },
+      {
+        title: "Service Room Names",
+        to: "admin-show-service-room-names",
       },
       {
         title: "Service Bookings",

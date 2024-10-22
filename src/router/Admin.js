@@ -187,6 +187,15 @@ export default [
       },
       // MaintenanceStaff
 
+      // ServiceRoomNames
+      {
+        path: "/admin-show-service-room-names",
+        name: "admin-show-service-room-names",
+        component: () =>
+          import("@/views/admin/ServiceRoomNames/showServiceRoomNames.vue"),
+      },
+      // ServiceRoomNames
+
       // ServiceBookings
       {
         path: "/admin-show-service-bookings-shipping",
