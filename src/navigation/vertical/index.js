@@ -200,6 +200,15 @@ export default [
           { title: "Maintenance", to: "admin-show-services-maintenance" },
         ],
       },
+      {
+        title: "Other services",
+        type: "admin",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Display", to: "admin-show-other-services" },
+          { title: "Types of services", to: "admin-show-other-services-type" },
+        ],
+      },
       { title: "Residential Units", to: "admin-show-residential-units" },
     ],
   },

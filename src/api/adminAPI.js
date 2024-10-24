@@ -674,6 +674,46 @@ class adminApi {
   }
   // Reservations
 
+  // OtherServicesType
+  async getOtherServicesType({ page, limit, search, sortBy }) {
+    const response = await axiosInstance.get(
+      `/services/type?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  async getOtherServices({ page, limit, search, is_available, sortBy, type }) {
+    const response = await axiosInstance.get(
+      `/services/other?page=${page}&limit=${limit}&search=${search}&is_available=${is_available}&sortBy=${sortBy}&type=${type}`
+    );
+    return response;
+  }
+  async getOtherServicesTypeAll() {
+    const response = await axiosInstance.get(`/services/type/all`);
+    return response;
+  }
+  async addOtherServicesType({ name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.post(`/services/type`, requestData);
+    return response;
+  }
+  async editOtherServicesType({ service_id, name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.put(
+      `/services/type/${service_id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeOtherServicesType(id) {
+    const response = await axiosInstance.delete(`/services/type/${id}`);
+    return response;
+  }
+  // Services
+
   // Services
   async getServices({ page, limit, search, is_available, sortBy, type }) {
     const response = await axiosInstance.get(

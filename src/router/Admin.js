@@ -196,6 +196,21 @@ export default [
       },
       // ServiceRoomNames
 
+      // Other services
+      {
+        path: "/admin-show-other-services-type",
+        name: "admin-show-other-services-type",
+        component: () =>
+          import("@/views/admin/OtherServicesType/showOtherServicesType.vue"),
+      },
+      {
+        path: "/admin-show-other-services",
+        name: "admin-show-other-services",
+        component: () =>
+          import("@/views/admin/OtherServicesType/showOtherServices.vue"),
+      },
+      // Other services
+
       // ServiceBookings
       {
         path: "/admin-show-service-bookings-shipping",
