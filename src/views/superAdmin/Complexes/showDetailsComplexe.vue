@@ -329,6 +329,7 @@ export default {
         { text: "ادمن", value: "admin" },
         { text: "محاسب", value: "manager_accountant" },
         { text: "أداري مجمع", value: "resident_manager" },
+        { text: "مستثمر", value: "investor" },
       ],
       addDialog: {
         open: false,

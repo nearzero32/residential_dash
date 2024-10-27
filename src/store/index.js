@@ -105,6 +105,8 @@ const store = createStore({
                 router.push("/super-admin-home");
               } else if (response.data.results.type === "admin") {
                 router.push("/admin-index");
+              } else if (response.data.results.type === "investor") {
+                router.push("/admin-index");
               } else if (response.data.results.type === "resident_manager") {
                 router.push("/admin-index");
               } else if (response.data.results.type === "assistance") {
@@ -213,6 +215,8 @@ const store = createStore({
                 router.push("/admin-index");
               } else if (response.data.results.type === "admin") {
                 router.push("/admin-index");
+              } else if (response.data.results.type === "investor") {
+                router.push("/admin-index");
               } else if (response.data.results.type === "assistance") {
                 var pages = response.data.results.pages[0];
                 if (pages == "home") {
@@ -319,6 +323,8 @@ const store = createStore({
                 router.push("/admin-index");
               } else if (response.data.results.type === "admin") {
                 router.push("/admin-index");
+              } else if (response.data.results.type === "investor") {
+                router.push("/admin-index");
               } else if (response.data.results.type === "assistance") {
                 var pages = response.data.results.pages[0];
                 if (pages == "home") {
@@ -420,6 +426,8 @@ const store = createStore({
               router.push("/super-admin-home");
             } else if (response.data.results.type === "admin") {
               router.push("/admin-index");
+            } else if (response.data.results.type === "investor") {
+              router.push("/admin-index");
             } else if (response.data.results.type === "assistance") {
               var pages = response.data.results.pages[0];
               if (pages == "home") {
@@ -519,6 +527,8 @@ const store = createStore({
         } else if (account_type === "admin") {
           router.push("/admin-index");
         } else if (account_type === "resident_manager") {
+          router.push("/admin-index");
+        } else if (account_type === "investor") {
           router.push("/admin-index");
         } else if (account_type === "assistance") {
           const pages = JSON.parse(localStorage.getItem("pages"));

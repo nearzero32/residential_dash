@@ -263,6 +263,223 @@ export default [
   },
   //admin
 
+  //investor
+  {
+    title: "Home Page",
+    to: { name: "admin-index" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-home-outline" },
+  },
+  {
+    title: "Accounts",
+    href:
+      currentPath === "admin.alrawan.net"
+        ? "https://counting.alrawan.net/login"
+        : currentPath === "admin.karambaghdad.com"
+        ? "https://counting.karambaghdad.com/login"
+        : currentPath === "admin.alfakhertowers.com"
+        ? "https://counting.alfakhertowers.com/login"
+        : "https://counting.myexperience.center/login",
+    type: "investor",
+    target: "_blank",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-cash-multiple" },
+  },
+  {
+    title: "Apartment models",
+    to: { name: "admin-show-apartment-models" },
+    type: "investor",
+    building_type: "شقق",
+    icon: { icon: "mdi-home-city" },
+  },
+  {
+    title: "House Models",
+    to: { name: "admin-show-house-models" },
+    type: "investor",
+    building_type: "منازل",
+    icon: { icon: "mdi-home-variant" },
+  },
+  {
+    title: "Owners",
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-account-tie" },
+    children: [
+      { title: "All", to: "admin-show-owners" },
+      { title: "All tenants", to: "admin-show-all-tenants" },
+      {
+        title: "Received the residential unit",
+        to: "admin-show-owners-recipients",
+      },
+      {
+        title: "Not received the residential unit",
+        to: "admin-show-owners-non-recipients",
+      },
+    ],
+  },
+  {
+    title: "Owners' visits",
+    to: { name: "admin-show-owners-visits" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-account-clock" },
+  },
+  {
+    title: "Sales",
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-sale" },
+    children: [
+      { title: "Sales staff", to: "admin-show-sales-staff" },
+      { title: "Queries", to: "admin-show-queries" },
+      {
+        title: "Customer attendance form",
+        to: "admin-show-customer-attendance-form",
+      },
+      {
+        title: "Residential Unit Booking Application Form",
+        to: "admin-show-application-form",
+      },
+      {
+        title: "Approval Request Form",
+        to: "admin-show-approval-request-form",
+      },
+      {
+        title: "Residential Unit Requests",
+        to: "admin-show-residential-unit-requests",
+      },
+      { title: "Sales Contracts", to: "admin-show-sales-contracts" },
+    ],
+  },
+  {
+    title: "marketing Residentail",
+    type: "investor",
+    name: "marketing Residentail",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-home-city" },
+    children: [
+      { title: "Complexes", name: "show-units", to: "admin-show-units" },
+      {
+        title: "marketing call center",
+        name: "show-marketing-call-center",
+        to: "admin-show-marketing-call-center",
+      },
+    ],
+  },
+  {
+    title: "Notifications",
+    to: { name: "admin-show-notifications" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-bell" },
+  },
+  {
+    title: "Banks",
+    to: { name: "admin-show-banks" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-bank" },
+  },
+  {
+    title: "After-Sales Services",
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-cogs" },
+    children: [
+      { title: "Maintenance Staff", to: "admin-show-maintenance-staff" },
+      {
+        title: "Maintenance of Devices",
+        to: "admin-show-maintenance-of-devices",
+      },
+      {
+        title: "Service Room Names",
+        to: "admin-show-service-room-names",
+      },
+      {
+        title: "Service Bookings",
+        type: "investor",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Shipping", to: "admin-show-service-bookings-shipping" },
+          {
+            title: "Maintenance",
+            to: "admin-show-service-bookings-maintenance",
+          },
+        ],
+      },
+      {
+        title: "Services",
+        type: "investor",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Shipping", to: "admin-show-services" },
+          { title: "Maintenance", to: "admin-show-services-maintenance" },
+        ],
+      },
+      {
+        title: "Other services",
+        type: "investor",
+        building_type: "منازل وشقق",
+        children: [
+          { title: "Display", to: "admin-show-other-services" },
+          { title: "Types of services", to: "admin-show-other-services-type" },
+        ],
+      },
+      { title: "Residential Units", to: "admin-show-residential-units" },
+    ],
+  },
+  {
+    title: "Guards",
+    to: { name: "admin-show-guards" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-shield-account" },
+  },
+  {
+    title: "Staff",
+    to: { name: "admin-show-staff" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-account-group" },
+  },
+  {
+    title: "Users",
+    to: { name: "admin-show-users" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-account" },
+  },
+  {
+    title: "Advertisements",
+    to: { name: "admin-show-advertisements" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-bullhorn" },
+  },
+  {
+    title: "Features",
+    to: { name: "admin-show-features" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-star" },
+  },
+  {
+    title: "How did you hear about u",
+    to: { name: "admin-show-how-did-you-hear-about-us" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-help-circle" },
+  },
+  {
+    title: "Complaints",
+    to: { name: "admin-show-complaints" },
+    type: "investor",
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-alert-circle" },
+  },
+  //investor
+
   //resident_manager
   {
     title: "Home Page",
