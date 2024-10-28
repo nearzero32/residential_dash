@@ -17,7 +17,7 @@ const props = defineProps({
     default: "aside",
   },
   navItems: {
-    type: null,
+    type: Array,
     required: true,
   },
   isOverlayNavActive: {
@@ -48,7 +48,6 @@ const hideTitleAndIcon = isVerticalNavMini(windowWidth, isHovered);
 const resolveNavItemComponent = (item) => {
   if ("heading" in item) return VerticalNavSectionTitle;
   if ("children" in item) return VerticalNavGroup;
-
   return VerticalNavLink;
 };
 
@@ -61,74 +60,86 @@ watch(
   }
 );
 
-const isVerticalNavScrolled = ref(false);
-const updateIsVerticalNavScrolled = (val) =>
-  (isVerticalNavScrolled.value = val);
-
-const handleNavScroll = (evt) => {
-  isVerticalNavScrolled.value = evt.target.scrollTop > 0;
-};
-
-const r = JSON.parse(localStorage.getItem("results"));
-let logo = null;
-let name = null;
-if (r.type === "super_admin") {
-  logo = log;
-  name = "Super Admin";
-} else {
-  if (localStorage.getItem("logo") !== null) {
-    logo = r.content_url + localStorage.getItem("logo");
-  } else {
-    logo = log;
-  }
-  name = r.center_id.name;
-}
-
-const accountType = localStorage.getItem("account_type");
+// جلب البيانات من LocalStorage
 const results = JSON.parse(localStorage.getItem("results"));
-const buildingType = results ? results.building_type : null;
-const centerId = results && results.center_id ? results.center_id._id : null;
+const accountType = localStorage.getItem("account_type")?.toLowerCase();
 const pages = JSON.parse(localStorage.getItem("pages"));
+const buildingType = results ? results.building_type : null;
+const centerId = results?.center_id?._id ?? null;
 
-let filteredNavItems = props.navItems.filter((item) => {
-  const matchesAccountType = item.type === accountType;
-  const matchesBuildingType =
-    buildingType === "منازل وشقق" ||
-    item.building_type === "منازل وشقق" ||
-    item.building_type === buildingType;
+let filteredNavItems = props.navItems
+  .map((item) => {
+    const itemTypes = Array.isArray(item.type)
+      ? item.type.map((type) => type.toLowerCase())
+      : [];
+    const matchesAccountType = itemTypes.includes(accountType);
 
-  let matchesCenterId = true;
-  if (centerId) {
-    matchesCenterId =
-      item.name !== "marketing Residentail" ||
-      ["663944d5260d48b0635862ad", "6638d6a4c8462a1d83346b54"].includes(
-        centerId
-      );
-  }
+    const matchesBuildingType =
+      buildingType === "منازل وشقق" ||
+      item.building_type === "منازل وشقق" ||
+      item.building_type === buildingType;
 
-  return matchesAccountType && matchesBuildingType && matchesCenterId;
-});
+    let matchesCenterId = true;
+    if (centerId) {
+      matchesCenterId =
+        item.name !== "marketing Residentail" ||
+        ["663944d5260d48b0635862ad", "6638d6a4c8462a1d83346b54"].includes(
+          centerId
+        );
+    }
 
-if (accountType === "assistance") {
-  filteredNavItems = filteredNavItems
-    .map((item) => {
-      if (item.children) {
-        item.children = item.children.filter((child) => {
-          if (child.hasOwnProperty("name")) {
-            return pages.includes(child.name);
-          } else {
-            return true;
+    const filteredItem =
+      matchesAccountType && matchesBuildingType && matchesCenterId
+        ? { ...item }
+        : null;
+
+    if (filteredItem && filteredItem.children) {
+      // تصفية الأطفال بناءً على تطابق الاسم مع 'pages' فقط إذا كان نوع الحساب 'assistance'
+      if (accountType === "assistance") {
+        filteredItem.children = filteredItem.children.filter((child) => {
+          const isChildIncluded = pages.includes(child.name);
+          return isChildIncluded;
+        });
+
+        // فلترة الأطفال في children المتداخلة
+        filteredItem.children.forEach((child) => {
+          if (child.children) {
+            child.children = child.children.filter((subChild) => {
+              const isSubChildIncluded = pages.includes(subChild.name);
+              return isSubChildIncluded;
+            });
+
+            // حذف 'children' إذا لم يتبقَ عناصر مرئية
+            if (child.children.length === 0) {
+              delete child.children;
+            }
           }
         });
       }
-      return item;
-    })
-    .filter((item) => {
-      const isIncludedInPages = pages.includes(item.name);
-      const hasVisibleChildren = item.children && item.children.length > 0;
 
-      return isIncludedInPages || hasVisibleChildren;
-    });
+      // حذف 'children' إذا لم يتبقَ عناصر مرئية (فقط إذا كان نوع الحساب 'assistance')
+      if (accountType === "assistance" && filteredItem.children.length === 0) {
+        delete filteredItem.children;
+      }
+    }
+
+    return filteredItem;
+  })
+  .filter((item) => item !== null);
+
+// الفلترة حسب نوع الحساب 'assistance'
+if (accountType === "assistance") {
+  filteredNavItems = filteredNavItems.filter((item) => {
+    const isIncludedInPages = pages.includes(item.name);
+    const hasVisibleChildren = item.children && item.children.length > 0;
+    return isIncludedInPages || hasVisibleChildren;
+  });
+}
+
+// إذا كان نوع الحساب لا يساوي 'assistance'
+// نقوم بعرض جميع البيانات بدون تصفية الأسماء
+if (accountType !== "assistance") {
+  filteredNavItems = filteredNavItems.filter((item) => item !== null);
 }
 </script>
 
@@ -146,15 +157,13 @@ if (accountType === "assistance") {
       },
     ]"
   >
-    <!-- 👉 Header -->
     <div class="nav-header">
       <slot name="nav-header">
         <RouterLink
           to="/"
           class="app-logo d-flex align-center gap-x-3 app-title-wrapper"
         >
-          <img :src="logo" style="width: 30px" />
-
+          <img :src="log" style="width: 30px" />
           <Transition name="vertical-nav-app-title">
             <h1
               v-show="!hideTitleAndIcon"
@@ -164,8 +173,6 @@ if (accountType === "assistance") {
             </h1>
           </Transition>
         </RouterLink>
-        <!-- 👉 Vertical nav actions -->
-        <!-- Show toggle collapsible in >md and close button in <md -->
         <template v-if="!isLessThanOverlayNavBreakpoint(windowWidth)">
           <Component
             :is="config.app.iconRenderer || 'div'"
@@ -216,6 +223,7 @@ if (accountType === "assistance") {
     </slot>
   </Component>
 </template>
+
 
 <style lang="scss">
 @use "@configured-variables" as variables;

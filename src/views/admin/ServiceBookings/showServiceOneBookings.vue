@@ -18,7 +18,7 @@
         <br />
         <p>{{ t("Service Name") }} : {{ Data.service ? Data.service.name : '' }}</p>
         <br />
-        <p>{{ t("Service Amount") }} : {{ Data.service ? Data.service.price : '' }}</p>
+        <p>{{ t("Service Amount") }} : {{ Data.service ? numberWithComma(Data.service.price) : '' }}</p>
         <br />
         <p>{{ t("Service type") }} : {{ Data.service ? Data.service.type : '' }}</p>
         <br />
@@ -46,6 +46,7 @@
 <script>
 import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
+import numberWithComma from "@/constant/number";
 
 export default {
   setup() {
@@ -108,6 +109,8 @@ export default {
       }
     },
     // Get Data
+
+    numberWithComma,
   },
 };
 </script>

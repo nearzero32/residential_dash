@@ -128,6 +128,12 @@ const store = createStore({
                     router.push(
                       this.returnUrl || "/admin-show-customer-attendance-form"
                     );
+                  } else if (
+                    response.data.results.pages[1] == "salesContracts"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-sales-contracts"
+                    );
                   } else if (response.data.results.pages[1] == "inquiries") {
                     router.push(this.returnUrl || "/admin-show-queries");
                   } else if (
@@ -149,8 +155,111 @@ const store = createStore({
                   }
                 } else if (pages == "notifications") {
                   router.push(this.returnUrl || "/admin-show-notifications");
-                } else if (pages == "notifications") {
-                  router.push(this.returnUrl || "/admin-show-notifications");
+                } else if (pages == "bankAccounts") {
+                  router.push(this.returnUrl || "/admin-show-banks");
+                } else if (pages == "After-sales-service") {
+                  if (response.data.results.pages[1] == "maintenance-staff") {
+                    router.push(
+                      this.returnUrl || "/admin-show-maintenance-staff"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "maintenance-of-devices"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-maintenance-of-devices"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "service-room-names"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-room-names"
+                    );
+                  } else if (
+                    response.data.results.pages[1] ==
+                    "service-bookings-shipping"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-bookings-shipping"
+                    );
+                  } else if (
+                    response.data.results.pages[1] ==
+                    "service-bookings-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl ||
+                        "/admin-show-service-bookings-maintenance"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "show-services"
+                  ) {
+                    router.push(this.returnUrl || "/admin-show-services");
+                  } else if (
+                    response.data.results.pages[1] == "services-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-services-maintenance"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "other-services"
+                  ) {
+                    router.push(this.returnUrl || "/admin-show-other-services");
+                  } else if (
+                    response.data.results.pages[1] == "other-services-type"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-other-services-type"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "residential-units"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-residential-units"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "reservation-service"
+                  ) {
+                    if (
+                      response.data.results.pages[2] ==
+                      "service-bookings-shipping"
+                    ) {
+                      router.push(
+                        this.returnUrl ||
+                          "/admin-show-service-bookings-shipping"
+                      );
+                    } else if (
+                      response.data.results.pages[2] ==
+                      "service-bookings-maintenance"
+                    ) {
+                      router.push(
+                        this.returnUrl ||
+                          "/admin-show-service-bookings-maintenance"
+                      );
+                    }
+                  } else if (response.data.results.pages[1] == "Services") {
+                    if (response.data.results.pages[2] == "show-services") {
+                      router.push(this.returnUrl || "/admin-show-services");
+                    } else if (
+                      response.data.results.pages[2] == "services-maintenance"
+                    ) {
+                      router.push(
+                        this.returnUrl || "/admin-show-services-maintenance"
+                      );
+                    }
+                  } else if (
+                    response.data.results.pages[1] == "Other services"
+                  ) {
+                    if (response.data.results.pages[2] == "other-services") {
+                      router.push(
+                        this.returnUrl || "/admin-show-other-services"
+                      );
+                    } else if (
+                      response.data.results.pages[2] == "other-services-type"
+                    ) {
+                      router.push(
+                        this.returnUrl || "/admin-show-other-services-type"
+                      );
+                    }
+                  }
                 } else if (pages == "marketing Residentail") {
                   if (response.data.results.pages[1] == "admin-show-units") {
                     router.push(
@@ -169,6 +278,8 @@ const store = createStore({
                   router.push(this.returnUrl || "/admin-show-guards");
                 } else if (pages == "employees") {
                   router.push(this.returnUrl || "/admin-show-staff");
+                } else if (pages == "Users") {
+                  router.push(this.returnUrl || "/admin-show-users");
                 } else if (pages == "postings") {
                   router.push(this.returnUrl || "/admin-show-advertisements");
                 } else if (pages == "advantages") {
@@ -236,6 +347,12 @@ const store = createStore({
                     router.push(
                       this.returnUrl || "/admin-show-customer-attendance-form"
                     );
+                  } else if (
+                    response.data.results.pages[1] == "salesContracts"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-sales-contracts"
+                    );
                   } else if (response.data.results.pages[1] == "inquiries") {
                     router.push(this.returnUrl || "/admin-show-queries");
                   } else if (
@@ -257,8 +374,111 @@ const store = createStore({
                   }
                 } else if (pages == "notifications") {
                   router.push(this.returnUrl || "/admin-show-notifications");
-                } else if (pages == "notifications") {
-                  router.push(this.returnUrl || "/admin-show-notifications");
+                } else if (pages == "bankAccounts") {
+                  router.push(this.returnUrl || "/admin-show-banks");
+                } else if (pages == "After-sales-service") {
+                  if (response.data.results.pages[1] == "maintenance-staff") {
+                    router.push(
+                      this.returnUrl || "/admin-show-maintenance-staff"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "maintenance-of-devices"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-maintenance-of-devices"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "service-room-names"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-room-names"
+                    );
+                  } else if (
+                    response.data.results.pages[1] ==
+                    "service-bookings-shipping"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-bookings-shipping"
+                    );
+                  } else if (
+                    response.data.results.pages[1] ==
+                    "service-bookings-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl ||
+                        "/admin-show-service-bookings-maintenance"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "show-services"
+                  ) {
+                    router.push(this.returnUrl || "/admin-show-services");
+                  } else if (
+                    response.data.results.pages[1] == "services-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-services-maintenance"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "other-services"
+                  ) {
+                    router.push(this.returnUrl || "/admin-show-other-services");
+                  } else if (
+                    response.data.results.pages[1] == "other-services-type"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-other-services-type"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "residential-units"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-residential-units"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "reservation-service"
+                  ) {
+                    if (
+                      response.data.results.pages[2] ==
+                      "service-bookings-shipping"
+                    ) {
+                      router.push(
+                        this.returnUrl ||
+                          "/admin-show-service-bookings-shipping"
+                      );
+                    } else if (
+                      response.data.results.pages[2] ==
+                      "service-bookings-maintenance"
+                    ) {
+                      router.push(
+                        this.returnUrl ||
+                          "/admin-show-service-bookings-maintenance"
+                      );
+                    }
+                  } else if (response.data.results.pages[1] == "Services") {
+                    if (response.data.results.pages[2] == "show-services") {
+                      router.push(this.returnUrl || "/admin-show-services");
+                    } else if (
+                      response.data.results.pages[2] == "services-maintenance"
+                    ) {
+                      router.push(
+                        this.returnUrl || "/admin-show-services-maintenance"
+                      );
+                    }
+                  } else if (
+                    response.data.results.pages[1] == "Other services"
+                  ) {
+                    if (response.data.results.pages[2] == "other-services") {
+                      router.push(
+                        this.returnUrl || "/admin-show-other-services"
+                      );
+                    } else if (
+                      response.data.results.pages[2] == "other-services-type"
+                    ) {
+                      router.push(
+                        this.returnUrl || "/admin-show-other-services-type"
+                      );
+                    }
+                  }
                 } else if (pages == "marketing Residentail") {
                   if (response.data.results.pages[1] == "admin-show-units") {
                     router.push(
@@ -277,6 +497,8 @@ const store = createStore({
                   router.push(this.returnUrl || "/admin-show-guards");
                 } else if (pages == "employees") {
                   router.push(this.returnUrl || "/admin-show-staff");
+                } else if (pages == "Users") {
+                  router.push(this.returnUrl || "/admin-show-users");
                 } else if (pages == "postings") {
                   router.push(this.returnUrl || "/admin-show-advertisements");
                 } else if (pages == "advantages") {
@@ -344,6 +566,12 @@ const store = createStore({
                     router.push(
                       this.returnUrl || "/admin-show-customer-attendance-form"
                     );
+                  } else if (
+                    response.data.results.pages[1] == "salesContracts"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-sales-contracts"
+                    );
                   } else if (response.data.results.pages[1] == "inquiries") {
                     router.push(this.returnUrl || "/admin-show-queries");
                   } else if (
@@ -365,8 +593,111 @@ const store = createStore({
                   }
                 } else if (pages == "notifications") {
                   router.push(this.returnUrl || "/admin-show-notifications");
-                } else if (pages == "notifications") {
-                  router.push(this.returnUrl || "/admin-show-notifications");
+                } else if (pages == "bankAccounts") {
+                  router.push(this.returnUrl || "/admin-show-banks");
+                } else if (pages == "After-sales-service") {
+                  if (response.data.results.pages[1] == "maintenance-staff") {
+                    router.push(
+                      this.returnUrl || "/admin-show-maintenance-staff"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "maintenance-of-devices"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-maintenance-of-devices"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "service-room-names"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-room-names"
+                    );
+                  } else if (
+                    response.data.results.pages[1] ==
+                    "service-bookings-shipping"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-bookings-shipping"
+                    );
+                  } else if (
+                    response.data.results.pages[1] ==
+                    "service-bookings-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl ||
+                        "/admin-show-service-bookings-maintenance"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "show-services"
+                  ) {
+                    router.push(this.returnUrl || "/admin-show-services");
+                  } else if (
+                    response.data.results.pages[1] == "services-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-services-maintenance"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "other-services"
+                  ) {
+                    router.push(this.returnUrl || "/admin-show-other-services");
+                  } else if (
+                    response.data.results.pages[1] == "other-services-type"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-other-services-type"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "residential-units"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-residential-units"
+                    );
+                  } else if (
+                    response.data.results.pages[1] == "reservation-service"
+                  ) {
+                    if (
+                      response.data.results.pages[2] ==
+                      "service-bookings-shipping"
+                    ) {
+                      router.push(
+                        this.returnUrl ||
+                          "/admin-show-service-bookings-shipping"
+                      );
+                    } else if (
+                      response.data.results.pages[2] ==
+                      "service-bookings-maintenance"
+                    ) {
+                      router.push(
+                        this.returnUrl ||
+                          "/admin-show-service-bookings-maintenance"
+                      );
+                    }
+                  } else if (response.data.results.pages[1] == "Services") {
+                    if (response.data.results.pages[2] == "show-services") {
+                      router.push(this.returnUrl || "/admin-show-services");
+                    } else if (
+                      response.data.results.pages[2] == "services-maintenance"
+                    ) {
+                      router.push(
+                        this.returnUrl || "/admin-show-services-maintenance"
+                      );
+                    }
+                  } else if (
+                    response.data.results.pages[1] == "Other services"
+                  ) {
+                    if (response.data.results.pages[2] == "other-services") {
+                      router.push(
+                        this.returnUrl || "/admin-show-other-services"
+                      );
+                    } else if (
+                      response.data.results.pages[2] == "other-services-type"
+                    ) {
+                      router.push(
+                        this.returnUrl || "/admin-show-other-services-type"
+                      );
+                    }
+                  }
                 } else if (pages == "marketing Residentail") {
                   if (response.data.results.pages[1] == "admin-show-units") {
                     router.push(
@@ -385,6 +716,8 @@ const store = createStore({
                   router.push(this.returnUrl || "/admin-show-guards");
                 } else if (pages == "employees") {
                   router.push(this.returnUrl || "/admin-show-staff");
+                } else if (pages == "Users") {
+                  router.push(this.returnUrl || "/admin-show-users");
                 } else if (pages == "postings") {
                   router.push(this.returnUrl || "/admin-show-advertisements");
                 } else if (pages == "advantages") {
@@ -468,8 +801,100 @@ const store = createStore({
                 }
               } else if (pages == "notifications") {
                 router.push(this.returnUrl || "/admin-show-notifications");
-              } else if (pages == "notifications") {
-                router.push(this.returnUrl || "/admin-show-notifications");
+              } else if (pages == "bankAccounts") {
+                router.push(this.returnUrl || "/admin-show-banks");
+              } else if (pages == "After-sales-service") {
+                if (response.data.results.pages[1] == "maintenance-staff") {
+                  router.push(
+                    this.returnUrl || "/admin-show-maintenance-staff"
+                  );
+                } else if (
+                  response.data.results.pages[1] == "maintenance-of-devices"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-maintenance-of-devices"
+                  );
+                } else if (
+                  response.data.results.pages[1] == "service-room-names"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-service-room-names"
+                  );
+                } else if (
+                  response.data.results.pages[1] == "service-bookings-shipping"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-service-bookings-shipping"
+                  );
+                } else if (
+                  response.data.results.pages[1] ==
+                  "service-bookings-maintenance"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-service-bookings-maintenance"
+                  );
+                } else if (response.data.results.pages[1] == "show-services") {
+                  router.push(this.returnUrl || "/admin-show-services");
+                } else if (
+                  response.data.results.pages[1] == "services-maintenance"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-services-maintenance"
+                  );
+                } else if (response.data.results.pages[1] == "other-services") {
+                  router.push(this.returnUrl || "/admin-show-other-services");
+                } else if (
+                  response.data.results.pages[1] == "other-services-type"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-other-services-type"
+                  );
+                } else if (
+                  response.data.results.pages[1] == "residential-units"
+                ) {
+                  router.push(
+                    this.returnUrl || "/admin-show-residential-units"
+                  );
+                } else if (
+                  response.data.results.pages[1] == "reservation-service"
+                ) {
+                  if (
+                    response.data.results.pages[2] ==
+                    "service-bookings-shipping"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-service-bookings-shipping"
+                    );
+                  } else if (
+                    response.data.results.pages[2] ==
+                    "service-bookings-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl ||
+                        "/admin-show-service-bookings-maintenance"
+                    );
+                  }
+                } else if (response.data.results.pages[1] == "Services") {
+                  if (response.data.results.pages[2] == "show-services") {
+                    router.push(this.returnUrl || "/admin-show-services");
+                  } else if (
+                    response.data.results.pages[2] == "services-maintenance"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-services-maintenance"
+                    );
+                  }
+                } else if (response.data.results.pages[1] == "Other services") {
+                  if (response.data.results.pages[2] == "other-services") {
+                    router.push(this.returnUrl || "/admin-show-other-services");
+                  } else if (
+                    response.data.results.pages[2] == "other-services-type"
+                  ) {
+                    router.push(
+                      this.returnUrl || "/admin-show-other-services-type"
+                    );
+                  }
+                }
               } else if (pages == "marketing Residentail") {
                 if (response.data.results.pages[1] == "admin-show-units") {
                   router.push(this.returnUrl || "/admin-show-service-bookings");
@@ -484,6 +909,8 @@ const store = createStore({
                 router.push(this.returnUrl || "/admin-show-guards");
               } else if (pages == "employees") {
                 router.push(this.returnUrl || "/admin-show-staff");
+              } else if (pages == "Users") {
+                router.push(this.returnUrl || "/admin-show-users");
               } else if (pages == "postings") {
                 router.push(this.returnUrl || "/admin-show-advertisements");
               } else if (pages == "advantages") {

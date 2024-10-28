@@ -95,7 +95,7 @@
           الموافقة على الطلب
         </VCardTitle>
         <VCardText>
-          <VForm>
+          <VForm ref="form">
             <VRow>
               <VCol cols="12" md="12">
                 <VSelect
@@ -125,7 +125,8 @@
                 <VTextarea
                   rows="5"
                   style="height: 379px"
-                  label="الملاحظة ( اختياري )"
+                  label="الملاحظة "
+                  :rules="Rules.required"
                   v-model="note"
                 />
               </VCol>
@@ -159,19 +160,21 @@
       <VCard>
         <VCardTitle class="headline justify-center"> رفض الطلب </VCardTitle>
         <VCardText>
-          <VForm>
+          <VForm ref="form">
             <VRow>
               <VCol cols="12" md="12">
                 <VTextarea
                   rows="5"
                   label="سبب الرفض"
                   v-model="dialogRejectIteme.reason_to_reject"
+                  :rules="Rules.required"
                 />
               </VCol>
               <VCol cols="12" md="12">
                 <VTextarea
                   rows="5"
-                  label="الملاحظة ( اختياري )"
+                  label="الملاحظة"
+                  :rules="Rules.required"
                   v-model="dialogRejectIteme.note"
                 />
               </VCol>
@@ -205,13 +208,14 @@
       <VCard>
         <VCardTitle class="headline justify-center"> انهاء الطلب </VCardTitle>
         <VCardText>
-          <VForm>
+          <VForm ref="form">
             <VRow>
               <VCol cols="12" md="12">
                 <VTextarea
                   rows="5"
-                  label="الملاحظة ( اختياري )"
+                  label="الملاحظة"
                   v-model="dialogFinishIteme.note"
+                  :rules="Rules.required"
                 />
               </VCol>
             </VRow>
@@ -589,31 +593,35 @@ export default {
       this.dialogConfirmIteme.open = true;
     },
     async ConfirmItemeItemConfirm() {
-      this.dialogConfirmIteme.loading = true;
-      try {
-        const response = await adminApi.acceptService({
-          id: this.dialogConfirmIteme.deletedItem._id,
-          employee_id: this.employee_id,
-          date_to_work: this.isoDatee,
-          note: this.note,
-        });
-        this.dialogConfirmIteme.loading = false;
-        this.dialogConfirmIteme.open = false;
-        this.getCenter();
-        this.showDialogfunction(response.data.message, "primary");
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        this.dialogConfirmIteme.loading = true;
+        try {
+          const response = await adminApi.acceptService({
+            id: this.dialogConfirmIteme.deletedItem._id,
+            employee_id: this.employee_id,
+            date_to_work: this.isoDatee,
+            note: this.note,
+          });
           this.dialogConfirmIteme.loading = false;
           this.dialogConfirmIteme.open = false;
-          this.$store.dispatch("submitLogout");
-        } else if (error.response && error.response.status === 500) {
+          this.getCenter();
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.dialogConfirmIteme.loading = false;
+            this.dialogConfirmIteme.open = false;
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.dialogConfirmIteme.loading = false;
+            this.dialogConfirmIteme.open = false;
+            this.showDialogfunction(error.response.data.results, "#FF5252");
+          }
+        } finally {
           this.dialogConfirmIteme.loading = false;
           this.dialogConfirmIteme.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
         }
-      } finally {
-        this.dialogConfirmIteme.loading = false;
-        this.dialogConfirmIteme.open = false;
       }
     },
     // ConfirmIteme
@@ -624,30 +632,34 @@ export default {
       this.dialogRejectIteme.open = true;
     },
     async RejectItemeConfirm() {
-      this.dialogRejectIteme.loading = true;
-      try {
-        const response = await adminApi.rejectService({
-          id: this.dialogRejectIteme.deletedItem._id,
-          reason_to_reject: this.dialogRejectIteme.reason_to_reject,
-          note: this.dialogRejectIteme.note,
-        });
-        this.dialogRejectIteme.loading = false;
-        this.dialogRejectIteme.open = false;
-        this.getCenter();
-        this.showDialogfunction(response.data.message, "primary");
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        this.dialogRejectIteme.loading = true;
+        try {
+          const response = await adminApi.rejectService({
+            id: this.dialogRejectIteme.deletedItem._id,
+            reason_to_reject: this.dialogRejectIteme.reason_to_reject,
+            note: this.dialogRejectIteme.note,
+          });
           this.dialogRejectIteme.loading = false;
           this.dialogRejectIteme.open = false;
-          this.$store.dispatch("submitLogout");
-        } else if (error.response && error.response.status === 500) {
+          this.getCenter();
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.dialogRejectIteme.loading = false;
+            this.dialogRejectIteme.open = false;
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.dialogRejectIteme.loading = false;
+            this.dialogRejectIteme.open = false;
+            this.showDialogfunction(error.response.data.results, "#FF5252");
+          }
+        } finally {
           this.dialogRejectIteme.loading = false;
           this.dialogRejectIteme.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
         }
-      } finally {
-        this.dialogRejectIteme.loading = false;
-        this.dialogRejectIteme.open = false;
       }
     },
     // RejectIteme
@@ -658,29 +670,33 @@ export default {
       this.dialogFinishIteme.open = true;
     },
     async FinishItemeConfirm() {
-      this.dialogFinishIteme.loading = true;
-      try {
-        const response = await adminApi.FinishService({
-          id: this.dialogFinishIteme.deletedItem._id,
-          note: this.dialogFinishIteme.note,
-        });
-        this.dialogFinishIteme.loading = false;
-        this.dialogFinishIteme.open = false;
-        this.getCenter();
-        this.showDialogfunction(response.data.message, "primary");
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        this.dialogFinishIteme.loading = true;
+        try {
+          const response = await adminApi.FinishService({
+            id: this.dialogFinishIteme.deletedItem._id,
+            note: this.dialogFinishIteme.note,
+          });
           this.dialogFinishIteme.loading = false;
           this.dialogFinishIteme.open = false;
-          this.$store.dispatch("submitLogout");
-        } else if (error.response && error.response.status === 500) {
+          this.getCenter();
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.dialogFinishIteme.loading = false;
+            this.dialogFinishIteme.open = false;
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.dialogFinishIteme.loading = false;
+            this.dialogFinishIteme.open = false;
+            this.showDialogfunction(error.response.data.results, "#FF5252");
+          }
+        } finally {
           this.dialogFinishIteme.loading = false;
           this.dialogFinishIteme.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
         }
-      } finally {
-        this.dialogFinishIteme.loading = false;
-        this.dialogFinishIteme.open = false;
       }
     },
     // RejectIteme

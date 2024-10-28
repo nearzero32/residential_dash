@@ -494,10 +494,21 @@ export default {
     pages() {
       return [
         { text: this.t("Home Page"), value: "home" },
+        { text: this.t("Accounts"), value: "Accounts" },
         { text: this.t("Apartment models"), value: "forms-Apartments" },
         { text: this.t("House Models"), value: "forms" },
-        { text: this.t("Owners"), value: "owners" },
+        { text: this.t("All Owners"), value: "owners" },
+        { text: this.t("All tenants"), value: "all-tenants" },
+        {
+          text: this.t("Received the residential unit"),
+          value: "owners-recipients",
+        },
+        {
+          text: this.t("Not received the residential unit"),
+          value: "owners-non-recipients",
+        },
         { text: this.t("Owners' visits"), value: "visits" },
+
         { text: this.t("Sales"), value: "sales" },
         { text: this.t("Sales staff"), value: "sells-employee" },
         { text: this.t("Queries"), value: "inquiries" },
@@ -509,21 +520,44 @@ export default {
         { text: this.t("Approval Request Form"), value: "confirmations-form" },
         { text: this.t("Residential Unit Requests"), value: "reservations" },
         { text: this.t("Sales Contracts"), value: "salesContracts" },
-        {
-          text: this.t("marketing Residentail"),
-          value: "marketing Residentail",
-        },
+
+        // {
+        //   text: this.t("marketing Residentail"),
+        //   value: "marketing Residentail",
+        // },
+        // {
+        //   text: this.t("Complexes"),
+        //   value: "show-units",
+        // },
+        // {
+        //   text: this.t("marketing call center"),
+        //   value: "show-marketing-call-center",
+        // },
 
         { text: this.t("Notifications"), value: "notifications" },
         { text: this.t("Banks"), value: "bankAccounts" },
+
         { text: this.t("After-Sales Services"), value: "After-sales-service" },
+        { text: this.t("Maintenance Staff"), value: "maintenance-staff" },
+        {
+          text: this.t("Maintenance of Devices"),
+          value: "maintenance-of-devices",
+        },
+        { text: this.t("Service Room Names"), value: "service-room-names" },
         { text: this.t("Service Bookings"), value: "reservation-service" },
-        { text: this.t("Services"), value: "services" },
-        { text: this.t("Residential Units"), value: "buying-offers" },
+        { text: this.t("Shipping"), value: "service-bookings-shipping" },
+        { text: this.t("Maintenance"), value: "service-bookings-maintenance" },
+        { text: this.t("Services"), value: "Services" },
+        { text: this.t("Shipping"), value: "show-services" },
+        { text: this.t("Maintenance"), value: "services-maintenance" },
+        { text: this.t("Other services"), value: "Other services" },
+        { text: this.t("Display"), value: "other-services" },
+        { text: this.t("Types of services"), value: "other-services-type" },
+        { text: this.t("Residential Units"), value: "residential-units" },
 
         { text: this.t("Guards"), value: "guards" },
         { text: this.t("Staff"), value: "employees" },
-        { text: this.t("Accounts staff"), value: "accounts-staff" },
+        { text: this.t("Users"), value: "Users" },
         { text: this.t("Advertisements"), value: "postings" },
         { text: this.t("Features"), value: "advantages" },
         {

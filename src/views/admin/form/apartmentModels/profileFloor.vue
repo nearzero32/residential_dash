@@ -18,7 +18,7 @@
               v-if="data.status === 'تم البيع'"
               append-icon="mdi-refresh-circle"
               :loading="loading"
-              @click="cancelPayingHouse"
+              @click="deleteItem"
             >
               {{ t("Resale of the residential unit") }}
             </VBtn>
@@ -190,6 +190,30 @@
       </VCard>
     </VDialog>
     <!-- Message Dialog -->
+
+    <!-- Delete Dialog -->
+    <VDialog v-model="dialogDelete.open" max-width="500px">
+      <VCard>
+        <VCardTitle class="headline justify-center">
+          {{ t("Are you sure about reselling the residential unit?") }}
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="blue darken-1" text @click="dialogDelete.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary white--text"
+            :loading="dialogDelete.loading"
+            @click="cancelPayingHouse"
+          >
+            {{ t("Resale of the residential unit") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Delete Dialog -->
   </div>
 </template>
 
@@ -241,6 +265,14 @@ export default {
       loading: false,
       id: this.$route.params.id,
 
+      // Delete
+      dialogDelete: {
+        open: false,
+        deletedItem: null,
+        loading: false,
+      },
+      // Delete
+
       // message
       dialogData: {
         open: false,
@@ -273,6 +305,10 @@ export default {
     },
     // Get Data
 
+    deleteItem(item) {
+      this.dialogDelete.deletedItem = { ...item };
+      this.dialogDelete.open = true;
+    },
     async cancelPayingHouse() {
       try {
         this.loading = true;
