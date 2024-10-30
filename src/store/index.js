@@ -13,11 +13,11 @@ const store = createStore({
     currentPath: "",
   },
   mutations: {
-    SET_EREORM(state, payload) {
-      state.errorM = payload;
-    },
     SET_AUTHENTICATED(state, payload) {
       state.isLogin = payload;
+    },
+    SET_EREORM(state, payload) {
+      state.errorM = payload;
     },
     updateMessage(state, newValue) {
       state.Message = newValue;
@@ -49,51 +49,181 @@ const store = createStore({
         window.location.hostname === "localhost" ||
         window.location.hostname === "admin.myexperience.center";
 
+      const errorMessages = {
+        "admin.alrawan.net": "خطأ: الحساب غير صالح لمجمع العلوان.",
+        "admin.alfakhertowers.com":
+          "خطأ: الحساب غير صالح لمجمع الأبراج الأفضل.",
+        "admin.karambaghdad.com": "خطأ: الحساب غير صالح لمجمع كرم بغداد.",
+        "admin.lamacc.com": "خطأ: الحساب غير صالح لمجمع لاماك.",
+      };
+
       const isValidCenter = (currentPath, centerId) => {
         if (isDevelopment) {
           return true;
         }
 
         const validCenters = {
-          "counting.alrawan.net": {
-            id: "66656b164cdec95cab679181",
-            name: "مجمع الروان",
-          },
-          "counting.alfakhertowers.com": {
-            id: "66e9376b2dcd8ef700ac5f01",
-            name: "مجمع الفاخر",
-          },
-          "counting.karambaghdad.com": {
-            id: "66e2c810dec89fdfea71c92b",
-            name: "مجمع كرم بغداد",
-          },
-          "counting.lamacc.com": {
-            id: "66a8a602996fa363c5a0f6f5",
-            name: "مجمع لاماك",
-          },
+          "admin.alrawan.net": "66656b164cdec95cab679181",
+          "admin.alfakhertowers.com": "66e9376b2dcd8ef700ac5f01",
+          "admin.karambaghdad.com": "66e2c810dec89fdfea71c92b",
+          "admin.lamacc.com": "66a8a602996fa363c5a0f6f5",
         };
 
-        if (validCenters[currentPath]?.id !== centerId) {
-          commit(
-            "SET_ERROR",
-            `خطأ، الرجاء إدخال حساب ${
-              validCenters[currentPath]?.name || "المجمع غير معروف"
-            }`
-          );
-          return false;
-        }
-        return true;
+        return validCenters[currentPath] === centerId;
       };
 
-      // دوال مساعدة (من غير تغيير)
       const saveUserData = (results) => {
-        /* نفس الشيفرة */
+        const { token, type, center_id, pages } = results;
+
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("account_type", type);
+        localStorage.setItem("results", JSON.stringify(results));
+        localStorage.setItem("pages", JSON.stringify(pages));
+
+        if (center_id && center_id.logo) {
+          commit("SET_LOGO", center_id.logo);
+          localStorage.setItem("logo", center_id.logo);
+        }
       };
+
       const redirectUser = (type, pages) => {
-        /* نفس الشيفرة */
+        const routes = {
+          super_admin: "/super-admin-home",
+          admin: "/admin-index",
+          investor: "/admin-index",
+          resident_manager: "/admin-index",
+          assistance: getAssistanceRoute(pages),
+        };
+
+        router.push(routes[type] || "/");
       };
+
       const getAssistanceRoute = (pages) => {
-        /* نفس الشيفرة */
+        const pageMap = {
+          home: "/admin-index",
+          "forms-Apartments": "/admin-show-apartment-models",
+          forms: "/admin-show-house-models",
+          owners: "/admin-show-owners",
+          "all-tenants": "/admin-show-all-tenants",
+          "owners-recipients": "/admin-show-owners-recipients",
+          "owners-non-recipients": "/admin-show-owners-non-recipients",
+          visits: "/admin-show-owners-visits",
+          "sells-employee": "/admin-show-sales-staff",
+          "call-center": "/admin-show-customer-attendance-form",
+          "application-form": "/admin-show-application-form",
+          "confirmations-form": "/admin-show-approval-request-form",
+          "show-units": "/admin-show-units",
+          "show-marketing-call-center": "/admin-show-marketing-call-center",
+          inquiries: "/admin-show-queries",
+          reservations: "/admin-show-residential-unit-requests",
+          salesContracts: "/admin-show-sales-contracts",
+          notifications: "/admin-show-notifications",
+          bankAccounts: "/admin-show-banks",
+          "After-sales-service": "/admin-show-maintenance-staff",
+          "maintenance-staff": "/admin-show-maintenance-staff",
+          "maintenance-of-devices": "/admin-show-maintenance-of-devices",
+          "service-room-names": "/admin-show-service-room-names",
+          "reservation-service": "/admin-show-service-bookings-shipping",
+          "service-bookings-shipping": "/admin-show-service-bookings-shipping",
+          Services: "/show-services",
+          "show-services": "/admin-show-services",
+          "services-maintenance": "/admin-show-services-maintenance",
+          "Other services": "/admin-show-other-services",
+          "other-services": "/admin-show-other-services",
+          "other-services-type": "/admin-show-other-services-type",
+          "residential-units": "/admin-show-residential-units",
+          guards: "/admin-show-guards",
+          employees: "/admin-show-staff",
+          Users: "/admin-show-users",
+          postings: "/admin-show-advertisements",
+          advantages: "/admin-show-features",
+          how_u_hear_about_us: "/admin-show-how-did-you-hear-about-us",
+          complain: "/admin-show-complaints",
+        };
+
+        if (pages[0] === "sales" && pages[1] === "sells-employee") {
+          return "/admin-show-sales-staff";
+        } else if (pages[0] === "sales" && pages[1] === "inquiries") {
+          return "/admin-show-queries";
+        } else if (pages[0] === "sales" && pages[1] === "call-center") {
+          return "/admin-show-customer-attendance-form";
+        } else if (pages[0] === "sales" && pages[1] === "application-form") {
+          return "/admin-show-application-form";
+        } else if (pages[0] === "sales" && pages[1] === "confirmations-form") {
+          return "/admin-show-approval-request-form";
+        } else if (pages[0] === "sales" && pages[1] === "reservations") {
+          return "/admin-show-residential-unit-requests";
+        } else if (pages[0] === "sales" && pages[1] === "salesContracts") {
+          return "/admin-show-sales-contracts";
+        } else if (
+          pages[0] === "marketing Residentail" &&
+          pages[1] === "show-units"
+        ) {
+          return "/admin-show-units";
+        } else if (
+          pages[0] === "marketing Residentail" &&
+          pages[1] === "show-marketing-call-center"
+        ) {
+          return "/show-marketing-call-center";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "maintenance-staff"
+        ) {
+          return "/admin-show-maintenance-staff";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "maintenance-of-devices"
+        ) {
+          return "/admin-show-maintenance-of-devices";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "service-room-names"
+        ) {
+          return "/admin-show-service-room-names";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "reservation-service" &&
+          pages[2] === "service-bookings-shipping"
+        ) {
+          return "/admin-show-service-bookings-shipping";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "reservation-service" &&
+          pages[2] === "service-bookings-maintenance"
+        ) {
+          return "/admin-show-service-bookings-maintenance";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "Services" &&
+          pages[2] === "show-services"
+        ) {
+          return "/admin-show-services";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "Services" &&
+          pages[2] === "services-maintenance"
+        ) {
+          return "/admin-show-services-maintenance";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "Other services" &&
+          pages[2] === "other-services"
+        ) {
+          return "/admin-show-other-services";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "Other services" &&
+          pages[2] === "other-services-type"
+        ) {
+          return "/admin-show-other-services-type";
+        } else if (
+          pages[0] === "marketing Residentail" &&
+          pages[1] === "residential-units"
+        ) {
+          return "/admin-show-residential-units";
+        }
+
+        return pageMap[pages[0]] || "/admin-index";
       };
 
       try {
@@ -108,7 +238,6 @@ const store = createStore({
         }
       } catch (error) {
         console.error("Error logging in:", error);
-        commit("SET_ERROR", "خطأ في الاتصال بخدمة Firebase.");
       }
 
       try {
@@ -137,7 +266,9 @@ const store = createStore({
           saveUserData(response.data.results);
           redirectUser(type, pages);
         } else {
-          commit("SET_ERROR", `خطأ, الرجاء ادخال حساب صالح في ${currentPath}`);
+          const errorMessage =
+            errorMessages[currentPath] || "خطأ: الحساب غير صالح.";
+          commit("SET_ERROR", errorMessage);
         }
       } catch (error) {
         console.log(error);
