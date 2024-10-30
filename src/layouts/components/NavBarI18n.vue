@@ -21,41 +21,66 @@ const i18nCompLanguages = [
     i18nLang: "kr",
   },
 ];
+
 var t = document.getElementById("ti");
+
+const getTitleByLanguage = (lang) => {
+  const currentPathh = window.location.hostname;
+  const titles = {
+    en: {
+      "counting.alfakhertowers.com": "Al-Fakher Residential Complex",
+      "counting.alrawan.net": "Al-Rawan Residential Complex",
+      "counting.karambaghdad.com": "Karim Baghdad Residential Complex",
+      "counting.lamacc.com": "Lamac Residential Complex",
+      localhost: "Development of Complexes",
+      default: "Residential Complexes",
+    },
+    ar: {
+      "counting.alfakhertowers.com": "مجمع الفاخر السكني",
+      "counting.alrawan.net": "مجمع الروان السكني",
+      "counting.karambaghdad.com": "مجمع كرم بغداد السكني",
+      "counting.lamacc.com": "مجمع لاماك السكني",
+      localhost: "مطور المجمعات",
+      default: "المجمعات السكنية",
+    },
+    kr: {
+      "counting.alfakhertowers.com": "مجمع الفاخر السكني",
+      "counting.alrawan.net": "مجمع الروان السكني",
+      "counting.karambaghdad.com": "مجمع كرم بغداد السكني",
+      "counting.lamacc.com": "مجمع لاماك السكني",
+      localhost: "مطور المجمعات",
+      default: "المجمعات السكنية",
+    },
+  };
+
+  return titles[lang][currentPathh] || titles[lang].default;
+};
+
+const pathh = () => {
+  const storedLang = localStorage.getItem("selectedLanguage") || "ar"; // Default to Arabic if no language is stored
+  return getTitleByLanguage(storedLang);
+};
 
 onMounted(() => {
   const storedLang = localStorage.getItem("selectedLanguage");
   if (storedLang) {
     locale.value = storedLang;
-    isAppRtl.value = storedLang === "ar" || storedLang === "kr"; // اجعل الكردية RTL
-    t.innerText =
-      storedLang === "ar"
-        ? "المجمعات السكنية"
-        : storedLang === "kr"
-        ? "Kompleksên malî"
-        : "Housing complexes";
+    isAppRtl.value = storedLang === "ar" || storedLang === "kr";
+    t.innerText = pathh(); // Set the title based on the current language
   } else {
     const defaultLang = "ar";
     locale.value = defaultLang;
     isAppRtl.value = defaultLang === "ar";
     localStorage.setItem("selectedLanguage", defaultLang);
-    t.innerText = "Housing complexes";
+    t.innerText = pathh(); // Set the title based on the default language
   }
 });
 
 const handleLangChange = (lang) => {
   locale.value = lang;
-  isAppRtl.value = lang === "ar" || lang === "kr"; // اجعل الكردية RTL
+  isAppRtl.value = lang === "ar" || lang === "kr";
   localStorage.setItem("selectedLanguage", lang);
-  if (lang) {
-    if (lang === "ar") {
-      t.innerText = "المجمعات السكنية";
-    } else if (lang === "kr") {
-      t.innerText = "Kompleksên malî"; // استخدم الترجمة المناسبة
-    } else {
-      t.innerText = "Housing complexes";
-    }
-  }
+  t.innerText = pathh(); // Set the title based on the selected language
 };
 </script>
 
