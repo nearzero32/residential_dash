@@ -55,6 +55,7 @@ const store = createStore({
           "خطأ: الحساب غير صالح لمجمع الأبراج الفاخر.",
         "admin.karambaghdad.com": "خطأ: الحساب غير صالح لمجمع كرم بغداد.",
         "admin.lamacc.com": "خطأ: الحساب غير صالح لمجمع لاماك.",
+        "admin.alwedd.net": "خطأ: الحساب غير صالح لمجمع الود.",
       };
 
       const isValidCenter = (currentPath, centerId) => {
@@ -67,6 +68,7 @@ const store = createStore({
           "admin.alfakhertowers.com": "66e9376b2dcd8ef700ac5f01",
           "admin.karambaghdad.com": "66e2c810dec89fdfea71c92b",
           "admin.lamacc.com": "66a8a602996fa363c5a0f6f5",
+          "admin.alwedd.net": "66e937122dcd8ef700ac5ed6",
         };
 
         return validCenters[currentPath] === centerId;
