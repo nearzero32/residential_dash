@@ -106,6 +106,13 @@
                     outlined
                   />
                 </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="data.telegram_chat_id"
+                    label="معرف كروب التلكرام"
+                    outlined
+                  />
+                </VCol>
                 <v-col cols="12" md="6" style="margin-block: 10px">
                   <v-autocomplete
                     v-model="data.is_dollar"
@@ -210,6 +217,13 @@
                     v-model="dialogEdit.editedItem.address"
                     :rules="Rules.address"
                     :label="t('Address')"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.telegram_chat_id"
+                    label="معرف كروب التلكرام"
                     outlined
                   />
                 </VCol>
@@ -372,6 +386,7 @@ export default {
       data: {
         qr: null,
         is_dollar: null,
+        telegram_chat_id: null,
         name: "",
         building_type: "",
         phone: "",
@@ -441,6 +456,12 @@ export default {
           type: "strong",
           link: ``,
           key: "address",
+        },
+        {
+          title: "معرف كروب التلكرام",
+          type: "telegram_chat_id",
+          link: ``,
+          key: "telegram_chat_id",
         },
         {
           title: this.t("Building type"),
@@ -524,6 +545,7 @@ export default {
             address: this.data.address,
             qr: this.data.qr,
             is_dollar: this.data.is_dollar,
+            telegram_chat_id: this.data.telegram_chat_id,
           });
 
           this.addDialog.saveLoading = false;
@@ -533,6 +555,7 @@ export default {
           this.data.address = "";
           this.data.qr = null;
           this.data.is_dollar = null;
+          this.data.telegram_chat_id = null;
           await this.getCenter();
           this.addDialog.open = false;
           this.showDialogfunction(response.data.message, "primary");
@@ -585,6 +608,7 @@ export default {
             address: this.dialogEdit.editedItem.address,
             qr: this.dialogEdit.editedItem.qr,
             is_dollar: this.dialogEdit.editedItem.is_dollar,
+            telegram_chat_id: this.dialogEdit.editedItem.telegram_chat_id,
           });
 
           this.dialogEdit.open = false;

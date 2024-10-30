@@ -8,7 +8,15 @@ class superAPI {
     );
     return response;
   }
-  async addCenter({ name, phone, building_type, address, qr, is_dollar }) {
+  async addCenter({
+    name,
+    phone,
+    building_type,
+    address,
+    qr,
+    is_dollar,
+    telegram_chat_id,
+  }) {
     const requestData = {
       name,
       phone,
@@ -16,6 +24,7 @@ class superAPI {
       address,
       qr,
       is_dollar,
+      telegram_chat_id,
     };
     const response = await axiosInstance.post(`/admin/centers`, requestData);
     return response;
@@ -28,6 +37,7 @@ class superAPI {
     address,
     qr,
     is_dollar,
+    telegram_chat_id,
   }) {
     const requestData = {
       center_id,
@@ -37,6 +47,7 @@ class superAPI {
       address,
       qr,
       is_dollar,
+      telegram_chat_id,
     };
     const response = await axiosInstance.put(`/admin/centers`, requestData);
     return response;

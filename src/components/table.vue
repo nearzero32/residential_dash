@@ -83,6 +83,17 @@
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
+          <div v-else-if="header.type === 'telegram_chat_id'">
+            <span
+              v-if="
+                item.selectable.telegram_chat_id !== null &&
+                item.selectable.telegram_chat_id !== ''
+              "
+            >
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
+              ><br />
+            </span>
+          </div>
           <div v-else-if="header.type === 'typeAdmin'">
             <span v-if="item.selectable.type == 'admin'">
               <span> ادمن </span>
@@ -660,6 +671,17 @@
             </span>
             <span v-else-if="item.selectable.type == 'investor'">
               <span> مستثمر </span>
+            </span>
+          </div>
+          <div v-else-if="header.type === 'telegram_chat_id'" class="l">
+            <span
+              v-if="
+                item.selectable.telegram_chat_id !== null &&
+                item.selectable.telegram_chat_id !== ''
+              "
+            >
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
+              ><br />
             </span>
           </div>
           <div v-else-if="header.type === 'linkk'" class="l">
