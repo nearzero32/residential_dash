@@ -50,9 +50,9 @@ const store = createStore({
         window.location.hostname === "admin.myexperience.center";
 
       const errorMessages = {
-        "admin.alrawan.net": "خطأ: الحساب غير صالح لمجمع العلوان.",
+        "admin.alrawan.net": "خطأ: الحساب غير صالح لمجمع الروان.",
         "admin.alfakhertowers.com":
-          "خطأ: الحساب غير صالح لمجمع الأبراج الأفضل.",
+          "خطأ: الحساب غير صالح لمجمع الأبراج الفاخر.",
         "admin.karambaghdad.com": "خطأ: الحساب غير صالح لمجمع كرم بغداد.",
         "admin.lamacc.com": "خطأ: الحساب غير صالح لمجمع لاماك.",
       };
@@ -261,20 +261,34 @@ const store = createStore({
           return;
         }
 
-        if (isValidCenter(currentPath, center_id._id)) {
+        // تأكد من وجود center_id قبل الوصول إلى _id
+        if (type === "super_admin") {
           commit("SET_AUTHENTICATED", true);
           saveUserData(response.data.results);
           redirectUser(type, pages);
-        } else {
+        } else if (
+          center_id &&
+          center_id._id &&
+          isValidCenter(currentPath, center_id._id)
+        ) {
+          commit("SET_AUTHENTICATED", true);
+          saveUserData(response.data.results);
+          redirectUser(type, pages);
+        } else if (center_id) {
+          // إذا كان center_id موجودًا ولكن غير صالح
           const errorMessage =
             errorMessages[currentPath] || "خطأ: الحساب غير صالح.";
           commit("SET_ERROR", errorMessage);
+        } else {
+          // حالة عدم وجود center_id
+          commit("SET_ERROR", "خطأ: لم يتم العثور على المركز.");
         }
       } catch (error) {
-        console.log(error);
-        const errorMessage =
-          error.response?.data?.results || "حدث خطأ أثناء تسجيل الدخول.";
-        commit("SET_ERROR", errorMessage);
+        commit(
+          "SET_ERROR",
+          "خطأ في تسجيل الدخول. يرجى التحقق من البريد الإلكتروني أو كلمة المرور."
+        );
+        console.error("Login error:", error);
       }
     },
     async getCenterP({ commit }) {
