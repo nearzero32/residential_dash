@@ -23,6 +23,9 @@
           <div v-else-if="url == 'admin.karambaghdad.com'">
             تسجيل الدخول الى مجمع كرم بغداد
           </div>
+          <div v-else-if="url == 'admin.lamacc.com'">
+            تسجيل الدخول الى مجمع لاماك
+          </div>
           <div v-else>تسجيل الدخول</div>
         </v-card-title>
         <hr />
