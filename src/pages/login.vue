@@ -138,9 +138,9 @@ export default {
         email: this.data.email,
         password: this.data.password,
       });
-      if (this.errorM !== null) {
+      if (this.errorM) {
         this.showDialogfunction(this.errorM, "#FF5252");
-        this.$store.state.errorM = null;
+        this.$store.commit("SET_ERROR", null); // إعادة تعيين الخطأ بعد العرض
       }
       this.loading = false;
     },
@@ -152,6 +152,7 @@ export default {
   },
 };
 </script>
+
 <route lang="yaml">
 meta:
   layout: blank
