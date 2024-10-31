@@ -237,7 +237,15 @@
               })
             }}
           </div>
-
+          <div v-else-if="header.type === 'total_price'">
+            {{ numberWithComma(item.selectable.total_price) }}
+          </div>
+          <div v-else-if="header.type === 'total_paid_price'">
+            {{ numberWithComma(item.selectable.total_paid_price) }}
+          </div>
+          <div v-else-if="header.type === 'total_un_paid_price'">
+            {{ numberWithComma(item.selectable.total_un_paid_price) }}
+          </div>
           <div v-else-if="header.key === 'buyer_info.customer_phone_two'">
             {{ item.selectable.buyer_info.customer_phone_two }}
           </div>
@@ -683,6 +691,15 @@
               <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
               ><br />
             </span>
+          </div>
+          <div v-else-if="header.type === 'total_price'" class="l">
+            {{ numberWithComma(item.selectable.total_price) }}
+          </div>
+          <div v-else-if="header.type === 'total_paid_price'" class="l">
+            {{ numberWithComma(item.selectable.total_paid_price) }}
+          </div>
+          <div v-else-if="header.type === 'total_un_paid_price'" class="l">
+            {{ numberWithComma(item.selectable.total_un_paid_price) }}
           </div>
           <div v-else-if="header.type === 'linkk'" class="l">
             <RouterLink

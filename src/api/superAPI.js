@@ -1,6 +1,14 @@
 import axiosInstance from "@/plugins/axios.js";
 
 class superAPI {
+  // Home
+  async getHome({ page, limit, search }) {
+    const response = await axiosInstance.get(
+      `/admin/mobile_bill_service?page=${page}&limit=${limit}&search=${search}`
+    );
+    return response;
+  }
+  // Home
   // Center
   async getCenter({ page, limit, search }) {
     const response = await axiosInstance.get(
