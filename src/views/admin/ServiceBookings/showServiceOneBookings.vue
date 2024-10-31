@@ -14,7 +14,7 @@
         <br />
         <p>{{ t("Owner's phone number") }} : {{ Data.phone }}</p>
         <br />
-        <p>{{ t("Address") }} : {{ Data.address }}</p>
+        <p>{{ t("Form Code") }} : {{ Data.form_code }}</p>
         <br />
         <p>{{ t("Service Name") }} : {{ Data.service ? Data.service.name : '' }}</p>
         <br />

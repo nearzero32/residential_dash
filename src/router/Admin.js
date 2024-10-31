@@ -532,4 +532,10 @@ export default [
     name: "admin-print-tenant",
     component: () => import("@/views/admin/Owners/PrintTenant.vue"),
   },
+  {
+    path: "/admin-print-service-bookings",
+    name: "admin-print-service-bookings",
+    component: () =>
+      import("@/views/admin/ServiceBookings/PrintServiceBookings.vue"),
+  },
 ];

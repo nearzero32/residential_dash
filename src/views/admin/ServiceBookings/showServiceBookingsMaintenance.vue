@@ -57,6 +57,7 @@
           @empConfirmIteme="ConfirmIteme"
           @empConsentIteme="RejectIteme"
           @empFinishIteme="FinishIteme"
+          @emitPrintItems="printItem"
         />
       </VCardText>
     </VCard>
@@ -307,7 +308,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["موافقه", "رفض", "انهاء"],
+        actions: ["موافقه", "رفض", "انهاء", "طباعة"],
         search: null,
         itemsPerPage: 5,
       },
@@ -700,6 +701,16 @@ export default {
       }
     },
     // RejectIteme
+
+    // printItem
+    printItem(item) {
+      localStorage.setItem("PrintServiceBookings", JSON.stringify(item));
+      let routeData = this.$router.resolve({
+        name: `admin-print-service-bookings`,
+      });
+      window.open(routeData.href, "_blank");
+    },
+    // printItem
 
     // message
     showDialogfunction(bodyText, color) {
