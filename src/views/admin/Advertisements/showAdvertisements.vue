@@ -521,12 +521,13 @@ export default {
           this.data.description = null;
           this.data.image = null;
         } catch (error) {
-          if (error.response && error.response.status === 401) {
+          if (error.response && error.response.message === 401) {
             this.$store.dispatch("submitLogout");
-          } else if (error.response && error.response.status === 500) {
+          } else if (error.response && error.response.message === 500) {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
           } else {
+            this.showDialogfunction(error.response.data.message, "#FF5252");
             this.addDialog.saveLoading = false;
           }
         } finally {
