@@ -488,6 +488,7 @@ export default {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
           } else {
+            this.showDialogfunction(error.response.data.message, "#FF5252");
             this.addDialog.saveLoading = false;
           }
         } finally {
