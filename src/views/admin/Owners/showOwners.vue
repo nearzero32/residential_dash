@@ -11,7 +11,7 @@
       <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
       <VCardText>
         <VRow style="justify-content: space-between">
-          <VCol cols="12" md="3" style="text-align: center">
+          <VCol cols="12" md="12" style="text-align: center">
             <VBtn
               style="margin-inline: 10px"
               tile
@@ -47,6 +47,18 @@
               item-title="text"
               item-value="value"
               v-model="is_house_received"
+              @update:modelValue="getCenter"
+            >
+            </VSelect>
+          </VCol>
+          <VCol cols="12" md="3" style="text-align: center">
+            <VSelect
+              density="compact"
+              :items="ownerIsDisabled"
+              :label="t('Select the owner’s status')"
+              item-title="text"
+              item-value="value"
+              v-model="IsDisabled"
               @update:modelValue="getCenter"
             >
             </VSelect>
@@ -1057,6 +1069,7 @@ export default {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
 
       is_house_received: null,
+      IsDisabled: false,
 
       tableOptions: {
         itemsPerPage: 10,
@@ -1287,6 +1300,13 @@ export default {
       ];
     },
 
+    ownerIsDisabled() {
+      return [
+        { text: this.t("Activatedd"), value: false },
+        { text: this.t("Deactivatedd"), value: true },
+      ];
+    },
+
     filteredHouses() {
       return this.Houses.filter((House) => House.status !== "تم البيع");
     },
@@ -1331,6 +1351,7 @@ export default {
           sortBy: sortByJSON,
           search: this.table.search,
           is_deleted: this.is_deleted,
+          is_disabled: this.IsDisabled,
           is_house_received: this.is_house_received,
         });
         this.table.Data = response.data.results.data;

@@ -284,6 +284,9 @@
   "Types of services": "Types of services",
   "Number of tenants": "Number of tenants",
   "Display": "Display",
+  "Activatedd": "Activated",
+  "Deactivatedd": "Deactivated",
+  "Select the owner’s status": "Select the owner’s status",
   "Are you sure about reselling the residential unit?": "Are you sure about reselling the residential unit?",
   "Logout": "Logout"
 }

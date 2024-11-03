@@ -1456,9 +1456,13 @@ export default {
 .button-like:focus {
   outline: none;
 }
-.v-table--density-default > .v-table__wrapper > table > tbody > tr > td,
-.v-table--density-default > .v-table__wrapper > table > thead > tr > td,
-.v-table--density-default > .v-table__wrapper > table > tfoot > tr > td {
-  block-size: 100% !important;
+@media (max-width: 768px) {
+  /* يمكنك تعديل العرض حسب الحاجة */
+  .v-table--density-default > .v-table__wrapper > table > tbody > tr > td,
+  .v-table--density-default > .v-table__wrapper > table > thead > tr > td,
+  .v-table--density-default > .v-table__wrapper > table > tfoot > tr > td {
+    block-size: 100% !important;
+    padding-block: 10px;
+  }
 }
 </style>

@@ -1206,10 +1206,11 @@ class adminApi {
     search,
     is_deleted,
     sortBy,
+    is_disabled,
     is_house_received,
   }) {
     const response = await axiosInstance.get(
-      `/owners?page=${page}&limit=${limit}&search=${search}&is_disabled=${is_deleted}&sortBy=${sortBy}&is_house_received=${is_house_received}`
+      `/owners?page=${page}&limit=${limit}&search=${search}&is_disabled=${is_deleted}&sortBy=${sortBy}&is_house_received=${is_house_received}&is_disabled=${is_disabled}`
     );
     return response;
   }
