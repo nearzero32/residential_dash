@@ -246,7 +246,7 @@ const store = createStore({
         const response = await login.login({
           email,
           password,
-          auth_phone_id: null,
+          auth_phone_id: "web",
           auth_firebase: token_firebase,
         });
 

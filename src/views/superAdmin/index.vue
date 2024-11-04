@@ -7,8 +7,108 @@
     ></BaseBreadcrumb>
     <br />
     <br />
+    <VRow class="mb-2" style="justify-content: center">
+      <VCol cols="12" sm="6" md="4" v-if="Statistics.is_paid">
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{ numberWithComma(Statistics.is_paid.total_price) }}
+              </h2>
+              <span>
+                <span v-if="Statistics.is_paid">الفواتير الكلية المسددة</span>
+                ( {{ numberWithComma(Statistics.is_paid.total) }} )</span
+              >
+            </div>
+
+            <VIcon size="30" color="primary" class="rounded-0">
+              mdi-cash-register
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+      <VCol cols="12" sm="6" md="4" v-if="Statistics.is_un_paid">
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{ numberWithComma(Statistics.is_un_paid.total_price) }}
+              </h2>
+              <span>
+                <span v-if="Statistics.is_un_paid.is_paid == false"
+                  >الفواتير الكلية الغير مسددة</span
+                >
+                ( {{ numberWithComma(Statistics.is_un_paid.total) }} )</span
+              >
+            </div>
+
+            <VIcon size="30" color="error" class="rounded-0">
+              mdi-cash-multiple
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+      <VCol
+        cols="12"
+        sm="6"
+        md="4"
+        v-if="Statistics.is_un_paid && Statistics.is_paid"
+      >
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{
+                  numberWithComma(
+                    Statistics.is_un_paid.total_price -
+                      Statistics.is_paid.total_price
+                  )
+                }}
+              </h2>
+              <span>
+                <span v-if="Statistics.is_un_paid && Statistics.is_paid"
+                  >الفواتير الكلية المتبقية</span
+                >
+                (
+                {{
+                  numberWithComma(
+                    Statistics.is_un_paid.total - Statistics.is_paid.total
+                  )
+                }}
+                )</span
+              >
+            </div>
+
+            <VIcon size="30" color="secondary" class="rounded-0">
+              mdi-cash
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+      <VCol cols="12" sm="6" md="3" v-if="Statistics.today">
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{ numberWithComma(Statistics.today.total_price) }}
+              </h2>
+              <span>
+                الفواتير الكلية اليوم (
+                {{ numberWithComma(Statistics.today.total) }} )</span
+              >
+            </div>
+
+            <VIcon size="30" color="primary" class="rounded-0">
+              mdi-cash-check
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+    </VRow>
     <VCard>
       <VCardTitle>
+        <h4 style="text-align: center">تقارير تطبيق الهاتف</h4>
+        <br />
         <VRow
           justify="space-between"
           style="align-items: center; margin-bottom: 15px"
@@ -65,6 +165,7 @@
 import { useI18n } from "vue-i18n";
 import Table from "@/components/table.vue";
 import superAPI from "@/api/superAPI.js";
+import numberWithComma from "@/constant/number";
 
 export default {
   components: {
@@ -106,6 +207,15 @@ export default {
       },
       dataSerch: [],
       // table
+
+      // Statistics
+      Statistics: {
+        loading: false,
+        today: {},
+        is_paid: {},
+        is_un_paid: {},
+      },
+      // Statistics
 
       // message
       dialogData: {
@@ -176,6 +286,9 @@ export default {
       ];
     },
   },
+  created() {
+    this.getMobileBillService();
+  },
   methods: {
     // Get Data
     async getCenter(newOptions) {
@@ -215,6 +328,29 @@ export default {
         this.table.loading = false;
       }
     },
+    async getMobileBillService() {
+      this.Statistics.loading = true;
+
+      const response = await superAPI.getMobileBillService();
+
+      if (response.status === 401) {
+        this.$store.dispatch("submitLogout");
+      } else if (response.status === 500) {
+        this.Statistics.loading = false;
+        this.showDialogfunction("حصلت مشكلة يرجى المحاولة مجددا", "#FF5252");
+      } else {
+        this.Statistics.loading = false;
+        this.Statistics.today = response.data.results.today;
+        this.Statistics.is_paid =
+          response.data.results.all[0].is_paid == true
+            ? response.data.results.all[0]
+            : response.data.results.all[1];
+        this.Statistics.is_un_paid =
+          response.data.results.all[0].is_paid == false
+            ? response.data.results.all[0]
+            : response.data.results.all[1];
+      }
+    },
     // Get Data
 
     // message
@@ -224,6 +360,8 @@ export default {
       this.dialogData.color = color;
     },
     // message
+
+    numberWithComma,
   },
 };
 </script>

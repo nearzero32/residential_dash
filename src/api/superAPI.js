@@ -8,6 +8,12 @@ class superAPI {
     );
     return response;
   }
+  async getMobileBillService() {
+    const response = await axiosInstance.get(
+      `/admin/mobile_bill_service/statistics`
+    );
+    return response;
+  }
   // Home
   // Center
   async getCenter({ page, limit, search }) {
