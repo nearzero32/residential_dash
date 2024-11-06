@@ -750,6 +750,15 @@ class adminApi {
   }
   // Services
 
+  // ResidentsRequests
+  async getResidentsRequests({ page, limit, search, sortBy }) {
+    const response = await axiosInstance.get(
+      `/owner_requests?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}`
+    );
+    return response;
+  }
+  // ResidentsRequests
+
   // BuyingOffers
   async getBuyingOffers({
     page,

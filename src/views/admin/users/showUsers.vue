@@ -538,6 +538,7 @@ export default {
         { text: this.t("Banks"), value: "bankAccounts" },
 
         { text: this.t("After-Sales Services"), value: "After-sales-service" },
+        { text: this.t("Residents' Requests"), value: "residents-requests" },
         { text: this.t("Maintenance Staff"), value: "maintenance-staff" },
         {
           text: this.t("Maintenance of Devices"),

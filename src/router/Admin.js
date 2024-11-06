@@ -83,6 +83,15 @@ export default [
       },
       // Queries
 
+      // ResidentsRequests
+      {
+        path: "/admin-show-residents-requests",
+        name: "admin-show-residents-requests",
+        component: () =>
+          import("@/views/admin/ResidentsRequests/shoeResidentsRequests.vue"),
+      },
+      // ResidentsRequests
+
       // CustomerAttendanceForm
       {
         path: "/admin-show-customer-attendance-form",

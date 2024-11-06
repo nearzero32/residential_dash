@@ -123,6 +123,7 @@ const store = createStore({
           bankAccounts: "/admin-show-banks",
           "After-sales-service": "/admin-show-maintenance-staff",
           "maintenance-staff": "/admin-show-maintenance-staff",
+          "residents-requests": "/admin-show-residents-requests",
           "maintenance-of-devices": "/admin-show-maintenance-of-devices",
           "service-room-names": "/admin-show-service-room-names",
           "reservation-service": "/admin-show-service-bookings-shipping",
@@ -172,6 +173,11 @@ const store = createStore({
           pages[1] === "maintenance-staff"
         ) {
           return "/admin-show-maintenance-staff";
+        } else if (
+          pages[0] === "After-sales-service" &&
+          pages[1] === "residents-requests"
+        ) {
+          return "/admin-show-residents-requests";
         } else if (
           pages[0] === "After-sales-service" &&
           pages[1] === "maintenance-of-devices"

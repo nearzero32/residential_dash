@@ -224,6 +224,12 @@ export default [
     icon: { icon: "mdi-cogs" },
     children: [
       {
+        title: "Residents' Requests",
+        type: ["admin", "investor", "resident_manager", "assistance"],
+        name: "residents-requests",
+        to: "admin-show-residents-requests",
+      },
+      {
         title: "Maintenance Staff",
         type: ["admin", "investor", "resident_manager", "assistance"],
         name: "maintenance-staff",
