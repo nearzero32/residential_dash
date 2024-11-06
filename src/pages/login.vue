@@ -29,6 +29,9 @@
           <div v-else-if="url == 'admin.alwedd.net'">
             تسجيل الدخول الى مجمع الود
           </div>
+          <div v-else-if="url == 'admin.aljanain.com'">
+            تسجيل الدخول الى مجمع الجنائن
+          </div>
           <div v-else>تسجيل الدخول</div>
         </v-card-title>
         <hr />
