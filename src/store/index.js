@@ -285,12 +285,10 @@ const store = createStore({
           saveUserData(response.data.results);
           redirectUser(type, pages);
         } else if (center_id) {
-          // إذا كان center_id موجودًا ولكن غير صالح
           const errorMessage =
             errorMessages[currentPath] || "خطأ: الحساب غير صالح.";
           commit("SET_ERROR", errorMessage);
         } else {
-          // حالة عدم وجود center_id
           commit("SET_ERROR", "خطأ: لم يتم العثور على المركز.");
         }
       } catch (error) {
