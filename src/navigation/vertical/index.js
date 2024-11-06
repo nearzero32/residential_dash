@@ -131,7 +131,7 @@ export default [
   {
     title: "Sales",
     name: "sales",
-    type: ["admin", "investor", "resident_manager", "assistance"],
+    type: ["admin", "investor", "assistance"],
     building_type: "منازل وشقق",
     icon: { icon: "mdi-sale" },
     children: [
@@ -359,7 +359,7 @@ export default [
     title: "How did you hear about u",
     name: "how_u_hear_about_us",
     to: { name: "admin-show-how-did-you-hear-about-us" },
-    type: ["admin", "investor", "resident_manager", "assistance"],
+    type: ["admin", "investor", "assistance"],
     building_type: "منازل وشقق",
     icon: { icon: "mdi-help-circle" },
   },
