@@ -406,22 +406,22 @@ export default {
           key: "service.price",
         },
         {
-          title: this.t("Completion has been achieved"),
-          type: "strong",
-          link: ``,
-          key: "current_status",
-        },
-        {
           title: this.t("Refusal"),
           type: "current_status",
           link: ``,
           key: "current_status.type",
         },
         {
-          title: this.t("The type"),
+          title: this.t("Accept"),
+          type: "Accept",
+          link: ``,
+          key: "Accept",
+        },
+        {
+          title: this.t("Completion has been achieved"),
           type: "strong",
           link: ``,
-          key: "service.type",
+          key: "current_status",
         },
         {
           title: this.t("Form Code"),

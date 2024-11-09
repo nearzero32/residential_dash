@@ -83,6 +83,13 @@
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
+          <div v-else-if="header.type === 'Accept'">
+            <span v-if="item.selectable.current_status.type == 'تم الموافقة'">
+              <v-icon color="#1976d2" size="40px">mdi-check-decagram</v-icon
+              ><br />
+              <span> {{ item.selectable.current_status.createdAt }} </span>
+            </span>
+          </div>
           <div v-else-if="header.type === 'telegram_chat_id'">
             <span
               v-if="
@@ -679,6 +686,13 @@
             </span>
             <span v-else-if="item.selectable.type == 'investor'">
               <span> مستثمر </span>
+            </span>
+          </div>
+          <div v-else-if="header.type === 'Accept'" class="l">
+            <span v-if="item.selectable.current_status.type == 'تم الموافقة'">
+              <v-icon color="#1976d2" size="40px">mdi-check-decagram</v-icon
+              ><br />
+              <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
           <div v-else-if="header.type === 'telegram_chat_id'" class="l">
