@@ -113,6 +113,13 @@
                     outlined
                   />
                 </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="mobile_bill_price"
+                    label="مبلغ استراك تطبيق الموبايل"
+                    outlined
+                  />
+                </VCol>
                 <v-col cols="12" md="6" style="margin-block: 10px">
                   <v-autocomplete
                     v-model="data.is_dollar"
@@ -224,6 +231,13 @@
                   <VTextField
                     v-model="dialogEdit.editedItem.telegram_chat_id"
                     label="معرف كروب التلكرام"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="mobile_bill_priceEdit"
+                    label="مبلغ استراك تطبيق الموبايل"
                     outlined
                   />
                 </VCol>
@@ -387,6 +401,7 @@ export default {
         qr: null,
         is_dollar: null,
         telegram_chat_id: null,
+        mobile_bill_price: null,
         name: "",
         building_type: "",
         phone: "",
@@ -464,6 +479,12 @@ export default {
           key: "telegram_chat_id",
         },
         {
+          title: "مبلغ تطبيق الموبايل",
+          type: "mobile_bill_price",
+          link: ``,
+          key: "mobile_bill_price",
+        },
+        {
           title: this.t("Building type"),
           type: "strong",
           link: ``,
@@ -477,6 +498,34 @@ export default {
           link: "",
         },
       ];
+    },
+    mobile_bill_price: {
+      get() {
+        if (this.data.mobile_bill_price === null) {
+          return "";
+        }
+        return this.data.mobile_bill_price
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      set(value) {
+        const numValue = value.replace(/,/g, "");
+        this.data.mobile_bill_price = numValue;
+      },
+    },
+    mobile_bill_priceEdit: {
+      get() {
+        if (this.dialogEdit.editedItem.mobile_bill_price === null) {
+          return "";
+        }
+        return this.dialogEdit.editedItem.mobile_bill_price
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      set(value) {
+        const numValue = value.replace(/,/g, "");
+        this.dialogEdit.editedItem.mobile_bill_price = numValue;
+      },
     },
   },
   methods: {
@@ -546,6 +595,7 @@ export default {
             qr: this.data.qr,
             is_dollar: this.data.is_dollar,
             telegram_chat_id: this.data.telegram_chat_id,
+            mobile_bill_price: this.data.mobile_bill_price,
           });
 
           this.addDialog.saveLoading = false;
@@ -556,6 +606,7 @@ export default {
           this.data.qr = null;
           this.data.is_dollar = null;
           this.data.telegram_chat_id = null;
+          this.data.mobile_bill_price = null;
           await this.getCenter();
           this.addDialog.open = false;
           this.showDialogfunction(response.data.message, "primary");
@@ -609,6 +660,7 @@ export default {
             qr: this.dialogEdit.editedItem.qr,
             is_dollar: this.dialogEdit.editedItem.is_dollar,
             telegram_chat_id: this.dialogEdit.editedItem.telegram_chat_id,
+            mobile_bill_price: this.dialogEdit.editedItem.mobile_bill_price,
           });
 
           this.dialogEdit.open = false;

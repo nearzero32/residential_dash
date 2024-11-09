@@ -30,6 +30,7 @@ class superAPI {
     qr,
     is_dollar,
     telegram_chat_id,
+    mobile_bill_price,
   }) {
     const requestData = {
       name,
@@ -39,6 +40,7 @@ class superAPI {
       qr,
       is_dollar,
       telegram_chat_id,
+      mobile_bill_price,
     };
     const response = await axiosInstance.post(`/admin/centers`, requestData);
     return response;
@@ -52,6 +54,7 @@ class superAPI {
     qr,
     is_dollar,
     telegram_chat_id,
+    mobile_bill_price,
   }) {
     const requestData = {
       center_id,
@@ -62,6 +65,7 @@ class superAPI {
       qr,
       is_dollar,
       telegram_chat_id,
+      mobile_bill_price,
     };
     const response = await axiosInstance.put(`/admin/centers`, requestData);
     return response;

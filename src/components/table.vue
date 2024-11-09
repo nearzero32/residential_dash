@@ -247,6 +247,9 @@
           <div v-else-if="header.type === 'total_price'">
             {{ numberWithComma(item.selectable.total_price) }}
           </div>
+          <div v-else-if="header.type === 'mobile_bill_price'">
+            {{ numberWithComma(item.selectable.mobile_bill_price) }}
+          </div>
           <div v-else-if="header.type === 'total_paid_price'">
             {{ numberWithComma(item.selectable.total_paid_price) }}
           </div>
@@ -708,6 +711,9 @@
           </div>
           <div v-else-if="header.type === 'total_price'" class="l">
             {{ numberWithComma(item.selectable.total_price) }}
+          </div>
+          <div v-else-if="header.type === 'mobile_bill_price'" class="l">
+            {{ numberWithComma(item.selectable.mobile_bill_price) }}
           </div>
           <div v-else-if="header.type === 'total_paid_price'" class="l">
             {{ numberWithComma(item.selectable.total_paid_price) }}
