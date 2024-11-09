@@ -5,7 +5,7 @@
         cols="12"
         sm="6"
         md="3"
-        v-if="Statistics.is_paid && Statistics.is_paid"
+        v-if="Statistics.is_paid && Statistics.is_paid.total_price"
       >
         <VCard :loading="Statistics.loading">
           <VCardText class="d-flex align-center justify-space-between pa-4">
@@ -29,7 +29,7 @@
         cols="12"
         sm="6"
         md="3"
-        v-if="Statistics.is_un_paid && Statistics.is_un_paid"
+        v-if="Statistics.is_un_paid && Statistics.is_un_paid.total_price"
       >
         <VCard :loading="Statistics.loading">
           <VCardText class="d-flex align-center justify-space-between pa-4">
@@ -538,14 +538,39 @@ export default {
         this.showDialogfunction("حصلت مشكلة يرجى المحاولة مجددا", "#FF5252");
       } else {
         this.Statistics.loading = false;
-        this.Statistics.is_paid =
-          response.data.results[0].is_paid == true
-            ? response.data.results[0]
-            : response.data.results[1];
-        this.Statistics.is_un_paid =
-          response.data.results[0].is_paid == false
-            ? response.data.results[0]
-            : response.data.results[1];
+
+        // تحقق من وجود عناصر داخل response.data.results
+        const results = response.data.results;
+        if (results && results.length > 0) {
+          this.Statistics.is_paid =
+            results[0].is_paid === true
+              ? results[0]
+              : results[1] || {
+                  total: 0,
+                  total_price: 0,
+                  is_paid: true,
+                };
+          this.Statistics.is_un_paid =
+            results[0].is_paid === false
+              ? results[0]
+              : results[1] || {
+                  total: 0,
+                  total_price: 0,
+                  is_paid: false,
+                };
+        } else {
+          // تعيين القيم الافتراضية في حال كانت النتائج فارغة
+          this.Statistics.is_paid = {
+            total: 0,
+            total_price: 0,
+            is_paid: true,
+          };
+          this.Statistics.is_un_paid = {
+            total: 0,
+            total_price: 0,
+            is_paid: false,
+          };
+        }
       }
     },
     async getMonthlyUtilityBillsStatisticsToday() {
