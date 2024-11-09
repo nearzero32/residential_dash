@@ -138,6 +138,7 @@
           :headers="headers"
           @update:options="getCenter"
           @editItems="editItem"
+          @emitGoToPage="GoToPage"
         />
       </VCardText>
     </VCard>
@@ -237,8 +238,8 @@ export default {
         },
         {
           title: this.t("Name of the complex"),
-          type: "strong",
-          link: ``,
+          type: "link",
+          link: `/super-admin-application-service-bills`,
           key: "name",
         },
         {
@@ -353,6 +354,9 @@ export default {
     },
     // Get Data
 
+    GoToPage(item) {
+      this.$router.push("/super-admin-application-service-bills");
+    },
     // message
     showDialogfunction(bodyText, color) {
       this.dialogData.open = true;

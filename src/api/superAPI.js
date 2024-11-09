@@ -15,6 +15,39 @@ class superAPI {
     return response;
   }
   // Home
+
+  // Home
+  async getApplicationServiceBills({ center_id, page, limit, search }) {
+    const response = await axiosInstance.get(
+      `/admin/mobile_bill_service/center_id/${center_id}?page=${page}&limit=${limit}&search=${search}`
+    );
+    return response;
+  }
+  async getApplicationServiceBillsStatistics(center_id) {
+    const response = await axiosInstance.get(
+      `/admin/mobile_bill_service/center_id/${center_id}/statistics`
+    );
+    return response;
+  }
+  async getApplicationServiceBillsStatisticsToday(center_id) {
+    const response = await axiosInstance.get(
+      `/admin/mobile_bill_service/center_id/${center_id}/statistics/today`
+    );
+    return response;
+  }
+  async getApplicationServiceBillsAll({
+    search,
+    is_paid,
+    start_date,
+    end_date,
+  }) {
+    const response = await axiosInstance.get(
+      `/counting/mobile_bill_service/all?search=${search}&is_paid=${is_paid}&start_date=${start_date}&end_date=${end_date}`
+    );
+    return response;
+  }
+  // Home
+
   // Center
   async getCenter({ page, limit, search }) {
     const response = await axiosInstance.get(

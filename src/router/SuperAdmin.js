@@ -9,6 +9,14 @@ export default [
         component: () => import("@/views/superAdmin/index.vue"),
       },
       {
+        path: "/super-admin-application-service-bills",
+        name: "super-admin-application-service-bills",
+        component: () =>
+          import(
+            "@/views/superAdmin/ApplicationServiceBills/showApplicationServiceBills.vue"
+          ),
+      },
+      {
         path: "/super-admin-show-complexes",
         name: "super-admin-show-complexes",
         component: () =>
