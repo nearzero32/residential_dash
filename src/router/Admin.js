@@ -547,4 +547,10 @@ export default [
     component: () =>
       import("@/views/admin/ServiceBookings/PrintServiceBookings.vue"),
   },
+  {
+    path: "/admin-print-residents-requests",
+    name: "admin-print-residents-requests",
+    component: () =>
+      import("@/views/admin/ResidentsRequests/PrintResidentsRequests.vue"),
+  },
 ];

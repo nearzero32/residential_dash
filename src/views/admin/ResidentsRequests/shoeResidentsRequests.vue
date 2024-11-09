@@ -36,6 +36,7 @@
           :content_url="content_url"
           :tableOptions="tableOptions"
           :headers="headers"
+          @emitPrintItems="printItem"
           @update:options="getCenter"
         />
       </VCardText>
@@ -106,7 +107,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: [],
+        actions: ["طباعة"],
         search: null,
         itemsPerPage: 5,
       },
@@ -162,6 +163,13 @@ export default {
           type: "strong",
           link: ``,
           key: "note",
+        },
+        {
+          title: this.t("Operations"),
+          key: "actions",
+          sortable: false,
+          type: "strong",
+          link: "",
         },
       ];
     },
@@ -221,6 +229,16 @@ export default {
       }
     },
     // Get Data
+
+    // printItem
+    printItem(item) {
+      localStorage.setItem("printResidentsRequests", JSON.stringify(item));
+      let routeData = this.$router.resolve({
+        name: `admin-print-residents-requests`,
+      });
+      window.open(routeData.href, "_blank");
+    },
+    // printItem
 
     // message
     showDialogfunction(bodyText, color) {
