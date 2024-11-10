@@ -540,6 +540,7 @@ export default {
         { text: this.t("After-Sales Services"), value: "After-sales-service" },
         { text: this.t("Residents' Requests"), value: "residents-requests" },
         { text: this.t("Maintenance Staff"), value: "maintenance-staff" },
+        { text: this.t("Other services"), value: "reservation-service-other" },
         {
           text: this.t("Maintenance of Devices"),
           value: "maintenance-of-devices",

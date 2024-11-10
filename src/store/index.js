@@ -204,6 +204,11 @@ const store = createStore({
           return "/admin-show-service-bookings-maintenance";
         } else if (
           pages[0] === "After-sales-service" &&
+          pages[1] === "reservation-service-other"
+        ) {
+          return "/admin-show-reservation-service-other";
+        } else if (
+          pages[0] === "After-sales-service" &&
           pages[1] === "Services" &&
           pages[2] === "show-services"
         ) {

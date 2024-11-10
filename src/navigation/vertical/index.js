@@ -235,18 +235,18 @@ export default [
         name: "maintenance-staff",
         to: "admin-show-maintenance-staff",
       },
-      {
-        title: "Maintenance of Devices",
-        type: ["admin", "investor", "resident_manager", "assistance"],
-        name: "maintenance-of-devices",
-        to: "admin-show-maintenance-of-devices",
-      },
-      {
-        title: "Service Room Names",
-        type: ["admin", "investor", "resident_manager", "assistance"],
-        name: "service-room-names",
-        to: "admin-show-service-room-names",
-      },
+      // {
+      //   title: "Maintenance of Devices",
+      //   type: ["admin", "investor", "resident_manager", "assistance"],
+      //   name: "maintenance-of-devices",
+      //   to: "admin-show-maintenance-of-devices",
+      // },
+      // {
+      //   title: "Service Room Names",
+      //   type: ["admin", "investor", "resident_manager", "assistance"],
+      //   name: "service-room-names",
+      //   to: "admin-show-service-room-names",
+      // },
       {
         title: "Service Bookings",
         name: "reservation-service",
@@ -264,6 +264,12 @@ export default [
             type: ["admin", "investor", "resident_manager", "assistance"],
             name: "service-bookings-maintenance",
             to: "admin-show-service-bookings-maintenance",
+          },
+          {
+            title: "Other services",
+            type: ["admin", "investor", "resident_manager", "assistance"],
+            name: "reservation-service-other",
+            to: "admin-show-reservation-service-other",
           },
         ],
       },

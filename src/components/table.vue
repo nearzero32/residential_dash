@@ -90,6 +90,17 @@
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
+          <div v-else-if="header.type === 'Room names'">
+            <span v-if="item.selectable.rooms.length == 0">لا يوجد</span>
+            <details v-else>
+              <summary class="button-like">عرض</summary>
+              <ul>
+                <li v-for="(it, index) in item.selectable.rooms" :key="index">
+                  {{ it }}
+                </li>
+              </ul>
+            </details>
+          </div>
           <div v-else-if="header.type === 'telegram_chat_id'">
             <span
               v-if="
@@ -407,7 +418,11 @@
             <VTooltip
               bottom
               v-if="
-                table.actions.includes('حذف') && userData.includes('remove')
+                table.actions.includes('حذف') &&
+                userData.includes('remove') &&
+                item.selectable &&
+                (item.selectable.is_deletable === true ||
+                  !item.selectable.hasOwnProperty('is_deletable'))
               "
             >
               <template v-slot:activator="{ props }">
@@ -708,6 +723,17 @@
               <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
               ><br />
             </span>
+          </div>
+          <div v-else-if="header.type === 'Room names'" class="l">
+            <span v-if="item.selectable.rooms.length == 0">لا يوجد</span>
+            <details v-else>
+              <summary class="button-like">عرض</summary>
+              <ul>
+                <li v-for="(it, index) in item.selectable.rooms" :key="index">
+                  {{ it }}
+                </li>
+              </ul>
+            </details>
           </div>
           <div v-else-if="header.type === 'total_price'" class="l">
             {{ numberWithComma(item.selectable.total_price) }}
@@ -1055,7 +1081,10 @@
             <VTooltip
               bottom
               v-if="
-                table.actions.includes('حذف') && userData.includes('remove')
+                table.actions.includes('حذف') &&
+                userData.includes('remove') &&
+                item.selectable &&
+                item.selectable.is_deletable === true
               "
             >
               <template v-slot:activator="{ props }">
@@ -1484,5 +1513,12 @@ export default {
     block-size: 100% !important;
     padding-block: 10px;
   }
+}
+.button-like {
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 </style>

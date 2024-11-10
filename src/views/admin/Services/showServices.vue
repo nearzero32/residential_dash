@@ -135,16 +135,6 @@
                     item-value="value"
                   ></VAutocomplete>
                 </VCol>
-                <VCol cols="12" md="4">
-                  <VAutocomplete
-                    v-model="data.type"
-                    :rules="Rules.type"
-                    :label="t('Type of Service')"
-                    :items="itemsType_of_Service"
-                    item-title="text"
-                    item-value="value"
-                  ></VAutocomplete>
-                </VCol>
                 <VCol cols="12" md="12">
                   <VRow>
                     <VCol cols="12" md="6">
@@ -597,7 +587,7 @@ export default {
             price: this.data.price,
             image: this.data.image,
             is_available: this.data.is_available,
-            type: this.data.type,
+            type: "شحن",
           });
 
           this.addDialog.saveLoading = false;
@@ -608,7 +598,6 @@ export default {
           this.data.name = null;
           this.data.price = null;
           this.data.is_available = null;
-          this.data.type = null;
           this.data.image = null;
         } catch (error) {
           if (error.response && error.response.status === 401) {
@@ -663,7 +652,7 @@ export default {
             name: this.dialogEdit.editedItem.name,
             price: this.dialogEdit.editedItem.price,
             is_available: this.dialogEdit.editedItem.is_available,
-            type: this.dialogEdit.editedItem.type,
+            type: "شحن",
             image: this.dialogEdit.editedItem.image,
           });
 

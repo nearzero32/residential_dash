@@ -105,6 +105,60 @@
         </VCard>
       </VCol>
     </VRow>
+    <VRow class="mb-2" style="justify-content: center">
+      <VCol cols="12" sm="6" md="3" v-if="Statistics.house_number">
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{ numberWithComma(Statistics.house_number) }}
+              </h2>
+              <span>العدد الكلي للوحدات السكنية</span>
+            </div>
+
+            <VIcon size="30" color="primary" class="rounded-0">
+              mdi-home-group
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+      <VCol cols="12" sm="6" md="3" v-if="Statistics.sold_house_number">
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{ numberWithComma(Statistics.sold_house_number) }}
+              </h2>
+              <span>عدد الوحدات السكنية المبيوعه</span>
+            </div>
+
+            <VIcon size="30" color="#7eae76" class="rounded-0">
+              mdi-home-group-plus
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+      <VCol cols="12" sm="6" md="3" v-if="Statistics.sold_house_number">
+        <VCard :loading="Statistics.loading">
+          <VCardText class="d-flex align-center justify-space-between pa-4">
+            <div>
+              <h2 class="font-weight-semibold mb-1">
+                {{
+                  numberWithComma(
+                    Statistics.house_number - Statistics.sold_house_number
+                  )
+                }}
+              </h2>
+              <span>عدد الوحدات السكنية الغير المبيوعه</span>
+            </div>
+
+            <VIcon size="30" color="#ed4141" class="rounded-0">
+              mdi-home-group-remove
+            </VIcon>
+          </VCardText>
+        </VCard>
+      </VCol>
+    </VRow>
     <VCard>
       <VCardTitle>
         <h4 style="text-align: center">تقارير تطبيق الهاتف</h4>
@@ -249,6 +303,12 @@ export default {
           key: "owner_number",
         },
         {
+          title: "عدد الوحدات السكنية",
+          type: "strong",
+          link: ``,
+          key: "house_number",
+        },
+        {
           title: this.t("Number of tenants"),
           type: "strong",
           link: ``,
@@ -350,6 +410,9 @@ export default {
           response.data.results.all[0].is_paid == false
             ? response.data.results.all[0]
             : response.data.results.all[1];
+        this.Statistics.sold_house_number =
+          response.data.results.sold_house_number;
+        this.Statistics.house_number = response.data.results.house_number;
       }
     },
     // Get Data

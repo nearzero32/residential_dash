@@ -109,7 +109,7 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="data.name"
                     :rules="Rules.name"
@@ -117,7 +117,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="data.price"
                     :rules="Rules.price"
@@ -125,7 +125,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VAutocomplete
                     v-model="data.is_available"
                     :rules="Rules.is_available"
@@ -135,14 +135,15 @@
                     item-value="value"
                   ></VAutocomplete>
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VAutocomplete
-                    v-model="data.type"
-                    :rules="Rules.type"
-                    :label="t('Type of Service')"
-                    :items="itemsType_of_Service"
-                    item-title="text"
-                    item-value="value"
+                    v-model="data.rooms"
+                    :rules="Rules.rooms"
+                    :label="t('Room names')"
+                    :items="itemsRooms"
+                    item-title="name"
+                    item-value="name"
+                    multiple
                   ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="12">
@@ -206,7 +207,7 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="dialogEdit.editedItem.name"
                     :rules="Rules.name"
@@ -214,7 +215,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="dialogEdit.editedItem.price"
                     :rules="Rules.price"
@@ -222,7 +223,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VAutocomplete
                     v-model="dialogEdit.editedItem.is_available"
                     :rules="Rules.is_available"
@@ -232,14 +233,15 @@
                     item-value="value"
                   ></VAutocomplete>
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VAutocomplete
-                    v-model="dialogEdit.editedItem.type"
-                    :rules="Rules.type"
-                    :label="t('Type of Service')"
-                    :items="itemsType_of_Service"
-                    item-title="text"
-                    item-value="value"
+                    v-model="dialogEdit.editedItem.rooms"
+                    :rules="Rules.rooms"
+                    :label="t('Room names')"
+                    :items="itemsRooms"
+                    item-title="name"
+                    item-value="name"
+                    multiple
                   ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="12">
@@ -408,7 +410,9 @@ export default {
         image: null,
         is_available: null,
         type: null,
+        rooms: [],
       },
+      itemsRooms: [],
       // add
 
       // dialogEdit
@@ -439,6 +443,7 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
+    this.getRooms();
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
     } else {
@@ -449,6 +454,7 @@ export default {
     Rules() {
       return {
         name: [(value) => !!value || this.t("This field is required")],
+        rooms: [(value) => !!value || this.t("This field is required")],
         price: [(value) => !!value || this.t("This field is required")],
         is_available: [
           (value) => value !== null || this.t("This field is required"),
@@ -490,10 +496,10 @@ export default {
           key: "image",
         },
         {
-          title: this.t("The type"),
-          type: "strong",
+          title: this.t("Room names"),
+          type: "Room names",
           link: ``,
-          key: "type",
+          key: "rooms",
         },
         {
           title: this.t("Operations"),
@@ -572,6 +578,22 @@ export default {
         this.table.loading = false;
       }
     },
+    async getRooms() {
+      try {
+        const response = await adminApi.getRooms();
+        this.itemsRooms = response.data.results;
+        this.table.loading = false;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     // Get Data
 
     // Add Data
@@ -597,7 +619,8 @@ export default {
             price: this.data.price,
             image: this.data.image,
             is_available: this.data.is_available,
-            type: this.data.type,
+            type: "صيانة",
+            rooms: this.data.rooms,
           });
 
           this.addDialog.saveLoading = false;
@@ -608,7 +631,7 @@ export default {
           this.data.name = null;
           this.data.price = null;
           this.data.is_available = null;
-          this.data.type = null;
+          this.data.rooms = null;
           this.data.image = null;
         } catch (error) {
           if (error.response && error.response.status === 401) {
@@ -663,7 +686,8 @@ export default {
             name: this.dialogEdit.editedItem.name,
             price: this.dialogEdit.editedItem.price,
             is_available: this.dialogEdit.editedItem.is_available,
-            type: this.dialogEdit.editedItem.type,
+            type: "صيانة",
+            rooms: this.dialogEdit.editedItem.rooms,
             image: this.dialogEdit.editedItem.image,
           });
 

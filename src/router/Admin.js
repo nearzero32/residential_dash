@@ -266,6 +266,15 @@ export default [
       },
       // ResidentialUnits
 
+      // ServiceBookings
+      {
+        path: "/admin-show-reservation-service-other",
+        name: "admin-show-reservation-service-other",
+        component: () =>
+          import("@/views/admin/ServiceBookings/ReservationServiceOther.vue"),
+      },
+      // ServiceBookings
+
       // Guards
       {
         path: "/admin-show-guards",

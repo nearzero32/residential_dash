@@ -627,6 +627,19 @@ class adminApi {
     );
     return response;
   }
+  async getReservationsServiceOther({
+    page,
+    limit,
+    search,
+    is_deleted,
+    sortBy,
+    type,
+  }) {
+    const response = await axiosInstance.get(
+      `/reservations/service/other?page=${page}&limit=${limit}&search=${search}&is_deleted=${is_deleted}&type=${type}&sortBy=${sortBy}`
+    );
+    return response;
+  }
   async removeReservationsService(id) {
     const response = await axiosInstance.delete(
       `/reservations/service/reserve_id/${id}`
@@ -721,18 +734,31 @@ class adminApi {
     );
     return response;
   }
-  async addServices({ name, price, is_available, type, image }) {
+  async getRooms() {
+    const response = await axiosInstance.get(`/houses_room_names`);
+    return response;
+  }
+  async addServices({ name, price, is_available, type, image, rooms }) {
     const requestData = {
       name,
       price,
       is_available,
       type,
       image,
+      rooms,
     };
     const response = await axiosInstance.post(`/services`, requestData);
     return response;
   }
-  async editServices({ service_id, name, price, is_available, type, image }) {
+  async editServices({
+    service_id,
+    name,
+    price,
+    is_available,
+    type,
+    image,
+    rooms,
+  }) {
     const requestData = {
       service_id,
       name,
@@ -740,6 +766,7 @@ class adminApi {
       is_available,
       type,
       image,
+      rooms,
     };
     const response = await axiosInstance.put(`/services`, requestData);
     return response;
