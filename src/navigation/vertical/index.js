@@ -241,12 +241,12 @@ export default [
       //   name: "maintenance-of-devices",
       //   to: "admin-show-maintenance-of-devices",
       // },
-      // {
-      //   title: "Service Room Names",
-      //   type: ["admin", "investor", "resident_manager", "assistance"],
-      //   name: "service-room-names",
-      //   to: "admin-show-service-room-names",
-      // },
+      {
+        title: "Service Room Names",
+        type: ["admin", "investor", "resident_manager", "assistance"],
+        name: "service-room-names",
+        to: "admin-show-service-room-names",
+      },
       {
         title: "Service Bookings",
         name: "reservation-service",
