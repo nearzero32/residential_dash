@@ -580,7 +580,7 @@ export default {
     },
     async getRooms() {
       try {
-        const response = await adminApi.getRooms();
+        const response = await adminApi.getRoomsall();
         this.itemsRooms = response.data.results;
         this.table.loading = false;
       } catch (error) {

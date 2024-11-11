@@ -738,6 +738,12 @@ class adminApi {
     const response = await axiosInstance.get(`/houses_room_names`);
     return response;
   }
+  async getRoomsall() {
+    const response = await axiosInstance.get(
+      `/reservations/service/room_names/all`
+    );
+    return response;
+  }
   async addServices({ name, price, is_available, type, image, rooms }) {
     const requestData = {
       name,
