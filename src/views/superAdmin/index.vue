@@ -350,6 +350,12 @@ export default {
           link: ``,
           key: "total_un_paid_price",
         },
+        {
+          title: "عدد المنازل المستلمه",
+          type: "strong",
+          link: ``,
+          key: "house_received_number",
+        },
       ];
     },
   },
