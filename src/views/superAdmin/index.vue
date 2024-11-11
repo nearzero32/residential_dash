@@ -298,7 +298,7 @@ export default {
         },
         {
           title: "سعر الاشتراك ",
-          type: "strong",
+          type: "mobile_bill_price",
           link: ``,
           key: "mobile_bill_price",
         },
