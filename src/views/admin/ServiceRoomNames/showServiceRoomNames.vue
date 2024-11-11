@@ -338,12 +338,22 @@ export default {
             : "asc"
           : "desc";
 
+      let { page, itemsPerPage } = this.tableOptions;
+
+      if (!page) {
+        page = 1;
+      }
+      if (!itemsPerPage) {
+        itemsPerPage = 10;
+      }
       const sortByJSON = JSON.stringify({ key, order });
 
       this.table.loading = true;
 
       try {
         const response = await adminApi.getServiceRoomNames({
+          page,
+          limit: itemsPerPage,
           search: this.table.search,
           sortBy: sortByJSON,
         });

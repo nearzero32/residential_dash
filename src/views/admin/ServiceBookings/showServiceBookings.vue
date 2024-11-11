@@ -91,37 +91,13 @@
 
     <!-- Delete Dialog -->
     <VDialog v-model="dialogConfirmIteme.open" max-width="1000px">
-      <VCard style="height: 700px">
+      <VCard>
         <VCardTitle class="headline justify-center">
           الموافقة على الطلب
         </VCardTitle>
         <VCardText>
           <VForm ref="form">
             <VRow>
-              <VCol cols="12" md="12">
-                <VSelect
-                  v-model="employee_id"
-                  :items="Employees"
-                  :rules="Rules.required"
-                  item-title="name"
-                  item-value="_id"
-                  label="موظف الصيانة"
-                />
-              </VCol>
-              <VCol cols="12" md="12">
-                <VueDatePicker
-                  :format="format"
-                  :rules="Rules.required"
-                  v-model="date_to_work"
-                  :type="datetime"
-                  density="compact"
-                  label="تاريخ ووقت العمل"
-                  outlined
-                  required
-                  dense
-                  :is24hr="false"
-                ></VueDatePicker>
-              </VCol>
               <VCol cols="12" md="12">
                 <VTextarea
                   rows="5"
@@ -583,8 +559,8 @@ export default {
         try {
           const response = await adminApi.acceptService({
             id: this.dialogConfirmIteme.deletedItem._id,
-            employee_id: this.employee_id,
-            date_to_work: this.isoDatee,
+            employee_id: null,
+            date_to_work: null,
             note: this.note,
           });
           this.dialogConfirmIteme.loading = false;

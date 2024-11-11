@@ -483,9 +483,9 @@ class adminApi {
   // bankAccounts
 
   // ServiceRoomNames
-  async getServiceRoomNames({ search, sortBy }) {
+  async getServiceRoomNames({ search, sortBy, page, limit }) {
     const response = await axiosInstance.get(
-      `reservations/service/room_names?search=${search}&sortBy=${sortBy}`
+      `reservations/service/room_names?search=${search}&sortBy=${sortBy}&page=${page}&limit=${limit}`
     );
     return response;
   }
