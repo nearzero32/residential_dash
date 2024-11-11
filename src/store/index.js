@@ -57,6 +57,7 @@ const store = createStore({
         "admin.lamacc.com": "خطأ: الحساب غير صالح لمجمع لاماك.",
         "admin.alwedd.net": "خطأ: الحساب غير صالح لمجمع الود.",
         "admin.aljanain.com": "خطأ: الحساب غير صالح لمجمع الجنائن.",
+        "admin.baghdadmarina.com": "خطأ: الحساب غير صالح لمجمع مارينا.",
       };
 
       const isValidCenter = (currentPath, centerId) => {
@@ -71,6 +72,7 @@ const store = createStore({
           "admin.lamacc.com": "66a8a602996fa363c5a0f6f5",
           "admin.alwedd.net": "66e937122dcd8ef700ac5ed6",
           "admin.aljanain.com": "6725ceff739176087eb6789f",
+          "admin.baghdadmarina.com": "6729808e77eecc001eb05f19",
         };
 
         return validCenters[currentPath] === centerId;
