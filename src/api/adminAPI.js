@@ -611,6 +611,10 @@ class adminApi {
     );
     return response;
   }
+  async disableMaintenanceEmployee(id) {
+    const response = await axiosInstance.put(`/maintenance_employee/id/${id}`);
+    return response;
+  }
   // MaintenanceEmployee
 
   // ReservationsService

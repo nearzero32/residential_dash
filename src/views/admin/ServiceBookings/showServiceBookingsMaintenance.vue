@@ -516,6 +516,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
@@ -548,6 +551,9 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
@@ -587,6 +593,9 @@ export default {
             date_to_work: this.isoDatee,
             note: this.note,
           });
+          this.employee_id = null;
+          this.isoDatee = null;
+          this.note = null;
           this.dialogConfirmIteme.loading = false;
           this.dialogConfirmIteme.open = false;
           this.getCenter();
@@ -599,7 +608,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogConfirmIteme.loading = false;
             this.dialogConfirmIteme.open = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogConfirmIteme.loading = false;
+            this.dialogConfirmIteme.open = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogConfirmIteme.loading = false;
@@ -625,6 +638,8 @@ export default {
             reason_to_reject: this.dialogRejectIteme.reason_to_reject,
             note: this.dialogRejectIteme.note,
           });
+          this.note = null;
+
           this.dialogRejectIteme.loading = false;
           this.dialogRejectIteme.open = false;
           this.getCenter();
@@ -637,7 +652,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogRejectIteme.loading = false;
             this.dialogRejectIteme.open = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogRejectIteme.loading = false;
+            this.dialogRejectIteme.open = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogRejectIteme.loading = false;
@@ -662,6 +681,8 @@ export default {
             id: this.dialogFinishIteme.deletedItem._id,
             note: this.dialogFinishIteme.note,
           });
+          this.note = null;
+
           this.dialogFinishIteme.loading = false;
           this.dialogFinishIteme.open = false;
           this.getCenter();
@@ -674,7 +695,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogFinishIteme.loading = false;
             this.dialogFinishIteme.open = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogFinishIteme.loading = false;
+            this.dialogFinishIteme.open = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogFinishIteme.loading = false;

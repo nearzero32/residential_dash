@@ -306,6 +306,8 @@ export default {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         } else if (error.response && error.response.status === 400) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
     },

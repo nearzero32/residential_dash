@@ -402,6 +402,8 @@ export default {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.loading = false;
@@ -438,7 +440,7 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
-        } else {
+        } else if (error.response && error.response.data.error === true) {
           this.addLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
@@ -472,6 +474,8 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         } else if (error.response && error.response.status === 404) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {

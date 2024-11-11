@@ -498,6 +498,22 @@
               </template>
               <span>ايقاف</span>
             </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('ايقاف موظف')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FF5252"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-pause-octagon
+                </VIcon>
+              </template>
+              <span>ايقاف</span>
+            </VTooltip>
             <VTooltip
               bottom
               v-if="
@@ -1183,6 +1199,22 @@
                 item.selectable.is_disabled == false
               "
             >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#FF5252"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-pause-octagon
+                </VIcon>
+              </template>
+              <span>ايقاف</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('ايقاف موظف')">
               <template v-slot:activator="{ props }">
                 <VIcon
                   style="margin-inline: 3px"

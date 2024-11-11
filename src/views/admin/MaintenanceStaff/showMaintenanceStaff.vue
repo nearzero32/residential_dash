@@ -65,7 +65,7 @@
           :tableOptions="tableOptions"
           :headers="headers"
           @update:options="getCenter"
-          @deleteItems="deleteItem"
+          @emitDisable="deleteItem"
           @editItems="editItem"
           @emitPrintItems="printItem"
         />
@@ -236,7 +236,7 @@
     <VDialog v-model="dialogDelete.open" max-width="500px">
       <VCard>
         <VCardTitle class="headline justify-center">
-          {{ t("Are you sure you want to delete?") }}
+          {{ t("Are you sure you want to deactivate this account?") }}
         </VCardTitle>
         <VCardActions>
           <VSpacer />
@@ -248,7 +248,7 @@
             :loading="dialogDelete.loading"
             @click="deleteItemConfirm"
           >
-            {{ t("Delete") }}
+            {{ t("Deactivate") }}
           </VBtn>
           <VSpacer />
         </VCardActions>
@@ -320,7 +320,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["حذف", "تعديل", "طباعة"],
+        actions: ["ايقاف موظف", "تعديل", "طباعة"],
         search: null,
         itemsPerPage: 5,
       },
@@ -450,6 +450,12 @@ export default {
           key: "address",
         },
         {
+          title: this.t("Number of requests"),
+          type: "strong",
+          link: ``,
+          key: "reservation_services_number",
+        },
+        {
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
@@ -514,6 +520,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
@@ -554,8 +563,9 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
-          } else {
+          } else if (error.response && error.response.data.error === true) {
             this.addDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.addDialog.saveLoading = false;
@@ -596,7 +606,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogEdit.open = false;
             this.dialogEdit.loading = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogEdit.open = false;
+            this.dialogEdit.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogEdit.loading = false;
@@ -613,7 +627,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeMaintenanceEmployee(
+        const response = await adminApi.disableMaintenanceEmployee(
           this.dialogDelete.deletedItem._id
         );
         this.dialogDelete.loading = false;
@@ -628,7 +642,11 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.dialogDelete.loading = false;
           this.dialogDelete.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.dialogDelete.loading = false;
+          this.dialogDelete.open = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.dialogDelete.loading = false;

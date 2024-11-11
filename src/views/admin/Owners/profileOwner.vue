@@ -2040,6 +2040,8 @@ export default {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.loading = false;
@@ -2074,6 +2076,8 @@ export default {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.loading = false;
@@ -2088,6 +2092,9 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
@@ -2143,6 +2150,9 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.tableTenants.loading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.tableTenants.loading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
@@ -2423,8 +2433,9 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
-          } else {
+          } else if (error.response && error.response.data.error === true) {
             this.addDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.addDialog.saveLoading = false;
@@ -2479,7 +2490,7 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.addTenant.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
-          } else {
+          } else if (error.response && error.response.data.error === true) {
             this.addTenant.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
           }
@@ -2565,7 +2576,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogEdit.open = false;
             this.dialogEdit.loading = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogEdit.open = false;
+            this.dialogEdit.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogEdit.loading = false;
@@ -2662,7 +2677,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogEditTenants.open = false;
             this.dialogEditTenants.loading = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogEditTenants.open = false;
+            this.dialogEditTenants.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogEditTenants.loading = false;
@@ -2696,7 +2715,11 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.dialogDelete.loading = false;
           this.dialogDelete.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.dialogDelete.loading = false;
+          this.dialogDelete.open = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.dialogDelete.loading = false;
@@ -2738,7 +2761,11 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.dialogDisable.loading = false;
           this.dialogDisable.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.dialogDisable.loading = false;
+          this.dialogDisable.open = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.dialogDisable.loading = false;

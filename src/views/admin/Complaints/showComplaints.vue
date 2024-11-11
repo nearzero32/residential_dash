@@ -249,6 +249,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
@@ -279,7 +282,11 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.dialogDelete.loading = false;
           this.dialogDelete.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.dialogDelete.loading = false;
+          this.dialogDelete.open = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.dialogDelete.loading = false;

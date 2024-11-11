@@ -558,9 +558,13 @@ export default {
         this.table.loading = false;
       } catch (error) {
         if (error.response && error.response.status === 401) {
+          this.table.loading = false;
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
-          this.addBtnLoading = false;
+          this.table.loading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.table.loading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
@@ -616,8 +620,9 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
-          } else {
+          } else if (error.response && error.response.data.error === true) {
             this.addDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.addDialog.saveLoading = false;
@@ -673,7 +678,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogEdit.open = false;
             this.dialogEdit.loading = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogEdit.open = false;
+            this.dialogEdit.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogEdit.loading = false;

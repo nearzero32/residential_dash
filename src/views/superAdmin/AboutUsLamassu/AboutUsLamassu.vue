@@ -214,6 +214,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.loading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.loading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.loading = false;
@@ -262,8 +265,9 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
-          } else {
+          } else if (error.response && error.response.data.error === true) {
             this.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.saveLoading = false;

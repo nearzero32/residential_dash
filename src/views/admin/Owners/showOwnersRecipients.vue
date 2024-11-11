@@ -1306,6 +1306,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
@@ -1331,6 +1334,8 @@ export default {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
     },
@@ -1349,6 +1354,8 @@ export default {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
     },
@@ -1361,6 +1368,8 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
@@ -1400,9 +1409,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.xlsxData.downloadLoading = false;
           this.showDialogfunction("حصلت مشكلة يرجى المحاولة مجددا", "#FF5252");
-        } else {
-          console.error(error);
-          this.showDialogfunction("حدث خطأ غير متوقع", "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.xlsxData.downloadLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.xlsxData.listLoading = false;
@@ -1682,7 +1691,7 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
-          } else {
+          } else if (error.response && error.response.data.error === true) {
             this.addDialog.saveLoading = false;
             this.showDialogfunction(error.response.data.message, "#FF5252");
           }
@@ -1752,7 +1761,11 @@ export default {
           } else if (error.response && error.response.status === 500) {
             this.dialogEdit.open = false;
             this.dialogEdit.loading = false;
-            this.showDialogfunction(error.response.data.results, "#FF5252");
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogEdit.open = false;
+            this.dialogEdit.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
           }
         } finally {
           this.dialogEdit.loading = false;
@@ -1794,7 +1807,11 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.dialogReceivedHouse.loading = false;
           this.dialogReceivedHouse.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.dialogReceivedHouse.loading = false;
+          this.dialogReceivedHouse.open = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.dialogReceivedHouse.loading = false;
@@ -1828,7 +1845,11 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.dialogDelete.loading = false;
           this.dialogDelete.open = false;
-          this.showDialogfunction(error.response.data.results, "#FF5252");
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.dialogDelete.loading = false;
+          this.dialogDelete.open = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.dialogDelete.loading = false;

@@ -254,6 +254,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
@@ -279,9 +282,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.xlsxData.downloadLoading = false;
           this.showDialogfunction("حصلت مشكلة يرجى المحاولة مجددا", "#FF5252");
-        } else {
-          console.error(error);
-          this.showDialogfunction("حدث خطأ غير متوقع", "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.xlsxData.downloadLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.xlsxData.listLoading = false;

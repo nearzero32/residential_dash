@@ -408,6 +408,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.table.loading = false;
@@ -443,6 +446,10 @@ export default {
           this.confirmItemLoading = false;
           this.dialogConfirm = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.confirmItemLoading = false;
+          this.dialogConfirm = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
     },
@@ -473,6 +480,10 @@ export default {
           this.dialogCancel = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         } else if (error.response && error.response.status === 400) {
+          this.cancelItemLoading = false;
+          this.dialogCancel = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.cancelItemLoading = false;
           this.dialogCancel = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");

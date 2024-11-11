@@ -205,6 +205,8 @@ export default {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
         this.loading = false;
@@ -222,6 +224,8 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
         } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {

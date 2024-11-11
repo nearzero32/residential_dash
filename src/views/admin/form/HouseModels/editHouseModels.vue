@@ -798,6 +798,9 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.addBtnLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.addBtnLoading = false;
+          this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
     },
@@ -1009,6 +1012,14 @@ export default {
               this.dialogDataadd.bodyTextN = `( ${error.response.data.results} )`;
               this.dialogDataadd.color = "#FF5252";
               this.isTrue = false;
+            } else if (error.response && error.response.data.error === true) {
+              this.checkHousesNamesLoading = false;
+              this.dialogDataadd.open = true;
+              this.dialogDataadd.bodyText = error.response.data.message;
+              this.dialogDataadd.bodyTextN = `( ${error.response.data.results} )`;
+              this.dialogDataadd.color = "#FF5252";
+              this.isTrue = false;
+              this.showDialogfunction(error.response.data.message, "#FF5252");
             }
           }
           if (this.isTrue) {
@@ -1259,7 +1270,7 @@ export default {
         } else if (error.response && error.response.status === 500) {
           this.saveLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
-        } else {
+        } else if (error.response && error.response.data.error === true) {
           this.saveLoading = false;
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
@@ -1278,6 +1289,8 @@ export default {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
         } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       } finally {
