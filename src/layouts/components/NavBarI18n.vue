@@ -30,6 +30,7 @@ const getTitleByLanguage = (lang) => {
     en: {
       "admin.alfakhertowers.com": "Al-Fakher Residential Complex",
       "admin.alrawan.net": "Al-Rawan Residential Complex",
+      "admin.loamrealestate.net": "Lome Real Estate Company",
       "admin.baghdadmarina.com": "Baghdad Marina Residential Complex",
       "admin.karambaghdad.com": "Karim Baghdad Residential Complex",
       "admin.lamacc.com": "Lamac Residential Complex",
@@ -40,6 +41,7 @@ const getTitleByLanguage = (lang) => {
     },
     ar: {
       "admin.alfakhertowers.com": "مجمع الفاخر السكني",
+      "admin.loamrealestate.net": "شركة لوم العقارية",
       "admin.alrawan.net": "مجمع الروان السكني",
       "admin.baghdadmarina.com": "مجمع مارينا السكني",
       "admin.karambaghdad.com": "مجمع كرم بغداد السكني",
@@ -52,6 +54,7 @@ const getTitleByLanguage = (lang) => {
     kr: {
       "admin.alfakhertowers.com": "مجمع الفاخر السكني",
       "admin.alrawan.net": "مجمع الروان السكني",
+      "admin.loamrealestate.net": "کۆمپانیای ڕەچینەوەی لۆم",
       "admin.baghdadmarina.com": "مجمع مارينا السكني",
       "admin.karambaghdad.com": "مجمع كرم بغداد السكني",
       "admin.alwedd.net": "مجمع الود السكني",

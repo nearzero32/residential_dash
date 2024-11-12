@@ -65,6 +65,16 @@ export default [
         ? "https://counting.karambaghdad.com/login"
         : currentPath === "admin.alfakhertowers.com"
         ? "https://counting.alfakhertowers.com/login"
+        : currentPath === "admin.loamrealestate.net"
+        ? "https://counting.loamrealestate.net/login"
+        : currentPath === "admin.lamacc.com"
+        ? "https://counting.lamacc.com/login"
+        : currentPath === "admin.alwedd.net"
+        ? "https://counting.alwedd.net/login"
+        : currentPath === "admin.aljanain.com"
+        ? "https://counting.aljanain.com/login"
+        : currentPath === "admin.baghdadmarina.com"
+        ? "https://counting.baghdadmarina.com/login"
         : "https://counting.myexperience.center/login",
     type: ["admin", "investor", "resident_manager", "assistance"],
     target: "_blank",

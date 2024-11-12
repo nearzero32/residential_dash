@@ -51,6 +51,7 @@ const store = createStore({
 
       const errorMessages = {
         "admin.alrawan.net": "خطأ: الحساب غير صالح لمجمع الروان.",
+        "admin.loamrealestate.net": "خطأ: الحساب غير صالح شركة لوم العقارية.",
         "admin.alfakhertowers.com":
           "خطأ: الحساب غير صالح لمجمع الأبراج الفاخر.",
         "admin.karambaghdad.com": "خطأ: الحساب غير صالح لمجمع كرم بغداد.",
@@ -73,6 +74,7 @@ const store = createStore({
           "admin.alwedd.net": "66e937122dcd8ef700ac5ed6",
           "admin.aljanain.com": "6725ceff739176087eb6789f",
           "admin.baghdadmarina.com": "6729808e77eecc001eb05f19",
+          "admin.loamrealestate.net": "672981a677eecc001eb05f4a",
         };
 
         return validCenters[currentPath] === centerId;

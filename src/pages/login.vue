@@ -35,6 +35,9 @@
           <div v-else-if="url == 'admin.baghdadmarina.com'">
             تسجيل الدخول الى مجمع مارينا
           </div>
+          <div v-else-if="url == 'admin.loamrealestate.net'">
+            تسجيل الدخول الى شركة لوم العقارية
+          </div>
           <div v-else>تسجيل الدخول</div>
         </v-card-title>
         <hr />
