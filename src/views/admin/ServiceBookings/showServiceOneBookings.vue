@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      id: JSON.parse(sessionStorage.getItem("pageData"))._id,
+      id: null,
       Data: {},
       loading: false,
     };
@@ -85,7 +85,11 @@ export default {
     } else {
       this.userData = ["add", "edit", "remove"];
     }
-    this.getCenter();
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.id = itemData;
+      this.getCenter();
+    }
   },
   methods: {
     // Get Data

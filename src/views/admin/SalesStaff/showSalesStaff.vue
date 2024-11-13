@@ -429,7 +429,7 @@ export default {
         },
         {
           title: this.t("Employee name"),
-          type: "link",
+          type: "linkURL",
           link: `/admin-profile-sales-staff`,
           key: "name",
         },

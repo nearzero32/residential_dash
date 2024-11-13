@@ -40,6 +40,7 @@
           @editItems="editItemTenants"
           @emitDisable="emitDisableTenants"
           @emitPrintItems="printItem"
+          @pageData="handlePageData"
         />
       </VCardText>
     </VCard>
@@ -157,7 +158,7 @@ export default {
         },
         {
           title: this.t("Tenant Name"),
-          type: "link",
+          type: "linkURL",
           link: `/admin-profile-tenant`,
           key: "name",
         },

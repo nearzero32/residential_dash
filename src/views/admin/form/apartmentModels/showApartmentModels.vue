@@ -192,7 +192,7 @@ export default {
         },
         {
           title: this.t("The name"),
-          type: "link",
+          type: "linkURL",
           link: `/admin-show-profile-apartments`,
           key: "name",
         },

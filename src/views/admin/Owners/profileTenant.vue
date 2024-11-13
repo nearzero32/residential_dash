@@ -217,8 +217,8 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      id: JSON.parse(sessionStorage.getItem("pageData"))._id,
-      data: JSON.parse(sessionStorage.getItem("pageData")),
+      id: null,
+      data: {},
       loading: null,
       // message
       dialogData: {
@@ -236,7 +236,11 @@ export default {
     } else {
       this.userData = ["add", "edit", "remove"];
     }
-    this.getCenter();
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.id = itemData;
+      this.getCenter();
+    }
   },
   methods: {
     // Get Data

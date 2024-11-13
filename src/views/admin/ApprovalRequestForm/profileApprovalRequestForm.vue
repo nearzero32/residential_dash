@@ -90,7 +90,7 @@ export default {
   },
   data() {
     return {
-      data: JSON.parse(sessionStorage.getItem("pageData")),
+      data: {},
       user: JSON.parse(localStorage.getItem("results")),
 
       // message
@@ -101,6 +101,12 @@ export default {
       },
       // message
     };
+  },
+  created() {
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.data = itemData;
+    }
   },
   methods: {
     Print() {

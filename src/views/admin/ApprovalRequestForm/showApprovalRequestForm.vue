@@ -137,7 +137,7 @@ export default {
         },
         {
           title: this.t("Customer name"),
-          type: "link",
+          type: "linkURLData",
           link: `/admin-profile-approval-request-form`,
           key: "customer_name",
         },

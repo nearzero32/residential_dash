@@ -34,6 +34,26 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'linkURL'">
+            <RouterLink
+              :to="{
+                path: header.link,
+                query: { data: JSON.stringify(item.selectable._id) },
+              }"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'linkURLData'">
+            <RouterLink
+              :to="{
+                path: header.link,
+                query: { data: JSON.stringify(item.selectable) },
+              }"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
           <div v-else-if="header.type === 'linkk'">
             <RouterLink
               :to="header.link"

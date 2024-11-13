@@ -1,7 +1,7 @@
 <template>
   <div class="team">
     <BaseBreadcrumb
-      :title="`${t(page.title)}  ( ${pageData.name} )`"
+      :title="`${t(page.title)}`"
       :icon="page.icon"
       :breadcrumbs="b.map((crumb) => ({ ...crumb, text: t(crumb.text) }))"
     ></BaseBreadcrumb>
@@ -308,7 +308,7 @@ export default {
   data() {
     return {
       // table
-      pageData: JSON.parse(sessionStorage.getItem("pageData")),
+      pageData: null,
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
       tableOptions: {
         itemsPerPage: 10,
@@ -336,7 +336,7 @@ export default {
         saveLoading: false,
       },
       data: {
-        center_id: JSON.parse(sessionStorage.getItem("pageData"))._id,
+        center_id: null,
         name: "",
         email: "",
         password_show: "",
@@ -448,7 +448,14 @@ export default {
       ];
     },
   },
-
+  created() {
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.data.center_id = itemData;
+      this.pageData = itemData;
+      this.getCenter();
+    }
+  },
   methods: {
     // Get Data
     async getCenter(newOptions) {
@@ -469,7 +476,7 @@ export default {
       }
 
       try {
-        const response = await superAPI.getCenterUsers(this.pageData._id);
+        const response = await superAPI.getCenterUsers(this.pageData);
 
         this.table.Data = response.data.results;
         this.table.totalItems = response.data.results.length;
@@ -499,7 +506,7 @@ export default {
 
         try {
           const response = await superAPI.addCenterUsers({
-            center_id: this.pageData._id,
+            center_id: this.pageData,
             name: this.data.name,
             email: this.data.email,
             password_show: this.data.password_show,

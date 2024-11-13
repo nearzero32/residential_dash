@@ -51,8 +51,12 @@
               <v-col cols="12" md="6"
                 ><strong>
                   {{ t("Sales representative's name") }} :
-                  {{ data.current_employee.name }}</strong
-                ></v-col
+                  <span
+                    v-if="data.current_employee && data.current_employee.name"
+                  >
+                    {{ data.current_employee.name }}
+                  </span>
+                </strong></v-col
               >
             </v-row>
           </v-card-text>
@@ -114,8 +118,12 @@
           </v-col>
           <v-col cols="12" md="12" style="padding: 10px">
             <strong
-              >{{ t("Current employee") }} : (
-              {{ data.current_employee.name }} )</strong
+              >{{ t("Current employee") }} : (<span
+                v-if="data.current_employee && data.current_employee.name"
+              >
+                ( {{ data.current_employee.name }} )
+              </span>
+              )</strong
             >
           </v-col>
           <v-col cols="12" md="12" style="padding: 10px">
@@ -190,8 +198,8 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      id: JSON.parse(sessionStorage.getItem("pageData"))._id,
-      data: JSON.parse(sessionStorage.getItem("pageData")),
+      id: null,
+      data: {},
       user,
       phone_call,
       employee,
@@ -207,7 +215,11 @@ export default {
     };
   },
   created() {
-    this.getCenter();
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.id = itemData;
+      this.getCenter();
+    }
   },
   methods: {
     async getCenter() {

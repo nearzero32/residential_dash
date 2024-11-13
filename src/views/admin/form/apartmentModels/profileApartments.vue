@@ -89,7 +89,7 @@
           >{{ t("Model images") }}</strong
         >
       </VCardTitle>
-      <VCardText>
+      <VCardText v-if="data && data.images">
         <v-carousel
           :progress="true"
           progress-color="primary"
@@ -294,7 +294,7 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      data: JSON.parse(sessionStorage.getItem("pageData")),
+      data: [],
       loading: false,
       space,
       spaceUtilization,
@@ -303,7 +303,7 @@ export default {
       street,
       location,
       data_classification,
-      id: JSON.parse(sessionStorage.getItem("pageData"))._id,
+      id: null,
 
       // message
       dialogData: {
@@ -315,7 +315,11 @@ export default {
     };
   },
   created() {
-    this.getHouse();
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.id = itemData;
+      this.getHouse();
+    }
   },
 
   methods: {

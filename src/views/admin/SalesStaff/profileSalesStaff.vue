@@ -89,8 +89,8 @@ export default {
     return {
       // table
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      id: JSON.parse(sessionStorage.getItem("pageData"))._id,
-      data: JSON.parse(sessionStorage.getItem("pageData")),
+      id: null,
+      data: {},
       // table
 
       // message
@@ -103,9 +103,12 @@ export default {
     };
   },
   created() {
-    this.getCenter();
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.id = itemData;
+      this.getCenter();
+    }
   },
-
   methods: {
     async getCenter() {
       try {

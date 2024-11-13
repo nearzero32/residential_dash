@@ -359,7 +359,7 @@ export default {
         },
         {
           title: this.t("Owner's name"),
-          type: "link",
+          type: "linkURL",
           link: `/admin-show-service-one-bookings`,
           key: "name",
         },

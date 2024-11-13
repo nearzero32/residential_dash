@@ -1679,8 +1679,8 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      id: JSON.parse(sessionStorage.getItem("pageDataa"))._id,
-      data: JSON.parse(sessionStorage.getItem("pageDataa")),
+      id: null,
+      data: {},
       loading: null,
       // table
       tableOptions: {
@@ -1820,9 +1820,13 @@ export default {
     } else {
       this.userData = ["add", "edit", "remove"];
     }
-    this.getCenter();
-    this.getBanks();
-    this.getAnotherOwner();
+    if (this.$route.query.data) {
+      const itemData = JSON.parse(this.$route.query.data);
+      this.id = itemData;
+      this.getCenter();
+      this.getBanks();
+      this.getAnotherOwner();
+    }
   },
   computed: {
     Rules() {

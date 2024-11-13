@@ -325,7 +325,7 @@ export default {
         },
         {
           title: this.t("Customer name"),
-          type: "link",
+          type: "linkURL",
           link: `/admin-profile-customer-attendance-form`,
           key: "caller_name",
         },

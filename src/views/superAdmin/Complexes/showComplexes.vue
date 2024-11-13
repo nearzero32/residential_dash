@@ -456,7 +456,7 @@ export default {
         },
         {
           title: this.t("Name of the complex"),
-          type: "link",
+          type: "linkURL",
           link: `/super-admin-show-details-complexe`,
           key: "name",
         },
