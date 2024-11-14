@@ -728,6 +728,34 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'linkURL'" class="l">
+            <RouterLink
+              :to="{
+                path: header.link,
+                query: { data: JSON.stringify(item.selectable._id) },
+              }"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'linkURLData'" class="l">
+            <RouterLink
+              :to="{
+                path: header.link,
+                query: { data: JSON.stringify(item.selectable) },
+              }"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'linkk'" class="l">
+            <RouterLink
+              :to="header.link"
+              @click.native.prevent="emitGoToPagee(item.selectable)"
+            >
+              {{ item.selectable[header.key] }}
+            </RouterLink>
+          </div>
           <div v-else-if="header.type === 'typeAdmin'" class="l">
             <span v-if="item.selectable.type == 'admin'">
               <span> ادمن </span>
@@ -782,14 +810,6 @@
           </div>
           <div v-else-if="header.type === 'total_un_paid_price'" class="l">
             {{ numberWithComma(item.selectable.total_un_paid_price) }}
-          </div>
-          <div v-else-if="header.type === 'linkk'" class="l">
-            <RouterLink
-              :to="header.link"
-              @click.native.prevent="emitGoToPagee(item.selectable)"
-            >
-              {{ item.selectable[header.key] }}
-            </RouterLink>
           </div>
           <div v-else-if="header.key === 'current_status'" class="l">
             <span v-if="item.selectable.current_status.type == 'تم الانتهاء'">
