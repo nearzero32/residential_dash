@@ -1981,7 +1981,7 @@ export default {
         },
         {
           title: this.t("Tenant Name"),
-          type: "link",
+          type: "linkURL",
           link: `/admin-profile-tenant`,
           key: "name",
         },
