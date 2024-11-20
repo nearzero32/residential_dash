@@ -5,7 +5,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .post(`/counting/expenses/get`, {
+      .post(`/admin/expenses/get`, {
         start_date,
         end_date,
         page,
@@ -22,7 +22,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .get(`/counting/services_expenses/get`)
+      .get(`/admin/services_expenses/get`)
       .then((Response) => Response)
       .catch((error) => {
         return error.response;
@@ -32,7 +32,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .post(`/counting/services_expenses/add`, {
+      .post(`/admin/services_expenses/add`, {
         name,
         note,
       })
@@ -45,7 +45,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .put(`/counting/services_expenses/edit`, {
+      .put(`/admin/services_expenses/edit`, {
         name,
         note,
         id,
@@ -60,7 +60,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .delete(`/counting/services_expenses/delete/${id}`)
+      .delete(`/admin/services_expenses/delete/${id}`)
       .then((Response) => Response)
       .catch((error) => {
         return error.response;
@@ -81,7 +81,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .post(`/counting/expenses/add`, {
+      .post(`/admin/expenses/add`, {
         expenses_name,
         money,
         exchange_rate,
@@ -110,7 +110,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .put(`/counting/expenses/edit`, {
+      .put(`/admin/expenses/edit`, {
         expenses_name,
         invoice_number,
         invoice_receiver,
@@ -129,7 +129,7 @@ class expenses_apiInvestor {
     axiosInstance.defaults.headers.common.Authorization =
       localStorage.getItem("accessToken");
     return axiosInstance
-      .delete(`/counting/expenses/delete/${id}`)
+      .delete(`/admin/expenses/delete/${id}`)
       .then((Response) => Response)
       .catch((error) => {
         return error.response;
