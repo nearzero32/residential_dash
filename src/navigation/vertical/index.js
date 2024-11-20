@@ -10,6 +10,20 @@ export default [
     building_type: "منازل وشقق",
   },
   {
+    title: "المصاريف",
+    to: { name: "admin-show-expenses" },
+    type: ["super_admin"],
+    icon: { icon: "mdi-card-account-details-outline" },
+    building_type: "منازل وشقق",
+  },
+  {
+    title: "انواع المصاريف",
+    to: { name: "admin-show-expenses-type" },
+    type: ["super_admin"],
+    icon: { icon: "mdi-card-account-details-outline" },
+    building_type: "منازل وشقق",
+  },
+  {
     title: "Complexes",
     to: { name: "super-admin-show-complexes" },
     building_type: "منازل وشقق",

@@ -60,6 +60,19 @@ export default [
           ),
       },
       // DashboardUpdates
+
+      // expenses
+      {
+        path: "/admin-show-expenses",
+        name: "admin-show-expenses",
+        component: () => import("@/views/superAdmin/expenses/expenses.vue"),
+      },
+      {
+        path: "/admin-show-expenses-type",
+        name: "admin-show-expenses-type",
+        component: () => import("@/views/superAdmin/expenses/expensesType.vue"),
+      },
+      // expenses
     ],
   },
 ];
