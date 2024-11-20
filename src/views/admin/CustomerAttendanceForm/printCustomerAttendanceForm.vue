@@ -11,7 +11,206 @@
         "
       >
         <v-card-title>
+          <div
+            v-if="dataResidential.center_id._id == '66e2c810dec89fdfea71c92b'"
+          >
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="logo1" style="width: 50%" alt="" />
+              </v-col>
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.logo
+                  "
+                  style="width: 80px"
+                  alt=""
+                />
+              </v-col>
+            </v-row>
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: black;
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: linear-gradient(
+                    190deg,
+                    rgba(141, 96, 67, 1) 0%,
+                    rgba(255, 198, 132, 1) 100%
+                  );
+                "
+              >
+                استمارة حضور زبون
+              </h4>
+            </v-container>
+          </div>
+          <div
+            v-else-if="
+              dataResidential.center_id._id == '66656b164cdec95cab679181'
+            "
+          >
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="12"
+                md="12"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="ba" style="width: 100%" alt="" />
+              </v-col>
+            </v-row>
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: black;
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(0 115 170) 0%,
+                    rgb(141 221 255) 100%
+                  );
+                "
+              >
+                استمارة حضور زبون
+              </h4>
+            </v-container>
+          </div>
+          <div
+            v-else-if="
+              dataResidential.center_id._id == '6667fa62668eb9af32976f03'
+            "
+          >
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+              >
+                <h4>
+                  <strong>{{ dataResidential.center_id.name }}</strong>
+                </h4>
+              </v-col>
+              <v-col cols="6" md="6" style="text-align: center">
+                <img
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.logo
+                  "
+                  style="width: 160px"
+                  alt=""
+                />
+              </v-col>
+            </v-row>
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: black;
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(0 115 170) 0%,
+                    rgb(141 221 255) 100%
+                  );
+                "
+              >
+                استمارة حضور زبون
+              </h4>
+            </v-container>
+          </div>
+          <div
+            v-else-if="
+              dataResidential.center_id._id == '66e9376b2dcd8ef700ac5f01'
+            "
+          >
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="3"
+                md="3"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="logo11" style="width: 60px" alt="" />
+              </v-col>
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="
+                    dataResidential.content_url + dataResidential.center_id.logo
+                  "
+                  style="width: 80px"
+                  alt=""
+                />
+              </v-col>
+              <v-col cols="3" md="3" style="text-align: center">
+                <img :src="logo2" style="width: 60px" alt="" />
+              </v-col>
+            </v-row>
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: black;
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(0 115 170) 0%,
+                    rgb(141 221 255) 100%
+                  );
+                "
+              >
+                استمارة حضور زبون
+              </h4>
+            </v-container>
+          </div>
           <v-row
+            v-else
             style="
               display: flex;
               flex-direction: row;
@@ -67,10 +266,10 @@
           >
             <v-col cols="6" md="6">
               <div>
-                <p><strong>أسم المتصل : </strong> {{ data.caller_name }}</p>
+                <p><strong>أسم الزبون : </strong> {{ data.caller_name }}</p>
                 <p><strong>رقم الهاتف : </strong> {{ data.caller_phone }}</p>
                 <p><strong>العنوان الوظيفي : </strong> {{ data.caller_job }}</p>
-                <p><strong>هاتف المتصل : </strong> {{ data.caller_address }}</p>
+                <p><strong>هاتف الزبون : </strong> {{ data.caller_address }}</p>
                 <p>
                   <strong>عدد افراد الأسرة : </strong>
                   {{ data.caller_family_members }}
@@ -135,6 +334,15 @@
               cols="6"
               md="6"
               style="padding: 10px; text-align: right; white-space: pre-wrap"
+              v-else-if="
+                dataResidential.center_id._id == '66e2c810dec89fdfea71c92b'
+              "
+              ><v-icon size="20"> mdi-phone </v-icon>07844448486</v-col
+            >
+            <v-col
+              cols="6"
+              md="6"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
               v-else
               ><v-icon size="20"> mdi-phone </v-icon
               >{{ dataResidential.center_id.phone }}</v-col
@@ -168,10 +376,18 @@
 
 <script>
 import adminApi from "@/api/adminApi";
+import logo1 from "@/assets/logo/q.png";
+import ba from "@/assets/images/icons/rr.jpg";
+import logo11 from "@/assets/logo/41412d.png";
+import logo2 from "@/assets/logo/qaiwan-logo.png";
 
 export default {
   data() {
     return {
+      logo1,
+      ba,
+      logo11,
+      logo2,
       id: JSON.parse(localStorage.getItem("CustomerAttendanceForm"))._id,
       data: {},
       user: JSON.parse(localStorage.getItem("results")),

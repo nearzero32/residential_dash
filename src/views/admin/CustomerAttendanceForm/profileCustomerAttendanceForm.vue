@@ -70,7 +70,7 @@
         <v-row>
           <v-col cols="12" md="12" style="padding: 10px">
             <strong
-              >{{ t("Caller's name") }} : ( {{ data.caller_name }} )</strong
+              >{{ t("Customer name") }} : ( {{ data.caller_name }} )</strong
             >
           </v-col>
           <v-col cols="12" md="12" style="padding: 10px">
