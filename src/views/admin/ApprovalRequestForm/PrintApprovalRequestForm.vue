@@ -107,37 +107,35 @@
                 align-items: center;
               "
             >
+              <v-col cols="3" md="3" style="text-align: center">
+                <h3>مجمع الرتاج السكني</h3>
+              </v-col>
               <v-col
                 cols="6"
                 md="6"
-                style="padding: 10px; text-align: right; white-space: pre-wrap"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
-                <h4>
-                  <strong>{{ dataResidential.center_id.name }}</strong>
-                </h4>
-              </v-col>
-              <v-col cols="6" md="6" style="text-align: center">
                 <img
                   :src="
                     dataResidential.content_url + dataResidential.center_id.logo
                   "
-                  style="width: 160px"
+                  style="width: 80px"
                   alt=""
                 />
               </v-col>
             </v-row>
-            <hr style="border-color: rgb(141 96 67)" />
+            <hr style="margin-top: 15px; border-color: rgb(141 96 67)" />
             <v-container>
               <h4
                 style="
                   text-align: center;
-                  color: black;
+                  color: #ffffff;
                   padding: 7px 0px;
                   border-radius: 10px;
                   background: linear-gradient(
                     190deg,
-                    rgb(0 115 170) 0%,
-                    rgb(141 221 255) 100%
+                    rgb(53 69 142) 0%,
+                    rgb(111 169 109) 100%
                   );
                 "
               >
