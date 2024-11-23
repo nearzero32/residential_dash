@@ -525,6 +525,18 @@ export default [
       import("@/views/admin/SalesContracts/print/PrintNahdda.vue"),
   },
   {
+    path: "/admin-print-sales-contracts-karam-bagdad",
+    name: "admin-print-sales-contracts-karam-bagdad",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintKaramBagdad.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-lamac",
+    name: "admin-print-sales-contracts-lamac",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintLamac.vue"),
+  },
+  {
     path: "/admin-print-maintenance-staff",
     name: "admin-print-maintenance-staff",
     component: () =>

@@ -262,6 +262,18 @@ export default {
           name: `admin-print-sales-contracts-alrtaj`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "66e2c810dec89fdfea71c92b") {
+        localStorage.setItem("PrintKaramBagdad", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-karam-bagdad`,
+        });
+        window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "66a8a602996fa363c5a0f6f5") {
+        localStorage.setItem("PrintLamac", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-lamac`,
+        });
+        window.open(routeData.href, "_blank");
       }
     },
     // printItem
