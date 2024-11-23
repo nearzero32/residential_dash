@@ -75,10 +75,7 @@
               <details>
                 <summary class="button-like">عرض</summary>
                 <ul>
-                  <li
-                    v-for="(user, index) in item.selectable.receivers"
-                    :key="index"
-                  >
+                  <li v-for="(user, index) in item.selectable.receivers" :key="index">
                     {{ user.name }}
                   </li>
                 </ul>
@@ -98,15 +95,13 @@
           </div>
           <div v-else-if="header.key === 'current_status'">
             <span v-if="item.selectable.current_status.type == 'تم الانتهاء'">
-              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
-              ><br />
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon><br />
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
           <div v-else-if="header.type === 'Accept'">
             <span v-if="item.selectable.current_status.type == 'تم الموافقة'">
-              <v-icon color="#1976d2" size="40px">mdi-check-decagram</v-icon
-              ><br />
+              <v-icon color="#1976d2" size="40px">mdi-check-decagram</v-icon><br />
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
@@ -128,8 +123,7 @@
                 item.selectable.telegram_chat_id !== ''
               "
             >
-              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
-              ><br />
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon><br />
             </span>
           </div>
           <div v-else-if="header.type === 'typeAdmin'">
@@ -148,8 +142,7 @@
           </div>
           <div v-else-if="header.type === 'current_status'">
             <span v-if="item.selectable.current_status.type == 'رفض'">
-              <v-icon color="rgb(175 76 76)" size="40px"
-                >mdi-close-octagon-outline</v-icon
+              <v-icon color="rgb(175 76 76)" size="40px">mdi-close-octagon-outline</v-icon
               ><br />
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
@@ -203,11 +196,7 @@
               v-if="item.selectable[header.key][0]"
               @click="emitShowImgs(item)"
               :src="content_urll + item.selectable[header.key][0]"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.type === 'imgs'">
@@ -215,11 +204,7 @@
               v-if="item.selectable.imgs"
               @click="emitShowImgs(item)"
               :src="content_urll + item.selectable.imgs[0]"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.key === 'building_space'">
@@ -234,10 +219,7 @@
           </div>
           <div v-else-if="header.key === 'total_space'">
             <ul>
-              <li
-                v-for="(total_spac, inde) in item.selectable.total_space"
-                :key="inde"
-              >
+              <li v-for="(total_spac, inde) in item.selectable.total_space" :key="inde">
                 {{ total_spac }}
               </li>
             </ul>
@@ -245,8 +227,7 @@
           <div v-else-if="header.key === 'apartment_building'">
             <ul>
               <li
-                v-for="(apartment_buildin, inde) in item.selectable
-                  .apartment_building"
+                v-for="(apartment_buildin, inde) in item.selectable.apartment_building"
                 :key="inde"
               >
                 {{ apartment_buildin }}
@@ -290,21 +271,13 @@
           <div v-else-if="header.key === 'buyer_info.customer_phone_two'">
             {{ item.selectable.buyer_info.customer_phone_two }}
           </div>
-          <div
-            v-else-if="item.selectable.service && header.key === 'service.name'"
-          >
+          <div v-else-if="item.selectable.service && header.key === 'service.name'">
             {{ item.selectable.service.name }}
           </div>
-          <div
-            v-else-if="
-              item.selectable.service && header.key === 'service.price'
-            "
-          >
+          <div v-else-if="item.selectable.service && header.key === 'service.price'">
             {{ item.selectable.service.price }}
           </div>
-          <div
-            v-else-if="item.selectable.service && header.key === 'service.type'"
-          >
+          <div v-else-if="item.selectable.service && header.key === 'service.type'">
             {{ item.selectable.service.type }}
           </div>
           <div v-else-if="header.key === 'money'">
@@ -313,8 +286,7 @@
           <div v-else-if="header.key === 'is_available'">
             <p
               v-if="
-                item.selectable.service &&
-                item.selectable.service.is_available == true
+                item.selectable.service && item.selectable.service.is_available == true
               "
             >
               مفعلة
@@ -327,15 +299,9 @@
           </div>
           <div v-else-if="header.key === 'privileges.actions'">
             <ul>
-              <li v-if="item.selectable.privileges.actions.includes('add')">
-                أضافة
-              </li>
-              <li v-if="item.selectable.privileges.actions.includes('edit')">
-                تعديل
-              </li>
-              <li v-if="item.selectable.privileges.actions.includes('remove')">
-                حذف
-              </li>
+              <li v-if="item.selectable.privileges.actions.includes('add')">أضافة</li>
+              <li v-if="item.selectable.privileges.actions.includes('edit')">تعديل</li>
+              <li v-if="item.selectable.privileges.actions.includes('remove')">حذف</li>
             </ul>
           </div>
           <div v-else-if="header.key === 'pages'">
@@ -348,9 +314,7 @@
               <li v-if="page == 'sales'">المبيعات</li>
               <li v-if="page == 'sells-employee'">موظفين المبيعات</li>
               <li v-if="page == 'call-center'">أستفسارات الزبائن</li>
-              <li v-if="page == 'application-form'">
-                أستماراة طلب حجز وحدة سكنية
-              </li>
+              <li v-if="page == 'application-form'">أستماراة طلب حجز وحدة سكنية</li>
               <li v-if="page == 'confirmations-form'">أستماراة طلب موافقة</li>
               <li v-if="page == 'reservations'">طلبات وحدة سكنية</li>
               <li v-if="page == 'notifications'">الأشعارات</li>
@@ -371,26 +335,15 @@
               v-if="item.selectable.image !== null"
               @click="emitShowImage(item)"
               :src="`${content_urll}${item.selectable.image}`"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.key === 'service.image'">
             <img
-              v-if="
-                item.selectable.service &&
-                item.selectable.service.image !== null
-              "
+              v-if="item.selectable.service && item.selectable.service.image !== null"
               @click="emitShowImage(item)"
               :src="`${content_urll}${item.selectable.service.image}`"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.key === 'houses.length'">
@@ -408,10 +361,7 @@
           </div>
           <div v-else-if="header.key === 'categories'">
             <ul>
-              <li
-                v-for="(categorie, index) in item.selectable.categories"
-                :key="index"
-              >
+              <li v-for="(categorie, index) in item.selectable.categories" :key="index">
                 {{ categorie }}
               </li>
             </ul>
@@ -461,9 +411,7 @@
             </VTooltip>
             <VTooltip
               bottom
-              v-if="
-                table.actions.includes('تعديل') && userData.includes('edit')
-              "
+              v-if="table.actions.includes('تعديل') && userData.includes('edit')"
             >
               <template v-slot:activator="{ props }">
                 <VIcon
@@ -499,8 +447,7 @@
             <VTooltip
               bottom
               v-if="
-                table.actions.includes('ايقاف') &&
-                item.selectable.is_disabled == false
+                table.actions.includes('ايقاف') && item.selectable.is_disabled == false
               "
             >
               <template v-slot:activator="{ props }">
@@ -580,10 +527,7 @@
             </VTooltip>
             <VTooltip
               bottom
-              v-if="
-                table.actions.includes('موافقة') &&
-                item.selectable.status == 'معلق'
-              "
+              v-if="table.actions.includes('موافقة') && item.selectable.status == 'معلق'"
             >
               <template v-slot:activator="{ props }">
                 <VIcon
@@ -671,10 +615,7 @@
             </VTooltip>
             <VTooltip
               bottom
-              v-if="
-                table.actions.includes('الغاء') &&
-                item.selectable.status == 'معلق'
-              "
+              v-if="table.actions.includes('الغاء') && item.selectable.status == 'معلق'"
             >
               <template v-slot:activator="{ props }">
                 <VIcon
@@ -711,11 +652,7 @@
         </td>
       </tr>
       <tr variant="tonal" class="all" v-else>
-        <td
-          class="alll"
-          v-for="(header, headerIndex) in headers"
-          :key="headerIndex"
-        >
+        <td class="alll" v-for="(header, headerIndex) in headers" :key="headerIndex">
           <div class="r">{{ header.title }}</div>
           <div v-if="header.key === 'num'" class="l">
             {{ index + 1 }}
@@ -772,8 +709,7 @@
           </div>
           <div v-else-if="header.type === 'Accept'" class="l">
             <span v-if="item.selectable.current_status.type == 'تم الموافقة'">
-              <v-icon color="#1976d2" size="40px">mdi-check-decagram</v-icon
-              ><br />
+              <v-icon color="#1976d2" size="40px">mdi-check-decagram</v-icon><br />
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
@@ -784,8 +720,7 @@
                 item.selectable.telegram_chat_id !== ''
               "
             >
-              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
-              ><br />
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon><br />
             </span>
           </div>
           <div v-else-if="header.type === 'Room names'" class="l">
@@ -813,15 +748,13 @@
           </div>
           <div v-else-if="header.key === 'current_status'" class="l">
             <span v-if="item.selectable.current_status.type == 'تم الانتهاء'">
-              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon
-              ><br />
+              <v-icon color="#4caf50" size="40px">mdi-check-decagram</v-icon><br />
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
           </div>
           <div v-else-if="header.type === 'current_status'" class="l">
             <span v-if="item.selectable.current_status.type == 'رفض'">
-              <v-icon color="rgb(175 76 76)" size="40px"
-                >mdi-close-octagon-outline</v-icon
+              <v-icon color="rgb(175 76 76)" size="40px">mdi-close-octagon-outline</v-icon
               ><br />
               <span> {{ item.selectable.current_status.createdAt }} </span>
             </span>
@@ -839,10 +772,7 @@
               <details>
                 <summary class="button-like">عرض</summary>
                 <ul>
-                  <li
-                    v-for="(user, index) in item.selectable.receivers"
-                    :key="index"
-                  >
+                  <li v-for="(user, index) in item.selectable.receivers" :key="index">
                     {{ user.name }}
                   </li>
                 </ul>
@@ -909,11 +839,7 @@
               v-if="item.selectable[header.key][0]"
               @click="emitShowImgs(item)"
               :src="content_urll + item.selectable[header.key][0]"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.type === 'createdAt'" class="l">
@@ -934,11 +860,7 @@
               v-if="item.selectable.imgs"
               @click="emitShowImgs(item)"
               :src="content_urll + item.selectable.imgs[0]"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.key === 'building_space'" class="l">
@@ -953,10 +875,7 @@
           </div>
           <div v-else-if="header.key === 'total_space'" class="l">
             <ul>
-              <li
-                v-for="(total_spac, inde) in item.selectable.total_space"
-                :key="inde"
-              >
+              <li v-for="(total_spac, inde) in item.selectable.total_space" :key="inde">
                 {{ total_spac }}
               </li>
             </ul>
@@ -964,8 +883,7 @@
           <div v-else-if="header.key === 'apartment_building'" class="l">
             <ul>
               <li
-                v-for="(apartment_buildin, inde) in item.selectable
-                  .apartment_building"
+                v-for="(apartment_buildin, inde) in item.selectable.apartment_building"
                 :key="inde"
               >
                 {{ apartment_buildin }}
@@ -984,10 +902,7 @@
           <div v-else-if="header.key === 'buyer_info.customer_phone'" class="l">
             {{ item.selectable.buyer_info.customer_phone }}
           </div>
-          <div
-            v-else-if="header.key === 'buyer_info.customer_phone_two'"
-            class="l"
-          >
+          <div v-else-if="header.key === 'buyer_info.customer_phone_two'" class="l">
             {{ item.selectable.buyer_info.customer_phone_two }}
           </div>
           <div v-else-if="header.key === 'image'" class="l">
@@ -995,26 +910,15 @@
               v-if="item.selectable.image !== null"
               @click="emitShowImage(item)"
               :src="`${content_urll}${item.selectable[header.key]}`"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div v-else-if="header.key === 'service.image'" class="l">
             <img
-              v-if="
-                item.selectable.service &&
-                item.selectable.service.image !== null
-              "
+              v-if="item.selectable.service && item.selectable.service.image !== null"
               @click="emitShowImage(item)"
               :src="`${content_urll}${item.selectable.service.image}`"
-              style="
-                width: 60px;
-                border: solid 1px rebeccapurple;
-                cursor: pointer;
-              "
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
           <div
@@ -1024,9 +928,7 @@
             {{ item.selectable.service.name }}
           </div>
           <div
-            v-else-if="
-              item.selectable.service && header.key === 'service.price'
-            "
+            v-else-if="item.selectable.service && header.key === 'service.price'"
             class="l"
           >
             {{ item.selectable.service.price }}
@@ -1040,8 +942,7 @@
           <div v-else-if="header.key === 'is_available'" class="l">
             <p
               v-if="
-                item.selectable.service &&
-                item.selectable.service.is_available == true
+                item.selectable.service && item.selectable.service.is_available == true
               "
             >
               مفعلة
@@ -1054,15 +955,9 @@
           </div>
           <div v-else-if="header.key === 'privileges.actions'" class="l">
             <ul>
-              <li v-if="item.selectable.privileges.actions.includes('add')">
-                أضافة
-              </li>
-              <li v-if="item.selectable.privileges.actions.includes('edit')">
-                تعديل
-              </li>
-              <li v-if="item.selectable.privileges.actions.includes('remove')">
-                حذف
-              </li>
+              <li v-if="item.selectable.privileges.actions.includes('add')">أضافة</li>
+              <li v-if="item.selectable.privileges.actions.includes('edit')">تعديل</li>
+              <li v-if="item.selectable.privileges.actions.includes('remove')">حذف</li>
             </ul>
           </div>
           <div v-else-if="header.key === 'houses.length'" class="l">
@@ -1078,9 +973,7 @@
               <li v-if="page == 'sales'">المبيعات</li>
               <li v-if="page == 'sells-employee'">موظفين المبيعات</li>
               <li v-if="page == 'call-center'">أستفسارات الزبائن</li>
-              <li v-if="page == 'application-form'">
-                أستماراة طلب حجز وحدة سكنية
-              </li>
+              <li v-if="page == 'application-form'">أستماراة طلب حجز وحدة سكنية</li>
               <li v-if="page == 'confirmations-form'">أستماراة طلب موافقة</li>
               <li v-if="page == 'reservations'">طلبات وحدة سكنية</li>
               <li v-if="page == 'notifications'">الأشعارات</li>
@@ -1108,10 +1001,7 @@
           </div>
           <div v-else-if="header.key === 'categories'" class="l">
             <ul>
-              <li
-                v-for="(categorie, index) in item.selectable.categories"
-                :key="index"
-              >
+              <li v-for="(categorie, index) in item.selectable.categories" :key="index">
                 {{ categorie }}
               </li>
             </ul>
@@ -1140,7 +1030,8 @@
                 table.actions.includes('حذف') &&
                 userData.includes('remove') &&
                 item.selectable &&
-                item.selectable.is_deletable === true
+                (item.selectable.is_deletable === true ||
+                  !item.selectable.hasOwnProperty('is_deletable'))
               "
             >
               <template v-slot:activator="{ props }">
@@ -1157,49 +1048,9 @@
               </template>
               <span>حذف</span>
             </VTooltip>
-            <VTooltip bottom v-if="table.actions.includes('عرض')">
-              <template v-slot:activator="{ props }">
-                <VIcon
-                  style="margin-inline: 3px"
-                  color="#2196F3"
-                  class="ml-2"
-                  v-bind="props"
-                  size="20"
-                  v-on="on"
-                  @click="empShowIteme(item.selectable)"
-                >
-                  mdi-eye
-                </VIcon>
-              </template>
-              <span>عرض المنازل</span>
-            </VTooltip>
             <VTooltip
               bottom
-              v-if="
-                table.actions.includes('اعادة تفعيل') &&
-                item.selectable.is_disabled == true
-              "
-            >
-              <template v-slot:activator="{ props }">
-                <VIcon
-                  style="margin-inline: 3px"
-                  color="#4caf50"
-                  class="ml-2"
-                  v-bind="props"
-                  size="20"
-                  v-on="on"
-                  @click="emitDisable(item.selectable)"
-                >
-                  mdi-account-reactivate
-                </VIcon>
-              </template>
-              <span>اعادة تفعيل</span>
-            </VTooltip>
-            <VTooltip
-              bottom
-              v-if="
-                table.actions.includes('تعديل') && userData.includes('edit')
-              "
+              v-if="table.actions.includes('تعديل') && userData.includes('edit')"
             >
               <template v-slot:activator="{ props }">
                 <VIcon
@@ -1235,8 +1086,7 @@
             <VTooltip
               bottom
               v-if="
-                table.actions.includes('ايقاف') &&
-                item.selectable.is_disabled == false
+                table.actions.includes('ايقاف') && item.selectable.is_disabled == false
               "
             >
               <template v-slot:activator="{ props }">
@@ -1273,6 +1123,28 @@
             <VTooltip
               bottom
               v-if="
+                table.actions.includes('اعادة تفعيل') &&
+                item.selectable.is_disabled == true
+              "
+            >
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#4caf50"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitDisable(item.selectable)"
+                >
+                  mdi-account-reactivate
+                </VIcon>
+              </template>
+              <span>اعادة تفعيل</span>
+            </VTooltip>
+            <VTooltip
+              bottom
+              v-if="
                 table.actions.includes('استلام الوحدة السكنية') &&
                 item.selectable.is_house_received == false
               "
@@ -1294,10 +1166,7 @@
             </VTooltip>
             <VTooltip
               bottom
-              v-if="
-                table.actions.includes('موافقة') &&
-                item.selectable.status == 'معلق'
-              "
+              v-if="table.actions.includes('موافقة') && item.selectable.status == 'معلق'"
             >
               <template v-slot:activator="{ props }">
                 <VIcon
@@ -1385,10 +1254,7 @@
             </VTooltip>
             <VTooltip
               bottom
-              v-if="
-                table.actions.includes('الغاء') &&
-                item.selectable.status == 'معلق'
-              "
+              v-if="table.actions.includes('الغاء') && item.selectable.status == 'معلق'"
             >
               <template v-slot:activator="{ props }">
                 <VIcon
@@ -1404,6 +1270,22 @@
                 </VIcon>
               </template>
               <span>الغاء</span>
+            </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('عرض')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#2196F3"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empShowIteme(item.selectable)"
+                >
+                  mdi-eye
+                </VIcon>
+              </template>
+              <span>عرض المنازل</span>
             </VTooltip>
           </div>
         </td>
@@ -1473,8 +1355,7 @@ export default {
         return this.headers.some((header) => {
           const value = this.getNestedValue(item, header.key);
           return (
-            value &&
-            value.toString().toLowerCase().includes(newSearch.toLowerCase())
+            value && value.toString().toLowerCase().includes(newSearch.toLowerCase())
           );
         });
       });
