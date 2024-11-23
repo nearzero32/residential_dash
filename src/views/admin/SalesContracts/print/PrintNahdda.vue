@@ -1185,7 +1185,9 @@
                         <td v-else>الدفعة ({{ getAdjustedIndex(index) }})</td>
                         <td>{{ salary_payment.date }}</td>
                         <td>{{ numberWithComma(salary_payment.amount) }}</td>
-                        <td>{{ salary_payment.amount_written }}</td>
+                        <td>
+                        {{ stringText(salary_payment.amount) }}
+                      </td>
                         <td>{{ salary_payment.desc }}</td>
                       </tr>
                     </tbody>
@@ -3257,6 +3259,7 @@
 import logoPrint from "@/assets/images/icons/logoPrint.png";
 import ba from "@/assets/images/icons/ba.png";
 import numberWithComma from "@/constant/number";
+import tafqeet from "@/constant/Tafqeet.js";
 
 export default {
   data() {
@@ -3306,6 +3309,9 @@ export default {
     }, 500);
   },
   methods: {
+        stringText(item) {
+      return tafqeet(item);
+    },
     numberWithComma,
     getMonthsDifference(startDate, endDate) {
       const start = new Date(startDate);

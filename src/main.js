@@ -13,8 +13,8 @@ import { createApp } from "vue";
 import store from "./store/index";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 loadFonts();
 // Firebase imports
@@ -45,7 +45,7 @@ if ("serviceWorker" in navigator) {
 const options = {
   transition: "Vue-Toastification__slideBlurred",
   maxToasts: 20,
-  newestOnTop: true
+  newestOnTop: true,
 };
 
 // Create vue app
@@ -59,7 +59,7 @@ app.use(layoutsPlugin);
 app.use(store);
 app.use(i18n);
 app.use(Toast, options);
-app.component('VueDatePicker', VueDatePicker);
+app.component("VueDatePicker", VueDatePicker);
 
 // Mount vue app
 app.mount("#app");

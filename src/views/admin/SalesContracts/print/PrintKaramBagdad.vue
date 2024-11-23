@@ -25,18 +25,18 @@
                 عقد شراء وحدة سكنية في مشروع كرم بغداد السكني
               </h3>
               <h3 style="font-weight: 900; text-align: center">
-                الطرف الأول البائع الشركة المنفذة: شركة روعة بلاد الرافدين
-                للمقاولات العامة
+                الطرف الأول البائع الشركة المنفذة: شركة روعة بلاد الرافدين للمقاولات
+                العامة
               </h3>
               <h3 style="font-weight: 900; text-align: center">
                 الطرف الثاني المشتري : <strong>{{ data.owner_name }}</strong>
               </h3>
               <br />
               <p style="text-align: center">
-                استنادا الى الاجازة الاستثمارية المرقمة (327/2015) والمؤرخة في
-                6\2\2023 والصادرة من هيئة استثمار بغداد والمقامة على القطعة
-                المرقمة (1/4850) م 20 داودي وباسم (مجمع كرم بغداد السكني) بناءا
-                على توفر وحدة سكنية للطرف الأول ولرغبة الطرف الثاني بالشراء فقد
+                استنادا الى الاجازة الاستثمارية المرقمة (327/2015) والمؤرخة في 6\2\2023
+                والصادرة من هيئة استثمار بغداد والمقامة على القطعة المرقمة (1/4850) م 20
+                داودي وباسم (مجمع كرم بغداد السكني) بناءا على توفر وحدة سكنية للطرف الأول
+                ولرغبة الطرف الثاني بالشراء فقد
                 <br />
                 اتفق الطرفان على ما يلي :
               </p>
@@ -109,11 +109,7 @@
               >
             </v-row>
 
-            <img
-              :src="footerKaramBagdad"
-              style="padding-top: 35px; width: 100%"
-              alt=""
-            />
+            <img :src="footerKaramBagdad" style="padding-top: 35px; width: 100%" alt="" />
           </v-container>
         </v-card>
       </v-card>
@@ -152,22 +148,19 @@
               </p>
               <p>
                 <strong style="color: black"
-                  >( مليون دينار) (الف دينار) عند الاستلام بعد مرور 3
-                  سنوات</strong
+                  >( مليون دينار) (الف دينار) عند الاستلام بعد مرور 3 سنوات</strong
                 >
               </p>
               <br />
               <br />
               <br />
               <p>
-                <strong style="color: black"
-                  >والمبلغ المتبقي يقسط كالاتي:-</strong
-                >
+                <strong style="color: black">والمبلغ المتبقي يقسط كالاتي:-</strong>
               </p>
               <p>
                 <strong style="color: black"
-                  >( {{ numberWithComma(sortedSalaryPayments[10].amount) }} )
-                  (الف دينار) قسط شهري لمدة (70 شهر)</strong
+                  >( {{ numberWithComma(sortedSalaryPayments[10].amount) }} ) (الف دينار)
+                  قسط شهري لمدة (70 شهر)</strong
                 >
               </p>
             </div>
@@ -208,11 +201,7 @@
               >
             </v-row>
 
-            <img
-              :src="footerKaramBagdad"
-              style="padding-top: 35px; width: 100%"
-              alt=""
-            />
+            <img :src="footerKaramBagdad" style="padding-top: 35px; width: 100%" alt="" />
           </v-container>
         </v-card>
       </v-card>
@@ -240,9 +229,7 @@
                   {{ numberWithComma(data.price_for_one_square_meter) }}
                 </h3>
                 <br />
-                <h3>
-                  السعر الاجمالي : {{ numberWithComma(data.salary_amount) }}
-                </h3>
+                <h3>السعر الاجمالي : {{ numberWithComma(data.salary_amount) }}</h3>
                 <br />
                 <table
                   border="1"
@@ -275,17 +262,13 @@
                       </td>
                       <td
                         style="background-color: rgb(186 217 227)"
-                        v-else-if="
-                          salary_payment.payment_position == 'دفعة الهيكل'
-                        "
+                        v-else-if="salary_payment.payment_position == 'دفعة الهيكل'"
                       >
                         دفعة الهيكل
                       </td>
                       <td
                         style="background-color: rgb(186 217 227)"
-                        v-else-if="
-                          salary_payment.payment_position == 'اخر دفعة'
-                        "
+                        v-else-if="salary_payment.payment_position == 'اخر دفعة'"
                       >
                         الدفعة (دفعة التسليم)
                       </td>
@@ -294,7 +277,9 @@
                       </td>
                       <td>{{ salary_payment.date }}</td>
                       <td>{{ numberWithComma(salary_payment.amount) }}</td>
-                      <td>{{ salary_payment.amount_written }}</td>
+                      <td>
+                        {{ stringText(salary_payment.amount) }}
+                      </td>
                       <td>{{ salary_payment.desc }}</td>
                     </tr>
                   </tbody>
@@ -344,11 +329,7 @@
               >
             </v-row>
 
-            <img
-              :src="footerKaramBagdad"
-              style="padding-top: 35px; width: 100%"
-              alt=""
-            />
+            <img :src="footerKaramBagdad" style="padding-top: 35px; width: 100%" alt="" />
           </v-container>
         </v-card>
       </v-card>
@@ -373,29 +354,27 @@
           <v-container>
             <div>
               <p style="margin-bottom: 30px">
-                3-في حال تأخر الطرف الثاني عن تسديد الأقساط لمدة 45 يوم سواء
-                كانت متصلة (خلال قسط واحد) اوكانت منفصلة (خلال عدة أقساط) يحق
-                للطرف الأول فسخ العقد وارجاع المبالغ الواصلة من قبل الطرف الثاني
-                وستقطع منه غرامة قدرها 20% من المبالغ الواصلة .
+                3-في حال تأخر الطرف الثاني عن تسديد الأقساط لمدة 45 يوم سواء كانت متصلة
+                (خلال قسط واحد) اوكانت منفصلة (خلال عدة أقساط) يحق للطرف الأول فسخ العقد
+                وارجاع المبالغ الواصلة من قبل الطرف الثاني وستقطع منه غرامة قدرها 20% من
+                المبالغ الواصلة .
               </p>
               <p style="margin-bottom: 30px">
-                4- في حالة تأخر الطرف الأول عن الإنجاز الكلي للوحدة السكنية
-                المحددة أعلاه وفي حالة قيام المشتري بتسديد التزاماته يتحمل الطرف
-                الأول غرامة مالية 1.5%عن كل شهر تأخير من مجموع المبالغ المدفوعة
-                للطرف الأول تستقطع من ثمن الدفعة الأخيرة
+                4- في حالة تأخر الطرف الأول عن الإنجاز الكلي للوحدة السكنية المحددة أعلاه
+                وفي حالة قيام المشتري بتسديد التزاماته يتحمل الطرف الأول غرامة مالية
+                1.5%عن كل شهر تأخير من مجموع المبالغ المدفوعة للطرف الأول تستقطع من ثمن
+                الدفعة الأخيرة
               </p>
               <p style="margin-bottom: 30px">
-                5- يلتزم الطرف الأول بنقل ملكية الوحدة السكنية باسم المشتري
-                اصوليا في دائرة التسجيل العقاري على ان يتحمل الطرف الثاني جميع
-                الرسوم والمصاريف التي تقتضيها إجراءات نقل الملكية واتعاب
-                المحاماة بعد تسديد جميع الأقساط المترتبة بذمة الطرف الثاني
-                المشتري .
+                5- يلتزم الطرف الأول بنقل ملكية الوحدة السكنية باسم المشتري اصوليا في
+                دائرة التسجيل العقاري على ان يتحمل الطرف الثاني جميع الرسوم والمصاريف التي
+                تقتضيها إجراءات نقل الملكية واتعاب المحاماة بعد تسديد جميع الأقساط
+                المترتبة بذمة الطرف الثاني المشتري .
               </p>
               <p>
-                6- لايحق للطرف الثاني بيع الوحدة السكنية للغير الا بموافقة الطرف
-                الأول ووفقا لتعليمات يضعها الطرف الأول في فترة تسديد الأقساط اما
-                بعد تسديد كامل مبلغ يحق للمشتري بيعها الى من يشاء وبالسعر الذي
-                يشاء.
+                6- لايحق للطرف الثاني بيع الوحدة السكنية للغير الا بموافقة الطرف الأول
+                ووفقا لتعليمات يضعها الطرف الأول في فترة تسديد الأقساط اما بعد تسديد كامل
+                مبلغ يحق للمشتري بيعها الى من يشاء وبالسعر الذي يشاء.
               </p>
             </div>
           </v-container>
@@ -435,11 +414,7 @@
               >
             </v-row>
 
-            <img
-              :src="footerKaramBagdad"
-              style="padding-top: 35px; width: 100%"
-              alt=""
-            />
+            <img :src="footerKaramBagdad" style="padding-top: 35px; width: 100%" alt="" />
           </v-container>
         </v-card>
       </v-card>
@@ -467,31 +442,26 @@
                 7- يخضع هذا العقد لقانون الاستثمار رقم 13 لسنه 2006م المعدل .
               </p>
               <p style="margin-bottom: 30px">
-                8-تكون التصاميم الهندسية التفصيلية و الانشائية وجدول تقديم العمل
-                والجدوى الاقتصادية المعدلة المقدمة من قبل الطرف الاؤل والمصادقة
-                عليها من قبل هيئة الاستثمار التي تم بموجبها منح المستثمر الاجازة
-                رقم ((327/2015) لسنه (2015) جزا لايتجزأ من هذا العقد فيما يتعلق
-                بالمشروع وخدماته بالكامل ..
+                8-تكون التصاميم الهندسية التفصيلية و الانشائية وجدول تقديم العمل والجدوى
+                الاقتصادية المعدلة المقدمة من قبل الطرف الاؤل والمصادقة عليها من قبل هيئة
+                الاستثمار التي تم بموجبها منح المستثمر الاجازة رقم ((327/2015) لسنه (2015)
+                جزا لايتجزأ من هذا العقد فيما يتعلق بالمشروع وخدماته بالكامل ..
               </p>
               <p style="margin-bottom: 30px">
-                9- تعتبر وصولات الإيداع للمبالغ حسب الية التسديد شرط لصحة العقد
-                وسلامته .
+                9- تعتبر وصولات الإيداع للمبالغ حسب الية التسديد شرط لصحة العقد وسلامته .
               </p>
               <p style="margin-bottom: 30px">
-                10.يعتبر العنوان واسم المختار المثبت من قبل الطرف الثاني محلا
-                للتبليغ
+                10.يعتبر العنوان واسم المختار المثبت من قبل الطرف الثاني محلا للتبليغ
               </p>
               <p style="margin-bottom: 30px">
                 11-يتكون هذا العقد من أربعة صفحات والموقع عليها من قبل الطرفين
               </p>
               <p style="margin-bottom: 30px">
-                12-اطلع الطرف الثاني المشتري على نموذج الوحدة السكنية المنفذة من
-                قبل الطرف الأول المستثمر ووافق عليها ولا يحق له المطالبة باي
-                تغيير في وحدته خلافا للنموذج
+                12-اطلع الطرف الثاني المشتري على نموذج الوحدة السكنية المنفذة من قبل الطرف
+                الأول المستثمر ووافق عليها ولا يحق له المطالبة باي تغيير في وحدته خلافا
+                للنموذج
               </p>
-              <p>
-                13-حرر هذا العقد في محافظة بغداد وتعاطيناه بنسختين تحريريتين
-              </p>
+              <p>13-حرر هذا العقد في محافظة بغداد وتعاطيناه بنسختين تحريريتين</p>
               <p>
                 بتاريخ :- <span style="margin-inline: 10px"></span>/
                 <span style="margin-inline: 10px"></span>/
@@ -534,11 +504,7 @@
               >
             </v-row>
 
-            <img
-              :src="footerKaramBagdad"
-              style="padding-top: 35px; width: 100%"
-              alt=""
-            />
+            <img :src="footerKaramBagdad" style="padding-top: 35px; width: 100%" alt="" />
           </v-container>
         </v-card>
       </v-card>
@@ -552,6 +518,7 @@ import KaramBagdad from "@/assets/images/icons/KaramBagdad.jpg";
 import footerKaramBagdad from "@/assets/images/icons/footerKaramBagdad.jpg";
 import rrr from "@/assets/images/icons/rrr.jpg";
 import numberWithComma from "@/constant/number";
+import tafqeet from "@/constant/Tafqeet.js";
 
 export default {
   data() {
@@ -603,8 +570,7 @@ export default {
 
       return this.data.salary_payments.slice().sort((a, b) => {
         return (
-          getPaymentWeight(a.payment_position) -
-          getPaymentWeight(b.payment_position)
+          getPaymentWeight(a.payment_position) - getPaymentWeight(b.payment_position)
         );
       });
     },
@@ -615,6 +581,9 @@ export default {
     }, 500);
   },
   methods: {
+    stringText(item) {
+      return tafqeet(item);
+    },
     numberWithComma,
     getMonthsDifferencey(startDate, endDate) {
       const start = new Date(startDate);

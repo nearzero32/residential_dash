@@ -148,7 +148,9 @@
                       </td>
                       <td>{{ salary_payment.date }}</td>
                       <td>{{ numberWithComma(salary_payment.amount) }}</td>
-                      <td>{{ salary_payment.amount_written }}</td>
+                      <td>
+                        {{ stringText(salary_payment.amount) }}
+                      </td>
                       <td>{{ salary_payment.desc }}</td>
                     </tr>
                   </tbody>
@@ -1280,6 +1282,7 @@
 
 <script>
 import numberWithComma from "@/constant/number";
+import tafqeet from "@/constant/Tafqeet.js";
 
 export default {
   data() {
@@ -1320,6 +1323,9 @@ export default {
     }, 500);
   },
   methods: {
+        stringText(item) {
+      return tafqeet(item);
+    },
     numberWithComma,
     getAdjustedIndex(index) {
       const structurePaymentIndex = this.sortedSalaryPayments.findIndex(

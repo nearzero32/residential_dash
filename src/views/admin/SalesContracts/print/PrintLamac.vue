@@ -262,7 +262,9 @@
                       </td>
                       <td>{{ salary_payment.date }}</td>
                       <td>{{ numberWithComma(salary_payment.amount) }}</td>
-                      <td>{{ salary_payment.amount_written }}</td>
+                      <td>
+                        {{ stringText(salary_payment.amount) }}
+                      </td>
                       <td>{{ salary_payment.desc }}</td>
                     </tr>
                   </tbody>
@@ -340,7 +342,7 @@
               <p>
                 3 - باع الطرف اﻻول الشقة بسعر اجمالي وقدره رقماً (
                 {{ numberWithComma(data.salary_amount) }} ) كتابة (
-                {{ data.salary_amount_written }} ) وان سعر متر الشقة هو (
+                {{ stringText(data.salary_amount_written) }} ) وان سعر متر الشقة هو (
                 {{ numberWithComma(data.price_for_one_square_meter) }} ) دينار عراقي
               </p>
               <p>4 - يقوم الطرف الثاني بدفع مبلغ الشقة الى الطرف اﻻول كما يلي:</p>
@@ -898,6 +900,7 @@ import logoPrint from "@/assets/images/icons/logoPrint.png";
 import ba from "@/assets/images/icons/rr.jpg";
 import rrr from "@/assets/images/icons/rrr.jpg";
 import numberWithComma from "@/constant/number";
+import tafqeet from "@/constant/Tafqeet.js";
 
 export default {
   data() {
@@ -915,7 +918,7 @@ export default {
   created() {
     this.data = JSON.parse(localStorage.getItem("PrintLamac"));
     this.user = JSON.parse(localStorage.getItem("results"));
-
+    // console.log(this.$tafqeet.convert(2500));
     if (this.data.first_payment_date && this.data.last_payment_date) {
       this.yearsDifference = this.getMonthsDifference(
         this.data.first_payment_date,
@@ -994,7 +997,9 @@ export default {
         return index - structurePaymentIndex;
       }
     },
-
+    stringText(item) {
+      return tafqeet(item);
+    },
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;
