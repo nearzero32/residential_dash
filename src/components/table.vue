@@ -139,6 +139,9 @@
             <span v-else-if="item.selectable.type == 'investor'">
               <span> مستثمر </span>
             </span>
+            <span v-else-if="item.selectable.type == 'investor_accountant'">
+              <span> محاسب المستثمر </span>
+            </span>
           </div>
           <div v-else-if="header.type === 'current_status'">
             <span v-if="item.selectable.current_status.type == 'رفض'">
@@ -705,6 +708,9 @@
             </span>
             <span v-else-if="item.selectable.type == 'investor'">
               <span> مستثمر </span>
+            </span>
+            <span v-else-if="item.selectable.type == 'investor_accountant'">
+              <span> محاسب المستثمر </span>
             </span>
           </div>
           <div v-else-if="header.type === 'Accept'" class="l">

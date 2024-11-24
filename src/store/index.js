@@ -99,6 +99,7 @@ const store = createStore({
           super_admin: "/super-admin-home",
           admin: "/admin-index",
           investor: "/admin-index",
+          investor_accountant: "/admin-index",
           resident_manager: "/admin-index",
           assistance: getAssistanceRoute(pages),
         };
@@ -332,6 +333,7 @@ const store = createStore({
           admin: "/admin-index",
           resident_manager: "/admin-index",
           investor: "/admin-index",
+          investor_accountant: "/admin-index",
           assistance: getAssistanceRoute(pages),
         };
 
