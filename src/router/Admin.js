@@ -443,6 +443,14 @@ export default [
       ),
   },
   {
+    path: "/admin-print-application-form-loam",
+    name: "admin-print-application-form-loam",
+    component: () =>
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormLoam.vue"
+      ),
+  },
+  {
     path: "/admin-print-application-form-alfakher",
     name: "admin-print-application-form-alfakher",
     component: () =>
@@ -493,6 +501,12 @@ export default [
     name: "admin-print-residential-unit-requests",
     component: () =>
       import("@/views/admin/ResidentialUnitRequests/PrintReservations.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-marina-baghdad",
+    name: "admin-print-sales-contracts-marina-baghdad",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintMarinaBaghdad.vue"),
   },
   {
     path: "/admin-print-sales-contracts-abasly",
@@ -573,5 +587,19 @@ export default [
     name: "admin-print-residents-requests",
     component: () =>
       import("@/views/admin/ResidentsRequests/PrintResidentsRequests.vue"),
+  },
+  {
+    path: "/admin-print-customer-attendance-form-loam",
+    name: "admin-print-customer-attendance-form-loam",
+    component: () =>
+      import("@/views/admin/CustomerAttendanceForm/prinLoam.vue"),
+  },
+  {
+    path: "/admin-print-customer-attendance-form-marina-baghdad",
+    name: "admin-print-customer-attendance-form-marina-baghdad",
+    component: () =>
+      import(
+        "@/views/admin/CustomerAttendanceForm/printCustomerAttendanceFormMarinaBaghdad.vue"
+      ),
   },
 ];

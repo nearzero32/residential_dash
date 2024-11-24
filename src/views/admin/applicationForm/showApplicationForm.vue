@@ -14,8 +14,7 @@
           <v-card-text style="text-align: center">
             <h4>
               <strong
-                >{{ t("Number of Pending Requests") }} (
-                {{ table.pending }} )</strong
+                >{{ t("Number of Pending Requests") }} ( {{ table.pending }} )</strong
               >
             </h4>
           </v-card-text>
@@ -26,8 +25,7 @@
           <v-card-text style="text-align: center">
             <h4>
               <strong
-                >{{ t("Number of Confirmed Requests") }} (
-                {{ table.approved }} )</strong
+                >{{ t("Number of Confirmed Requests") }} ( {{ table.approved }} )</strong
               >
             </h4>
           </v-card-text>
@@ -38,8 +36,7 @@
           <v-card-text style="text-align: center">
             <h4>
               <strong
-                >{{ t("Number of Cancelled Requests") }} (
-                {{ table.canceled }} )</strong
+                >{{ t("Number of Cancelled Requests") }} ( {{ table.canceled }} )</strong
               >
             </h4>
           </v-card-text>
@@ -70,10 +67,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -427,9 +421,7 @@ export default {
       this.confirmItemLoading = true;
 
       try {
-        const response = await adminApi.confirmApplicationForm(
-          this.confirmItem._id
-        );
+        const response = await adminApi.confirmApplicationForm(this.confirmItem._id);
 
         this.confirmItemLoading = false;
         this.dialogConfirm = false;
@@ -464,9 +456,7 @@ export default {
       this.cancelItemLoading = true;
 
       try {
-        const response = await adminApi.cancelApplicationForm(
-          this.cancelItem._id
-        );
+        const response = await adminApi.cancelApplicationForm(this.cancelItem._id);
 
         this.cancelItemLoading = false;
         this.dialogCancel = false;
@@ -496,57 +486,45 @@ export default {
     printItem(item) {
       const results = JSON.parse(localStorage.getItem("results"));
       if (results.center_id._id === "65e818b420bce937fbf81fe4") {
-        localStorage.setItem(
-          "printApplicationFormAlnahdaa",
-          JSON.stringify(item)
-        );
+        localStorage.setItem("printApplicationFormAlnahdaa", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-alnahdaa`,
         });
         window.open(routeData.href, "_blank");
       } else if (results.center_id._id === "66e9376b2dcd8ef700ac5f01") {
-        localStorage.setItem(
-          "printApplicationFormAlfakher",
-          JSON.stringify(item)
-        );
+        localStorage.setItem("printApplicationFormAlfakher", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-alfakher`,
         });
         window.open(routeData.href, "_blank");
       } else if (results.center_id._id === "665d7276f4c4a964001e12ab") {
-        localStorage.setItem(
-          "printApplicationFormAbasly",
-          JSON.stringify(item)
-        );
+        localStorage.setItem("printApplicationFormAbasly", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-abasly`,
         });
         window.open(routeData.href, "_blank");
       } else if (results.center_id._id === "66656b164cdec95cab679181") {
-        localStorage.setItem(
-          "printApplicationFormAlrawan",
-          JSON.stringify(item)
-        );
+        localStorage.setItem("printApplicationFormAlrawan", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-alrawan`,
         });
         window.open(routeData.href, "_blank");
       } else if (results.center_id._id === "6667fa62668eb9af32976f03") {
-        localStorage.setItem(
-          "printApplicationFormAlrtaj",
-          JSON.stringify(item)
-        );
+        localStorage.setItem("printApplicationFormAlrtaj", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-alrtaj`,
         });
         window.open(routeData.href, "_blank");
       } else if (results.center_id._id === "66e2c810dec89fdfea71c92b") {
-        localStorage.setItem(
-          "printApplicationFormKaramBagdad",
-          JSON.stringify(item)
-        );
+        localStorage.setItem("printApplicationFormKaramBagdad", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-application-form-karam-bagdad`,
+        });
+        window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "672981a677eecc001eb05f4a") {
+        localStorage.setItem("printApplicationFormLoam", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-application-form-loam`,
         });
         window.open(routeData.href, "_blank");
       }

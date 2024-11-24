@@ -10,10 +10,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -272,6 +269,12 @@ export default {
         localStorage.setItem("PrintLamac", JSON.stringify(item));
         let routeData = this.$router.resolve({
           name: `admin-print-sales-contracts-lamac`,
+        });
+        window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "6729808e77eecc001eb05f19") {
+        localStorage.setItem("PrintMarinaBaghdad", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-marina-baghdad`,
         });
         window.open(routeData.href, "_blank");
       }

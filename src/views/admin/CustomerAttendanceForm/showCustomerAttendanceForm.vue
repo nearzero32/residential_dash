@@ -28,10 +28,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -162,11 +159,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -245,6 +238,7 @@ export default {
       },
       userData: [],
       // table
+      results: null,
 
       // dialogEdit
       how_u_hear_about_us: [],
@@ -276,6 +270,7 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
+    this.results = JSON.parse(localStorage.getItem("results"));
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
     } else {
@@ -291,21 +286,16 @@ export default {
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (value.length !== 11)
-              return this.t("Phone number must be 11 digits");
+            if (value.length !== 11) return this.t("Phone number must be 11 digits");
             return true;
           },
         ],
         password_show: [(value) => !!value || this.t("This field is required")],
         address: [(value) => !!value || this.t("This field is required")],
         form_id: [(value) => !!value || this.t("This field is required")],
-        space_required: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        space_required: [(value) => !!value || this.t("This field is required")],
         call_reason: [(value) => !!value || this.t("This field is required")],
-        how_he_hear_about_us: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        how_he_hear_about_us: [(value) => !!value || this.t("This field is required")],
         salary: [
           (value) => {
             if (!value) return this.t("This field is required");
@@ -510,10 +500,8 @@ export default {
             caller_phone: this.dialogEdit.editedItem.caller_phone,
             caller_job: this.dialogEdit.editedItem.caller_job,
             caller_address: this.dialogEdit.editedItem.caller_address,
-            caller_family_members:
-              this.dialogEdit.editedItem.caller_family_members,
-            how_he_hear_about_us:
-              this.dialogEdit.editedItem.how_he_hear_about_us,
+            caller_family_members: this.dialogEdit.editedItem.caller_family_members,
+            how_he_hear_about_us: this.dialogEdit.editedItem.how_he_hear_about_us,
             space_required: this.dialogEdit.editedItem.space_required,
             call_reason: this.dialogEdit.editedItem.call_reason,
             form_id: this.dialogEdit.editedItem.form_id,
@@ -649,11 +637,25 @@ export default {
 
     // printItem
     printItem(item) {
-      localStorage.setItem("CustomerAttendanceForm", JSON.stringify(item));
-      let routeData = this.$router.resolve({
-        name: `admin-print-customer-attendance-form`,
-      });
-      window.open(routeData.href, "_blank");
+      if (this.results.center_id._id === "672981a677eecc001eb05f4a") {
+        localStorage.setItem("CustomerAttendanceFormLoam", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-customer-attendance-form-loam`,
+        });
+        window.open(routeData.href, "_blank");
+      } else if (this.results.center_id._id === "6729808e77eecc001eb05f19") {
+        localStorage.setItem("CustomerAttendanceFormMarinaBaghdad", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-customer-attendance-form-marina-baghdad`,
+        });
+        window.open(routeData.href, "_blank");
+      } else {
+        localStorage.setItem("CustomerAttendanceForm", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-customer-attendance-form`,
+        });
+        window.open(routeData.href, "_blank");
+      }
     },
     // printItem
 
