@@ -85,6 +85,7 @@
                     v-model="data.center_form_ids"
                     :rules="Rules.required"
                     :items="Forms"
+                    item-value="_id"
                     outlined
                     :item-title="getItemText"
                     attach
@@ -176,6 +177,7 @@
                     :items="Forms"
                     outlined
                     :item-title="getItemText"
+                    item-value="_id"
                     attach
                     multiple
                     :label="t(`Form name`)"
@@ -193,7 +195,7 @@
                         :label="t('The image')"
                         accept="image/png, image/jpeg, image/bmp"
                         prepend-icon="mdi-camera-outline"
-                        @change="handleFileChange"
+                        @change="handleFileChangeEdit"
                         @click:clear="
                           file = null;
                           dialogEdit.editedItem.logo = null;
