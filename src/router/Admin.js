@@ -443,6 +443,12 @@ export default [
       ),
   },
   {
+    path: "/admin-print-application-form-marina-baghdad",
+    name: "admin-print-application-form-marina-baghdad",
+    component: () =>
+      import("@/views/admin/applicationForm/print/printMarinaBaghdad.vue"),
+  },
+  {
     path: "/admin-print-application-form-loam",
     name: "admin-print-application-form-loam",
     component: () =>

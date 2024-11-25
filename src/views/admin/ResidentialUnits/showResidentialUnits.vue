@@ -48,10 +48,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -85,10 +82,7 @@
     <!-- - showImg -->
     <VDialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <VCard style="padding-top: 20px">
-        <VCardText
-          class="headline justify-center"
-          v-if="showImg.dataImg !== null"
-        >
+        <VCardText class="headline justify-center" v-if="showImg.dataImg !== null">
           <VCarousel>
             <VCarousel-item v-for="(img, i) in showImg.dataImg" :key="i">
               <img :src="content_url + img" style="width: 100%" />
@@ -97,9 +91,7 @@
         </VCardText>
         <VCard-actions>
           <VSpacer />
-          <VBtn color="primary" text @click="showImg.open = false">
-            إغلاق
-          </VBtn>
+          <VBtn color="primary" text @click="showImg.open = false"> إغلاق </VBtn>
         </VCard-actions>
       </VCard>
     </VDialog>
@@ -124,52 +116,29 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="data.price"
-                    :rules="Rules.price"
-                    :label="t(`Price`)"
+                  <VAutocomplete
+                    v-model="data.form"
+                    :rules="Rules.name"
+                    :items="Forms"
                     outlined
-                  />
+                    :item-title="getItemText"
+                    attach
+                    return-object
+                    @update:modelValue="getHouses"
+                    :label="t(`Form name`)"
+                  ></VAutocomplete>
                 </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="data.rating"
-                    :rules="Rules.rating"
-                    :label="t(`Appraisal`)"
+                <VCol cols="12" md="4" v-if="HousesShow">
+                  <VAutocomplete
+                    v-model="data.center_form_house_id"
+                    :rules="Rules.name"
+                    :items="filteredHouses"
                     outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="data.living_rooms"
-                    :rules="Rules.living_rooms"
-                    :label="t(`Living Rooms`)"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="data.bath_rooms"
-                    :rules="Rules.bath_rooms"
-                    :label="t(`Bathrooms`)"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="data.bed_rooms"
-                    :rules="Rules.bed_rooms"
-                    :label="t(`Bedrooms`)"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="data.space"
-                    :rules="Rules.space"
-                    :label="t(`The area`)"
-                    outlined
-                  />
+                    :item-title="formatHouse"
+                    item-value="_id"
+                    attach
+                    :label="t(`The house`)"
+                  ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="4">
                   <VAutocomplete
@@ -234,9 +203,7 @@
                               >
                                 <img
                                   style="height: 100px; width: 100%"
-                                  :src="
-                                    isBase64(imag) ? imag : content_url + imag
-                                  "
+                                  :src="isBase64(imag) ? imag : content_url + imag"
                                   alt="Image"
                                   @click.stop
                                 />
@@ -261,10 +228,7 @@
                                     background-color: #faebd700;
                                   "
                                 >
-                                  <v-icon
-                                    color="red"
-                                    size="30"
-                                    style="color: red"
+                                  <v-icon color="red" size="30" style="color: red"
                                     >mdi-delete</v-icon
                                   >
                                 </v-btn>
@@ -285,11 +249,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -315,53 +275,40 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.price"
-                    :rules="Rules.price"
-                    :label="t(`Price`)"
+                <VCol cols="12" md="6">
+                  <VAutocomplete
+                    v-model="dialogEdit.editedItem.center_form_id"
+                    :rules="Rules.form"
+                    :items="Forms"
                     outlined
-                  />
+                    :item-title="
+                      (item) =>
+                        item.exact_apartment_building
+                          ? `${item.exact_apartment_building} - ${item.name}`
+                          : item.name
+                    "
+                    item-value="_id"
+                    attach
+                    @update:modelValue="
+                      (value) => {
+                        const selectedItem = Forms.find((item) => item._id === value);
+                        getHousesEdit(selectedItem);
+                      }
+                    "
+                    :label="t('Form name')"
+                  ></VAutocomplete>
                 </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.rating"
-                    :rules="Rules.rating"
-                    :label="t(`Appraisal`)"
+                <VCol cols="12" md="6">
+                  <VAutocomplete
+                    v-model="dialogEdit.editedItem.center_form_house_id"
+                    :rules="Rules.house_id"
+                    :items="Houses"
                     outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.living_rooms"
-                    :rules="Rules.living_rooms"
-                    :label="t(`Living Rooms`)"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.bath_rooms"
-                    :rules="Rules.bath_rooms"
-                    :label="t(`Bathrooms`)"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.bed_rooms"
-                    :rules="Rules.bed_rooms"
-                    :label="t(`Bedrooms`)"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="4">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.space"
-                    :rules="Rules.space"
-                    :label="t(`The area`)"
-                    outlined
-                  />
+                    :item-title="formatHouse"
+                    item-value="_id"
+                    attach
+                    :label="t(`The house`)"
+                  ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="4">
                   <VAutocomplete
@@ -407,19 +354,14 @@
                         "
                       />
                     </VCol>
-                    <VCol
-                      cols="12"
-                      md="9"
-                      v-if="dialogEdit.editedItem.imgs.length"
-                    >
+                    <VCol cols="12" md="9" v-if="dialogEdit.editedItem.imgs.length">
                       <VCard>
                         <VCardText>
                           <v-row>
                             <v-col
                               cols="12"
                               md="2"
-                              v-for="(imag, index) in dialogEdit.editedItem
-                                .imgs"
+                              v-for="(imag, index) in dialogEdit.editedItem.imgs"
                               :key="index"
                               style="padding: 10px"
                             >
@@ -431,9 +373,7 @@
                               >
                                 <img
                                   style="height: 100px; width: 100%"
-                                  :src="
-                                    isBase64(imag) ? imag : content_url + imag
-                                  "
+                                  :src="isBase64(imag) ? imag : content_url + imag"
                                   alt="Image"
                                   @click.stop
                                 />
@@ -458,10 +398,7 @@
                                     background-color: #faebd700;
                                   "
                                 >
-                                  <v-icon
-                                    color="red"
-                                    size="30"
-                                    style="color: red"
+                                  <v-icon color="red" size="30" style="color: red"
                                     >mdi-delete</v-icon
                                   >
                                 </v-btn>
@@ -482,11 +419,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -604,22 +537,23 @@ export default {
       visibleDeleteIcons: [],
       visibleDeleteIconsE: [],
       filesE: [],
+      Forms: [],
+      Houses: [],
+      HousesShow: false,
+      building_type: null,
       addDialog: {
         open: false,
         saveLoading: false,
       },
       data: {
-        image: [],
         name: null,
-        price: null,
         description: null,
-        rating: null,
-        living_rooms: null,
-        bath_rooms: null,
-        bed_rooms: null,
-        space: null,
+        form: null,
+        center_form_id: null,
+        center_form_house_id: null,
         is_available: null,
         existing_type: null,
+        image: [],
       },
       // add
 
@@ -656,6 +590,18 @@ export default {
     } else {
       this.userData = ["add", "edit", "remove"];
     }
+    this.getForms();
+  },
+  watch: {
+    "dialogEdit.editedItem.center_form_id": {
+      handler(newVal) {
+        const selectedItem = this.Forms.find((item) => item._id === newVal);
+        if (selectedItem) {
+          this.getHousesEditO(selectedItem);
+        }
+      },
+      immediate: true,
+    },
   },
   computed: {
     Rules() {
@@ -688,10 +634,10 @@ export default {
           key: "name",
         },
         {
-          title: this.t("Price"),
+          title: this.t("The type"),
           type: "strong",
           link: ``,
-          key: "price",
+          key: "existing_type",
         },
         {
           title: this.t("Details"),
@@ -700,34 +646,16 @@ export default {
           key: "description",
         },
         {
-          title: this.t("Appraisal"),
+          title: this.t("Form name"),
           type: "strong",
           link: ``,
-          key: "rating",
+          key: "center_form_name",
         },
         {
-          title: this.t("The area"),
+          title: this.t("Form Code"),
           type: "strong",
           link: ``,
-          key: "space",
-        },
-        {
-          title: this.t("Living Rooms"),
-          type: "strong",
-          link: ``,
-          key: "living_rooms",
-        },
-        {
-          title: this.t("Bedrooms"),
-          type: "strong",
-          link: ``,
-          key: "bed_rooms",
-        },
-        {
-          title: this.t("Bathrooms"),
-          type: "strong",
-          link: ``,
-          key: "bath_rooms",
+          key: "form_code",
         },
         {
           title: this.t("The image"),
@@ -761,6 +689,9 @@ export default {
         { text: this.t("Sale"), value: "بيع" },
         { text: this.t("Rent"), value: "ايجار" },
       ];
+    },
+    filteredHouses() {
+      return this.Houses.filter((House) => House.status !== "تم البيع");
     },
   },
   methods: {
@@ -820,6 +751,40 @@ export default {
         }
       } finally {
         this.table.loading = false;
+      }
+    },
+    async getForms() {
+      try {
+        const response = await adminApi.getFormsSelect();
+
+        this.Forms = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
+    getItemText(item) {
+      if (item.building_type === "شقق") {
+        return `${item.exact_apartment_building} - ${item.name}`;
+      }
+      return item.name;
+    },
+    getHouses() {
+      this.data.center_form_id = this.data.form._id;
+      this.Houses = this.data.form.houses;
+      this.building_type = this.data.form.building_type;
+      this.HousesShow = true;
+    },
+    formatHouse(item) {
+      if (this.building_type == "شقق") {
+        return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
+      } else if (this.building_type == "منازل") {
+        return `منزل ( ${item.name} ) الحالة  (${item.status})`;
       }
     },
     // Get Data
@@ -884,17 +849,13 @@ export default {
 
         try {
           const response = await adminApi.addBuyingOffers({
-            image: this.data.image,
             name: this.data.name,
-            price: this.data.price,
             description: this.data.description,
-            rating: this.data.rating,
-            living_rooms: this.data.living_rooms,
-            bath_rooms: this.data.bath_rooms,
-            bed_rooms: this.data.bed_rooms,
-            space: this.data.space,
+            center_form_id: this.data.center_form_id,
+            center_form_house_id: this.data.center_form_house_id,
             is_available: this.data.is_available,
             existing_type: this.data.existing_type,
+            imgs: this.data.image,
           });
 
           this.addDialog.saveLoading = false;
@@ -903,16 +864,12 @@ export default {
           this.showDialogfunction(response.data.message, "primary");
 
           this.data.name = null;
-          this.data.price = null;
-          this.data.is_available = null;
           this.data.description = null;
-          this.data.rating = null;
-          this.data.space = null;
-          this.data.bath_rooms = null;
+          this.data.center_form_id = null;
+          this.data.center_form_house_id = null;
+          this.data.is_available = null;
           this.data.existing_type = null;
-          this.data.bed_rooms = null;
-          this.data.living_rooms = null;
-          this.data.image = [];
+          this.data.imgs = [];
         } catch (error) {
           if (error.response && error.response.status === 401) {
             this.$store.dispatch("submitLogout");
@@ -938,6 +895,15 @@ export default {
     // showImgs
 
     // editItem
+    getHousesEditO(item) {
+      this.building_type = item.building_type;
+      this.Houses = item.houses;
+    },
+    getHousesEdit(item) {
+      this.dialogEdit.editedItem.center_form_house_id = null;
+      this.building_type = item.building_type;
+      this.Houses = item.houses;
+    },
     editItem(item) {
       this.dialogEdit.editedItem = { ...item };
       this.dialogEdit.open = true;
@@ -951,17 +917,13 @@ export default {
         try {
           const response = await adminApi.editBuyingOffers({
             buy_id: this.dialogEdit.editedItem._id,
-            image: this.dialogEdit.editedItem.imgs,
             name: this.dialogEdit.editedItem.name,
-            price: this.dialogEdit.editedItem.price,
             description: this.dialogEdit.editedItem.description,
-            rating: this.dialogEdit.editedItem.rating,
-            living_rooms: this.dialogEdit.editedItem.living_rooms,
-            bath_rooms: this.dialogEdit.editedItem.bath_rooms,
-            bed_rooms: this.dialogEdit.editedItem.bed_rooms,
-            space: this.dialogEdit.editedItem.space,
+            center_form_id: this.dialogEdit.editedItem.center_form_id,
+            center_form_house_id: this.dialogEdit.editedItem.center_form_house_id,
             is_available: this.dialogEdit.editedItem.is_available,
             existing_type: this.dialogEdit.editedItem.existing_type,
+            imgs: this.dialogEdit.editedItem.imgs,
           });
 
           this.dialogEdit.open = false;

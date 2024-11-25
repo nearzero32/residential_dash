@@ -527,6 +527,12 @@ export default {
           name: `admin-print-application-form-loam`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "6729808e77eecc001eb05f19") {
+        localStorage.setItem("printApplicationFormMarinaBaghdad", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-application-form-marina-baghdad`,
+        });
+        window.open(routeData.href, "_blank");
       }
       //   localStorage.setItem("CustomerAttendanceForm", JSON.stringify(item));
       //   let routeData = this.$router.resolve({

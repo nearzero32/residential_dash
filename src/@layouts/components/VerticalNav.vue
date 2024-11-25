@@ -83,15 +83,15 @@ let filteredNavItems = props.navItems
     if (centerId) {
       matchesCenterId =
         item.name !== "marketing Residentail" ||
-        ["663944d5260d48b0635862ad", "6638d6a4c8462a1d83346b54"].includes(
-          centerId
-        );
+        [
+          "663944d5260d48b0635862ad",
+          "6638d6a4c8462a1d83346b54",
+          "672981a677eecc001eb05f4a",
+        ].includes(centerId);
     }
 
     const filteredItem =
-      matchesAccountType && matchesBuildingType && matchesCenterId
-        ? { ...item }
-        : null;
+      matchesAccountType && matchesBuildingType && matchesCenterId ? { ...item } : null;
 
     if (filteredItem && filteredItem.children) {
       // تصفية الأطفال بناءً على تطابق الاسم مع 'pages' فقط إذا كان نوع الحساب 'assistance'
@@ -159,10 +159,7 @@ if (accountType !== "assistance") {
   >
     <div class="nav-header">
       <slot name="nav-header">
-        <RouterLink
-          to="/"
-          class="app-logo d-flex align-center gap-x-3 app-title-wrapper"
-        >
+        <RouterLink to="/" class="app-logo d-flex align-center gap-x-3 app-title-wrapper">
           <img :src="log" style="width: 30px" />
           <Transition name="vertical-nav-app-title">
             <h1
@@ -202,10 +199,7 @@ if (accountType !== "assistance") {
     <slot name="before-nav-items">
       <div class="vertical-nav-items-shadow" />
     </slot>
-    <slot
-      name="nav-items"
-      :update-is-vertical-nav-scrolled="updateIsVerticalNavScrolled"
-    >
+    <slot name="nav-items" :update-is-vertical-nav-scrolled="updateIsVerticalNavScrolled">
       <PerfectScrollbar
         :key="isAppRtl"
         tag="ul"
@@ -223,7 +217,6 @@ if (accountType !== "assistance") {
     </slot>
   </Component>
 </template>
-
 
 <style lang="scss">
 @use "@configured-variables" as variables;

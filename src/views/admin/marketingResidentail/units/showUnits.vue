@@ -28,10 +28,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -71,13 +68,59 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="12">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="data.name"
                     :rules="Rules.required"
                     :label="t(`The name`)"
                     outlined
                   />
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="6"
+                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
+                >
+                  <VAutocomplete
+                    v-model="data.center_form_ids"
+                    :rules="Rules.required"
+                    :items="Forms"
+                    outlined
+                    :item-title="getItemText"
+                    attach
+                    multiple
+                    :label="t(`Form name`)"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="12"
+                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
+                >
+                  <VRow>
+                    <VCol cols="12" md="6">
+                      <VFileInput
+                        v-model="file"
+                        :label="t('The image')"
+                        accept="image/png, image/jpeg, image/bmp"
+                        prepend-icon="mdi-camera-outline"
+                        @change="handleFileChange"
+                        @click:clear="
+                          file = null;
+                          data.logo = null;
+                        "
+                      />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                      <img
+                        v-if="data.logo"
+                        style="width: 130px"
+                        :src="isBase64(data.logo) ? data.logo : content_url + data.logo"
+                        alt=""
+                        @click.stop
+                      />
+                    </VCol>
+                  </VRow>
                 </VCol>
                 <VCol cols="12" md="12">
                   <v-textarea
@@ -96,11 +139,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -118,13 +157,63 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="12">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="dialogEdit.editedItem.name"
                     :rules="Rules.required"
                     :label="t(`The name`)"
                     outlined
                   />
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="6"
+                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
+                >
+                  <VAutocomplete
+                    v-model="dialogEdit.editedItem.center_form_ids"
+                    :rules="Rules.required"
+                    :items="Forms"
+                    outlined
+                    :item-title="getItemText"
+                    attach
+                    multiple
+                    :label="t(`Form name`)"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="12"
+                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
+                >
+                  <VRow>
+                    <VCol cols="12" md="6">
+                      <VFileInput
+                        v-model="file"
+                        :label="t('The image')"
+                        accept="image/png, image/jpeg, image/bmp"
+                        prepend-icon="mdi-camera-outline"
+                        @change="handleFileChange"
+                        @click:clear="
+                          file = null;
+                          dialogEdit.editedItem.logo = null;
+                        "
+                      />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                      <img
+                        v-if="dialogEdit.editedItem.logo"
+                        style="width: 130px"
+                        :src="
+                          isBase64(dialogEdit.editedItem.logo)
+                            ? dialogEdit.editedItem.logo
+                            : content_url + dialogEdit.editedItem.logo
+                        "
+                        alt=""
+                        @click.stop
+                      />
+                    </VCol>
+                  </VRow>
                 </VCol>
                 <VCol cols="12" md="12">
                   <v-textarea
@@ -143,11 +232,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -250,6 +335,8 @@ export default {
       // table
 
       // add
+      results: {},
+      Forms: [],
       addDialog: {
         open: false,
         saveLoading: false,
@@ -257,6 +344,8 @@ export default {
       data: {
         name: null,
         note: null,
+        logo: null,
+        center_form_ids: [],
       },
       // add
 
@@ -288,6 +377,8 @@ export default {
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
+    this.results = JSON.parse(localStorage.getItem("results"));
+    this.getForms();
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
     } else {
@@ -386,18 +477,65 @@ export default {
         this.table.loading = false;
       }
     },
+
+    async getForms() {
+      try {
+        const response = await adminApi.getFormsSelect();
+
+        this.Forms = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      }
+    },
     // Get Data
 
     // Add Data
+    getItemText(item) {
+      if (item.building_type === "شقق") {
+        return `${item.exact_apartment_building} - ${item.name}`;
+      }
+      return item.name;
+    },
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.data.logo = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    isBase64(image) {
+      return /^data:image\/[a-z]+;base64,/.test(image);
+    },
     async addCenter() {
       const { valid } = await this.$refs.form.validate();
 
       if (valid) {
+        if (this.results.center_id._id === "672981a677eecc001eb05f4a") {
+          if (this.data.logo === null) {
+            this.showDialogfunction("يجب اضافة لوكو", "#FF5252");
+            return;
+          }
+          if (this.data.center_form_ids.length <= 0) {
+            this.showDialogfunction("يجب اختيار نموذج واحد على الاقل", "#FF5252");
+            return;
+          }
+        }
         this.addDialog.saveLoading = true;
         try {
           const response = await adminApi.addUnits({
             name: this.data.name,
             note: this.data.note,
+            center_form_ids: this.data.center_form_ids,
+            logo: this.data.logo,
           });
 
           this.addDialog.saveLoading = false;
@@ -424,6 +562,19 @@ export default {
     // Add Data
 
     // editItem
+    handleFileChangeEdit(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          this.dialogEdit.editedItem.logo = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
     editItem(item) {
       this.dialogEdit.editedItem = { ...item };
       this.dialogEdit.open = true;
@@ -432,6 +583,16 @@ export default {
       const { valid } = await this.$refs.form.validate();
 
       if (valid) {
+        if (this.results.center_id._id === "672981a677eecc001eb05f4a") {
+          if (this.dialogEdit.editedItem.logo === null) {
+            this.showDialogfunction("يجب اضافة لوكو", "#FF5252");
+            return;
+          }
+          if (this.dialogEdit.editedItem.center_form_ids.length <= 0) {
+            this.showDialogfunction("يجب اختيار نموذج واحد على الاقل", "#FF5252");
+            return;
+          }
+        }
         this.dialogEdit.loading = true;
 
         try {
@@ -439,6 +600,8 @@ export default {
             id: this.dialogEdit.editedItem._id,
             name: this.dialogEdit.editedItem.name,
             note: this.dialogEdit.editedItem.note,
+            center_form_ids: this.dialogEdit.editedItem.center_form_ids,
+            logo: this.dialogEdit.editedItem.logo,
           });
 
           this.dialogEdit.open = false;
@@ -472,9 +635,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeUnits(
-          this.dialogDelete.deletedItem._id
-        );
+        const response = await adminApi.removeUnits(this.dialogDelete.deletedItem._id);
         this.dialogDelete.loading = false;
         this.dialogDelete.open = false;
         this.getCenter();

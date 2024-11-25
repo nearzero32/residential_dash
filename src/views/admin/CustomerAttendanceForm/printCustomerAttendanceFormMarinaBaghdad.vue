@@ -27,23 +27,25 @@
                   md="12"
                   style="padding: 10px; text-align: center; white-space: pre-wrap"
                 >
-                  <img :src="logo1" style="width: 15%" alt="" />
+                  <v-container style="text-align: center; padding: 0px">
+                    <img :src="ba" style="width: 150px" alt="" />
+                  </v-container>
                 </v-col>
               </v-row>
               <hr style="margin-top: 20px; border-color: rgb(4 4 4)" />
               <v-container>
                 <v-row style="justify-content: center">
-                  <v-col cols="3" md="3">
+                  <v-col cols="4" md="4">
                     <h4
                       style="
                         text-align: center;
-                        color: #ffffff;
+                        color: rgb(0 0 0);
                         padding: 7px 10px;
                         border-radius: 10px;
-                        background: #827962;
+                        background: rgb(232 212 187);
                       "
                     >
-                      إستمارة زائرین
+                      إستمارة حضور زبون
                     </h4>
                   </v-col>
                 </v-row>
@@ -74,6 +76,11 @@
                   </h3>
                   <br />
                   <h3 style="font-weight: 100; color: #827962">
+                    العنـوان الوضيفـي :
+                    <strong style="border-bottom: dotted"> {{ data.caller_job }}</strong>
+                  </h3>
+                  <br />
+                  <h3 style="font-weight: 100; color: #827962">
                     عنوان السکن :
                     <strong style="border-bottom: dotted">
                       {{ data.caller_address }}</strong
@@ -81,9 +88,9 @@
                   </h3>
                   <br />
                   <h3 style="font-weight: 100; color: #827962">
-                    المساحــــــة :
+                    طــريقــة الــوصــول :
                     <strong style="border-bottom: dotted">
-                      {{ data.space_required }}</strong
+                      {{ data.how_he_hear_about_us }}</strong
                     >
                   </h3>
                   <br />
@@ -100,7 +107,12 @@
                   </h4>
                 </div>
               </v-col>
-              <v-col cols="6" md="6" style="text-align: center">
+              <v-col
+                cols="6"
+                md="6"
+                style="text-align: center"
+                v-if="dataResidential.center_id && dataResidential.center_id.qr"
+              >
                 <p>يمكنك تحميل التطبيق</p>
                 <img
                   style="width: 120px"
@@ -163,12 +175,16 @@
 
 <script>
 import adminApi from "@/api/adminApi";
-import logo1 from "@/assets/logo/loam.png";
+import logo1 from "@/assets/logo/Screenshot-2024-11-24-113024.png";
+import ba from "@/assets/logo/mar.jpg";
+import naM from "@/assets/images/naM.png";
 
 export default {
   data() {
     return {
       logo1,
+      ba,
+      naM,
       id: JSON.parse(localStorage.getItem("CustomerAttendanceFormMarinaBaghdad"))._id,
       data: {},
       user: JSON.parse(localStorage.getItem("results")),

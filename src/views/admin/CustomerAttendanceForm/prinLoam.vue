@@ -163,7 +163,7 @@
 
 <script>
 import adminApi from "@/api/adminApi";
-import logo1 from "@/assets/logo/loam.png";
+import logo1 from "@/assets/logo/Screenshot-2024-11-24-113024.png";
 
 export default {
   data() {

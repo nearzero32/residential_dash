@@ -251,7 +251,7 @@
 <script>
 import { getCurrentDateInString } from "@/constant/date";
 import numberWithComma from "@/constant/number";
-import logo1 from "@/assets/logo/loam.png";
+import logo1 from "@/assets/logo/Screenshot-2024-11-24-113024.png";
 import adminApi from "@/api/adminApi";
 
 export default {
@@ -277,9 +277,9 @@ export default {
         const response = await adminApi.getOneApplicationForm(this.id);
 
         this.data = response.data.results;
-        // setTimeout(() => {
-        //   this.printElement();
-        // }, 1000);
+        setTimeout(() => {
+          this.printElement();
+        }, 1000);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");

@@ -810,64 +810,48 @@ class adminApi {
     );
     return response;
   }
+
   async addBuyingOffers({
-    image,
     name,
-    price,
     description,
-    rating,
-    living_rooms,
-    bath_rooms,
-    bed_rooms,
-    space,
+    center_form_id,
+    center_form_house_id,
     is_available,
     existing_type,
+    imgs,
   }) {
     const requestData = {
-      imgs: image,
       name,
-      price,
       description,
-      rating,
-      living_rooms,
-      bath_rooms,
-      bed_rooms,
-      space,
+      center_form_id,
+      center_form_house_id,
       is_available,
       existing_type,
+      imgs,
     };
     const response = await axiosInstance.post(`/houses`, requestData);
     return response;
   }
   async editBuyingOffers({
     buy_id,
-    image,
     name,
-    price,
     description,
-    rating,
-    living_rooms,
-    bath_rooms,
-    bed_rooms,
-    space,
+    center_form_id,
+    center_form_house_id,
     is_available,
     existing_type,
+    imgs,
   }) {
     const requestData = {
-      house_id: buy_id,
-      imgs: image,
       name,
-      price,
       description,
-      rating,
-      living_rooms,
-      bath_rooms,
-      bed_rooms,
-      space,
+      center_form_id,
+      center_form_house_id,
       is_available,
       existing_type,
+      imgs,
     };
-    const response = await axiosInstance.put(`/houses`, requestData);
+    const response = await axiosInstance.put(`/houses/${buy_id}`, requestData);
     return response;
   }
   async removeBuyingOffers(id) {
@@ -1590,10 +1574,12 @@ class adminApi {
     );
     return response;
   }
-  async addUnits({ name, note }) {
+  async addUnits({ name, note, center_form_ids, logo }) {
     const requestData = {
       name,
       note,
+      center_form_ids,
+      logo,
     };
     const response = await axiosInstance.post(
       `/marketing_residential/market_residential_units`,
@@ -1601,11 +1587,13 @@ class adminApi {
     );
     return response;
   }
-  async editUnits({ id, name, note }) {
+  async editUnits({ id, name, note, center_form_ids, logo }) {
     const requestData = {
       id,
       name,
       note,
+      center_form_ids,
+      logo,
     };
     const response = await axiosInstance.put(
       `/marketing_residential/market_residential_units/${id}`,
