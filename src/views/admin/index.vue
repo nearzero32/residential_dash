@@ -14,9 +14,7 @@
             <CrmSalesOverview
               :key="componentKey"
               :allHouses="
-                data && data.houses && data.houses.allHouses
-                  ? data.houses.allHouses
-                  : 0
+                data && data.houses && data.houses.allHouses ? data.houses.allHouses : 0
               "
               :allOwners="data && data.allOwners ? data.allOwners : 0"
               :allReceivedOwners="
@@ -30,7 +28,10 @@
         </v-expansion-panel>
       </v-expansion-panels>
       <br />
-      <v-expansion-panels v-model="panel">
+      <v-expansion-panels
+        v-model="panel"
+        v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+      >
         <v-expansion-panel title="مخطط بياني لزوار الملاك">
           <v-expansion-panel-text>
             <VCard>
@@ -38,23 +39,15 @@
                 <VRow>
                   <VCol cols="12" md="5">
                     <VCardTitle>مخطط بياني لزوار الملاك</VCardTitle>
-                    <VCardSubtitle
-                      >السنوي &amp; السهري &amp; اليومي</VCardSubtitle
-                    >
+                    <VCardSubtitle>السنوي &amp; السهري &amp; اليومي</VCardSubtitle>
                   </VCol>
                   <VCol cols="12" md="2">
-                    <div
-                      class="d-flex align-center"
-                      style="justify-content: center"
-                    >
+                    <div class="d-flex align-center" style="justify-content: center">
                       <VueDatePicker v-model="year" year-picker />
                     </div>
                   </VCol>
                   <VCol cols="12" md="5">
-                    <div
-                      class="d-flex align-center"
-                      style="justify-content: center"
-                    >
+                    <div class="d-flex align-center" style="justify-content: center">
                       <h6 class="text-h6 me-3">
                         عدد الزوار الكلي لسنة ( {{ year }} )
                         <!-- 401 -->
@@ -83,10 +76,7 @@
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/phone.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/phone.png" style="width: 35px" /><br />
               <strong
                 >{{ t("Number of customer inquiries") }} <br />(
                 {{ data.allCallCenter }} )</strong
@@ -111,10 +101,7 @@
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/request.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/request.png" style="width: 35px" /><br />
               <strong
                 >{{ t("Number of housing unit reservation forms") }} <br />(
                 {{ data.allApplicationForm }} )</strong
@@ -153,10 +140,7 @@
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/maintenance.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/maintenance.png" style="width: 35px" /><br />
               <strong>عدد عقود المبيعات <br />( لا يوجد )</strong>
             </VCardText>
           </VCard>
@@ -192,13 +176,29 @@
       </VRow>
       <hr style="margin-block: 20px" />
       <VRow style="justify-content: center">
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id === '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/maintenance.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/maintenance.png" style="width: 35px" /><br />
+              <strong
+                >{{ t("Number of complexes") }} <br />(
+                {{ data.AllServicesMaintenance }} )</strong
+              >
+            </VCardText>
+          </VCard>
+        </VCol>
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
+          <VCard elevation="16" :loading="loading" outlined shaped>
+            <VCardText style="text-align: center">
+              <img src="@/assets/images/icon/maintenance.png" style="width: 35px" /><br />
               <strong
                 >{{ t("Number of maintenance services") }} <br />(
                 {{ data.AllServicesMaintenance }} )</strong
@@ -220,21 +220,25 @@
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/ads.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/ads.png" style="width: 35px" /><br />
               <strong
-                >{{ t("Number of advertisements") }} <br />(
-                {{ data.allAds }} )</strong
+                >{{ t("Number of advertisements") }} <br />( {{ data.allAds }} )</strong
               >
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
               <img
@@ -242,8 +246,7 @@
                 style="width: 35px"
               /><br />
               <strong
-                >{{ t("Number of features") }} <br />(
-                {{ data.allAdvantages }} )</strong
+                >{{ t("Number of features") }} <br />( {{ data.allAdvantages }} )</strong
               >
             </VCardText>
           </VCard>
@@ -251,38 +254,33 @@
         <VCol cols="12" md="3">
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/staff.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/staff.png" style="width: 35px" /><br />
               <strong
-                >{{ t("Number of employees") }} <br />(
-                {{ data.allEmployee }} )</strong
+                >{{ t("Number of employees") }} <br />( {{ data.allEmployee }} )</strong
               >
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/policeman.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{ t("Number of guards") }} <br />(
-                {{ data.allGuards }} )</strong
-              >
+              <img src="@/assets/images/icon/policeman.png" style="width: 35px" /><br />
+              <strong>{{ t("Number of guards") }} <br />( {{ data.allGuards }} )</strong>
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/reserve.png"
-                style="width: 35px"
-              /><br />
+              <img src="@/assets/images/icon/reserve.png" style="width: 35px" /><br />
               <strong
                 >{{ t("Number of service bookings") }} <br />
                 ( {{ data.allReservationsInServices }} )</strong
@@ -290,17 +288,15 @@
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
-              <img
-                src="@/assets/images/icon/team.png"
-                style="width: 35px"
-              /><br />
-              <strong
-                >{{ t("Number of users") }} <br />(
-                {{ data.allUsers }} )</strong
-              >
+              <img src="@/assets/images/icon/team.png" style="width: 35px" /><br />
+              <strong>{{ t("Number of users") }} <br />( {{ data.allUsers }} )</strong>
             </VCardText>
           </VCard>
         </VCol>
@@ -362,6 +358,7 @@ export default {
   },
   data() {
     return {
+      userDataString: null,
       panel: [1],
       panell: [1],
       //data
@@ -379,6 +376,8 @@ export default {
     };
   },
   created() {
+    this.userDataString = JSON.parse(localStorage.getItem("results"));
+
     this.getCenter();
   },
   watch: {
