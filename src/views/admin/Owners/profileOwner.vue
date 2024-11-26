@@ -43,9 +43,7 @@
           <br />
           <h4>{{ t("Password") }} : {{ data.password_show }}</h4>
           <br />
-          <h4>
-            {{ t("National Identification Number") }} : {{ data.id_number }}
-          </h4>
+          <h4>{{ t("National Identification Number") }} : {{ data.id_number }}</h4>
           <br />
           <h4>
             {{ t("Issuing Authority of the Identification Card") }} :
@@ -57,13 +55,9 @@
             {{ data.id_issue_date }}
           </h4>
           <br />
-          <h4>
-            {{ t("Residence Card Number") }} : {{ data.residence_card_number }}
-          </h4>
+          <h4>{{ t("Residence Card Number") }} : {{ data.residence_card_number }}</h4>
           <br />
-          <h4>
-            {{ t("Issuing Authority of the Residence Card") }} : {{ data.rec }}
-          </h4>
+          <h4>{{ t("Issuing Authority of the Residence Card") }} : {{ data.rec }}</h4>
 
           <br />
           <h4>{{ t("Job Title") }} : {{ data.owner_title_jop }}</h4>
@@ -197,9 +191,7 @@
       </v-card>
       <br />
       <VCard class="mb-6">
-        <VCardTitle style="text-align: center">{{
-          t("Operations")
-        }}</VCardTitle>
+        <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
         <VCardText>
           <VRow style="justify-content: space-between">
             <VCol cols="12" md="3" style="text-align: center">
@@ -218,8 +210,7 @@
               md="3"
               style="text-align: center"
               v-if="
-                (tableTenants.Data.length === 0 &&
-                  tableTenants.is_disabled == false) ||
+                (tableTenants.Data.length === 0 && tableTenants.is_disabled == false) ||
                 tableTenants.Data[0]?.is_disabled === true
               "
             >
@@ -239,10 +230,7 @@
       <br />
       <VCard v-if="table.Data.length > 0">
         <VCardTitle>
-          <VRow
-            justify="space-between"
-            style="align-items: center; margin-bottom: 15px"
-          >
+          <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
             <VCol cols="12" sm="12" md="12">
               <h4 style="text-align: center">الملاك الاخرين</h4>
             </VCol>
@@ -361,10 +349,7 @@
       <br />
       <VCard>
         <VCardTitle>
-          <VRow
-            justify="space-between"
-            style="align-items: center; margin-bottom: 15px"
-          >
+          <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
             <VCol cols="12" sm="12" md="12">
               <h4 style="text-align: center">{{ t("Tenants") }}</h4>
             </VCol>
@@ -475,9 +460,7 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VLabel
-                    >{{ t("Date of Issuance of the Identification Card") }}
-                  </VLabel>
+                  <VLabel>{{ t("Date of Issuance of the Identification Card") }} </VLabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dataAddTenant.id_issue_date"
@@ -504,9 +487,7 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VLabel
-                    >{{ t("Date of Issuance of the Residence Card") }}
-                  </VLabel>
+                  <VLabel>{{ t("Date of Issuance of the Residence Card") }} </VLabel>
 
                   <VueDatePicker
                     :format="format"
@@ -696,11 +677,7 @@
           <VBtn color="primary" text @click="addTenant.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addTenant.saveLoading"
-            @click="addCenterTenant"
-          >
+          <VBtn color="primary" :loading="addTenant.saveLoading" @click="addCenterTenant">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -751,9 +728,7 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VLabel
-                    >{{ t("Date of Issuance of the Identification Card") }}
-                  </VLabel>
+                  <VLabel>{{ t("Date of Issuance of the Identification Card") }} </VLabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dataAdd.id_issue_date"
@@ -780,9 +755,7 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VLabel
-                    >{{ t("Date of Issuance of the Residence Card") }}
-                  </VLabel>
+                  <VLabel>{{ t("Date of Issuance of the Residence Card") }} </VLabel>
 
                   <VueDatePicker
                     :format="format"
@@ -961,11 +934,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -1016,9 +985,7 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <Vlabel
-                    >{{ t("Date of Issuance of the Identification Card") }}
-                  </Vlabel>
+                  <Vlabel>{{ t("Date of Issuance of the Identification Card") }} </Vlabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.id_issue_date"
@@ -1039,17 +1006,13 @@
                 </VCol>
                 <VCol cols="12" md="4">
                   <VTextField
-                    v-model="
-                      dialogEdit.editedItem.residence_card_place_of_issue
-                    "
+                    v-model="dialogEdit.editedItem.residence_card_place_of_issue"
                     :label="t('Issuing Authority of the Residence Card')"
                     outlined
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <Vlabel
-                    >{{ t("Date of Issuance of the Residence Card") }}
-                  </Vlabel>
+                  <Vlabel>{{ t("Date of Issuance of the Residence Card") }} </Vlabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEdit.editedItem.residence_card_issue_date"
@@ -1150,8 +1113,7 @@
                         :src="
                           isBase64(dialogEdit.editedItem.location_img_front)
                             ? dialogEdit.editedItem.location_img_front
-                            : content_url +
-                              dialogEdit.editedItem.location_img_front
+                            : content_url + dialogEdit.editedItem.location_img_front
                         "
                         alt=""
                         @click.stop
@@ -1181,8 +1143,7 @@
                         :src="
                           isBase64(dialogEdit.editedItem.location_img_back)
                             ? dialogEdit.editedItem.location_img_back
-                            : content_url +
-                              dialogEdit.editedItem.location_img_back
+                            : content_url + dialogEdit.editedItem.location_img_back
                         "
                         alt=""
                         @click.stop
@@ -1229,11 +1190,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -1242,11 +1199,7 @@
     <!-- Edit Class Dialog -->
 
     <!-- Edit Tenants Class Dialog -->
-    <VDialog
-      v-model="dialogEditTenants.open"
-      max-width="800px"
-      max-height="100%"
-    >
+    <VDialog v-model="dialogEditTenants.open" max-width="800px" max-height="100%">
       <VCard>
         <VCardTitle>
           <span class="headline">{{ t("Edit") }}</span>
@@ -1312,9 +1265,7 @@
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VLabel
-                    >{{ t("Date of Issuance of the Identification Card") }}
-                  </VLabel>
+                  <VLabel>{{ t("Date of Issuance of the Identification Card") }} </VLabel>
                   <VueDatePicker
                     :format="format"
                     v-model="dialogEditTenants.editedItem.id_issue_date"
@@ -1335,23 +1286,17 @@
                 </VCol>
                 <VCol cols="12" md="4">
                   <VTextField
-                    v-model="
-                      dialogEditTenants.editedItem.residence_card_place_of_issue
-                    "
+                    v-model="dialogEditTenants.editedItem.residence_card_place_of_issue"
                     :label="t('Issuing Authority of the Residence Card')"
                     outlined
                   />
                 </VCol>
                 <VCol cols="12" md="4">
-                  <VLabel
-                    >{{ t("Date of Issuance of the Residence Card") }}
-                  </VLabel>
+                  <VLabel>{{ t("Date of Issuance of the Residence Card") }} </VLabel>
 
                   <VueDatePicker
                     :format="format"
-                    v-model="
-                      dialogEditTenants.editedItem.residence_card_issue_date
-                    "
+                    v-model="dialogEditTenants.editedItem.residence_card_issue_date"
                     density="compact"
                     :label="t('Date of Issuance of the Residence Card')"
                     outlined
@@ -1400,8 +1345,7 @@
                         :src="
                           isBase64(dialogEditTenants.editedItem.id_img_front)
                             ? dialogEditTenants.editedItem.id_img_front
-                            : content_url +
-                              dialogEditTenants.editedItem.id_img_front
+                            : content_url + dialogEditTenants.editedItem.id_img_front
                         "
                         alt=""
                         @click.stop
@@ -1431,8 +1375,7 @@
                         :src="
                           isBase64(dialogEditTenants.editedItem.id_img_back)
                             ? dialogEditTenants.editedItem.id_img_back
-                            : content_url +
-                              dialogEditTenants.editedItem.id_img_back
+                            : content_url + dialogEditTenants.editedItem.id_img_back
                         "
                         alt=""
                         @click.stop
@@ -1451,8 +1394,7 @@
                         @change="handleFileChangeLEditTenant"
                         @click:clear="
                           file = null;
-                          dialogEditTenants.editedItem.location_img_front =
-                            null;
+                          dialogEditTenants.editedItem.location_img_front = null;
                         "
                       />
                     </VCol>
@@ -1461,9 +1403,7 @@
                         v-if="dialogEditTenants.editedItem.location_img_front"
                         style="width: 130px"
                         :src="
-                          isBase64(
-                            dialogEditTenants.editedItem.location_img_front
-                          )
+                          isBase64(dialogEditTenants.editedItem.location_img_front)
                             ? dialogEditTenants.editedItem.location_img_front
                             : content_url +
                               dialogEditTenants.editedItem.location_img_front
@@ -1494,12 +1434,9 @@
                         v-if="dialogEditTenants.editedItem.location_img_back"
                         style="width: 130px"
                         :src="
-                          isBase64(
-                            dialogEditTenants.editedItem.location_img_back
-                          )
+                          isBase64(dialogEditTenants.editedItem.location_img_back)
                             ? dialogEditTenants.editedItem.location_img_back
-                            : content_url +
-                              dialogEditTenants.editedItem.location_img_back
+                            : content_url + dialogEditTenants.editedItem.location_img_back
                         "
                         alt=""
                         @click.stop
@@ -1529,8 +1466,7 @@
                         :src="
                           isBase64(dialogEditTenants.editedItem.passport_img)
                             ? dialogEditTenants.editedItem.passport_img
-                            : content_url +
-                              dialogEditTenants.editedItem.passport_img
+                            : content_url + dialogEditTenants.editedItem.passport_img
                         "
                         alt=""
                         @click.stop
@@ -1837,30 +1773,19 @@ export default {
         email: [
           (value) => !!value || this.t("This field is required"),
           (value) =>
-            /.+@.+\..+/.test(value) ||
-            this.t("Please enter a valid email address"),
+            /.+@.+\..+/.test(value) || this.t("Please enter a valid email address"),
         ],
-        location_img_back: [
-          (value) => !!value || this.t("This field is required"),
-        ],
-        location_img_front: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        location_img_back: [(value) => !!value || this.t("This field is required")],
+        location_img_front: [(value) => !!value || this.t("This field is required")],
         id_img_back: [(value) => !!value || this.t("This field is required")],
         id_img_front: [(value) => !!value || this.t("This field is required")],
-        owner_title_jop: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        owner_title_jop: [(value) => !!value || this.t("This field is required")],
         residence_card_place_of_issue: [
           (value) => !!value || this.t("This field is required"),
         ],
-        residence_card_number: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        residence_card_number: [(value) => !!value || this.t("This field is required")],
         id_issue_date: [(value) => !!value || this.t("This field is required")],
-        id_place_of_issue: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        id_place_of_issue: [(value) => !!value || this.t("This field is required")],
         name: [(value) => !!value || this.t("This field is required")],
         residence_card_issue_date: [
           (value) => !!value || this.t("This field is required"),
@@ -1869,8 +1794,7 @@ export default {
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (value.length !== 11)
-              return this.t("Phone number must be 11 digits");
+            if (value.length !== 11) return this.t("Phone number must be 11 digits");
             return true;
           },
         ],
@@ -2114,13 +2038,11 @@ export default {
       }
 
       const key =
-        this.tableOptionsTenants.sortBy &&
-        this.tableOptionsTenants.sortBy.length > 0
+        this.tableOptionsTenants.sortBy && this.tableOptionsTenants.sortBy.length > 0
           ? this.tableOptionsTenants.sortBy[0]
           : "createdAt";
       const order =
-        this.tableOptionsTenants.sortDesc &&
-        this.tableOptionsTenants.sortDesc.length > 0
+        this.tableOptionsTenants.sortDesc && this.tableOptionsTenants.sortDesc.length > 0
           ? this.tableOptionsTenants.sortDesc[0]
             ? "desc"
             : "asc"
@@ -2402,8 +2324,7 @@ export default {
             residence_card_issue_date: this.format(
               this.dataAdd.residence_card_issue_date
             ),
-            residence_card_place_of_issue:
-              this.dataAdd.residence_card_place_of_issue,
+            residence_card_place_of_issue: this.dataAdd.residence_card_place_of_issue,
             owner_title_jop: this.dataAdd.owner_title_jop,
             id_img_front: this.dataAdd.id_img_front,
             id_img_back: this.dataAdd.id_img_back,
@@ -2471,8 +2392,8 @@ export default {
             residence_card_issue_date: this.format(
               this.dataAddTenant.residence_card_issue_date
             ),
-            residence_card_place_of_issue:
-              this.dataAddTenant.residence_card_place_of_issue,
+            residence_card_place_of_issue: this.dataAddTenant
+              .residence_card_place_of_issue,
             owner_title_jop: this.dataAddTenant.owner_title_jop,
             id_img_front: this.dataAddTenant.id_img_front,
             id_img_back: this.dataAddTenant.id_img_back,
@@ -2519,11 +2440,8 @@ export default {
         }
       }
 
-      if (
-        typeof this.dialogEdit.editedItem.residence_card_issue_date === "string"
-      ) {
-        const dateParts =
-          this.dialogEdit.editedItem.residence_card_issue_date.split("/");
+      if (typeof this.dialogEdit.editedItem.residence_card_issue_date === "string") {
+        const dateParts = this.dialogEdit.editedItem.residence_card_issue_date.split("/");
         if (dateParts.length === 3) {
           const day = parseInt(dateParts[0], 10);
           const month = parseInt(dateParts[1], 10) - 1;
@@ -2551,16 +2469,13 @@ export default {
             name: this.dialogEdit.editedItem.name,
             phone: this.dialogEdit.editedItem.phone,
             id_place_of_issue: this.dialogEdit.editedItem.id_place_of_issue,
-            id_issue_date: this.format(
-              this.dialogEdit.editedItem.id_issue_date
-            ),
-            residence_card_number:
-              this.dialogEdit.editedItem.residence_card_number,
+            id_issue_date: this.format(this.dialogEdit.editedItem.id_issue_date),
+            residence_card_number: this.dialogEdit.editedItem.residence_card_number,
             residence_card_issue_date: this.format(
               this.dialogEdit.editedItem.residence_card_issue_date
             ),
-            residence_card_place_of_issue:
-              this.dialogEdit.editedItem.residence_card_place_of_issue,
+            residence_card_place_of_issue: this.dialogEdit.editedItem
+              .residence_card_place_of_issue,
             owner_title_jop: this.dialogEdit.editedItem.owner_title_jop,
             id_img_front: this.dialogEdit.editedItem.id_img_front,
             id_img_back: this.dialogEdit.editedItem.id_img_back,
@@ -2598,34 +2513,30 @@ export default {
       this.dialogEditTenants.editedItem = { ...item };
 
       if (typeof this.dialogEditTenants.editedItem.id_issue_date === "string") {
-        const dateParts =
-          this.dialogEditTenants.editedItem.id_issue_date.split("/");
+        const dateParts = this.dialogEditTenants.editedItem.id_issue_date.split("/");
         if (dateParts.length === 3) {
           const day = parseInt(dateParts[0], 10);
           const month = parseInt(dateParts[1], 10) - 1;
           const year = parseInt(dateParts[2], 10);
-          this.dialogEditTenants.editedItem.id_issue_date = new Date(
-            year,
-            month,
-            day
-          );
+          this.dialogEditTenants.editedItem.id_issue_date = new Date(year, month, day);
         }
       }
 
       if (
-        typeof this.dialogEditTenants.editedItem.residence_card_issue_date ===
-        "string"
+        typeof this.dialogEditTenants.editedItem.residence_card_issue_date === "string"
       ) {
-        const dateParts =
-          this.dialogEditTenants.editedItem.residence_card_issue_date.split(
-            "/"
-          );
+        const dateParts = this.dialogEditTenants.editedItem.residence_card_issue_date.split(
+          "/"
+        );
         if (dateParts.length === 3) {
           const day = parseInt(dateParts[0], 10);
           const month = parseInt(dateParts[1], 10) - 1;
           const year = parseInt(dateParts[2], 10);
-          this.dialogEditTenants.editedItem.residence_card_issue_date =
-            new Date(year, month, day);
+          this.dialogEditTenants.editedItem.residence_card_issue_date = new Date(
+            year,
+            month,
+            day
+          );
         }
       }
 
@@ -2647,25 +2558,20 @@ export default {
             password_show: this.dialogEditTenants.editedItem.password_show,
             bank_id: this.dialogEditTenants.editedItem.bank_id,
             address: this.dialogEditTenants.editedItem.address,
-            id_place_of_issue:
-              this.dialogEditTenants.editedItem.id_place_of_issue,
-            id_issue_date: this.format(
-              this.dialogEditTenants.editedItem.id_issue_date
-            ),
-            residence_card_number:
-              this.dialogEditTenants.editedItem.residence_card_number,
+            id_place_of_issue: this.dialogEditTenants.editedItem.id_place_of_issue,
+            id_issue_date: this.format(this.dialogEditTenants.editedItem.id_issue_date),
+            residence_card_number: this.dialogEditTenants.editedItem
+              .residence_card_number,
             residence_card_issue_date: this.format(
               this.dialogEditTenants.editedItem.residence_card_issue_date
             ),
-            residence_card_place_of_issue:
-              this.dialogEditTenants.editedItem.residence_card_place_of_issue,
+            residence_card_place_of_issue: this.dialogEditTenants.editedItem
+              .residence_card_place_of_issue,
             owner_title_jop: this.dialogEditTenants.editedItem.owner_title_jop,
             id_img_front: this.dialogEditTenants.editedItem.id_img_front,
             id_img_back: this.dialogEditTenants.editedItem.id_img_back,
-            location_img_front:
-              this.dialogEditTenants.editedItem.location_img_front,
-            location_img_back:
-              this.dialogEditTenants.editedItem.location_img_back,
+            location_img_front: this.dialogEditTenants.editedItem.location_img_front,
+            location_img_back: this.dialogEditTenants.editedItem.location_img_back,
             passport_img: this.dialogEditTenants.editedItem.passport_img,
           });
 

@@ -3,9 +3,7 @@
     <v-container id="pri">
       <v-card>
         <v-card-title>
-          <div
-            v-if="dataResidential.center_id._id == '66e2c810dec89fdfea71c92b'"
-          >
+          <div v-if="dataResidential.center_id._id == '66e2c810dec89fdfea71c92b'">
             <v-row
               style="
                 display: flex;
@@ -19,7 +17,7 @@
                 md="6"
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
-                <img :src="logo1" style="width: 50%" alt="" />
+                <img :src="karambagdad" style="width: 50%" alt="" />
               </v-col>
               <v-col
                 cols="6"
@@ -27,16 +25,13 @@
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
                 <img
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.logo
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
                   style="width: 80px"
                   alt=""
                 />
               </v-col>
             </v-row>
-            <hr style="border-color: rgb(141 96 67)" />
-            <v-container>
+            <v-container style="padding: 0px">
               <h4
                 style="
                   text-align: center;
@@ -50,15 +45,11 @@
                   );
                 "
               >
-                أستماراة طلب موافقة
+                طلبات وحدة سكنية
               </h4>
             </v-container>
           </div>
-          <div
-            v-else-if="
-              dataResidential.center_id._id == '66656b164cdec95cab679181'
-            "
-          >
+          <div v-else-if="dataResidential.center_id._id == '66656b164cdec95cab679181'">
             <v-row
               style="
                 display: flex;
@@ -70,13 +61,12 @@
               <v-col
                 cols="12"
                 md="12"
-                style="padding: 10px; text-align: center; white-space: pre-wrap"
+                style="padding: 0px; text-align: center; white-space: pre-wrap"
               >
-                <img :src="ba" style="width: 100%" alt="" />
+                <img :src="alrawan" style="width: 100%" alt="" />
               </v-col>
             </v-row>
-            <hr style="border-color: rgb(141 96 67)" />
-            <v-container>
+            <v-container style="padding: 7px 0px 0px 0px">
               <h4
                 style="
                   text-align: center;
@@ -94,11 +84,7 @@
               </h4>
             </v-container>
           </div>
-          <div
-            v-else-if="
-              dataResidential.center_id._id == '6667fa62668eb9af32976f03'
-            "
-          >
+          <div v-else-if="dataResidential.center_id._id == '6667fa62668eb9af32976f03'">
             <v-row
               style="
                 display: flex;
@@ -116,9 +102,7 @@
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
                 <img
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.logo
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
                   style="width: 80px"
                   alt=""
                 />
@@ -143,11 +127,7 @@
               </h4>
             </v-container>
           </div>
-          <div
-            v-else-if="
-              dataResidential.center_id._id == '66e9376b2dcd8ef700ac5f01'
-            "
-          >
+          <div v-else-if="dataResidential.center_id._id == '66e9376b2dcd8ef700ac5f01'">
             <v-row
               style="
                 display: flex;
@@ -157,27 +137,14 @@
               "
             >
               <v-col
-                cols="3"
-                md="3"
-                style="padding: 10px; text-align: center; white-space: pre-wrap"
-              >
-                <img :src="logo11" style="width: 60px" alt="" />
-              </v-col>
-              <v-col
                 cols="6"
                 md="6"
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
-                <img
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.logo
-                  "
-                  style="width: 80px"
-                  alt=""
-                />
+                <img :src="alfakher" style="width: 80px" alt="" />
               </v-col>
-              <v-col cols="3" md="3" style="text-align: center">
-                <img :src="logo2" style="width: 60px" alt="" />
+              <v-col cols="6" md="6" style="text-align: center">
+                <img :src="qaiwan" style="width: 60px" alt="" />
               </v-col>
             </v-row>
             <hr style="border-color: rgb(141 96 67)" />
@@ -185,13 +152,13 @@
               <h4
                 style="
                   text-align: center;
-                  color: black;
+                  color: #c8be79;
                   padding: 7px 0px;
                   border-radius: 10px;
                   background: linear-gradient(
                     190deg,
-                    rgb(0 115 170) 0%,
-                    rgb(141 221 255) 100%
+                    rgb(26 29 33) 0%,
+                    rgb(55 61 65) 100%
                   );
                 "
               >
@@ -199,49 +166,151 @@
               </h4>
             </v-container>
           </div>
-          <v-row
-            v-else
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: space-around;
-              align-items: center;
-            "
-          >
-            <v-col
-              cols="3"
-              md="3"
-              style="padding: 10px; text-align: right; white-space: pre-wrap"
+          <div v-else-if="dataResidential.center_id._id == '672981a677eecc001eb05f4a'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
             >
-              <p style="font-size: 14px">
-                <strong>{{ dataResidential.center_id.name }}</strong>
-              </p>
-            </v-col>
-            <v-col
-              cols="6"
-              md="6"
-              style="padding: 10px; text-align: center; white-space: pre-wrap"
-            >
-              <div
+              <v-col
+                cols="12"
+                md="312"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="loam" style="width: 155px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
                 style="
-                  background-color: #ffd147;
-                  padding: 10px;
+                  text-align: center;
+                  color: #ffffff;
+                  padding: 7px 0px;
                   border-radius: 10px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(131 122 97) 0%,
+                    rgb(174 173 169) 100%
+                  );
                 "
               >
-                <strong style="font-size: 14px">أستماراة طلب موافقة</strong>
-              </div>
-            </v-col>
-            <v-col cols="3" md="3" style="text-align: center">
-              <img
-                :src="
-                  dataResidential.content_url + dataResidential.center_id.logo
+                أستماراة طلب موافقة
+              </h4>
+            </v-container>
+          </div>
+          <div v-else-if="dataResidential.center_id._id == '6729808e77eecc001eb05f19'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="12"
+                md="312"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="MarinaBaghdad" style="width: 150px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: rgb(0 0 0);
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: #e5d3bb;
                 "
-                style="width: 160px"
-                alt=""
-              />
-            </v-col>
-          </v-row>
+              >
+                أستماراة طلب موافقة
+              </h4>
+            </v-container>
+          </div>
+          <div v-else-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+              >
+                <p style="font-size: 14px">
+                  <strong
+                    >شركة صناع النهضة <br />
+                    للأستثمار والتطوير العقاري
+                  </strong>
+                </p>
+              </v-col>
+              <v-col cols="6" md="6" style="text-align: end">
+                <img :src="Nahdda" style="width: 160px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: rgb(255 255 255);
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: rgb(195 146 46);
+                "
+              >
+                أستماراة طلب موافقة
+              </h4>
+            </v-container>
+          </div>
+          <div v-else>
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+              >
+                <p style="font-size: 14px">
+                  <strong>{{ dataResidential.center_id.name }}</strong>
+                </p>
+              </v-col>
+              <v-col cols="6" md="6" style="text-align: end">
+                <img
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
+                  style="width: 10%"
+                  alt=""
+                />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <v-card-text class="text-h4 primary text-center bg-grey-lighten-3">
+                أستماراة طلب موافقة
+              </v-card-text>
+            </v-container>
+          </div>
         </v-card-title>
         <v-container>
           <div>
@@ -253,21 +322,13 @@
             <table border="1" style="width: 100%; border-collapse: collapse">
               <thead>
                 <tr>
-                  <th style="border: 1px solid black; padding: 8px">
-                    أسم الزبون
-                  </th>
+                  <th style="border: 1px solid black; padding: 8px">أسم الزبون</th>
                   <th style="border: 1px solid black; padding: 8px">النوع</th>
-                  <th style="border: 1px solid black; padding: 8px">
-                    أسم النموذج
-                  </th>
+                  <th style="border: 1px solid black; padding: 8px">أسم النموذج</th>
                   <th style="border: 1px solid black; padding: 8px">البلوك</th>
                   <th style="border: 1px solid black; padding: 8px">التصنيف</th>
-                  <th style="border: 1px solid black; padding: 8px">
-                    رقم الشارع
-                  </th>
-                  <th style="border: 1px solid black; padding: 8px">
-                    رقم المنزل
-                  </th>
+                  <th style="border: 1px solid black; padding: 8px">رقم الشارع</th>
+                  <th style="border: 1px solid black; padding: 8px">رقم المنزل</th>
                 </tr>
               </thead>
               <tbody>
@@ -321,13 +382,7 @@
                 padding: 10px;
               "
             >
-              <div
-                style="
-                  display: flex;
-                  flex-direction: column;
-                  align-items: flex-start;
-                "
-              >
+              <div style="display: flex; flex-direction: column; align-items: flex-start">
                 <strong>أسم موظف المبيعات : </strong>
                 <strong>توقيع الأدارة : </strong>
               </div>
@@ -385,18 +440,24 @@
 </template>
 
 <script>
-import logo1 from "@/assets/logo/q.png";
-import ba from "@/assets/images/icons/rr.jpg";
-import logo11 from "@/assets/logo/41412d.png";
-import logo2 from "@/assets/logo/qaiwan-logo.png";
+import MarinaBaghdad from "@/assets/logo/mar.jpg";
+import loam from "@/assets/logo/Screenshot-2024-11-24-113024.png";
+import alfakher from "@/assets/logo/alfakher.jpg";
+import qaiwan from "@/assets/logo/qaiwan-logo.png";
+import karambagdad from "@/assets/logo/q.png";
+import alrawan from "@/assets/images/icons/rr.jpg";
+import Nahdda from "@/assets/images/icons/logoPrint.png";
 
 export default {
   data() {
     return {
-      logo1,
-      ba,
-      logo11,
-      logo2,
+      MarinaBaghdad,
+      loam,
+      alfakher,
+      qaiwan,
+      karambagdad,
+      alrawan,
+      Nahdda,
       data: null,
       user: null,
       dataResidential: null,

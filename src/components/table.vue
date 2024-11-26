@@ -450,7 +450,7 @@
             <VTooltip
               bottom
               v-if="
-                table.actions.includes('ايقاف') && item.selectable.is_disabled == false
+                table.actions.includes('ايقاف') && item.selectable.is_disabled === false
               "
             >
               <template v-slot:activator="{ props }">
@@ -1092,7 +1092,7 @@
             <VTooltip
               bottom
               v-if="
-                table.actions.includes('ايقاف') && item.selectable.is_disabled == false
+                table.actions.includes('ايقاف') && item.selectable.is_disabled === false
               "
             >
               <template v-slot:activator="{ props }">

@@ -10,9 +10,7 @@
         "
       >
         <v-card-title>
-          <div
-            v-if="dataResidential.center_id._id == '66e2c810dec89fdfea71c92b'"
-          >
+          <div v-if="dataResidential.center_id._id == '66e2c810dec89fdfea71c92b'">
             <v-row
               style="
                 display: flex;
@@ -26,7 +24,7 @@
                 md="6"
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
-                <img :src="logo1" style="width: 50%" alt="" />
+                <img :src="karambagdad" style="width: 50%" alt="" />
               </v-col>
               <v-col
                 cols="6"
@@ -34,16 +32,13 @@
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
                 <img
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.logo
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
                   style="width: 80px"
                   alt=""
                 />
               </v-col>
             </v-row>
-            <hr style="border-color: rgb(141 96 67)" />
-            <v-container>
+            <v-container style="padding: 0px">
               <h4
                 style="
                   text-align: center;
@@ -57,15 +52,11 @@
                   );
                 "
               >
-                المالك ( {{ data.name }} )
+                طلبات وحدة سكنية
               </h4>
             </v-container>
           </div>
-          <div
-            v-else-if="
-              dataResidential.center_id._id == '66656b164cdec95cab679181'
-            "
-          >
+          <div v-else-if="dataResidential.center_id._id == '66656b164cdec95cab679181'">
             <v-row
               style="
                 display: flex;
@@ -77,13 +68,12 @@
               <v-col
                 cols="12"
                 md="12"
-                style="padding: 10px; text-align: center; white-space: pre-wrap"
+                style="padding: 0px; text-align: center; white-space: pre-wrap"
               >
-                <img :src="ba" style="width: 100%" alt="" />
+                <img :src="alrawan" style="width: 100%" alt="" />
               </v-col>
             </v-row>
-            <hr style="border-color: rgb(141 96 67)" />
-            <v-container>
+            <v-container style="padding: 7px 0px 0px 0px">
               <h4
                 style="
                   text-align: center;
@@ -101,11 +91,7 @@
               </h4>
             </v-container>
           </div>
-          <div
-            v-else-if="
-              dataResidential.center_id._id == '6667fa62668eb9af32976f03'
-            "
-          >
+          <div v-else-if="dataResidential.center_id._id == '6667fa62668eb9af32976f03'">
             <v-row
               style="
                 display: flex;
@@ -123,9 +109,7 @@
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
                 <img
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.logo
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
                   style="width: 80px"
                   alt=""
                 />
@@ -150,11 +134,7 @@
               </h4>
             </v-container>
           </div>
-          <div
-            v-else-if="
-              dataResidential.center_id._id == '66e9376b2dcd8ef700ac5f01'
-            "
-          >
+          <div v-else-if="dataResidential.center_id._id == '66e9376b2dcd8ef700ac5f01'">
             <v-row
               style="
                 display: flex;
@@ -164,27 +144,14 @@
               "
             >
               <v-col
-                cols="3"
-                md="3"
-                style="padding: 10px; text-align: center; white-space: pre-wrap"
-              >
-                <img :src="logo11" style="width: 60px" alt="" />
-              </v-col>
-              <v-col
                 cols="6"
                 md="6"
                 style="padding: 10px; text-align: center; white-space: pre-wrap"
               >
-                <img
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.logo
-                  "
-                  style="width: 80px"
-                  alt=""
-                />
+                <img :src="alfakher" style="width: 80px" alt="" />
               </v-col>
-              <v-col cols="3" md="3" style="text-align: center">
-                <img :src="logo2" style="width: 60px" alt="" />
+              <v-col cols="6" md="6" style="text-align: center">
+                <img :src="qaiwan" style="width: 60px" alt="" />
               </v-col>
             </v-row>
             <hr style="border-color: rgb(141 96 67)" />
@@ -192,13 +159,13 @@
               <h4
                 style="
                   text-align: center;
-                  color: black;
+                  color: #c8be79;
                   padding: 7px 0px;
                   border-radius: 10px;
                   background: linear-gradient(
                     190deg,
-                    rgb(0 115 170) 0%,
-                    rgb(141 221 255) 100%
+                    rgb(26 29 33) 0%,
+                    rgb(55 61 65) 100%
                   );
                 "
               >
@@ -206,53 +173,151 @@
               </h4>
             </v-container>
           </div>
-          <v-row
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: space-around;
-              align-items: center;
-            "
-            v-else
-          >
-            <v-col
-              cols="3"
-              md="3"
-              style="padding: 10px; text-align: right; white-space: pre-wrap"
+          <div v-else-if="dataResidential.center_id._id == '672981a677eecc001eb05f4a'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
             >
-              <p style="font-size: 14px">
-                <strong>{{ dataResidential.center_id.name }}</strong>
-              </p>
-            </v-col>
-            <v-col
-              cols="6"
-              md="6"
-              style="padding: 10px; text-align: center; white-space: pre-wrap"
-            >
-              <div
+              <v-col
+                cols="12"
+                md="312"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="loam" style="width: 155px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
                 style="
-                  background-color: #ffd147;
-                  padding: 10px;
+                  text-align: center;
+                  color: #ffffff;
+                  padding: 7px 0px;
                   border-radius: 10px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(131 122 97) 0%,
+                    rgb(174 173 169) 100%
+                  );
                 "
               >
-                <strong style="font-size: 14px"
-                  >المالك ( {{ data.name }} )</strong
-                >
-              </div>
-            </v-col>
-            <v-col cols="3" md="3" style="text-align: center">
-              <img
-                :src="
-                  dataResidential.content_url + dataResidential.center_id.logo
+                المالك ( {{ data.name }} )
+              </h4>
+            </v-container>
+          </div>
+          <div v-else-if="dataResidential.center_id._id == '6729808e77eecc001eb05f19'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="12"
+                md="312"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="MarinaBaghdad" style="width: 150px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: rgb(0 0 0);
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: #e5d3bb;
                 "
-                style="width: 80px"
-                alt=""
-              />
-            </v-col>
-          </v-row>
-          <br />
-          <br />
+              >
+                المالك ( {{ data.name }} )
+              </h4>
+            </v-container>
+          </div>
+          <div v-else-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+              >
+                <p style="font-size: 14px">
+                  <strong
+                    >شركة صناع النهضة <br />
+                    للأستثمار والتطوير العقاري
+                  </strong>
+                </p>
+              </v-col>
+              <v-col cols="6" md="6" style="text-align: end">
+                <img :src="Nahdda" style="width: 160px" alt="" />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: rgb(255 255 255);
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: rgb(195 146 46);
+                "
+              >
+                المالك ( {{ data.name }} )
+              </h4>
+            </v-container>
+          </div>
+          <div v-else>
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="6"
+                md="6"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+              >
+                <p style="font-size: 14px">
+                  <strong>{{ dataResidential.center_id.name }}</strong>
+                </p>
+              </v-col>
+              <v-col cols="6" md="6" style="text-align: end">
+                <img
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
+                  style="width: 10%"
+                  alt=""
+                />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <v-card-text class="text-h4 primary text-center bg-grey-lighten-3">
+                المالك ( {{ data.name }} )
+              </v-card-text>
+            </v-container>
+          </div>
         </v-card-title>
         <v-container style="padding-block: 0px; height: 100%">
           <v-row
@@ -268,12 +333,8 @@
                 <p style="margin-bottom: 0px">أسم المالك : {{ data.name }}</p>
                 <p style="margin-bottom: 0px">رقم الهاتف : {{ data.phone }}</p>
 
-                <p style="margin-bottom: 0px">
-                  البريد الألكتروني : {{ data.email }}
-                </p>
-                <p style="margin-bottom: 0px">
-                  كلمة المرور : {{ data.password_show }}
-                </p>
+                <p style="margin-bottom: 0px">البريد الألكتروني : {{ data.email }}</p>
+                <p style="margin-bottom: 0px">كلمة المرور : {{ data.password_show }}</p>
 
                 <p style="margin-bottom: 0px">
                   اسم الوحدة السكنية : {{ data.house_name }}
@@ -287,12 +348,8 @@
                 <p>تفاصيل المالك الثاني :-</p>
                 <p>العنوان : {{ data.another_owner.address }}</p>
                 <p>رقم الهوية : {{ data.another_owner.id_number }}</p>
-                <p>
-                  جهة اصدار الهوية : {{ data.another_owner.id_place_of_issue }}
-                </p>
-                <p>
-                  تاريخ اصدار الهوية : {{ data.another_owner.id_issue_date }}
-                </p>
+                <p>جهة اصدار الهوية : {{ data.another_owner.id_place_of_issue }}</p>
+                <p>تاريخ اصدار الهوية : {{ data.another_owner.id_issue_date }}</p>
                 <p>
                   رقم بطاقة السكن :
                   {{ data.another_owner.residence_card_number }}
@@ -301,24 +358,19 @@
                   جهة اصدار بطاقة السكن :
                   {{ data.another_owner.residence_card_place_of_issue }}
                 </p>
-                <p>
-                  العنوان الوظيفي : {{ data.another_owner.owner_title_jop }}
-                </p>
+                <p>العنوان الوظيفي : {{ data.another_owner.owner_title_jop }}</p>
               </div>
             </v-col>
             <v-col
               cols="12"
               md="12"
-              v-if="
-                user.center_id &&
-                user.center_id._id == '66656b164cdec95cab679181'
-              "
+              v-if="user.center_id && user.center_id._id == '66656b164cdec95cab679181'"
             >
               <hr style="width: 100%" />
               <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الروان،</p>
               <p style="margin-bottom: 0px">
-                يمكنكم الآن تحميل تطبيق مجمع الروان السكني وبدء استخدامه باتباع
-                الخطوات التالية:
+                يمكنكم الآن تحميل تطبيق مجمع الروان السكني وبدء استخدامه باتباع الخطوات
+                التالية:
               </p>
               <p
                 style="
@@ -338,9 +390,7 @@
               <div style="text-align: center; margin-block: 10px">
                 <img
                   style="width: 120px"
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.qr
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.qr"
                   alt=""
                 />
               </div>
@@ -363,38 +413,33 @@
               <p style="margin-bottom: 0px">البريد الإلكتروني</p>
               <p style="margin-bottom: 0px">كلمة المرور</p>
               <p style="margin-bottom: 0px">
-                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الروان
-                السكني بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
+                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الروان السكني بسهولة
+                ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
               </p>
               <p style="margin-bottom: 0px">
-                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل
-                وحدة سكنية.
+                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل وحدة سكنية.
               </p>
               <p style="margin-bottom: 0px">
-                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار
-                والإعلانات.
+                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار والإعلانات.
               </p>
               <p style="margin-bottom: 0px">
                 - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
               </p>
               <p style="margin-bottom: 0px">
-                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر
-                التطبيق.
+                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر التطبيق.
               </p>
               <p style="margin-bottom: 0px">
-                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير
-                الشحن.
+                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير الشحن.
               </p>
               <p style="margin-bottom: 0px">
                 - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
               </p>
               <p style="margin-bottom: 0px">
-                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات
-                السكنية في حال وجود أقساط.
+                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات السكنية في
+                حال وجود أقساط.
               </p>
               <p style="margin-bottom: 0px">
-                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة
-                شؤونكم اليومية.
+                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم اليومية.
               </p>
             </v-col>
             <v-col
@@ -405,17 +450,19 @@
               <hr style="width: 100%" />
               <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الفاخر</p>
               <p style="margin-bottom: 0px">
-                يمكنكم الآن تحميل تطبيق مجمع الفاخر السكني وبدء استخدامه باتباع
-                الخطوات التالية:
+                يمكنكم الآن تحميل تطبيق مجمع الفاخر السكني وبدء استخدامه باتباع الخطوات
+                التالية:
               </p>
               <p
                 style="
                   text-align: center;
-                  background-color: #163d68;
-                  color: white;
-                  padding: 0px 20px;
+                  color: #c8be79;
+                  padding: 7px 0px;
                   border-radius: 10px;
-                  margin-bottom: 0px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(26 29 33) 0%,
+                    rgb(55 61 65) 100%
                 "
               >
                 لتحميل التطبيق:
@@ -426,9 +473,7 @@
               <div style="text-align: center; margin-block: 10px">
                 <img
                   style="width: 120px"
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.qr
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.qr"
                   alt=""
                 />
               </div>
@@ -436,11 +481,13 @@
               <p
                 style="
                   text-align: center;
-                  background-color: #163d68;
-                  color: white;
-                  padding: 0px 20px;
+                  color: #c8be79;
+                  padding: 7px 0px;
                   border-radius: 10px;
-                  margin-bottom: 0px;
+                  background: linear-gradient(
+                    190deg,
+                    rgb(26 29 33) 0%,
+                    rgb(55 61 65) 100%
                 "
               >
                 لتسجيل الدخول:
@@ -451,38 +498,33 @@
               <p style="margin-bottom: 0px">البريد الإلكتروني</p>
               <p style="margin-bottom: 0px">كلمة المرور</p>
               <p style="margin-bottom: 0px">
-                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الفاخر
-                السكني بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
+                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الفاخر السكني بسهولة
+                ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
               </p>
               <p style="margin-bottom: 0px">
-                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل
-                وحدة سكنية.
+                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل وحدة سكنية.
               </p>
               <p style="margin-bottom: 0px">
-                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار
-                والإعلانات.
+                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار والإعلانات.
               </p>
               <p style="margin-bottom: 0px">
                 - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
               </p>
               <p style="margin-bottom: 0px">
-                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر
-                التطبيق.
+                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر التطبيق.
               </p>
               <p style="margin-bottom: 0px">
-                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير
-                الشحن.
+                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير الشحن.
               </p>
               <p style="margin-bottom: 0px">
                 - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
               </p>
               <p style="margin-bottom: 0px">
-                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات
-                السكنية في حال وجود أقساط.
+                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات السكنية في
+                حال وجود أقساط.
               </p>
               <p style="margin-bottom: 0px">
-                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة
-                شؤونكم اليومية.
+                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم اليومية.
               </p>
             </v-col>
             <v-col
@@ -493,14 +535,18 @@
               <hr style="width: 100%" />
               <p style="margin-bottom: 0px">مرحبًا بسكان مجمع كرم بغداد</p>
               <p style="margin-bottom: 0px">
-                يمكنكم الآن تحميل تطبيق مجمع كرم بغداد السكني وبدء استخدامه
-                باتباع الخطوات التالية:
+                يمكنكم الآن تحميل تطبيق مجمع كرم بغداد السكني وبدء استخدامه باتباع الخطوات
+                التالية:
               </p>
               <p
                 style="
                   text-align: center;
-                  background-color: rgb(255 209 71);
-                  color: #000000;
+                  background: linear-gradient(
+                    190deg,
+                    rgba(141, 96, 67, 1) 0%,
+                    rgba(255, 198, 132, 1) 100%
+                  );
+                  color: black;
                   padding: 0px 20px;
                   border-radius: 10px;
                   margin-bottom: 0px;
@@ -514,9 +560,7 @@
               <div style="text-align: center; margin-block: 10px">
                 <img
                   style="width: 120px"
-                  :src="
-                    dataResidential.content_url + dataResidential.center_id.qr
-                  "
+                  :src="dataResidential.content_url + dataResidential.center_id.qr"
                   alt=""
                 />
               </div>
@@ -524,8 +568,12 @@
               <p
                 style="
                   text-align: center;
-                  background-color: rgb(255 209 71);
-                  color: #000000;
+                  background: linear-gradient(
+                    190deg,
+                    rgba(141, 96, 67, 1) 0%,
+                    rgba(255, 198, 132, 1) 100%
+                  );
+                  color: black;
                   padding: 0px 20px;
                   border-radius: 10px;
                   margin-bottom: 0px;
@@ -539,38 +587,33 @@
               <p style="margin-bottom: 0px">البريد الإلكتروني</p>
               <p style="margin-bottom: 0px">كلمة المرور</p>
               <p style="margin-bottom: 0px">
-                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع كرم بغداد
-                السكني بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
+                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع كرم بغداد السكني
+                بسهولة ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
               </p>
               <p style="margin-bottom: 0px">
-                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل
-                وحدة سكنية.
+                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل وحدة سكنية.
               </p>
               <p style="margin-bottom: 0px">
-                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار
-                والإعلانات.
+                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار والإعلانات.
               </p>
               <p style="margin-bottom: 0px">
                 - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
               </p>
               <p style="margin-bottom: 0px">
-                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر
-                التطبيق.
+                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر التطبيق.
               </p>
               <p style="margin-bottom: 0px">
-                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير
-                الشحن.
+                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير الشحن.
               </p>
               <p style="margin-bottom: 0px">
                 - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
               </p>
               <p style="margin-bottom: 0px">
-                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات
-                السكنية في حال وجود أقساط.
+                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات السكنية في
+                حال وجود أقساط.
               </p>
               <p style="margin-bottom: 0px">
-                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة
-                شؤونكم اليومية.
+                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم اليومية.
               </p>
             </v-col>
           </v-row>
@@ -627,16 +670,24 @@
 
 <script>
 import adminApi from "@/api/adminApi";
-import r from "@/assets/images/icons/r.jpg";
-import logo1 from "@/assets/logo/41412d.png";
-import logo2 from "@/assets/logo/qaiwan-logo.png";
+import MarinaBaghdad from "@/assets/logo/mar.jpg";
+import loam from "@/assets/logo/Screenshot-2024-11-24-113024.png";
+import alfakher from "@/assets/logo/alfakher.jpg";
+import qaiwan from "@/assets/logo/qaiwan-logo.png";
+import karambagdad from "@/assets/logo/q.png";
+import alrawan from "@/assets/images/icons/rr.jpg";
+import Nahdda from "@/assets/images/icons/logoPrint.png";
 
 export default {
   data() {
     return {
-      r,
-      logo1,
-      logo2,
+      MarinaBaghdad,
+      loam,
+      alfakher,
+      qaiwan,
+      karambagdad,
+      alrawan,
+      Nahdda,
       loading: true,
       data: null,
       user: null,

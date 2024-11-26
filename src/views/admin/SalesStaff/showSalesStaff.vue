@@ -38,10 +38,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -139,11 +136,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -219,11 +212,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -319,7 +308,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل", "طباعة", "ايقاف"],
+        actions: ["تعديل", "طباعة", "ايقاف موظف"],
         search: null,
         itemsPerPage: 5,
       },
@@ -391,14 +380,12 @@ export default {
         email: [
           (value) => !!value || this.t("This field is required"),
           (value) =>
-            /.+@.+\..+/.test(value) ||
-            this.t("Please enter a valid email address"),
+            /.+@.+\..+/.test(value) || this.t("Please enter a valid email address"),
         ],
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (value.length !== 11)
-              return this.t("Phone number must be 11 digits");
+            if (value.length !== 11) return this.t("Phone number must be 11 digits");
             return true;
           },
         ],
@@ -415,8 +402,8 @@ export default {
     },
     items() {
       return [
-        { text: this.t("Deleted"), value: true },
-        { text: this.t("Not deleted"), value: false },
+        { text: this.t("Activated"), value: true },
+        { text: this.t("Deactivated"), value: false },
       ];
     },
     headers() {
@@ -655,19 +642,7 @@ export default {
     // deleteItem
 
     isNumber(evt) {
-      const keysAllowed = [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        ".",
-      ];
+      const keysAllowed = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
       const keyPressed = evt.key;
       if (!keysAllowed.includes(keyPressed)) {
         evt.preventDefault();

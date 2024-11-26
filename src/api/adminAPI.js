@@ -159,7 +159,7 @@ class adminApi {
   // SellsEmployee
   async getSellsEmployee({ page, limit, sortBy, search, is_deleted }) {
     const response = await axiosInstance.get(
-      `/sellsEmployee?page=${page}&limit=${limit}&search=${search}&is_deleted=${is_deleted}&sortBy=${sortBy}`
+      `/sellsEmployee?page=${page}&limit=${limit}&search=${search}&is_disable=${is_deleted}&sortBy=${sortBy}`
     );
     return response;
   }
