@@ -28,10 +28,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -127,15 +124,21 @@
                         v-if="data.image"
                         style="width: 130px"
                         :src="
-                          isBase64(data.image)
-                            ? data.image
-                            : content_url + data.image
+                          isBase64(data.image) ? data.image : content_url + data.image
                         "
                         alt=""
                         @click.stop
                       />
                     </VCol>
                   </VRow>
+                </VCol>
+                <VCol cols="12" md="12">
+                  <v-textarea
+                    v-model="data.note"
+                    :rules="Rules.title"
+                    :label="t(`Note`)"
+                    outlined
+                  />
                 </VCol>
               </VRow>
             </VForm>
@@ -146,11 +149,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -206,6 +205,14 @@
                   </VCol>
                 </VRow>
               </VCol>
+              <VCol cols="12" md="12">
+                <v-textarea
+                  v-model="dialogEdit.editedItem.note"
+                  :rules="Rules.title"
+                  :label="t(`Note`)"
+                  outlined
+                />
+              </VCol>
             </VRow>
           </VForm>
         </VCardText>
@@ -214,11 +221,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -401,6 +404,12 @@ export default {
           key: "image",
         },
         {
+          title: this.t("Note"),
+          type: "strong",
+          link: ``,
+          key: "note",
+        },
+        {
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
@@ -475,6 +484,7 @@ export default {
           const response = await adminApi.addAdvantages({
             title: this.data.title,
             image: this.data.image,
+            note: this.data.note,
           });
 
           this.addDialog.saveLoading = false;
@@ -537,6 +547,7 @@ export default {
             advantage_id: this.dialogEdit.editedItem._id,
             title: this.dialogEdit.editedItem.title,
             image: this.dialogEdit.editedItem.image,
+            note: this.dialogEdit.editedItem.note,
           });
 
           this.dialogEdit.open = false;

@@ -1088,19 +1088,21 @@ class adminApi {
     );
     return response;
   }
-  async addAdvantages({ image, title }) {
+  async addAdvantages({ image, title, note }) {
     const requestData = {
       title,
       image,
+      note,
     };
     const response = await axiosInstance.post(`/advantages`, requestData);
     return response;
   }
-  async editAdvantages({ advantage_id, title, image }) {
+  async editAdvantages({ advantage_id, title, image, note }) {
     const requestData = {
       advantage_id,
       title,
       image,
+      note,
     };
     const response = await axiosInstance.put(`/advantages`, requestData);
     return response;
