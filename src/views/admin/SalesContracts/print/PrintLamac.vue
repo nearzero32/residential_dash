@@ -227,11 +227,11 @@
                 >
                   <thead>
                     <tr style="background-color: rgb(186 217 227)">
-                      <th>رقم الدفعة</th>
-                      <th>تاريخ الاستحقاق</th>
-                      <th>مقدار الدفعة رقما</th>
-                      <th>مقدار الدفعة كتابة</th>
-                      <th>الملاحظات</th>
+                      <th style="color: black">رقم الدفعة</th>
+                      <th style="color: black">تاريخ الاستحقاق</th>
+                      <th style="color: black">مقدار الدفعة رقما</th>
+                      <th style="color: black">مقدار الدفعة كتابة</th>
+                      <th style="color: black">الملاحظات</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -240,32 +240,34 @@
                       :key="index"
                     >
                       <td
-                        style="background-color: rgb(186 217 227)"
+                        style="color: black; background-color: rgb(186 217 227)"
                         v-if="salary_payment.payment_position == 'مقدم'"
                       >
                         دفعة المقدمة
                       </td>
                       <td
-                        style="background-color: rgb(186 217 227)"
+                        style="color: black; background-color: rgb(186 217 227)"
                         v-else-if="salary_payment.payment_position == 'دفعة الهيكل'"
                       >
                         دفعة الهيكل
                       </td>
                       <td
-                        style="background-color: rgb(186 217 227)"
+                        style="color: black; background-color: rgb(186 217 227)"
                         v-else-if="salary_payment.payment_position == 'اخر دفعة'"
                       >
                         الدفعة (دفعة التسليم)
                       </td>
-                      <td style="background-color: rgb(186 217 227)" v-else>
+                      <td style="color: black; background-color: rgb(186 217 227)" v-else>
                         الدفعة ({{ getAdjustedIndex(index) }})
                       </td>
-                      <td>{{ salary_payment.date }}</td>
-                      <td>{{ numberWithComma(salary_payment.amount) }}</td>
-                      <td>
+                      <td style="color: black">{{ salary_payment.date }}</td>
+                      <td style="color: black">
+                        {{ numberWithComma(salary_payment.amount) }}
+                      </td>
+                      <td style="color: black">
                         {{ stringText(salary_payment.amount) }}
                       </td>
-                      <td>{{ salary_payment.desc }}</td>
+                      <td style="color: black">{{ salary_payment.desc }}</td>
                     </tr>
                   </tbody>
                 </table>
