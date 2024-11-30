@@ -541,6 +541,7 @@ export default {
 
       if (valid) {
         this.dialogEdit.loading = true;
+        console.log(this.dialogEdit.editedItem.image);
 
         try {
           const response = await adminApi.editAdvantages({
