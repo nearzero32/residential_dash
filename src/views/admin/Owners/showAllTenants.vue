@@ -10,10 +10,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -197,6 +194,12 @@ export default {
           type: "strong",
           link: ``,
           key: "owner_title_jop",
+        },
+        {
+          title: this.t("Date"),
+          type: "strong",
+          link: ``,
+          key: "createdAt",
         },
         {
           title: this.t("Operations"),

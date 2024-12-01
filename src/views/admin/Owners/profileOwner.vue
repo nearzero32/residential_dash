@@ -1946,6 +1946,12 @@ export default {
           key: "owner_title_jop",
         },
         {
+          title: this.t("Date"),
+          type: "strong",
+          link: ``,
+          key: "createdAt",
+        },
+        {
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
