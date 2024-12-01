@@ -27,9 +27,7 @@
           </v-col>
           <v-col cols="3" md="3" style="text-align: center">
             <img
-              :src="
-                dataResidential.content_url + dataResidential.center_id.logo
-              "
+              :src="dataResidential.content_url + dataResidential.center_id.logo"
               style="width: 60px"
               alt=""
             />
@@ -67,9 +65,7 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="12">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -93,9 +89,7 @@
               </div>
             </v-col>
             <v-col cols="8" md="8" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -120,9 +114,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -147,9 +139,7 @@
               </div>
             </v-col>
             <v-col cols="8" md="8" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -174,9 +164,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -201,9 +189,7 @@
               </div>
             </v-col>
             <v-col cols="8" md="8" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -229,9 +215,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -257,9 +241,7 @@
               </div>
             </v-col>
             <v-col cols="8" md="8" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -285,9 +267,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -312,9 +292,7 @@
               </div>
             </v-col>
             <v-col cols="12" md="12">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -343,9 +321,7 @@
           </h2>
           <v-row>
             <v-col cols="8" md="8" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -371,9 +347,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -398,9 +372,7 @@
               </div>
             </v-col>
             <v-col cols="8" md="8" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -425,9 +397,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -452,9 +422,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -480,9 +448,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-inline: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -508,9 +474,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -536,13 +500,7 @@
               </div>
             </v-col>
           </v-row>
-          <hr
-            style="
-              margin-inline: 10%;
-              margin-top: 15px;
-              border-color: rgb(55 88 34);
-            "
-          />
+          <hr style="margin-inline: 10%; margin-top: 15px; border-color: rgb(55 88 34)" />
         </v-container>
         <v-container>
           <h4
@@ -560,9 +518,7 @@
         <v-container>
           <v-row>
             <v-col cols="3" md="3" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -588,9 +544,7 @@
               </div>
             </v-col>
             <v-col cols="3" md="3" style="padding-inline: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -616,9 +570,7 @@
               </div>
             </v-col>
             <v-col cols="3" md="3" style="padding-inline: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -644,9 +596,7 @@
               </div>
             </v-col>
             <v-col cols="3" md="3" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -671,9 +621,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -699,9 +647,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-inline: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -727,9 +673,7 @@
               </div>
             </v-col>
             <v-col cols="4" md="4" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -754,9 +698,7 @@
               </div>
             </v-col>
             <v-col cols="6" md="6" style="padding-left: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -781,9 +723,7 @@
               </div>
             </v-col>
             <v-col cols="6" md="6" style="padding-right: 0px">
-              <div
-                style="display: flex; align-items: center; flex-direction: row"
-              >
+              <div style="display: flex; align-items: center; flex-direction: row">
                 <p
                   style="
                     margin: 0px;
@@ -825,21 +765,18 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="12">
-              اني الموقع ادناه اقر بأني قد قرأت جميع بنود هذه الاستمارة
-              وتفاصيلها وبنود عقد البيع واتعهد باالألتزام بكافة الشروط واتحمل
-              كافة التبعات القانونية والمالية واتعهد بعدم المطالبة باسترجاع مبلغ
-              نسبة شركة بوابة المستقبل للوساطة العقارية ولا يعتبر نسبة شركة
-              بوابة المستقبل جزء من قيمة العقار واتعهد بدفع الدفعة الاولى للوحدة
-              السكنية خلال مدة اقصاها ( 7 ايام ) من تاريخ هذه الاستمارة وبخلافه
-              يسقط حقي بالمطالبة بالوحدة السكنية بدون الرجوع للمحاكم المختصة
-              (المبلغ المدفوع غير مسترد)
+              اني الموقع ادناه اقر بأني قد قرأت جميع بنود هذه الاستمارة وتفاصيلها وبنود
+              عقد البيع واتعهد باالألتزام بكافة الشروط واتحمل كافة التبعات القانونية
+              والمالية واتعهد بعدم المطالبة باسترجاع مبلغ نسبة شركة بوابة المستقبل للوساطة
+              العقارية ولا يعتبر نسبة شركة بوابة المستقبل جزء من قيمة العقار واتعهد بدفع
+              الدفعة الاولى للوحدة السكنية خلال مدة اقصاها ( 7 ايام ) من تاريخ هذه
+              الاستمارة وبخلافه يسقط حقي بالمطالبة بالوحدة السكنية بدون الرجوع للمحاكم
+              المختصة (المبلغ المدفوع غير مسترد)
             </v-col>
             <v-col cols="6" md="6">
               اسم وتوقيع المشتري : {{ data.buyer_info.customer_name }}</v-col
             >
-            <v-col cols="6" md="6"
-              >موظف المبيعات : {{ data.employee_name }}</v-col
-            >
+            <v-col cols="6" md="6">موظف المبيعات : {{ data.employee_name }}</v-col>
           </v-row>
         </v-container>
       </v-card>
