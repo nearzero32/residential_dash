@@ -23,9 +23,7 @@
             style="padding: 10px; text-align: center; white-space: pre-wrap"
           >
             <img
-              :src="
-                dataResidential.content_url + dataResidential.center_id.logo
-              "
+              :src="dataResidential.content_url + dataResidential.center_id.logo"
               style="width: 80px"
               alt=""
             />
@@ -45,7 +43,7 @@
               التاريخ: {{ date }}
             </v-col>
             <v-col cols="6" md="6" style="text-align: left">
-              رقــم الاســتمارة :
+              رقــم الاســتمارة : {{ data.application_code }}
             </v-col>
           </v-row>
         </v-container>
@@ -79,9 +77,7 @@
               >
               <v-col cols="6" md="6">
                 رقم الهوية:
-                <span style="padding-inline: 70px">{{
-                  data.buyer_info.id_number
-                }}</span>
+                <span style="padding-inline: 70px">{{ data.buyer_info.id_number }}</span>
               </v-col>
               <v-col cols="6" md="6">
                 تاريخ الإصدار :
@@ -132,10 +128,7 @@
                   data.buyer_info.customer_phone
                 }}</span>
               </v-col>
-              <v-col cols="12" md="12">
-                البريد الالكتروني :
-                <span style="padding-inline: 145px"></span>
-              </v-col>
+              <v-col cols="12" md="12"> البريد الالكتروني : {{ data.email }} </v-col>
             </v-row>
           </div>
           <br />
@@ -163,22 +156,18 @@
               >
               <v-col cols="3" md="3">
                 رقم الشقة :
-                <span style="padding-inline: 10px">{{
-                  data.house_name
-                }}</span></v-col
+                <span style="padding-inline: 10px">{{ data.house_name }}</span></v-col
               >
               <v-col cols="4" md="4">
                 ســعـر المتــر :
                 <span style="padding-inline: 10px"></span
               ></v-col>
               <v-col cols="4" md="4">
-                الســعر رقمأ :
-                <span style="padding-inline: 10px"></span
-              ></v-col>
+                الســعر رقمأ : {{ numberWithComma(data.house_info.price) }}</v-col
+              >
               <v-col cols="4" md="4">
-                السعــر كتــابــة :
-                <span style="padding-inline: 10px"></span
-              ></v-col>
+                السعــر كتــابــة : {{ data.house_info.price_written }}</v-col
+              >
               <v-col cols="12" md="12">
                 طريـــقة الـــدفـــع <br /><br />
                 نقداً:
@@ -226,15 +215,14 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="12">
-              أني الموقع ادناه أقر بأني قرأت جميع بنود هذه الاستمارة وتفاصيلها
-              وبنود عقد بيع لتملك شقة من مجمع كرم بغداد السكني واتعهد بالالتزام
-              بكافة الشروط واتحمل كافة الشروط والتبعات المالية والقانونية
+              أني الموقع ادناه أقر بأني قرأت جميع بنود هذه الاستمارة وتفاصيلها وبنود عقد
+              بيع لتملك شقة من مجمع كرم بغداد السكني واتعهد بالالتزام بكافة الشروط واتحمل
+              كافة الشروط والتبعات المالية والقانونية
               <br />
               <strong> ملاحظة : الدفع حسب تعليمات البنك المركزي. </strong>
               <br />
               <strong>
-                ملاحظة : تكون بداية دفع الاقساط بعد مرور شهر من تاريخ الدفعة
-                المقدمة
+                ملاحظة : تكون بداية دفع الاقساط بعد مرور شهر من تاريخ الدفعة المقدمة
               </strong>
             </v-col>
           </v-row>
@@ -277,8 +265,7 @@ export default {
     return {
       logo1,
       data: null,
-      id: JSON.parse(localStorage.getItem("printApplicationFormKaramBagdad"))
-        ._id,
+      id: JSON.parse(localStorage.getItem("printApplicationFormKaramBagdad"))._id,
       user: null,
       dataResidential: null,
       date: getCurrentDateInString(),
