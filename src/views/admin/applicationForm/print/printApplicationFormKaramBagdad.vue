@@ -159,9 +159,8 @@
                 <span style="padding-inline: 10px">{{ data.house_name }}</span></v-col
               >
               <v-col cols="4" md="4">
-                ســعـر المتــر :
-                <span style="padding-inline: 10px"></span
-              ></v-col>
+                ســعـر المتــر : {{ numberWithComma(data.house_info.meter_price) }}</v-col
+              >
               <v-col cols="4" md="4">
                 الســعر رقمأ : {{ numberWithComma(data.house_info.price) }}</v-col
               >
