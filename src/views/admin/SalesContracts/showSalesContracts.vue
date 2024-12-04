@@ -277,6 +277,12 @@ export default {
           name: `admin-print-sales-contracts-marina-baghdad`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "6725ceff739176087eb6789f") {
+        localStorage.setItem("PrintAljanain", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-aljanain`,
+        });
+        window.open(routeData.href, "_blank");
       }
     },
     // printItem
