@@ -135,7 +135,8 @@
             <div>
               <p>
                 <strong style="color: black"
-                  >2- ان بدل الوحدة السكنية هو ( $ )( دولار امريكي )</strong
+                  >2- ان بدل الوحدة السكنية هو (<span style="margin-inline: 200px"></span>
+                  )</strong
                 >
               </p>
               <p>
@@ -143,12 +144,14 @@
               </p>
               <p>
                 <strong style="color: black"
-                  >( مليون دينار) ( الف دينار ) مقدمة عند توقيع العقد
+                  >( {{ numberWithComma(data.salary_first_payment) }} ) مقدمة عند توقيع
+                  العقد
                 </strong>
               </p>
               <p>
                 <strong style="color: black"
-                  >( مليون دينار) (الف دينار) عند الاستلام بعد مرور 3 سنوات</strong
+                  >( <span style="margin-inline: 200px"></span> ) عند الاستلام بعد مرور 3
+                  سنوات</strong
                 >
               </p>
               <br />
