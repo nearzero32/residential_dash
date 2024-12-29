@@ -663,6 +663,22 @@
               </template>
               <span>عرض المنازل</span>
             </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('ارسال اشعار')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#2196F3"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empSendNotificationsIteme(item.selectable)"
+                >
+                  mdi-bell
+                </VIcon>
+              </template>
+              <span>ارسال اشعار</span>
+            </VTooltip>
           </div>
         </td>
       </tr>
@@ -1317,6 +1333,22 @@
               </template>
               <span>عرض المنازل</span>
             </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('ارسال اشعار')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#2196F3"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="empSendNotificationsIteme(item.selectable)"
+                >
+                  mdi-bell
+                </VIcon>
+              </template>
+              <span>ارسال اشعار</span>
+            </VTooltip>
           </div>
         </td>
       </tr>
@@ -1436,6 +1468,9 @@ export default {
     },
     empShowIteme(item) {
       this.$emit("empShowIteme", item);
+    },
+    empSendNotificationsIteme(item) {
+      this.$emit("empSendNotificationsIteme", item);
     },
     empConsentIteme(item) {
       this.$emit("empConsentIteme", item);

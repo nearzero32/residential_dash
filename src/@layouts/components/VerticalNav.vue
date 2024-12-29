@@ -80,6 +80,8 @@ let filteredNavItems = props.navItems
       item.building_type === buildingType;
 
     let matchesCenterId = true;
+
+    // التحقق من العناصر الرئيسية
     if (centerId) {
       matchesCenterId =
         item.name !== "marketing Residentail" ||
@@ -94,31 +96,23 @@ let filteredNavItems = props.navItems
       matchesAccountType && matchesBuildingType && matchesCenterId ? { ...item } : null;
 
     if (filteredItem && filteredItem.children) {
-      // تصفية الأطفال بناءً على تطابق الاسم مع 'pages' فقط إذا كان نوع الحساب 'assistance'
-      if (accountType === "assistance") {
-        filteredItem.children = filteredItem.children.filter((child) => {
-          const isChildIncluded = pages.includes(child.name);
-          return isChildIncluded;
-        });
+      // فلترة الأطفال داخل children
+      filteredItem.children = filteredItem.children.filter((child) => {
+        let matchesChildCenterId = true;
 
-        // فلترة الأطفال في children المتداخلة
-        filteredItem.children.forEach((child) => {
-          if (child.children) {
-            child.children = child.children.filter((subChild) => {
-              const isSubChildIncluded = pages.includes(subChild.name);
-              return isSubChildIncluded;
-            });
+        // التحقق الخاص بـ "Marketing Staff Tasks"
+        if (child.name === "admin-show-marketing-tasks" && centerId) {
+          matchesChildCenterId = [
+            "6638d6a4c8462a1d83346b54",
+            "672981a677eecc001eb05f4a",
+          ].includes(centerId);
+        }
 
-            // حذف 'children' إذا لم يتبقَ عناصر مرئية
-            if (child.children.length === 0) {
-              delete child.children;
-            }
-          }
-        });
-      }
+        return matchesChildCenterId;
+      });
 
-      // حذف 'children' إذا لم يتبقَ عناصر مرئية (فقط إذا كان نوع الحساب 'assistance')
-      if (accountType === "assistance" && filteredItem.children.length === 0) {
+      // حذف 'children' إذا لم يتبقَ عناصر مرئية
+      if (filteredItem.children.length === 0) {
         delete filteredItem.children;
       }
     }

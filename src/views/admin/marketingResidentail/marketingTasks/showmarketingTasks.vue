@@ -8,18 +8,48 @@
     <br />
     <br />
     <VCard class="mb-6">
-      <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
+      <VCardTitle style="text-align: center">{{ t("Filter") }}</VCardTitle>
       <VCardText>
         <VRow style="justify-content: space-between">
           <VCol cols="12" md="4">
+            <VAutocomplete
+              v-model="is_finished"
+              label="الحالة"
+              :items="items_is_finished"
+              item-title="title"
+              item-value="value"
+              @update:modelValue="getCenter"
+              @click:clear="is_finished = null"
+              clearable
+            ></VAutocomplete>
+          </VCol>
+        </VRow>
+      </VCardText>
+    </VCard>
+    <VCard class="mb-6">
+      <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
+      <VCardText>
+        <VRow style="justify-content: space-between">
+          <VCol cols="12" md="12">
             <VBtn
               tile
+              style="margin-inline: 10px"
               color="primary"
               prepend-icon="mdi-plus"
               @click="addDialog.open = true"
               v-if="userData.includes('add')"
             >
               {{ t("Addition") }}
+            </VBtn>
+            <VBtn
+              tile
+              style="margin-inline: 10px"
+              color="primary"
+              prepend-icon="mdi-plus"
+              @click="addExcelDialog.open = true"
+              v-if="userData.includes('add')"
+            >
+              إضافة ملف اكسل
             </VBtn>
             <VBtn
               style="margin-inline: 10px"
@@ -64,9 +94,58 @@
           @update:options="getCenter"
           @deleteItems="deleteItem"
           @editItems="editItem"
+          @empSendNotificationsIteme="SendNotificationsIteme"
         />
       </VCardText>
     </VCard>
+
+    <!-- Add Excel Class Dialog -->
+    <VDialog v-model="addExcelDialog.open" max-width="800px">
+      <VCard>
+        <VCardTitle>
+          <span class="headline">{{ t("Addition") }}</span>
+        </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VForm ref="form">
+              <VRow>
+                <VCol cols="12" md="12">
+                  <VFileInput
+                    v-model="data.excelFile"
+                    label="اختيار ملف اكسل"
+                    outlined
+                    accept=".xls,.xlsx"
+                  />
+                </VCol>
+                <VCol cols="12" md="12">
+                  <strong
+                    >يجب ان يحتوي ملف الاكسل على هذه الاعمدة فقط كما موضح في الصورة في
+                    الاسفل</strong
+                  >
+                  <br />
+                  <br />
+                  <img :src="exle" style="width: 100%" alt="" />
+                </VCol>
+              </VRow>
+            </VForm>
+          </VContainer>
+        </VCardText>
+        <VCardActions class="ml-3">
+          <VSpacer />
+          <VBtn color="primary" text @click="addExcelDialog.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary"
+            :loading="addExcelDialog.saveLoading"
+            @click="addExcelCenter"
+          >
+            {{ t("Addition") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Add Excel Class Dialog -->
 
     <!-- Add Class Dialog -->
     <VDialog v-model="addDialog.open" max-width="800px">
@@ -172,6 +251,51 @@
     </VDialog>
     <!-- Edit Class Dialog -->
 
+    <!-- dialogSendNotifications Dialog -->
+    <VDialog v-model="dialogSendNotifications.open" max-width="800px" max-height="100%">
+      <VCard>
+        <VCardTitle>
+          <span class="headline">ارسال اشعار</span>
+        </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VForm ref="form">
+              <VRow>
+                <VCol cols="12" md="12">
+                  <VTextField
+                    v-model="dialogSendNotifications.editedItem.title"
+                    label="العنوان"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="12">
+                  <VTextarea
+                    v-model="dialogSendNotifications.editedItem.body"
+                    label="التفاصيل"
+                    outlined
+                  />
+                </VCol>
+              </VRow>
+            </VForm>
+          </VContainer>
+        </VCardText>
+        <VCardActions class="ml-3">
+          <VSpacer />
+          <VBtn color="primary" text @click="dialogSendNotifications.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary"
+            :loading="dialogSendNotifications.loading"
+            @click="SendNotificationsConform"
+          >
+            ارسال اشعار
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Edit Class Dialog -->
+
     <!-- Delete Dialog -->
     <VDialog v-model="dialogDelete.open" max-width="500px">
       <VCard>
@@ -220,6 +344,7 @@ import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
 import Table from "@/components/table.vue";
 import numberWithComma from "@/constant/number";
+import exle from "@/assets/exle.png";
 import * as XLSX from "xlsx";
 
 export default {
@@ -251,6 +376,7 @@ export default {
   },
   data() {
     return {
+      exle,
       // table
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
       residential_id: null,
@@ -262,12 +388,28 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["حذف", "تعديل"],
+        actions: ["حذف", "تعديل", "ارسال اشعار"],
         search: null,
         itemsPerPage: 5,
       },
       userData: [],
       // table
+
+      items_is_finished: [
+        {
+          title: "الكل",
+          value: null,
+        },
+        {
+          title: "منتهي",
+          value: true,
+        },
+        {
+          title: "غير منتهي",
+          value: false,
+        },
+      ],
+      is_finished: null,
 
       // xlsx
       xlsxData: {
@@ -282,13 +424,31 @@ export default {
         open: false,
         saveLoading: false,
       },
+      addExcelDialog: {
+        open: false,
+        saveLoading: false,
+      },
       data: {
         customer_name: null,
         customer_phone: null,
         employee_id: null,
+        excelFile: null,
       },
       itemss: [],
       // add
+
+      // dialogSendNotifications
+      dialogSendNotifications: {
+        open: false,
+        editedItem: {
+          title: null,
+          body: null,
+          employee_id: null,
+        },
+        isFormValid: false,
+        loading: false,
+      },
+      // dialogSendNotifications
 
       // dialogEdit
       dialogEdit: {
@@ -429,6 +589,19 @@ export default {
         }
       }
 
+      const key =
+        this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
+          ? this.tableOptions.sortBy[0]
+          : "createdAt";
+      const order =
+        this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
+          ? this.tableOptions.sortDesc[0]
+            ? "desc"
+            : "asc"
+          : "desc";
+
+      const sortByJSON = JSON.stringify({ key, order });
+
       this.table.loading = true;
       let { page, itemsPerPage } = this.tableOptions;
 
@@ -444,6 +617,8 @@ export default {
           page,
           limit: itemsPerPage,
           search: this.table.search,
+          sortBy: sortByJSON,
+          is_finished: this.is_finished,
         });
         this.table.Data = response.data.results.data;
         this.table.totalItems = response.data.results.count;
@@ -588,6 +763,45 @@ export default {
     },
     // Download Excel
 
+    // Add Data Excel
+    async addExcelCenter() {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        if (!this.data.excelFile) {
+          this.showDialogfunction("يرجى تحميل ملف Excel", "#FF5252");
+          return;
+        }
+        this.addExcelDialog.saveLoading = true;
+
+        const formData = new FormData();
+        formData.append("data", this.data.excelFile[0]);
+
+        try {
+          const response = await adminApi.addExcelMarketingTasks(formData);
+
+          this.addExcelDialog.saveLoading = false;
+          await this.getCenter();
+          this.addExcelDialog.open = false;
+          this.showDialogfunction(response.data.message, "primary");
+          this.data.excelFile = null;
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.addExcelDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.addExcelDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          }
+        } finally {
+          this.addExcelDialog.saveLoading = false;
+        }
+      }
+    },
+    // Add Data Excel
+
     // Add Data
     async addCenter() {
       const { valid } = await this.$refs.form.validate();
@@ -624,6 +838,47 @@ export default {
       }
     },
     // Add Data
+
+    // SendNotificationsIteme
+    SendNotificationsIteme(item) {
+      this.dialogSendNotifications.editedItem = { ...item };
+      this.dialogSendNotifications.open = true;
+    },
+    async SendNotificationsConform() {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        this.dialogSendNotifications.loading = true;
+
+        try {
+          const response = await adminApi.SendNotifications({
+            title: this.dialogSendNotifications.editedItem.title,
+            body: this.dialogSendNotifications.editedItem.body,
+            account_id: this.dialogSendNotifications.editedItem.employee_id,
+          });
+
+          this.dialogSendNotifications.open = false;
+          this.dialogSendNotifications.loading = false;
+          this.getCenter();
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.dialogSendNotifications.open = false;
+            this.dialogSendNotifications.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.dialogSendNotifications.open = false;
+            this.dialogSendNotifications.loading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          }
+        } finally {
+          this.dialogSendNotifications.loading = false;
+        }
+      }
+    },
+    // SendNotificationsIteme
 
     // editItem
     editItem(item) {

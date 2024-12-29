@@ -1660,9 +1660,9 @@ class adminApi {
   // MarketingCallCenter
 
   // MarketingTasks
-  async getMarketingTasks({ page, limit, search }) {
+  async getMarketingTasks({ page, limit, search, sortBy, is_finished }) {
     const response = await axiosInstance.get(
-      `/marketing_residential/marketing_tasks?page=${page}&limit=${limit}&search=${search}`
+      `/marketing_residential/marketing_tasks?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&is_finished=${is_finished}`
     );
     return response;
   }
@@ -1676,6 +1676,29 @@ class adminApi {
       `/marketing_residential/marketing_tasks`,
       requestData
     );
+    return response;
+  }
+  async SendNotifications({ title, body, account_id }) {
+    const requestData = {
+      title,
+      body,
+      account_id,
+    };
+    const response = await axiosInstance.post(
+      `/counting/notifications`,
+      requestData
+    );
+    return response;
+  }
+  async addExcelMarketingTasks(formData) {
+    axiosInstance.defaults.headers.common.Authorization =
+      localStorage.getItem("accessToken");
+
+    const response = await axiosInstance.post(
+      "/marketing_residential/marketing_tasks/excel",
+      formData
+    );
+
     return response;
   }
   async editMarketingTasks({ id, customer_name, customer_phone, employee_id }) {
