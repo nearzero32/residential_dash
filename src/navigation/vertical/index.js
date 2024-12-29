@@ -342,6 +342,18 @@ export default [
         name: "show-marketing-call-center",
         to: "admin-show-marketing-call-center",
       },
+      {
+        title: "Marketing Staff Tasks",
+        type: [
+          "admin",
+          "investor",
+          "investor_accountant",
+          "resident_manager",
+          "assistance",
+        ],
+        name: "admin-show-marketing-tasks",
+        to: "admin-show-marketing-tasks",
+      },
     ],
   },
   {

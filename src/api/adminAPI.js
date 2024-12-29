@@ -1657,6 +1657,45 @@ class adminApi {
     );
     return response;
   }
-  // Units
+  // MarketingCallCenter
+
+  // MarketingTasks
+  async getMarketingTasks({ page, limit, search }) {
+    const response = await axiosInstance.get(
+      `/marketing_residential/marketing_tasks?page=${page}&limit=${limit}&search=${search}`
+    );
+    return response;
+  }
+  async addMarketingTasks({ customer_name, customer_phone, employee_id }) {
+    const requestData = {
+      customer_name,
+      customer_phone,
+      employee_id,
+    };
+    const response = await axiosInstance.post(
+      `/marketing_residential/marketing_tasks`,
+      requestData
+    );
+    return response;
+  }
+  async editMarketingTasks({ id, customer_name, customer_phone, employee_id }) {
+    const requestData = {
+      customer_name,
+      customer_phone,
+      employee_id,
+    };
+    const response = await axiosInstance.put(
+      `/marketing_residential/marketing_tasks/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeMarketingTasks(id) {
+    const response = await axiosInstance.delete(
+      `/marketing_residential/marketing_tasks/${id}`
+    );
+    return response;
+  }
+  // MarketingTasks
 }
 export default new adminApi();

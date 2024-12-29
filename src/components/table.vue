@@ -243,6 +243,18 @@
           <div v-else-if="header.key === 'buyer_info.customer_name'">
             {{ item.selectable.buyer_info.customer_name }}
           </div>
+          <div v-else-if="header.key === 'is_finished'">
+            {{ item.selectable.is_finished ? "نعم" : "كلا" }}
+          </div>
+          <div v-else-if="header.key === 'is_customer_interested'">
+            {{ item.selectable.is_customer_interested ? "نعم" : "كلا" }}
+          </div>
+          <div v-else-if="header.key === 'is_customer_locking_for_loan'">
+            {{ item.selectable.is_customer_locking_for_loan ? "نعم" : "كلا" }}
+          </div>
+          <div v-else-if="header.key === 'customter_price'">
+            {{ numberWithComma(item.selectable.customter_price) }}
+          </div>
           <div v-else-if="header.key === 'buyer_info.customer_phone'">
             {{ item.selectable.buyer_info.customer_phone }}
           </div>
@@ -695,6 +707,18 @@
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
+          </div>
+          <div v-else-if="header.key === 'is_finished'" class="l">
+            {{ item.selectable.is_finished ? "نعم" : "كلا" }}
+          </div>
+          <div v-else-if="header.key === 'is_customer_interested'" class="l">
+            {{ item.selectable.is_customer_interested ? "نعم" : "كلا" }}
+          </div>
+          <div v-else-if="header.key === 'is_customer_locking_for_loan'" class="l">
+            {{ item.selectable.is_customer_locking_for_loan ? "نعم" : "كلا" }}
+          </div>
+          <div v-else-if="header.key === 'customter_price'" class="l">
+            {{ numberWithComma(item.selectable.customter_price) }}
           </div>
           <div v-else-if="header.type === 'typeAdmin'" class="l">
             <span v-if="item.selectable.type == 'admin'">

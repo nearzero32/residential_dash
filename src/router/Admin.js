@@ -418,6 +418,14 @@ export default [
             "@/views/admin/marketingResidentail/marketingCallCenter/showMarketingCallCenter.vue"
           ),
       },
+      {
+        path: "/admin-show-marketing-tasks",
+        name: "admin-show-marketing-tasks",
+        component: () =>
+          import(
+            "@/views/admin/marketingResidentail/marketingTasks/showmarketingTasks.vue"
+          ),
+      },
       // marketingResidentail
     ],
   },
