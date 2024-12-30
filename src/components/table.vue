@@ -244,7 +244,9 @@
             {{ item.selectable.buyer_info.customer_name }}
           </div>
           <div v-else-if="header.key === 'is_finished'">
-            {{ item.selectable.is_finished ? "نعم" : "كلا" }}
+            <v-chip :color="item.selectable.is_finished ? 'success' : 'error'">
+              {{ item.selectable.is_finished ? "اكمل المهمة" : "لم يكمل المهمة" }}
+            </v-chip>
           </div>
           <div v-else-if="header.key === 'is_customer_interested'">
             {{ item.selectable.is_customer_interested ? "نعم" : "كلا" }}
@@ -725,7 +727,9 @@
             </RouterLink>
           </div>
           <div v-else-if="header.key === 'is_finished'" class="l">
-            {{ item.selectable.is_finished ? "نعم" : "كلا" }}
+            <v-chip :color="item.selectable.is_finished ? 'success' : 'error'">
+              {{ item.selectable.is_finished ? "اكمل المهمة" : "لم يكمل المهمة" }}
+            </v-chip>
           </div>
           <div v-else-if="header.key === 'is_customer_interested'" class="l">
             {{ item.selectable.is_customer_interested ? "نعم" : "كلا" }}

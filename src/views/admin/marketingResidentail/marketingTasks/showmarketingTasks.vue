@@ -263,14 +263,16 @@
               <VRow>
                 <VCol cols="12" md="12">
                   <VTextField
-                    v-model="dialogSendNotifications.editedItem.title"
+                    v-model="dialogSendNotifications.Item.title"
+                    :rules="Rules.required"
                     label="العنوان"
                     outlined
                   />
                 </VCol>
                 <VCol cols="12" md="12">
                   <VTextarea
-                    v-model="dialogSendNotifications.editedItem.body"
+                    v-model="dialogSendNotifications.Item.body"
+                    :rules="Rules.required"
                     label="التفاصيل"
                     outlined
                   />
@@ -440,9 +442,9 @@ export default {
       // dialogSendNotifications
       dialogSendNotifications: {
         open: false,
-        editedItem: {
-          title: null,
-          body: null,
+        Item: {
+          title: "الرجاء الإسراع باكمال المهمة",
+          body: "",
           employee_id: null,
         },
         isFormValid: false,
@@ -841,7 +843,7 @@ export default {
 
     // SendNotificationsIteme
     SendNotificationsIteme(item) {
-      this.dialogSendNotifications.editedItem = { ...item };
+      this.dialogSendNotifications.Item.employee_id = item._id;
       this.dialogSendNotifications.open = true;
     },
     async SendNotificationsConform() {
@@ -852,14 +854,17 @@ export default {
 
         try {
           const response = await adminApi.SendNotifications({
-            title: this.dialogSendNotifications.editedItem.title,
-            body: this.dialogSendNotifications.editedItem.body,
-            account_id: this.dialogSendNotifications.editedItem.employee_id,
+            title: this.dialogSendNotifications.Item.title,
+            body: this.dialogSendNotifications.Item.body,
+            account_id: this.dialogSendNotifications.Item.employee_id,
           });
 
           this.dialogSendNotifications.open = false;
           this.dialogSendNotifications.loading = false;
           this.getCenter();
+          this.dialogSendNotifications.Item.title = "الرجاء الإسراع باكمال المهمة";
+          this.dialogSendNotifications.Item.body = null;
+          this.dialogSendNotifications.Item.employee_id = null;
           this.showDialogfunction(response.data.message, "primary");
         } catch (error) {
           if (error.response && error.response.status === 401) {
