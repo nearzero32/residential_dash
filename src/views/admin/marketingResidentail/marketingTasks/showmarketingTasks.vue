@@ -109,13 +109,24 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="12">
+                <VCol cols="12" md="6">
                   <VFileInput
                     v-model="data.excelFile"
                     label="اختيار ملف اكسل"
                     outlined
                     accept=".xls,.xlsx"
                   />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VAutocomplete
+                    v-model="data.employee_ids"
+                    :rules="Rules.required"
+                    label="الموظف"
+                    :items="itemss"
+                    item-title="name"
+                    item-value="_id"
+                    multiple
+                  ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="12">
                   <strong
@@ -435,6 +446,7 @@ export default {
         customer_phone: null,
         employee_id: null,
         excelFile: null,
+        employee_ids: [],
       },
       itemss: [],
       // add
@@ -778,6 +790,10 @@ export default {
 
         const formData = new FormData();
         formData.append("data", this.data.excelFile[0]);
+
+        this.data.employee_ids.forEach((id) => {
+          formData.append("employee_ids[]", id);
+        });
 
         try {
           const response = await adminApi.addExcelMarketingTasks(formData);
