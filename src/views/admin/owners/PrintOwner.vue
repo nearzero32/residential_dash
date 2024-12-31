@@ -337,7 +337,7 @@
                 <p style="margin-bottom: 0px">كلمة المرور : {{ data.password_show }}</p>
 
                 <p style="margin-bottom: 0px">
-                  اسم الوحدة السكنية : {{ data.house_name }}
+                  كود الوحدة السكنية : {{ data.form_code }}
                 </p>
               </div>
               <div
