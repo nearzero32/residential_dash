@@ -358,66 +358,7 @@ export default {
       loading: false,
       data: {},
       //data
-      visits: [
-        {
-          date: "2024-10",
-          visits: 49,
-          days: [
-            { day: "10-1", number: 9 },
-            { day: "10-2", number: 3 },
-            { day: "10-3", number: 30 },
-            { day: "10-4", number: 7 },
-            { day: "10-5", number: 0 },
-          ],
-        },
-        {
-          date: "2024-11",
-          visits: 50,
-          days: [
-            { day: "11-1", number: 10 },
-            { day: "11-2", number: 3 },
-            { day: "11-3", number: 30 },
-            { day: "11-4", number: 7 },
-            { day: "11-5", number: 0 },
-          ],
-        },
-        {
-          date: "2024-12",
-          visits: 48,
-          days: [
-            { day: "12-1", number: 8 },
-            { day: "12-2", number: 4 },
-            { day: "12-3", number: 30 },
-            { day: "12-4", number: 7 },
-            { day: "12-5", number: 0 },
-            { day: "12-6", number: 8 },
-            { day: "12-7", number: 3 },
-            { day: "12-8", number: 30 },
-            { day: "12-9", number: 7 },
-            { day: "12-10", number: 0 },
-            { day: "12-11", number: 81 },
-            { day: "12-12", number: 31 },
-            { day: "12-13", number: 310 },
-            { day: "12-14", number: 71 },
-            { day: "12-15", number: 1 },
-            { day: "12-16", number: 18 },
-            { day: "12-17", number: 13 },
-            { day: "12-18", number: 130 },
-            { day: "12-19", number: 17 },
-            { day: "12-20", number: 10 },
-            { day: "12-21", number: 18 },
-            { day: "12-22", number: 13 },
-            { day: "12-23", number: 130 },
-            { day: "12-24", number: 17 },
-            { day: "12-25", number: 10 },
-            { day: "12-26", number: 18 },
-            { day: "12-27", number: 13 },
-            { day: "12-28", number: 10 },
-            { day: "12-29", number: 17 },
-            { day: "12-30", number: 10 },
-          ],
-        },
-      ],
+      visits: [],
       // message
       dialogData: {
         open: false,
@@ -431,6 +372,7 @@ export default {
     this.userDataString = JSON.parse(localStorage.getItem("results"));
 
     this.getCenter();
+    this.getVisitsStatistics();
   },
   watch: {
     data: {
@@ -439,6 +381,11 @@ export default {
       },
       immediate: true,
       deep: true,
+    },
+    year: {
+      handler() {
+        this.getVisitsStatistics();
+      },
     },
   },
   methods: {
@@ -451,6 +398,27 @@ export default {
         this.loading = false;
 
         this.data = response.data.results;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getVisitsStatistics() {
+      try {
+        this.loading = true;
+
+        const response = await adminApi.getVisitsStatistics(this.year);
+
+        this.loading = false;
+
+        this.visits = response.data.results;
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");

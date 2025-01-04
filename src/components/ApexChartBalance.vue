@@ -14,13 +14,12 @@
       height="250"
       :options="balanceChartConfig"
       :series="series"
-      @click.native="handleChartClick"
     />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 import VueApexCharts from "vue3-apexcharts";
 import { useTheme } from "vuetify";
 import { getLineChartSimpleConfig } from "@core/libs/apex-chart/apexCharConfig";
@@ -33,74 +32,45 @@ const props = defineProps({
 });
 
 const vuetifyTheme = useTheme();
-
 const series = ref([]);
-
-const daysSeries = ref([]);
-
 const showDays = ref(false);
 
-watch(daysSeries, (newSeries) => {
-  series.value = newSeries;
-});
-
-const initialSeriesData = ref(props.visits.map((item) => item.visits));
-series.value = [
-  {
-    name: "Visitors",
-    data: initialSeriesData.value,
-  },
-];
-
+// تهيئة balanceChartConfig قبل استدعاء updateChart
 const balanceChartConfig = ref(
   getLineChartSimpleConfig(vuetifyTheme.current.value, props.visits)
 );
 
-const handleChartClick = (event, chartContext, opts) => {
-  if (showDays.value) return;
+// دالة لتحديث المخطط بناءً على البيانات الجديدة
+const updateChart = () => {
+  const months = props.visits.map((item) => `Month ${item.month}`);
+  const counts = props.visits.map((item) => item.count);
 
-  const seriesIndex = opts.seriesIndex;
-  const dataPointIndex = opts.dataPointIndex;
-
-  if (dataPointIndex < props.visits.length) {
-    const clickedData = props.visits[dataPointIndex];
-    const clickedDate = clickedData.date;
-    const days = clickedData.days;
-
-    const newDaysSeries = [
-      {
-        name: `Visits in ${clickedDate}`,
-        data: days.map((day) => day.number),
-      },
-    ];
-
-    daysSeries.value = newDaysSeries;
-
-    balanceChartConfig.value = {
-      ...getLineChartSimpleConfig(vuetifyTheme.current.value, props.visits),
-      xaxis: {
-        categories: days.map((day) => day.day),
-      },
-    };
-
-    showDays.value = true;
-  } else {
-    console.warn("Invalid data point index:", dataPointIndex);
-  }
-};
-
-const goBackToMonths = () => {
   series.value = [
     {
       name: "Visitors",
-      data: initialSeriesData.value,
+      data: counts,
     },
   ];
 
-  balanceChartConfig.value = getLineChartSimpleConfig(
-    vuetifyTheme.current.value,
-    props.visits
-  );
+  balanceChartConfig.value = {
+    ...getLineChartSimpleConfig(vuetifyTheme.current.value, props.visits),
+    xaxis: {
+      categories: months,
+    },
+  };
+};
+
+// مراقبة البيانات لتحديث المخطط عند تغيّرها
+watch(
+  () => props.visits,
+  () => {
+    updateChart();
+  },
+  { deep: true, immediate: true }
+);
+
+const goBackToMonths = () => {
+  updateChart();
   showDays.value = false;
 };
 </script>
