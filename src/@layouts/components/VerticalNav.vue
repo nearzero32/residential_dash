@@ -69,6 +69,16 @@ const centerId = results?.center_id?._id ?? null;
 
 let filteredNavItems = props.navItems
   .map((item) => {
+    if (item.name === "visits" && centerId === "672981a677eecc001eb05f4a") {
+      return null;
+    }
+    if (item.name === "After-sales-service" && centerId === "672981a677eecc001eb05f4a") {
+      return null;
+    }
+    if (item.name === "guards" && centerId === "672981a677eecc001eb05f4a") {
+      return null;
+    }
+
     const itemTypes = Array.isArray(item.type)
       ? item.type.map((type) => type.toLowerCase())
       : [];
