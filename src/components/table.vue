@@ -210,6 +210,21 @@
               style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
             />
           </div>
+          <div v-else-if="header.type === 'image'">
+            <img
+              v-if="item.selectable.logo"
+              @click="emitShowImgs(item)"
+              :src="content_urll + item.selectable.logo"
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+            />
+          </div>
+          <div v-else-if="header.type === 'center_forms'">
+            <ul>
+              <li v-for="(form, index) in item.selectable.center_forms" :key="index">
+                {{ form.name }}
+              </li>
+            </ul>
+          </div>
           <div v-else-if="header.key === 'building_space'">
             <ul>
               <li
@@ -717,6 +732,21 @@
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'image'" class="l">
+            <img
+              v-if="item.selectable.logo"
+              @click="emitShowImgs(item)"
+              :src="content_urll + item.selectable.logo"
+              style="width: 60px; border: solid 1px rebeccapurple; cursor: pointer"
+            />
+          </div>
+          <div v-else-if="header.type === 'center_forms'" class="l">
+            <ul>
+              <li v-for="(form, index) in item.selectable.center_forms" :key="index">
+                {{ form.name }}
+              </li>
+            </ul>
           </div>
           <div v-else-if="header.type === 'linkk'" class="l">
             <RouterLink

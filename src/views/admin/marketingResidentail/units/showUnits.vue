@@ -394,7 +394,7 @@ export default {
       };
     },
     headers() {
-      return [
+      const headers = [
         {
           title: "#",
           type: "strong",
@@ -413,14 +413,42 @@ export default {
           link: ``,
           key: "note",
         },
-        {
+      ];
+
+      // تحقق الشرط وإضافة الكائن الجديد
+      if (this.results?.center_id?._id === "672981a677eecc001eb05f4a") {
+        headers.push(
+          {
+            title: this.t("image"),
+            key: "logo",
+            type: "image",
+            link: "",
+          },
+          {
+            title: this.t("Form name"),
+            key: "center_forms.name",
+            type: "center_forms",
+            link: "",
+          },
+          {
+            title: this.t("Operations"),
+            key: "actions",
+            sortable: false,
+            type: "strong",
+            link: "",
+          }
+        );
+      } else {
+        headers.push({
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
           type: "strong",
           link: "",
-        },
-      ];
+        });
+      }
+
+      return headers;
     },
   },
   methods: {
