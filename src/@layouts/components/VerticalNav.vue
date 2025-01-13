@@ -73,7 +73,18 @@ let filteredNavItems = props.navItems
       return null;
     }
     if (item.name === "After-sales-service" && centerId === "672981a677eecc001eb05f4a") {
-      return null;
+      return {
+        title: "Residential Units",
+        type: [
+          "admin",
+          "investor",
+          "investor_accountant",
+          "resident_manager",
+          "assistance",
+        ],
+        name: "residential-units",
+        to: "admin-show-residential-units",
+      };
     }
     if (item.name === "guards" && centerId === "672981a677eecc001eb05f4a") {
       return null;

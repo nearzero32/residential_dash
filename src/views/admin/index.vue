@@ -199,7 +199,11 @@
             </VCardText>
           </VCard>
         </VCol>
-        <VCol cols="12" md="3">
+        <VCol
+          cols="12"
+          md="3"
+          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
+        >
           <VCard elevation="16" :loading="loading" outlined shaped>
             <VCardText style="text-align: center">
               <img
