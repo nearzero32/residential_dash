@@ -128,6 +128,12 @@ let filteredNavItems = props.navItems
             "672981a677eecc001eb05f4a",
           ].includes(centerId);
         }
+        if (
+          child.name === "show-marketing-call-center" &&
+          centerId === "672981a677eecc001eb05f4a"
+        ) {
+          return null;
+        }
 
         return matchesChildCenterId;
       });
