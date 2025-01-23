@@ -273,7 +273,9 @@ const store = createStore({
 
         const { type, center_id, token, pages } = response.data.results;
 
-        if (["agent", "accountant_users"].includes(type)) {
+        if (
+          ["agent", "accountant_users", "manager_accountant"].includes(type)
+        ) {
           commit(
             "SET_ERROR",
             "خطأ: لا يمكن تسجيل الحساب في الادمن الرئيسي. يمكنك تسجيل الدخول في الحسابات فقط."

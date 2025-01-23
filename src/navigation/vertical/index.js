@@ -102,6 +102,7 @@ export default [
       "investor_accountant",
       "resident_manager",
       "assistance",
+      "manager_accountant",
     ],
     target: "_blank",
     building_type: "منازل وشقق",
