@@ -533,6 +533,12 @@ export default {
           name: `admin-print-application-form-marina-baghdad`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "6638d6a4c8462a1d83346b54") {
+        localStorage.setItem("printApplicationFormLamassu", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-application-form-lamassu`,
+        });
+        window.open(routeData.href, "_blank");
       }
       //   localStorage.setItem("CustomerAttendanceForm", JSON.stringify(item));
       //   let routeData = this.$router.resolve({

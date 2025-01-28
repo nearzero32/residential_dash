@@ -283,6 +283,12 @@ export default {
           name: `admin-print-sales-contracts-aljanain`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "6638d6a4c8462a1d83346b54") {
+        localStorage.setItem("PrintLamassu", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-lamassu`,
+        });
+        window.open(routeData.href, "_blank");
       }
     },
     // printItem

@@ -457,6 +457,14 @@ export default [
       import("@/views/admin/applicationForm/print/printMarinaBaghdad.vue"),
   },
   {
+    path: "/admin-print-application-form-lamassu",
+    name: "admin-print-application-form-lamassu",
+    component: () =>
+      import(
+        "@/views/admin/applicationForm/print/printApplicationFormLamassu.vue"
+      ),
+  },
+  {
     path: "/admin-print-application-form-loam",
     name: "admin-print-application-form-loam",
     component: () =>
@@ -527,6 +535,12 @@ export default [
     name: "admin-print-sales-contracts-aljanain",
     component: () =>
       import("@/views/admin/SalesContracts/print/PrintAljanain.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-lamassu",
+    name: "admin-print-sales-contracts-lamassu",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintLamassu.vue"),
   },
   {
     path: "/admin-print-sales-contracts-abasly",
