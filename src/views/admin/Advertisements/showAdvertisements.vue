@@ -28,10 +28,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -108,6 +105,9 @@
                   />
                 </VCol>
                 <VCol cols="12" md="12">
+                  <VTextField v-model="data.link" :label="t(`Link`)" outlined />
+                </VCol>
+                <VCol cols="12" md="12">
                   <VRow>
                     <VCol cols="12" md="6">
                       <VFileInput
@@ -127,9 +127,7 @@
                         v-if="data.image"
                         style="width: 130px"
                         :src="
-                          isBase64(data.image)
-                            ? data.image
-                            : content_url + data.image
+                          isBase64(data.image) ? data.image : content_url + data.image
                         "
                         alt=""
                         @click.stop
@@ -154,11 +152,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -183,7 +177,13 @@
                   outlined
                 />
               </VCol>
-
+              <VCol cols="12" md="12">
+                <VTextField
+                  v-model="dialogEdit.editedItem.link"
+                  :label="t(`Link`)"
+                  outlined
+                />
+              </VCol>
               <VCol cols="12" md="12">
                 <VRow>
                   <VCol cols="12" md="6">
@@ -230,11 +230,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -353,6 +349,7 @@ export default {
         title: null,
         description: null,
         image: null,
+        link: null,
       },
       // add
 
@@ -423,6 +420,12 @@ export default {
           type: "strong",
           link: ``,
           key: "image",
+        },
+        {
+          title: this.t("Link"),
+          type: "showLink",
+          link: ``,
+          key: "link",
         },
         {
           title: this.t("Operations"),
@@ -513,6 +516,7 @@ export default {
             title: this.data.title,
             description: this.data.description,
             image: this.data.image,
+            link: this.data.link,
           });
 
           this.addDialog.saveLoading = false;
@@ -523,6 +527,7 @@ export default {
           this.data.title = null;
           this.data.description = null;
           this.data.image = null;
+          this.data.link = null;
         } catch (error) {
           if (error.response && error.response.message === 401) {
             this.$store.dispatch("submitLogout");
@@ -577,6 +582,7 @@ export default {
             title: this.dialogEdit.editedItem.title,
             description: this.dialogEdit.editedItem.description,
             image: this.dialogEdit.editedItem.image,
+            link: this.dialogEdit.editedItem.link,
           });
 
           this.dialogEdit.open = false;
@@ -614,9 +620,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removePostings(
-          this.dialogDelete.deletedItem._id
-        );
+        const response = await adminApi.removePostings(this.dialogDelete.deletedItem._id);
         this.dialogDelete.loading = false;
         this.dialogDelete.open = false;
         this.getCenter();

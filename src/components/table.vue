@@ -34,6 +34,16 @@
               {{ item.selectable[header.key] }}
             </RouterLink>
           </div>
+          <div v-else-if="header.type === 'showLink'">
+            <v-btn
+              v-if="item.selectable[header.key]"
+              color="indigo"
+              variant="text"
+              @click="showLinkA(item.selectable)"
+            >
+              عرض
+            </v-btn>
+          </div>
           <div v-else-if="header.type === 'linkURL'">
             <RouterLink
               :to="{
@@ -732,6 +742,16 @@
             >
               {{ item.selectable[header.key] }}
             </RouterLink>
+          </div>
+          <div v-else-if="header.type === 'showLink'" class="l">
+            <v-btn
+              v-if="item.selectable[header.key]"
+              color="indigo"
+              variant="text"
+              @click="showLinkA(item.selectable)"
+            >
+              عرض
+            </v-btn>
           </div>
           <div v-else-if="header.type === 'image'" class="l">
             <img
@@ -1511,6 +1531,9 @@ export default {
     },
     empFinishIteme(item) {
       this.$emit("empFinishIteme", item);
+    },
+    showLinkA(item) {
+      window.open(item.link, "_blank");
     },
     numberWithComma,
   },

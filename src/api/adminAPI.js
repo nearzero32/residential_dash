@@ -1060,21 +1060,23 @@ class adminApi {
     );
     return response;
   }
-  async addPostings({ image, title, description }) {
+  async addPostings({ image, title, description, link }) {
     const requestData = {
       title,
       description,
       image,
+      link,
     };
     const response = await axiosInstance.post(`/postings`, requestData);
     return response;
   }
-  async editPostings({ image, postings_id, title, description }) {
+  async editPostings({ image, postings_id, title, description, link }) {
     const requestData = {
       title,
       description,
       image,
       postings_id,
+      link,
     };
     const response = await axiosInstance.put(`/postings`, requestData);
     return response;
