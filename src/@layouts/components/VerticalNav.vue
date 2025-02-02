@@ -152,7 +152,16 @@ let filteredNavItems = props.navItems
 if (accountType === "assistance") {
   filteredNavItems = filteredNavItems.filter((item) => {
     const isIncludedInPages = pages.includes(item.name);
+
+    // إذا كان للعنصر أطفال، نقوم بتصفية هؤلاء الأطفال حسب الشرط
+    if (item.children && item.children.length > 0) {
+      item.children = item.children.filter((child) => pages.includes(child.name));
+    }
+
+    // نعتمد على الشرط التالي: يظهر العنصر إذا كان موجودًا في pages أو إذا كانت لديه أطفال بعد التصفية.
     const hasVisibleChildren = item.children && item.children.length > 0;
+
+    console.log(isIncludedInPages, item.name);
     return isIncludedInPages || hasVisibleChildren;
   });
 }
