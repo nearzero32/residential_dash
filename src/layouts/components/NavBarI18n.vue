@@ -9,12 +9,12 @@ const { locale } = useI18n();
 
 const i18nCompLanguages = [
   {
-    label: "English",
-    i18nLang: "en",
-  },
-  {
     label: "Arabic",
     i18nLang: "ar",
+  },
+  {
+    label: "English",
+    i18nLang: "en",
   },
   {
     label: "Kurdish",

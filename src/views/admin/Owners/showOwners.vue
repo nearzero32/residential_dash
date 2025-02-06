@@ -69,10 +69,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -288,11 +285,8 @@
                               >
                                 <img
                                   style="height: 100px; width: 100%"
-                                  :src="
-                                    isBase64(image)
-                                      ? image
-                                      : content_url + image
-                                  "
+                                  :src="isBase64(image) ? image : content_url + image"
+                                  @dblclick="openImage(image)"
                                   alt="Image"
                                   @click.stop
                                 />
@@ -317,12 +311,7 @@
                                     background-color: #faebd700;
                                   "
                                 >
-                                  <v-icon
-                                    color="red"
-                                    size="30"
-                                    style="color: red"
-                                    >mdi-delete</v-icon
-                                  >
+                                  حذف
                                 </v-btn>
                               </VCard>
                             </v-col>
@@ -357,6 +346,7 @@
                             : content_url + data.id_img_front
                         "
                         alt=""
+                        @dblclick="openImage(data.id_img_front)"
                         @click.stop
                       />
                     </VCol>
@@ -387,6 +377,7 @@
                             : content_url + data.id_img_back
                         "
                         alt=""
+                        @dblclick="openImage(data.id_img_back)"
                         @click.stop
                       />
                     </VCol>
@@ -417,6 +408,7 @@
                             : content_url + data.location_img_front
                         "
                         alt=""
+                        @dblclick="openImage(data.location_img_front)"
                         @click.stop
                       />
                     </VCol>
@@ -447,6 +439,7 @@
                             : content_url + data.location_img_back
                         "
                         alt=""
+                        @dblclick="openImage(data.location_img_back)"
                         @click.stop
                       />
                     </VCol>
@@ -477,6 +470,7 @@
                             : content_url + data.passport_img
                         "
                         alt=""
+                        @dblclick="openImage(data.passport_img)"
                         @click.stop
                       />
                     </VCol>
@@ -491,11 +485,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -582,9 +572,7 @@
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="
-                      dialogEdit.editedItem.residence_card_place_of_issue
-                    "
+                    v-model="dialogEdit.editedItem.residence_card_place_of_issue"
                     :label="t('Issuing Authority of the Residence Card')"
                     outlined
                   />
@@ -644,9 +632,7 @@
                     attach
                     @update:modelValue="
                       (value) => {
-                        const selectedItem = Forms.find(
-                          (item) => item._id === value
-                        );
+                        const selectedItem = Forms.find((item) => item._id === value);
                         getHousesEdit(selectedItem);
                       }
                     "
@@ -704,14 +690,11 @@
                                 @mouseleave="hideDeleteIcon(index)"
                               >
                                 <img
-                                  style="height: 100px; width: 100%"
-                                  :src="
-                                    isBase64(image)
-                                      ? image
-                                      : content_url + image
-                                  "
+                                  style="height: 100px; width: 100%; cursor: pointer"
+                                  :src="isBase64(image) ? image : content_url + image"
                                   alt="Image"
                                   @click.stop
+                                  @dblclick="openImage(image)"
                                 />
                                 <v-btn
                                   fab
@@ -719,9 +702,7 @@
                                   color="red"
                                   text
                                   class="delete-icon"
-                                  :class="{
-                                    visible: visibleDeleteIcons[index],
-                                  }"
+                                  :class="{ visible: visibleDeleteIcons[index] }"
                                   @click.stop="deleteImageEdit(index)"
                                   style="
                                     position: absolute;
@@ -734,12 +715,7 @@
                                     background-color: #faebd700;
                                   "
                                 >
-                                  <v-icon
-                                    color="red"
-                                    size="30"
-                                    style="color: red"
-                                    >mdi-delete</v-icon
-                                  >
+                                  <v-icon color="red" size="30">mdi-delete</v-icon>
                                 </v-btn>
                               </VCard>
                             </v-col>
@@ -774,6 +750,7 @@
                             : content_url + dialogEdit.editedItem.id_img_front
                         "
                         alt=""
+                        @dblclick="openImage(dialogEdit.editedItem.id_img_front)"
                         @click.stop
                       />
                     </VCol>
@@ -804,6 +781,7 @@
                             : content_url + dialogEdit.editedItem.id_img_back
                         "
                         alt=""
+                        @dblclick="openImage(dialogEdit.editedItem.id_img_back)"
                         @click.stop
                       />
                     </VCol>
@@ -831,10 +809,10 @@
                         :src="
                           isBase64(dialogEdit.editedItem.location_img_front)
                             ? dialogEdit.editedItem.location_img_front
-                            : content_url +
-                              dialogEdit.editedItem.location_img_front
+                            : content_url + dialogEdit.editedItem.location_img_front
                         "
                         alt=""
+                        @dblclick="openImage(dialogEdit.editedItem.id_img_back)"
                         @click.stop
                       />
                     </VCol>
@@ -862,10 +840,10 @@
                         :src="
                           isBase64(dialogEdit.editedItem.location_img_back)
                             ? dialogEdit.editedItem.location_img_back
-                            : content_url +
-                              dialogEdit.editedItem.location_img_back
+                            : content_url + dialogEdit.editedItem.location_img_back
                         "
                         alt=""
+                        @dblclick="openImage(dialogEdit.editedItem.location_img_back)"
                         @click.stop
                       />
                     </VCol>
@@ -896,6 +874,7 @@
                             : content_url + dialogEdit.editedItem.passport_img
                         "
                         alt=""
+                        @dblclick="openImage(dialogEdit.editedItem.passport_img)"
                         @click.stop
                       />
                     </VCol>
@@ -910,17 +889,27 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
       </VCard>
     </VDialog>
     <!-- Edit Class Dialog -->
+
+    <!-- Dialog لعرض الصورة بحجم كبير -->
+    <v-dialog v-model="showImageDialog" max-width="800">
+      <v-card>
+        <v-card-title class="text-h6">عرض الصورة</v-card-title>
+        <v-card-text>
+          <img :src="selectedImage" style="width: 100%; height: auto" />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red" text @click="showImageDialog = false">إغلاق</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <!-- Delete Dialog -->
     <VDialog v-model="dialogDelete.open" max-width="500px">
@@ -939,6 +928,54 @@
             @click="deleteItemConfirm"
           >
             {{ t("Deactivate") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Delete Dialog -->
+
+    <!-- Delete Dialog -->
+    <VDialog v-model="dialogDeleteImagAdd.open" max-width="500px">
+      <VCard>
+        <VCardTitle class="headline justify-center">
+          {{ t("Are you sure you want to delete the picture?") }}
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="blue darken-1" text @click="dialogDeleteImagAdd.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary white--text"
+            :loading="dialogDeleteImagAdd.loading"
+            @click="deleteImageAdd"
+          >
+            {{ t("Delete") }}
+          </VBtn>
+          <VSpacer />
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- Delete Dialog -->
+
+    <!-- Delete Dialog -->
+    <VDialog v-model="dialogDeleteImag.open" max-width="500px">
+      <VCard>
+        <VCardTitle class="headline justify-center">
+          {{ t("Are you sure you want to delete the picture?") }}
+        </VCardTitle>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="blue darken-1" text @click="dialogDeleteImag.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary white--text"
+            :loading="dialogDeleteImag.loading"
+            @click="deleteImageEditt"
+          >
+            {{ t("Delete") }}
           </VBtn>
           <VSpacer />
         </VCardActions>
@@ -967,9 +1004,7 @@
                 </VCol>
                 <VCol cols="12">
                   <VTextField
-                    v-model="
-                      dialogReceivedHouse.data.received_monthly_payment_date
-                    "
+                    v-model="dialogReceivedHouse.data.received_monthly_payment_date"
                     :rules="Rules.name"
                     :label="t('received_monthly_payment_date')"
                     outlined
@@ -982,11 +1017,7 @@
         </VCardText>
         <VCardActions>
           <VSpacer />
-          <VBtn
-            color="blue darken-1"
-            text
-            @click="dialogReceivedHouse.open = false"
-          >
+          <VBtn color="blue darken-1" text @click="dialogReceivedHouse.open = false">
             {{ t("Cancel") }}
           </VBtn>
           <VBtn
@@ -1085,7 +1116,8 @@ export default {
       userData: [],
       action: [],
       // table
-
+      showImageDialog: false,
+      selectedImage: "",
       // add
       visibleDeleteIcons: [],
       Forms: [],
@@ -1149,6 +1181,20 @@ export default {
         loading: false,
       },
 
+      // dialogDeleteImag
+      dialogDeleteImag: {
+        open: false,
+        deletedItem: null,
+        loading: false,
+      },
+
+      // dialogDeleteImagAdd
+      dialogDeleteImagAdd: {
+        open: false,
+        deletedItem: null,
+        loading: false,
+      },
+
       // received house
       dialogReceivedHouse: {
         open: false,
@@ -1201,12 +1247,8 @@ export default {
     Rules() {
       return {
         passport_img: [(value) => !!value || this.t("This field is required")],
-        location_img_back: [
-          (value) => !!value || this.t("This field is required"),
-        ],
-        location_img_front: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        location_img_back: [(value) => !!value || this.t("This field is required")],
+        location_img_front: [(value) => !!value || this.t("This field is required")],
         id_img_back: [(value) => !!value || this.t("This field is required")],
         id_img_front: [(value) => !!value || this.t("This field is required")],
         house_id: [(value) => !!value || this.t("This field is required")],
@@ -1215,19 +1257,13 @@ export default {
         bank_id: [(value) => !!value || this.t("This field is required")],
         address: [(value) => !!value || this.t("This field is required")],
         password_show: [(value) => !!value || this.t("This field is required")],
-        owner_title_jop: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        owner_title_jop: [(value) => !!value || this.t("This field is required")],
         residence_card_place_of_issue: [
           (value) => !!value || this.t("This field is required"),
         ],
-        residence_card_number: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        residence_card_number: [(value) => !!value || this.t("This field is required")],
         id_issue_date: [(value) => !!value || this.t("This field is required")],
-        id_place_of_issue: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        id_place_of_issue: [(value) => !!value || this.t("This field is required")],
         name: [(value) => !!value || this.t("This field is required")],
         contract_imgs: [(value) => !!value || this.t("This field is required")],
         residence_card_issue_date: [
@@ -1237,14 +1273,12 @@ export default {
         email: [
           (value) => !!value || this.t("This field is required"),
           (value) =>
-            /.+@.+\..+/.test(value) ||
-            this.t("Please enter a valid email address"),
+            /.+@.+\..+/.test(value) || this.t("Please enter a valid email address"),
         ],
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (value.length !== 11)
-              return this.t("Phone number must be 11 digits");
+            if (value.length !== 11) return this.t("Phone number must be 11 digits");
             return true;
           },
         ],
@@ -1253,8 +1287,8 @@ export default {
     },
 
     headers() {
-      const buildingType = JSON.parse(localStorage.getItem("results"))
-        ?.center_id?.building_type;
+      const buildingType = JSON.parse(localStorage.getItem("results"))?.center_id
+        ?.building_type;
 
       const baseHeaders = [
         {
@@ -1395,6 +1429,10 @@ export default {
           this.showDialogfunction(error.response.data.message, "#FF5252");
         }
       }
+    },
+    openImage(image) {
+      this.selectedImage = this.isBase64(image) ? image : this.content_url + image;
+      this.showImageDialog = true;
     },
     async getBankAccounts() {
       try {
@@ -1548,12 +1586,24 @@ export default {
       return /^data:image\/[a-z]+;base64,/.test(image);
     },
     deleteImage(index) {
+      this.dialogDeleteImagAdd.open = true;
+      this.dialogDeleteImagAdd.deletedItem = index;
+    },
+    deleteImageAdd() {
+      var index = this.dialogDeleteImagAdd.deletedItem;
       this.data.contract_imgs.splice(index, 1);
       this.visibleDeleteIcons.splice(index, 1);
+      this.dialogDeleteImagAdd.open = false;
     },
     deleteImageEdit(index) {
+      this.dialogDeleteImag.open = true;
+      this.dialogDeleteImag.deletedItem = index;
+    },
+    deleteImageEditt() {
+      var index = this.dialogDeleteImag.deletedItem;
       this.dialogEdit.editedItem.contract_imgs.splice(index, 1);
       this.visibleDeleteIcons.splice(index, 1);
+      this.dialogDeleteImag.open = false;
     },
     showDeleteIcon(index) {
       this.visibleDeleteIcons[index] = true;
@@ -1711,8 +1761,7 @@ export default {
             bank_id: this.data.bank_id,
             residence_card_number: this.data.residence_card_number,
             residence_card_issue_date: this.data.residence_card_issue_date,
-            residence_card_place_of_issue:
-              this.data.residence_card_place_of_issue,
+            residence_card_place_of_issue: this.data.residence_card_place_of_issue,
             owner_title_jop: this.data.owner_title_jop,
           });
 
@@ -1797,14 +1846,13 @@ export default {
             passport_img: this.dialogEdit.editedItem.passport_img,
             id_number: this.dialogEdit.editedItem.id_number,
             bank_id: this.dialogEdit.editedItem.bank_id,
-            residence_card_issue_date:
-              this.dialogEdit.editedItem.residence_card_issue_date,
+            residence_card_issue_date: this.dialogEdit.editedItem
+              .residence_card_issue_date,
             id_place_of_issue: this.dialogEdit.editedItem.id_place_of_issue,
             id_issue_date: this.dialogEdit.editedItem.id_issue_date,
-            residence_card_number:
-              this.dialogEdit.editedItem.residence_card_number,
-            residence_card_place_of_issue:
-              this.dialogEdit.editedItem.residence_card_place_of_issue,
+            residence_card_number: this.dialogEdit.editedItem.residence_card_number,
+            residence_card_place_of_issue: this.dialogEdit.editedItem
+              .residence_card_place_of_issue,
             owner_title_jop: this.dialogEdit.editedItem.owner_title_jop,
           });
 
@@ -1849,8 +1897,8 @@ export default {
         const response = await adminApi.editOwnerIsHouseReceived({
           id: this.dialogReceivedHouse.receivedItem._id,
           received_date: this.dialogReceivedHouse.data.received_date,
-          received_monthly_payment_date:
-            this.dialogReceivedHouse.data.received_monthly_payment_date,
+          received_monthly_payment_date: this.dialogReceivedHouse.data
+            .received_monthly_payment_date,
         });
         this.dialogReceivedHouse.loading = false;
         this.dialogReceivedHouse.open = false;

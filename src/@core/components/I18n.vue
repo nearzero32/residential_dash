@@ -7,19 +7,19 @@ const props = defineProps({
   location: {
     type: null,
     required: false,
-    default: 'bottom end',
+    default: "bottom end",
   },
-})
+});
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(["change"]);
 
-const { locale } = useI18n({ useScope: 'global' })
+const { locale } = useI18n({ useScope: "global" });
 
-watch(locale, val => {
-  document.documentElement.setAttribute('lang', val)
-})
+watch(locale, (val) => {
+  document.documentElement.setAttribute("lang", val);
+});
 
-const currentLang = ref(['en'])
+const currentLang = ref(["ar"]);
 </script>
 
 <template>
@@ -31,9 +31,15 @@ const currentLang = ref(['en'])
       <!-- List -->
       <VList v-model:selected="currentLang" active-color="primary" min-width="175px">
         <!-- List item -->
-        <VListItem v-for="lang in props.languages" :key="lang.i18nLang" :value="lang.i18nLang"
-          @click="locale = lang.i18nLang; $emit('change', lang.i18nLang)">
-          <!-- Language label -->
+        <VListItem
+          v-for="lang in props.languages"
+          :key="lang.i18nLang"
+          :value="lang.i18nLang"
+          @click="
+            locale = lang.i18nLang;
+            $emit('change', lang.i18nLang);
+          "
+        >
           <VListItemTitle>{{ lang.label }}</VListItemTitle>
         </VListItem>
       </VList>
