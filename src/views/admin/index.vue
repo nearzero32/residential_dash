@@ -5,12 +5,14 @@
       :icon="page.icon"
       :breadcrumbs="b.map((crumb) => ({ ...crumb, text: t(crumb.text) }))"
     ></BaseBreadcrumb>
+    <!-- :tour="tourComponent" -->
     <br />
-    <VContainer>
+    <div class="st"></div>
+    <VContainer class="VContainer">
       <br />
-      <v-expansion-panels v-model="panell">
+      <v-expansion-panels v-model="panell" class="expansionPanelsOwners">
         <v-expansion-panel title="مخطط بياني للوحدات السكنية">
-          <v-expansion-panel-text>
+          <v-expansion-panel-text class="CrmSalesOverviewOwners">
             <CrmSalesOverview
               :key="componentKey"
               :allHouses="
@@ -29,11 +31,12 @@
       </v-expansion-panels>
       <br />
       <v-expansion-panels
+        class="OwnersVisits"
         v-model="panel"
         v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
       >
         <v-expansion-panel title="مخطط بياني لزوار الملاك">
-          <v-expansion-panel-text>
+          <v-expansion-panel-text class="OwnersVisitsRow">
             <VRow>
               <VCol cols="12" md="5">
                 <VCardSubtitle>السنوي &amp; الشهري &amp; اليومي</VCardSubtitle>
@@ -67,7 +70,7 @@
 
       <VRow style="justify-content: center">
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="allCallCenter">
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/phone.png" style="width: 35px" /><br />
               <strong
@@ -78,7 +81,13 @@
           </VCard>
         </VCol>
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="allSalesEmployee"
+          >
             <VCardText style="text-align: center">
               <img
                 src="@/assets/images/icon/sales-marketing.png"
@@ -92,7 +101,13 @@
           </VCard>
         </VCol>
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="allApplicationForm"
+          >
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/request.png" style="width: 35px" /><br />
               <strong
@@ -103,7 +118,13 @@
           </VCard>
         </VCol>
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="allConfirmationsForm"
+          >
             <VCardText style="text-align: center">
               <img
                 src="@/assets/images/icon/application-architecture.png"
@@ -117,7 +138,13 @@
           </VCard>
         </VCol>
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="allReservations"
+          >
             <VCardText style="text-align: center">
               <img
                 src="@/assets/images/icon/communications.png"
@@ -131,7 +158,7 @@
           </VCard>
         </VCol>
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="SalesContracts">
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/maintenance.png" style="width: 35px" /><br />
               <strong>عدد عقود المبيعات <br />( لا يوجد )</strong>
@@ -174,7 +201,13 @@
           md="3"
           v-if="userDataString.center_id._id === '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="AllServicesMaintenance"
+          >
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/maintenance.png" style="width: 35px" /><br />
               <strong
@@ -189,22 +222,13 @@
           md="3"
           v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
-            <VCardText style="text-align: center">
-              <img src="@/assets/images/icon/maintenance.png" style="width: 35px" /><br />
-              <strong
-                >{{ t("Number of maintenance services") }} <br />(
-                {{ data.AllServicesMaintenance }} )</strong
-              >
-            </VCardText>
-          </VCard>
-        </VCol>
-        <VCol
-          cols="12"
-          md="3"
-          v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
-        >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="AllServicesThatShipping"
+          >
             <VCardText style="text-align: center">
               <img
                 src="@/assets/images/icon/delivery-truck.png"
@@ -222,7 +246,7 @@
           md="3"
           v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="allAds">
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/ads.png" style="width: 35px" /><br />
               <strong
@@ -236,7 +260,7 @@
           md="3"
           v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="allAdvantages">
             <VCardText style="text-align: center">
               <img
                 src="@/assets/images/icon/new-features.png"
@@ -249,7 +273,7 @@
           </VCard>
         </VCol>
         <VCol cols="12" md="3">
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="allEmployee">
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/staff.png" style="width: 35px" /><br />
               <strong
@@ -263,7 +287,7 @@
           md="3"
           v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="allGuards">
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/policeman.png" style="width: 35px" /><br />
               <strong>{{ t("Number of guards") }} <br />( {{ data.allGuards }} )</strong>
@@ -275,7 +299,13 @@
           md="3"
           v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard
+            elevation="16"
+            :loading="loading"
+            outlined
+            shaped
+            class="allReservationsInServices"
+          >
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/reserve.png" style="width: 35px" /><br />
               <strong
@@ -290,7 +320,7 @@
           md="3"
           v-if="userDataString.center_id._id !== '672981a677eecc001eb05f4a'"
         >
-          <VCard elevation="16" :loading="loading" outlined shaped>
+          <VCard elevation="16" :loading="loading" outlined shaped class="allUsers">
             <VCardText style="text-align: center">
               <img src="@/assets/images/icon/team.png" style="width: 35px" /><br />
               <strong>{{ t("Number of users") }} <br />( {{ data.allUsers }} )</strong>
@@ -325,19 +355,22 @@ import { useI18n } from "vue-i18n";
 import CrmSalesOverview from "@/components/CrmSalesOverview.vue";
 import ApexChartBalance from "@/components/ApexChartBalance.vue";
 import CrmAreaCharts from "@/components/CrmAreaCharts.vue";
+import tour from "./tour.vue";
 
 export default {
   components: {
     CrmSalesOverview,
     ApexChartBalance,
     CrmAreaCharts,
+    tour,
   },
   setup() {
     const { t } = useI18n();
-
+    const tourComponent = tour;
     const year = ref(new Date().getFullYear());
 
     return {
+      tourComponent,
       t,
       year,
       // nav
@@ -374,7 +407,6 @@ export default {
   },
   created() {
     this.userDataString = JSON.parse(localStorage.getItem("results"));
-
     this.getCenter();
     this.getVisitsStatistics();
   },

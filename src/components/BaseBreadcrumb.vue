@@ -28,9 +28,7 @@
               breadcrumb.text
             }}</router-link>
             <span v-else>{{ breadcrumb.text }}</span>
-            <v-icon v-if="index < breadcrumbs.length - 1"
-              >mdi-chevron-left</v-icon
-            >
+            <v-icon v-if="index < breadcrumbs.length - 1">mdi-chevron-left</v-icon>
           </li>
         </ul>
       </div>

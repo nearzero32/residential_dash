@@ -1,177 +1,176 @@
 <script setup>
-import Shepherd from 'shepherd.js'
-import axios from '@axios'
-import { useThemeConfig } from '@core/composable/useThemeConfig'
+import axios from "@axios";
+import { useThemeConfig } from "@core/composable/useThemeConfig";
+import Shepherd from "shepherd.js";
 
-const { appContentLayoutNav } = useThemeConfig()
+const { appContentLayoutNav } = useThemeConfig();
 
-defineOptions({ inheritAttrs: false })
+defineOptions({ inheritAttrs: false });
 
 // 👉 Is App Search Bar Visible
-const isAppSearchBarVisible = ref(false)
+const isAppSearchBarVisible = ref(false);
 
 // 👉 Default suggestions
 const suggestionGroups = [
   {
-    title: 'Popular Searches',
+    title: "Popular Searches",
     content: [
       {
-        icon: 'mdi-chart-donut',
-        title: 'Analytics',
-        url: { name: 'dashboards-analytics' },
+        icon: "mdi-chart-donut",
+        title: "Analytics",
+        url: { name: "dashboards-analytics" },
       },
       {
-        icon: 'mdi-chart-bubble',
-        title: 'CRM',
-        url: { name: 'dashboards-crm' },
+        icon: "mdi-chart-bubble",
+        title: "CRM",
+        url: { name: "dashboards-crm" },
       },
       {
-        icon: 'mdi-file-outline',
-        title: 'Invoice List',
-        url: { name: 'apps-invoice-list' },
+        icon: "mdi-file-outline",
+        title: "Invoice List",
+        url: { name: "apps-invoice-list" },
       },
       {
-        icon: 'mdi-account-group-outline',
-        title: 'User List',
-        url: { name: 'apps-user-list' },
+        icon: "mdi-account-group-outline",
+        title: "User List",
+        url: { name: "apps-user-list" },
       },
     ],
   },
   {
-    title: 'Apps & Pages',
+    title: "Apps & Pages",
     content: [
       {
-        icon: 'mdi-calendar',
-        title: 'Calendar',
-        url: { name: 'apps-calendar' },
+        icon: "mdi-calendar",
+        title: "Calendar",
+        url: { name: "apps-calendar" },
       },
       {
-        icon: 'mdi-file-plus-outline',
-        title: 'Invoice Add',
-        url: { name: 'apps-invoice-add' },
+        icon: "mdi-file-plus-outline",
+        title: "Invoice Add",
+        url: { name: "apps-invoice-add" },
       },
       {
-        icon: 'mdi-currency-usd',
-        title: 'Pricing',
-        url: { name: 'pages-pricing' },
+        icon: "mdi-currency-usd",
+        title: "Pricing",
+        url: { name: "pages-pricing" },
       },
       {
-        icon: 'mdi-account-cog-outline',
-        title: 'Account Settings',
+        icon: "mdi-account-cog-outline",
+        title: "Account Settings",
         url: {
-          name: 'pages-account-settings-tab',
-          params: { tab: 'account' },
+          name: "pages-account-settings-tab",
+          params: { tab: "account" },
         },
       },
     ],
   },
   {
-    title: 'User Interface',
+    title: "User Interface",
     content: [
       {
-        icon: 'mdi-alpha-a-box-outline',
-        title: 'Typography',
-        url: { name: 'pages-typography' },
+        icon: "mdi-alpha-a-box-outline",
+        title: "Typography",
+        url: { name: "pages-typography" },
       },
       {
-        icon: 'mdi-tab',
-        title: 'Tabs',
-        url: { name: 'components-tabs' },
+        icon: "mdi-tab",
+        title: "Tabs",
+        url: { name: "components-tabs" },
       },
       {
-        icon: 'mdi-gesture-tap-button',
-        title: 'Buttons',
-        url: { name: 'components-button' },
+        icon: "mdi-gesture-tap-button",
+        title: "Buttons",
+        url: { name: "components-button" },
       },
       {
-        icon: 'mdi-keyboard-settings-outline',
-        title: 'Statistics',
-        url: { name: 'pages-cards-card-statistics' },
+        icon: "mdi-keyboard-settings-outline",
+        title: "Statistics",
+        url: { name: "pages-cards-card-statistics" },
       },
     ],
   },
   {
-    title: 'Popular Searches',
+    title: "Popular Searches",
     content: [
       {
-        icon: 'mdi-format-list-checkbox',
-        title: 'Select',
-        url: { name: 'forms-select' },
+        icon: "mdi-format-list-checkbox",
+        title: "Select",
+        url: { name: "forms-select" },
       },
       {
-        icon: 'mdi-lastpass',
-        title: 'Combobox',
-        url: { name: 'forms-combobox' },
+        icon: "mdi-lastpass",
+        title: "Combobox",
+        url: { name: "forms-combobox" },
       },
       {
-        icon: 'mdi-calendar-range-outline',
-        title: 'Date & Time Picker',
-        url: { name: 'forms-date-time-picker' },
+        icon: "mdi-calendar-range-outline",
+        title: "Date & Time Picker",
+        url: { name: "forms-date-time-picker" },
       },
       {
-        icon: 'mdi-hexagram-outline',
-        title: 'Rating',
-        url: { name: 'forms-rating' },
+        icon: "mdi-hexagram-outline",
+        title: "Rating",
+        url: { name: "forms-rating" },
       },
     ],
   },
-]
+];
 
 // 👉 No Data suggestion
 const noDataSuggestions = [
   {
-    title: 'Analytics Dashboard',
-    icon: 'mdi-cart-outline',
-    url: { name: 'dashboards-analytics' },
+    title: "Analytics Dashboard",
+    icon: "mdi-cart-outline",
+    url: { name: "dashboards-analytics" },
   },
   {
-    title: 'Account Settings',
-    icon: 'mdi-account-outline',
+    title: "Account Settings",
+    icon: "mdi-account-outline",
     url: {
-      name: 'pages-account-settings-tab',
-      params: { tab: 'account' },
+      name: "pages-account-settings-tab",
+      params: { tab: "account" },
     },
   },
   {
-    title: 'Pricing Page',
-    icon: 'mdi-cash',
-    url: { name: 'pages-pricing' },
+    title: "Pricing Page",
+    icon: "mdi-cash",
+    url: { name: "pages-pricing" },
   },
-]
+];
 
-const searchQuery = ref('')
-const searchResult = ref([])
-const router = useRouter()
+const searchQuery = ref("");
+const searchResult = ref([]);
+const router = useRouter();
 
 // 👉 fetch search result API
 watchEffect(() => {
-  axios.get('/app-bar/search', { params: { q: searchQuery.value } }).then(response => {
-    searchResult.value = response.data
-  })
-})
+  axios.get("/app-bar/search", { params: { q: searchQuery.value } }).then((response) => {
+    searchResult.value = response.data;
+  });
+});
 
-const redirectToSuggestedOrSearchedPage = selected => {
-  router.push(selected.url)
-  isAppSearchBarVisible.value = false
-  searchQuery.value = ''
-}
+const redirectToSuggestedOrSearchedPage = (selected) => {
+  router.push(selected.url);
+  isAppSearchBarVisible.value = false;
+  searchQuery.value = "";
+};
 
-const LazyAppBarSearch = defineAsyncComponent(() => import('@core/components/AppBarSearch.vue'))
+const LazyAppBarSearch = defineAsyncComponent(() =>
+  import("@core/components/AppBarSearch.vue")
+);
 </script>
 
 <template>
   <div
     class="d-flex align-center cursor-pointer"
     v-bind="$attrs"
-    style="user-select: none;"
+    style="user-select: none"
     @click="isAppSearchBarVisible = !isAppSearchBarVisible"
   >
     <!-- 👉 Search Trigger button -->
     <!-- close active tour while opening search bar using icon -->
-    <IconBtn
-      class="me-1"
-      @click="Shepherd.activeTour?.cancel()"
-    >
+    <IconBtn class="me-1" @click="Shepherd.activeTour?.cancel()">
       <VIcon icon="mdi-magnify" />
     </IconBtn>
 
