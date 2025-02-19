@@ -28,10 +28,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -122,6 +119,19 @@
                 </VCol>
                 <v-col cols="12" md="6" style="margin-block: 10px">
                   <v-autocomplete
+                    v-model="data.currency_type"
+                    :rules="Rules.is_dollar"
+                    :items="['دينار', 'دولار', 'كلاهما']"
+                    item-title="text"
+                    item-value="value"
+                    outlined
+                    dense
+                    label="نوع العملة"
+                    @click:clear="data.currency_type = null"
+                  ></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6" style="margin-block: 10px">
+                  <v-autocomplete
                     v-model="data.is_dollar"
                     :rules="Rules.is_dollar"
                     :items="is_dollarType"
@@ -129,7 +139,7 @@
                     item-value="value"
                     outlined
                     dense
-                    label="نوع العملة"
+                    label="نوع عرض العمله"
                     @click:clear="data.is_dollar = null"
                   ></v-autocomplete>
                 </v-col>
@@ -152,9 +162,7 @@
                       <img
                         v-if="data.qr"
                         style="width: 130px"
-                        :src="
-                          isBase64(data.qr) ? data.qr : content_url + data.qr
-                        "
+                        :src="isBase64(data.qr) ? data.qr : content_url + data.qr"
                         alt=""
                         @click.stop
                       />
@@ -170,11 +178,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -243,6 +247,19 @@
                 </VCol>
                 <v-col cols="12" md="6" style="margin-block: 10px">
                   <v-autocomplete
+                    v-model="dialogEdit.editedItem.currency_type"
+                    :rules="Rules.is_dollar"
+                    :items="['دينار', 'دولار', 'كلاهما']"
+                    item-title="text"
+                    item-value="value"
+                    outlined
+                    dense
+                    label="نوع العملة"
+                    @click:clear="dialogEdit.editedItem.currency_type = null"
+                  ></v-autocomplete>
+                </v-col>
+                <v-col cols="12" md="6" style="margin-block: 10px">
+                  <v-autocomplete
                     v-model="dialogEdit.editedItem.is_dollar"
                     :rules="Rules.is_dollar"
                     :items="is_dollarType"
@@ -250,8 +267,8 @@
                     item-value="value"
                     outlined
                     dense
-                    label="نوع العملة"
-                    @click:clear="data.is_dollar = null"
+                    label="نوع عرض العمله"
+                    @click:clear="dialogEdit.editedItem.is_dollar = null"
                   ></v-autocomplete>
                 </v-col>
                 <VCol cols="12" md="12">
@@ -293,11 +310,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -402,6 +415,7 @@ export default {
         is_dollar: null,
         telegram_chat_id: null,
         mobile_bill_price: null,
+        currency_type: null,
         name: "",
         building_type: "",
         phone: "",
@@ -430,16 +444,13 @@ export default {
   computed: {
     Rules() {
       return {
-        is_dollar: [
-          (value) => value !== null || this.t("This field is required"),
-        ],
+        is_dollar: [(value) => value !== null || this.t("This field is required")],
         name: [(value) => !!value || this.t("This field is required")],
         building_type: [(value) => !!value || this.t("This field is required")],
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (value.length !== 11)
-              return this.t("Phone number must be 11 digits");
+            if (value.length !== 11) return this.t("Phone number must be 11 digits");
             return true; // Validation passed
           },
         ],
@@ -600,6 +611,7 @@ export default {
             is_dollar: this.data.is_dollar,
             telegram_chat_id: this.data.telegram_chat_id,
             mobile_bill_price: this.data.mobile_bill_price,
+            currency_type: this.data.currency_type,
           });
 
           this.addDialog.saveLoading = false;
@@ -611,6 +623,7 @@ export default {
           this.data.is_dollar = null;
           this.data.telegram_chat_id = null;
           this.data.mobile_bill_price = null;
+          this.data.currency_type = null;
           await this.getCenter();
           this.addDialog.open = false;
           this.showDialogfunction(response.data.message, "primary");
@@ -666,6 +679,7 @@ export default {
             is_dollar: this.dialogEdit.editedItem.is_dollar,
             telegram_chat_id: this.dialogEdit.editedItem.telegram_chat_id,
             mobile_bill_price: this.dialogEdit.editedItem.mobile_bill_price,
+            currency_type: this.dialogEdit.editedItem.currency_type,
           });
 
           this.dialogEdit.open = false;
