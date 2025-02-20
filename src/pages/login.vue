@@ -7,12 +7,7 @@
     <br />
     <br />
     <v-form v-model="isFormValidAdd" :loading="loading">
-      <v-card
-        class="mx-auto pa-12 pb-8"
-        elevation="8"
-        max-width="500"
-        rounded="lg"
-      >
+      <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="500" rounded="lg">
         <v-card-title style="text-align: center">
           <div v-if="url == 'admin.alfakhertowers.com'">
             تسجيل الدخول الى ابراج الفاخر السكني
@@ -23,28 +18,23 @@
           <div v-else-if="url == 'admin.karambaghdad.com'">
             تسجيل الدخول الى مجمع كرم بغداد
           </div>
-          <div v-else-if="url == 'admin.lamacc.com'">
-            تسجيل الدخول الى مجمع لاماك
-          </div>
-          <div v-else-if="url == 'admin.alwedd.net'">
-            تسجيل الدخول الى مجمع الود
-          </div>
-          <div v-else-if="url == 'admin.aljanain.com'">
-            تسجيل الدخول الى مجمع الجنائن
-          </div>
+          <div v-else-if="url == 'admin.lamacc.com'">تسجيل الدخول الى مجمع لاماك</div>
+          <div v-else-if="url == 'admin.alwedd.net'">تسجيل الدخول الى مجمع الود</div>
+          <div v-else-if="url == 'admin.aljanain.com'">تسجيل الدخول الى مجمع الجنائن</div>
           <div v-else-if="url == 'admin.baghdadmarina.com'">
             تسجيل الدخول الى مجمع مارينا
           </div>
           <div v-else-if="url == 'admin.loamrealestate.net'">
             تسجيل الدخول الى شركة لوم العقارية
           </div>
+          <div v-else-if="url == 'admin.alkholood.net'">
+            تسجيل الدخول الى مجمع الخلود السكني
+          </div>
           <div v-else>تسجيل الدخول</div>
         </v-card-title>
         <hr />
         <br />
-        <div class="text-subtitle-1 text-medium-emphasis">
-          البريد الألكتروني
-        </div>
+        <div class="text-subtitle-1 text-medium-emphasis">البريد الألكتروني</div>
 
         <v-text-field
           density="compact"
