@@ -28,7 +28,10 @@
 
     <VCard>
       <VCardTitle>
-        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
+        <VRow
+          justify="space-between"
+          style="align-items: center; margin-bottom: 15px"
+        >
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -76,11 +79,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol
-                  cols="12"
-                  md="6"
-                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
-                >
+                <VCol cols="12" md="6">
                   <VAutocomplete
                     v-model="data.center_form_ids"
                     :rules="Rules.required"
@@ -93,11 +92,7 @@
                     :label="t(`Form name`)"
                   ></VAutocomplete>
                 </VCol>
-                <VCol
-                  cols="12"
-                  md="12"
-                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
-                >
+                <VCol cols="12" md="12">
                   <VRow>
                     <VCol cols="12" md="6">
                       <VFileInput
@@ -116,7 +111,11 @@
                       <img
                         v-if="data.logo"
                         style="width: 130px"
-                        :src="isBase64(data.logo) ? data.logo : content_url + data.logo"
+                        :src="
+                          isBase64(data.logo)
+                            ? data.logo
+                            : content_url + data.logo
+                        "
                         alt=""
                         @click.stop
                       />
@@ -140,7 +139,11 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
+          <VBtn
+            color="primary"
+            :loading="addDialog.saveLoading"
+            @click="addCenter"
+          >
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -166,11 +169,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol
-                  cols="12"
-                  md="6"
-                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
-                >
+                <VCol cols="12" md="6">
                   <VAutocomplete
                     v-model="dialogEdit.editedItem.center_form_ids"
                     :rules="Rules.required"
@@ -183,11 +182,7 @@
                     :label="t(`Form name`)"
                   ></VAutocomplete>
                 </VCol>
-                <VCol
-                  cols="12"
-                  md="12"
-                  v-if="results.center_id._id === '672981a677eecc001eb05f4a'"
-                >
+                <VCol cols="12" md="12">
                   <VRow>
                     <VCol cols="12" md="6">
                       <VFileInput
@@ -234,7 +229,11 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
+          <VBtn
+            color="primary"
+            :loading="dialogEdit.loading"
+            @click="editItemConform"
+          >
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -416,37 +415,27 @@ export default {
       ];
 
       // تحقق الشرط وإضافة الكائن الجديد
-      if (this.results?.center_id?._id === "672981a677eecc001eb05f4a") {
-        headers.push(
-          {
-            title: this.t("image"),
-            key: "logo",
-            type: "image",
-            link: "",
-          },
-          {
-            title: this.t("Form name"),
-            key: "center_forms.name",
-            type: "center_forms",
-            link: "",
-          },
-          {
-            title: this.t("Operations"),
-            key: "actions",
-            sortable: false,
-            type: "strong",
-            link: "",
-          }
-        );
-      } else {
-        headers.push({
+      headers.push(
+        {
+          title: this.t("image"),
+          key: "logo",
+          type: "image",
+          link: "",
+        },
+        {
+          title: this.t("Form name"),
+          key: "center_forms.name",
+          type: "center_forms",
+          link: "",
+        },
+        {
           title: this.t("Operations"),
           key: "actions",
           sortable: false,
           type: "strong",
           link: "",
-        });
-      }
+        }
+      );
 
       return headers;
     },
@@ -549,15 +538,13 @@ export default {
       const { valid } = await this.$refs.form.validate();
 
       if (valid) {
-        if (this.results.center_id._id === "672981a677eecc001eb05f4a") {
-          if (this.data.logo === null) {
-            this.showDialogfunction("يجب اضافة لوكو", "#FF5252");
-            return;
-          }
-          if (this.data.center_form_ids.length <= 0) {
-            this.showDialogfunction("يجب اختيار نموذج واحد على الاقل", "#FF5252");
-            return;
-          }
+        if (this.data.logo === null) {
+          this.showDialogfunction("يجب اضافة لوكو", "#FF5252");
+          return;
+        }
+        if (this.data.center_form_ids.length <= 0) {
+          this.showDialogfunction("يجب اختيار نموذج واحد على الاقل", "#FF5252");
+          return;
         }
         this.addDialog.saveLoading = true;
         try {
@@ -613,15 +600,13 @@ export default {
       const { valid } = await this.$refs.form.validate();
 
       if (valid) {
-        if (this.results.center_id._id === "672981a677eecc001eb05f4a") {
-          if (this.dialogEdit.editedItem.logo === null) {
-            this.showDialogfunction("يجب اضافة لوكو", "#FF5252");
-            return;
-          }
-          if (this.dialogEdit.editedItem.center_form_ids.length <= 0) {
-            this.showDialogfunction("يجب اختيار نموذج واحد على الاقل", "#FF5252");
-            return;
-          }
+        if (this.dialogEdit.editedItem.logo === null) {
+          this.showDialogfunction("يجب اضافة لوكو", "#FF5252");
+          return;
+        }
+        if (this.dialogEdit.editedItem.center_form_ids.length <= 0) {
+          this.showDialogfunction("يجب اختيار نموذج واحد على الاقل", "#FF5252");
+          return;
         }
         this.dialogEdit.loading = true;
 
@@ -665,7 +650,9 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeUnits(this.dialogDelete.deletedItem._id);
+        const response = await adminApi.removeUnits(
+          this.dialogDelete.deletedItem._id
+        );
         this.dialogDelete.loading = false;
         this.dialogDelete.open = false;
         this.getCenter();
