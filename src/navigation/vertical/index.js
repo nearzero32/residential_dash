@@ -83,6 +83,8 @@ export default [
         ? "https://counting.alrawan.net/login"
         : currentPath === "admin.alkholood.net"
         ? "https://counting.alkholood.net/login"
+        : currentPath === "admin.buruj-realstate.com"
+        ? "https://counting.buruj-realstate.com/login"
         : currentPath === "admin.karambaghdad.com"
         ? "https://counting.karambaghdad.com/login"
         : currentPath === "admin.alfakhertowers.com"
@@ -104,7 +106,6 @@ export default [
       "investor_accountant",
       "resident_manager",
       "assistance",
-      "manager_accountant",
     ],
     target: "_blank",
     building_type: "منازل وشقق",

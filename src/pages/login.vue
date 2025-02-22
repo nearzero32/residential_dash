@@ -30,6 +30,9 @@
           <div v-else-if="url == 'admin.alkholood.net'">
             تسجيل الدخول الى مجمع الخلود السكني
           </div>
+          <div v-else-if="url == 'admin.buruj-realstate.com'">
+            تسجيل الدخول الى مجمع البروج السكني
+          </div>
           <div v-else>تسجيل الدخول</div>
         </v-card-title>
         <hr />
