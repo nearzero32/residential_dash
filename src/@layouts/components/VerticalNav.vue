@@ -126,6 +126,7 @@ let filteredNavItems = props.navItems
           matchesChildCenterId = [
             "6638d6a4c8462a1d83346b54",
             "672981a677eecc001eb05f4a",
+            "663944d5260d48b0635862ad",
           ].includes(centerId);
         }
         if (
