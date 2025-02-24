@@ -78,6 +78,13 @@
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
+                    v-model="data.email_symbol"
+                    label="اختصار البريد الالكتروني"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
                     v-model="data.phone"
                     :rules="Rules.phone"
                     :label="t('Phone number')"
@@ -201,6 +208,13 @@
                     v-model="dialogEdit.editedItem.name"
                     :rules="Rules.name"
                     :label="t('Name of the complex')"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.email_symbol"
+                    label="اختصار البريد الالكتروني"
                     outlined
                   />
                 </VCol>
@@ -413,6 +427,7 @@ export default {
       data: {
         qr: null,
         is_dollar: null,
+        email_symbol: null,
         telegram_chat_id: null,
         mobile_bill_price: null,
         currency_type: null,
@@ -470,6 +485,12 @@ export default {
           type: "linkURL",
           link: `/super-admin-show-details-complexe`,
           key: "name",
+        },
+        {
+          title: "البريد",
+          type: "strong",
+          link: ``,
+          key: "email_symbol",
         },
         {
           title: this.t("Phone number"),
@@ -605,6 +626,7 @@ export default {
           const response = await superAPI.addCenter({
             name: this.data.name,
             phone: this.data.phone,
+            email_symbol: this.data.email_symbol,
             building_type: this.data.building_type,
             address: this.data.address,
             qr: this.data.qr,
@@ -622,6 +644,7 @@ export default {
           this.data.qr = null;
           this.data.is_dollar = null;
           this.data.telegram_chat_id = null;
+          this.data.email_symbol = null;
           this.data.mobile_bill_price = null;
           this.data.currency_type = null;
           await this.getCenter();
@@ -673,6 +696,7 @@ export default {
             center_id: this.dialogEdit.editedItem._id,
             name: this.dialogEdit.editedItem.name,
             phone: this.dialogEdit.editedItem.phone,
+            email_symbol: this.dialogEdit.editedItem.email_symbol,
             building_type: this.dialogEdit.editedItem.building_type,
             address: this.dialogEdit.editedItem.address,
             qr: this.dialogEdit.editedItem.qr,

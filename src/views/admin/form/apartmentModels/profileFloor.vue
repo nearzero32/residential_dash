@@ -35,8 +35,7 @@
         <br />
         <br />
         <strong v-if="data.current_owner && data.current_owner.phone"
-          >{{ t("Owner's phone number") }} : (
-          {{ data.current_owner.phone }} )</strong
+          >{{ t("Owner's phone number") }} : ( {{ data.current_owner.phone }} )</strong
         >
         <br />
         <br />
@@ -46,16 +45,15 @@
         <strong>{{ t("Form Code") }} : ( {{ data.form_code }} )</strong>
         <br />
         <br />
-        <strong
-          >{{ t("Architecture name") }} : (
-          {{ data.exact_apartment_building }} )</strong
-        >
+        <strong>{{ t("The type") }} : ( {{ data.type }} )</strong>
         <br />
         <br />
         <strong
-          >{{ t("Floor number") }} : (
-          {{ data.apartment_floor_number }} )</strong
+          >{{ t("Architecture name") }} : ( {{ data.exact_apartment_building }} )</strong
         >
+        <br />
+        <br />
+        <strong>{{ t("Floor number") }} : ( {{ data.apartment_floor_number }} )</strong>
         <br />
         <br />
         <strong>{{ t("Apartment numberr") }} : ( {{ data.name }} )</strong>
@@ -64,9 +62,7 @@
         <strong>{{ t("Total area") }} : ( {{ data.total_space }} )</strong>
         <br />
         <br />
-        <strong
-          >{{ t("Building area") }} : ( {{ data.building_space }} )</strong
-        >
+        <strong>{{ t("Building area") }} : ( {{ data.building_space }} )</strong>
         <br />
         <br />
         <strong>{{ t("Status") }} : ( {{ data.status }} )</strong>
@@ -96,9 +92,7 @@
                   justify-content: flex-start;
                 "
               >
-                <p style="margin-left: 83px">
-                  {{ t("The name") }} : {{ item.name }}
-                </p>
+                <p style="margin-left: 83px">{{ t("The name") }} : {{ item.name }}</p>
                 <p>{{ t("Phone number") }} : {{ item.phone }}</p>
               </div>
             </li>
@@ -115,10 +109,7 @@
           <br />
           <div>
             <v-carousel progress-color="primary" hide-delimiters>
-              <v-carousel-item
-                v-for="(img, inde) in data.form_images"
-                :key="inde"
-              >
+              <v-carousel-item v-for="(img, inde) in data.form_images" :key="inde">
                 <v-sheet height="100%">
                   <div class="d-flex fill-height justify-center align-center">
                     <img
@@ -164,9 +155,7 @@
                   alt=""
                 />
 
-                <p v-else>
-                  {{ t("The image") }} ( {{ t("No image available") }} )
-                </p>
+                <p v-else>{{ t("The image") }} ( {{ t("No image available") }} )</p>
               </v-card>
             </v-col>
           </v-row>

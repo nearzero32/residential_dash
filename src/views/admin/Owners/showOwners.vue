@@ -111,7 +111,7 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="data.name"
                     :rules="Rules.name"
@@ -119,7 +119,18 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6" v-if="email_symbol !== null">
+                  <VTextField
+                    v-model="data.email"
+                    :rules="Rules.account_email"
+                    dense
+                    :label="t('Email')"
+                    outlined
+                  >
+                    <template #prepend-inner>{{ email_symbol }}</template>
+                  </VTextField>
+                </VCol>
+                <VCol cols="12" md="6" v-else>
                   <VTextField
                     v-model="data.email"
                     :rules="Rules.email"
@@ -127,7 +138,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="data.phone"
                     :rules="Rules.phone"
@@ -1098,7 +1109,7 @@ export default {
     return {
       // table
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-
+      email_symbol: JSON.parse(localStorage.getItem("results")).center_id.email_symbol,
       is_house_received: null,
       IsDisabled: false,
 
@@ -1257,6 +1268,37 @@ export default {
         bank_id: [(value) => !!value || this.t("This field is required")],
         address: [(value) => !!value || this.t("This field is required")],
         password_show: [(value) => !!value || this.t("This field is required")],
+        account_email: [
+          (value) => !!value || this.t("This field is required"),
+          (v) => {
+            const hasEnglishCharacters = /[a-zA-Z]/.test(v);
+            if (!hasEnglishCharacters) {
+              return this.t("The email must contain English characters");
+            }
+            return true;
+          },
+          (v) => {
+            const hasAtSign = /@/.test(v);
+            if (hasAtSign) {
+              return this.t("The email must not contain the symbol") + " ( @ ) ";
+            }
+            return true;
+          },
+          (v) => {
+            const hasSpace = /\s/.test(v);
+            if (hasSpace) {
+              return this.t("The email must not contain spaces between characters");
+            }
+            return true;
+          },
+          (v) => {
+            const hasDot = /\./.test(v);
+            if (hasDot) {
+              return this.t("The email must not contain the symbol") + " ( . ) ";
+            }
+            return true;
+          },
+        ],
         owner_title_jop: [(value) => !!value || this.t("This field is required")],
         residence_card_place_of_issue: [
           (value) => !!value || this.t("This field is required"),
@@ -1745,7 +1787,10 @@ export default {
             name: this.data.name,
             phone: this.data.phone,
             password_show: this.data.password_show,
-            email: this.data.email,
+            email:
+              this.email_symbol !== null
+                ? this.data.email + this.email_symbol
+                : this.data.email,
             address: this.data.address,
             form_id: this.data.form_id,
             house_id: this.data.house_id,

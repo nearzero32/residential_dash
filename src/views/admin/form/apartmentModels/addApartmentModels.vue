@@ -43,12 +43,13 @@
               />
             </VCol>
             <VCol md="4" sm="6" cols="12">
-              <VTextField
-                v-model="data.type"
-                :rules="Rules.type"
+              <vue3-tags-input
+                :tags="tagsType"
                 dense
                 :label="t('The type')"
                 outlined
+                placeholder="يرجى ادخال النوع وبعد ذالك اضغط على زر الادخال"
+                @on-tags-changed="handleChangeTagType"
               />
             </VCol>
             <VCol cols="12" md="12">
@@ -210,7 +211,7 @@
                         style="align-items: center"
                         v-if="Space.addSpaceInput == true"
                       >
-                        <v-col cols="12" md="5" style="padding: 10px">
+                        <v-col cols="12" md="3" style="padding: 10px">
                           <v-label class="mb-2 font-weight-medium">
                             {{ t("Apartment numbers") }}
                           </v-label>
@@ -229,7 +230,7 @@
                             "
                           />
                         </v-col>
-                        <v-col cols="12" md="5" style="padding: 10px">
+                        <v-col cols="12" md="3" style="padding: 10px">
                           <v-label class="mb-2 font-weight-medium">
                             {{ t("Floor number") }}
                           </v-label>
@@ -240,7 +241,21 @@
                             outlined
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="2" style="padding: 10px">
+                        <v-col cols="12" md="3" style="padding: 10px">
+                          <v-label class="mb-2 font-weight-medium">
+                            {{ t("The type") }}
+                          </v-label>
+                          <v-select
+                            dense
+                            filled
+                            solo
+                            v-model="Space.tag.type"
+                            :label="t('Copying content from another area')"
+                            :items="tagsType"
+                            return-object
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12" md="3" style="padding: 10px">
                           <v-btn @click="addHouesFloor(index)" color="primary"
                             >ادخال</v-btn
                           >
@@ -259,6 +274,7 @@
                               <tr>
                                 <th>ارقام الشقق</th>
                                 <th>رقم الطابق</th>
+                                <th>النوع</th>
                                 <th>العمليات</th>
                               </tr>
                             </thead>
@@ -280,6 +296,7 @@
                                   </span>
                                 </td>
                                 <td>{{ showHouses.FloorNumber }}</td>
+                                <td>{{ showHouses.type }}</td>
                                 <td>
                                   <VTooltip bottom>
                                     <template #activator="{ attrs }">
@@ -564,6 +581,7 @@ export default {
       saveLoading: false,
       copyD: null,
       tagsBuildingNames: [],
+      tagsType: [],
       visibleDeleteIcons: [],
       housesRoomNames: [],
       panel: [],
@@ -626,6 +644,10 @@ export default {
     handleChangeTag(tags) {
       this.data.BuildingNames = tags;
     },
+    handleChangeTagType(tags) {
+      this.tagsType = tags;
+      console.log("New Value:", this.tagsType);
+    },
     handleChangeTagHouseNumber(tags, index) {
       this.data.Spaces[index].tag.tagsHouseNumber = tags;
     },
@@ -642,6 +664,7 @@ export default {
           houseNumber: "",
           tagsHouseNumber: [],
           FloorNumber: "",
+          type: "",
         },
         table: [],
         houseNumber: [],
@@ -759,16 +782,19 @@ export default {
           total_space: this.data.Spaces[index].total_space,
           building_space: this.data.Spaces[index].building_space,
           apartment_floor_number: this.data.Spaces[index].tag.FloorNumber,
+          type: this.data.Spaces[index].tag.type,
         });
 
         this.data.Spaces[index].table.push({
           HouseNumber: this.data.Spaces[index].houseNumber,
           FloorNumber: this.data.Spaces[index].tag.FloorNumber,
+          type: this.data.Spaces[index].tag.type,
         });
 
         this.data.Spaces[index].tag.tagsHouseNumber = [];
         this.data.Spaces[index].tag.houseNumber = "";
         this.data.Spaces[index].tag.FloorNumber = "";
+        this.data.Spaces[index].tag.type = "";
       } else {
         this.showDialogfunction(
           this.t("Apartment and floor numbers must be entered"),
@@ -816,6 +842,7 @@ export default {
           this.data.Spaces[index].tag.tagsHouseNumber.push(house.names[i]);
         }
         this.data.Spaces[index].tag.FloorNumber = house.apartment_floor_number;
+        this.data.Spaces[index].tag.type = house.type;
       });
 
       this.data.houses = houses.filter((house) => !filteredHouses.includes(house));
@@ -920,6 +947,7 @@ export default {
       const roomsForSpace = this.data.Spaces.map((Space) => {
         const rooms = Space.rooms;
         const buildingSpace = Space.building_space;
+        console.log(Space);
 
         const formattedData = {
           for_space: buildingSpace,

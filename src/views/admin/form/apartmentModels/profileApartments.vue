@@ -64,7 +64,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" md="4" style="padding: 10px">
+      <!-- <v-col cols="12" md="4" style="padding: 10px">
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
@@ -73,7 +73,7 @@
             <img style="width: 70px; margin-block: 12px" :src="typee" alt="" />
           </v-card-text>
         </v-card>
-      </v-col>
+      </v-col> -->
     </v-row>
     <br />
     <br />

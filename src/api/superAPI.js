@@ -58,6 +58,7 @@ class superAPI {
   async addCenter({
     name,
     phone,
+    email_symbol,
     building_type,
     address,
     qr,
@@ -69,6 +70,7 @@ class superAPI {
     const requestData = {
       name,
       phone,
+      email_symbol,
       building_type,
       address,
       qr,
@@ -84,6 +86,7 @@ class superAPI {
     center_id,
     name,
     phone,
+    email_symbol,
     building_type,
     address,
     qr,
@@ -96,6 +99,7 @@ class superAPI {
       center_id,
       name,
       phone,
+      email_symbol,
       building_type,
       address,
       qr,

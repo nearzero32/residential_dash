@@ -38,10 +38,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -90,11 +87,22 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="6" v-if="email_symbol !== null">
+                  <VTextField
+                    v-model="data.email"
+                    :rules="Rules.account_email"
+                    dense
+                    :label="t('Email')"
+                    outlined
+                  >
+                    <template #prepend-inner>{{ email_symbol }}</template>
+                  </VTextField>
+                </VCol>
+                <VCol cols="12" md="6" v-else>
                   <VTextField
                     v-model="data.email"
                     :rules="Rules.email"
-                    :label="t('Email')"
+                    :label="t(`Email`)"
                     outlined
                   />
                 </VCol>
@@ -140,11 +148,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -220,11 +224,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -312,6 +312,7 @@ export default {
       // table
       is_deleted: false,
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
+      email_symbol: JSON.parse(localStorage.getItem("results")).center_id.email_symbol,
       tableOptions: {
         itemsPerPage: 10,
         page: 1,
@@ -380,17 +381,46 @@ export default {
     Rules() {
       return {
         name: [(value) => !!value || this.t("This field is required")],
+        account_email: [
+          (value) => !!value || this.t("This field is required"),
+          (v) => {
+            const hasEnglishCharacters = /[a-zA-Z]/.test(v);
+            if (!hasEnglishCharacters) {
+              return this.t("The email must contain English characters");
+            }
+            return true;
+          },
+          (v) => {
+            const hasAtSign = /@/.test(v);
+            if (hasAtSign) {
+              return this.t("The email must not contain the symbol") + " ( @ ) ";
+            }
+            return true;
+          },
+          (v) => {
+            const hasSpace = /\s/.test(v);
+            if (hasSpace) {
+              return this.t("The email must not contain spaces between characters");
+            }
+            return true;
+          },
+          (v) => {
+            const hasDot = /\./.test(v);
+            if (hasDot) {
+              return this.t("The email must not contain the symbol") + " ( . ) ";
+            }
+            return true;
+          },
+        ],
         email: [
           (value) => !!value || this.t("This field is required"),
           (value) =>
-            /.+@.+\..+/.test(value) ||
-            this.t("Please enter a valid email address"),
+            /.+@.+\..+/.test(value) || this.t("Please enter a valid email address"),
         ],
         phone: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (value.length !== 11)
-              return this.t("Phone number must be 11 digits");
+            if (value.length !== 11) return this.t("Phone number must be 11 digits");
             return true;
           },
         ],
@@ -536,7 +566,10 @@ export default {
             name: this.data.name,
             phone: this.data.phone,
             password_show: this.data.password_show,
-            email: this.data.email,
+            email:
+              this.email_symbol !== null
+                ? this.data.email + this.email_symbol
+                : this.data.email,
             address: this.data.address,
             salary: this.data.salary,
           });
@@ -622,9 +655,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeGuards(
-          this.dialogDelete.deletedItem._id
-        );
+        const response = await adminApi.removeGuards(this.dialogDelete.deletedItem._id);
         this.dialogDelete.loading = false;
         this.dialogDelete.open = false;
         this.getCenter();
@@ -661,19 +692,7 @@ export default {
     // printItem
 
     isNumber(evt) {
-      const keysAllowed = [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        ".",
-      ];
+      const keysAllowed = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
       const keyPressed = evt.key;
       if (!keysAllowed.includes(keyPressed)) {
         evt.preventDefault();

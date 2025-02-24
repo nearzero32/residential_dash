@@ -419,7 +419,18 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6" v-if="email_symbol !== null">
+                  <VTextField
+                    v-model="dataAddTenant.email"
+                    :rules="Rules.account_email"
+                    dense
+                    :label="t('Email')"
+                    outlined
+                  >
+                    <template #prepend-inner>{{ email_symbol }}</template>
+                  </VTextField>
+                </VCol>
+                <VCol cols="12" md="6" v-else>
                   <VTextField
                     v-model="dataAddTenant.email"
                     :rules="Rules.email"
@@ -1615,6 +1626,8 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
+      email_symbol: JSON.parse(localStorage.getItem("results")).center_id.email_symbol,
+
       id: null,
       data: {},
       loading: null,
@@ -1770,6 +1783,37 @@ export default {
         bank_id: [(value) => !!value || this.t("This field is required")],
         passport_img: [(value) => !!value || this.t("This field is required")],
         password_show: [(value) => !!value || this.t("This field is required")],
+        account_email: [
+          (value) => !!value || this.t("This field is required"),
+          (v) => {
+            const hasEnglishCharacters = /[a-zA-Z]/.test(v);
+            if (!hasEnglishCharacters) {
+              return this.t("The email must contain English characters");
+            }
+            return true;
+          },
+          (v) => {
+            const hasAtSign = /@/.test(v);
+            if (hasAtSign) {
+              return this.t("The email must not contain the symbol") + " ( @ ) ";
+            }
+            return true;
+          },
+          (v) => {
+            const hasSpace = /\s/.test(v);
+            if (hasSpace) {
+              return this.t("The email must not contain spaces between characters");
+            }
+            return true;
+          },
+          (v) => {
+            const hasDot = /\./.test(v);
+            if (hasDot) {
+              return this.t("The email must not contain the symbol") + " ( . ) ";
+            }
+            return true;
+          },
+        ],
         email: [
           (value) => !!value || this.t("This field is required"),
           (value) =>
@@ -2387,7 +2431,10 @@ export default {
             name: this.dataAddTenant.name,
             phone: this.dataAddTenant.phone,
             password_show: this.dataAddTenant.password_show,
-            email: this.dataAddTenant.email,
+            email:
+              this.email_symbol !== null
+                ? this.dataAddTenant.email + this.email_symbol
+                : this.dataAddTenant.email,
             address: this.dataAddTenant.address,
             house_id: this.data.house_id,
             form_id: this.data.form_id,
