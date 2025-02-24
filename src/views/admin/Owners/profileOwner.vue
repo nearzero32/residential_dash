@@ -218,7 +218,7 @@
                 tile
                 color="primary"
                 prepend-icon="mdi-plus"
-                @click="addTenant.open = true"
+                @click="getEmailSymbol()"
                 v-if="userData.includes('add')"
               >
                 {{ t("Add Tenant Account") }}
@@ -403,7 +403,7 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="dataAddTenant.name"
                     :rules="Rules.name"
@@ -411,7 +411,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="dataAddTenant.phone"
                     :rules="Rules.phone"
@@ -438,7 +438,7 @@
                     outlined
                   />
                 </VCol>
-                <VCol cols="12" md="4">
+                <VCol cols="12" md="6">
                   <VTextField
                     v-model="dataAddTenant.password_show"
                     :rules="Rules.password_show"
@@ -1626,7 +1626,7 @@ export default {
   data() {
     return {
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      email_symbol: JSON.parse(localStorage.getItem("results")).center_id.email_symbol,
+      email_symbol: null,
 
       id: null,
       data: {},
@@ -2007,6 +2007,23 @@ export default {
   },
   methods: {
     // Get Data
+    async getEmailSymbol() {
+      try {
+        const response = await adminApi.getEmailSymbol();
+        this.email_symbol = response.data.results;
+        this.addTenant.open = true;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     async getCenter() {
       try {
         this.loading = true;

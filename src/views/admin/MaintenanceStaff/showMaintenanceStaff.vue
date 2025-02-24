@@ -16,7 +16,7 @@
               tile
               color="primary"
               prepend-icon="mdi-plus"
-              @click="addDialog.open = true"
+              @click="getEmailSymbol()"
               v-if="userData.includes('add')"
             >
               {{ t("Addition") }}
@@ -312,7 +312,7 @@ export default {
       // table
       is_deleted: false,
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
-      email_symbol: JSON.parse(localStorage.getItem("results")).center_id.email_symbol,
+      email_symbol: null,
       tableOptions: {
         itemsPerPage: 10,
         page: 1,
@@ -502,6 +502,23 @@ export default {
     },
   },
   methods: {
+    async getEmailSymbol() {
+      try {
+        const response = await adminApi.getEmailSymbol();
+        this.email_symbol = response.data.results;
+        this.addDialog.open = true;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
     // Get Data
     async getCenter(newOptions) {
       if (newOptions) {

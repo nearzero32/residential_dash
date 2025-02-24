@@ -6,6 +6,10 @@ class adminApi {
     const response = await axiosInstance.get(`/counts`);
     return response;
   }
+  async getEmailSymbol() {
+    const response = await axiosInstance.get(`/profile/email_symbol`);
+    return response;
+  }
   async getVisitsStatistics(year) {
     const response = await axiosInstance.get(`/counts/visits?year=${year}`);
     return response;
