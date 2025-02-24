@@ -28,9 +28,7 @@
                 :label="t('Names of the buildings')"
                 outlined
                 :placeholder="
-                  t(
-                    'Please enter the building name and then press the Enter key.'
-                  )
+                  t('Please enter the building name and then press the Enter key.')
                 "
                 @on-tags-changed="handleChangeTag"
               />
@@ -41,6 +39,15 @@
                 :rules="Rules.block_number"
                 dense
                 :label="t('The block')"
+                outlined
+              />
+            </VCol>
+            <VCol md="4" sm="6" cols="12">
+              <VTextField
+                v-model="data.type"
+                :rules="Rules.type"
+                dense
+                :label="t('The type')"
                 outlined
               />
             </VCol>
@@ -79,9 +86,7 @@
                           >
                             <img
                               style="height: 100px; width: 100%"
-                              :src="
-                                isBase64(image) ? image : content_url + image
-                              "
+                              :src="isBase64(image) ? image : content_url + image"
                               alt="Image"
                               @click.stop
                             />
@@ -117,40 +122,26 @@
               </VRow>
             </VCol>
             <VCol cols="12" md="12">
-              <v-expansion-panels
-                class="my-4"
-                variant="popout"
-                v-model="panel"
-                multiple
-              >
-                <v-expansion-panel
-                  v-for="(Space, index) in data.Spaces"
-                  :key="index"
-                >
+              <v-expansion-panels class="my-4" variant="popout" v-model="panel" multiple>
+                <v-expansion-panel v-for="(Space, index) in data.Spaces" :key="index">
                   <v-expansion-panel-title>
                     <v-row>
                       <v-col cols="6" md="6" style="padding-block: 0px">
                         {{ t("The area") }}
                         <span
-                          v-if="
-                            Space.total_space !== null &&
-                            Space.total_space !== ''
-                          "
+                          v-if="Space.total_space !== null && Space.total_space !== ''"
                           >( {{ Space.total_space }} )</span
                         >
                         <span v-else>( {{ t("New") }} )</span>
                       </v-col>
                       <v-col cols="6" md="6" style="padding: 0px">
                         <v-btn text @click="deleteSpace(index)">
-                          <v-icon style="color: red !important"
-                            >mdi-delete</v-icon
-                          >
+                          <v-icon style="color: red !important">mdi-delete</v-icon>
                           <span>
                             {{ t("Deleting the area") }}
                             <span
                               v-if="
-                                Space.total_space !== null &&
-                                Space.total_space !== ''
+                                Space.total_space !== null && Space.total_space !== ''
                               "
                               >( {{ Space.total_space }} )</span
                             >
@@ -278,17 +269,12 @@
                               >
                                 <td>
                                   <span
-                                    v-for="(
-                                      showHous, index
-                                    ) in showHouses.HouseNumber"
+                                    v-for="(showHous, index) in showHouses.HouseNumber"
                                     :key="index"
                                   >
                                     {{ showHous }}
                                     <span
-                                      v-if="
-                                        index !==
-                                        showHouses.HouseNumber.length - 1
-                                      "
+                                      v-if="index !== showHouses.HouseNumber.length - 1"
                                       >,</span
                                     >
                                   </span>
@@ -301,9 +287,7 @@
                                         color="rgb(243 216 1)"
                                         v-bind="attrs"
                                         size="20"
-                                        @click="
-                                          editShowHouses(showIndex, index)
-                                        "
+                                        @click="editShowHouses(showIndex, index)"
                                       >
                                         mdi-note-edit
                                       </v-icon>
@@ -316,9 +300,7 @@
                                         color="#FF5252"
                                         v-bind="attrs"
                                         size="20"
-                                        @click="
-                                          deleteShowHouses(showIndex, index)
-                                        "
+                                        @click="deleteShowHouses(showIndex, index)"
                                       >
                                         mdi-delete-restore
                                       </v-icon>
@@ -332,9 +314,7 @@
                         </v-col>
                       </v-row>
                       <v-container
-                        v-if="
-                          Space.addSpaceInput == true && Space.table.length > 0
-                        "
+                        v-if="Space.addSpaceInput == true && Space.table.length > 0"
                       >
                         <v-row>
                           <v-col cols="12" md="6" style="padding-block: 30px">
@@ -389,9 +369,7 @@
                                     color="red"
                                     @click="deleteRoom(index, ind)"
                                   >
-                                    <v-icon style="color: red"
-                                      >mdi-delete</v-icon
-                                    >
+                                    <v-icon style="color: red">mdi-delete</v-icon>
                                   </v-btn>
                                 </div>
                               </v-col>
@@ -428,8 +406,7 @@
                             <v-row>
                               <v-col cols="12" md="12" style="padding: 0px">
                                 <v-label class="mb-2 font-weight-medium"
-                                  >{{ t("The image") }} (
-                                  {{ room.name }} )</v-label
+                                  >{{ t("The image") }} ( {{ room.name }} )</v-label
                                 >
                                 <div
                                   @click="openFileInputR(index, ind)"
@@ -439,9 +416,7 @@
                                   <input
                                     type="file"
                                     accept="image/png, image/jpeg, image/bmp"
-                                    @change="
-                                      handleFileChangeR($event, index, ind)
-                                    "
+                                    @change="handleFileChangeR($event, index, ind)"
                                     :ref="'fileInput' + index + ind"
                                     style="display: none"
                                   />
@@ -451,16 +426,9 @@
                                     style="width: 100%"
                                   >
                                     <v-row>
-                                      <v-col
-                                        cols="12"
-                                        md="12"
-                                        style="padding: 0px"
-                                      >
+                                      <v-col cols="12" md="12" style="padding: 0px">
                                         <div
-                                          style="
-                                            text-align: center;
-                                            position: relative;
-                                          "
+                                          style="text-align: center; position: relative"
                                           class="imgI"
                                         >
                                           <img
@@ -474,9 +442,7 @@
                                             small
                                             color="red"
                                             class="delete-icon"
-                                            @click.stop="
-                                              deleteImageR(index, ind)
-                                            "
+                                            @click.stop="deleteImageR(index, ind)"
                                             style="
                                               position: absolute;
                                               top: 50%;
@@ -603,6 +569,7 @@ export default {
       panel: [],
       data: {
         name: null,
+        type: null,
         BuildingNames: [],
         images: [],
         block_number: null,
@@ -640,19 +607,14 @@ export default {
     Rules() {
       return {
         name: [(value) => !!value || this.t("This field is required")],
-        tagsBuildingNames: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        type: [(value) => !!value || this.t("This field is required")],
+        tagsBuildingNames: [(value) => !!value || this.t("This field is required")],
         block_number: [(value) => !!value || this.t("This field is required")],
         total_space: [(value) => !!value || this.t("This field is required")],
-        building_space: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        building_space: [(value) => !!value || this.t("This field is required")],
         houseNumber: [(value) => !!value || this.t("This field is required")],
         FloorNumber: [(value) => !!value || this.t("This field is required")],
-        housesRoomNames: [
-          (value) => !!value || this.t("This field is required"),
-        ],
+        housesRoomNames: [(value) => !!value || this.t("This field is required")],
       };
     },
   },
@@ -774,9 +736,7 @@ export default {
         let existingFloorNumbers = this.data.Spaces[index].table.map(
           (space) => space.FloorNumber
         );
-        if (
-          existingFloorNumbers.includes(this.data.Spaces[index].tag.FloorNumber)
-        ) {
+        if (existingFloorNumbers.includes(this.data.Spaces[index].tag.FloorNumber)) {
           this.showDialogfunction(
             this.t("Floor number is duplicated within the same area"),
             "#FF5252"
@@ -785,17 +745,14 @@ export default {
         }
         if (this.isHouseFloorNumberDuplicate(index)) {
           this.showDialogfunction(
-            this.t(
-              "The apartment number and floor number exist in another area"
-            ),
+            this.t("The apartment number and floor number exist in another area"),
             "#FF5252"
           );
           return;
         }
 
         this.data.Spaces[index].houseNumber = [];
-        this.data.Spaces[index].houseNumber =
-          this.data.Spaces[index].tag.tagsHouseNumber;
+        this.data.Spaces[index].houseNumber = this.data.Spaces[index].tag.tagsHouseNumber;
 
         this.data.houses.push({
           names: this.data.Spaces[index].houseNumber,
@@ -820,17 +777,15 @@ export default {
       }
     },
     isHouseFloorNumberDuplicate(currentIndex) {
-      const currentHouseNumbers = this.data.Spaces[
-        currentIndex
-      ].tag.tagsHouseNumber.map((tag) => tag);
+      const currentHouseNumbers = this.data.Spaces[currentIndex].tag.tagsHouseNumber.map(
+        (tag) => tag
+      );
       const currentFloorNumber = this.data.Spaces[currentIndex].tag.FloorNumber;
 
       for (let i = 0; i < this.data.Spaces.length; i++) {
         if (i !== currentIndex) {
           const space = this.data.Spaces[i];
-          const houseNumbers = space.table
-            .map((entry) => entry.HouseNumber)
-            .flat();
+          const houseNumbers = space.table.map((entry) => entry.HouseNumber).flat();
           const floorNumbers = space.table.map((entry) => entry.FloorNumber);
 
           for (let j = 0; j < houseNumbers.length; j++) {
@@ -863,9 +818,7 @@ export default {
         this.data.Spaces[index].tag.FloorNumber = house.apartment_floor_number;
       });
 
-      this.data.houses = houses.filter(
-        (house) => !filteredHouses.includes(house)
-      );
+      this.data.houses = houses.filter((house) => !filteredHouses.includes(house));
 
       this.data.Spaces[index].table = this.data.Spaces[index].table.filter(
         (tableItem) => tableItem !== show
@@ -882,19 +835,14 @@ export default {
           house.apartment_floor_number === show.FloorNumber
       );
 
-      this.data.houses = houses.filter(
-        (house) => !filteredHouses.includes(house)
-      );
+      this.data.houses = houses.filter((house) => !filteredHouses.includes(house));
       this.data.Spaces[index].table = this.data.Spaces[index].table.filter(
         (tableItem) => tableItem !== show
       );
     },
     adCopyD(index) {
       this.data.Spaces[index].rooms = [];
-      if (
-        this.copyD.building_space !== null &&
-        this.copyD.total_space !== null
-      ) {
+      if (this.copyD.building_space !== null && this.copyD.total_space !== null) {
         for (var i = 0; i < this.data.Spaces.length; i++) {
           if (
             this.data.Spaces[i].building_space == this.copyD.building_space &&
@@ -948,38 +896,27 @@ export default {
       this.saveLoading = true;
 
       if (this.data.Spaces.length <= 0) {
-        this.showDialogfunction(
-          this.t("At least one area must be added"),
-          "#FF5252"
-        );
+        this.showDialogfunction(this.t("At least one area must be added"), "#FF5252");
         return;
       }
 
       for (let i = 0; i < this.data.Spaces.length; i++) {
         const space = this.data.Spaces[i];
         if (space.total_space === null || space.building_space === null) {
-          this.showDialogfunction(
-            this.t("All fields must be filled out"),
-            "#FF5252"
-          );
+          this.showDialogfunction(this.t("All fields must be filled out"), "#FF5252");
           return;
         }
         for (let j = 0; j < space.rooms.length; j++) {
           const room = space.rooms[j];
           if (room.name === null || room.space === null) {
-            this.showDialogfunction(
-              this.t("At least one room must be added"),
-              "#FF5252"
-            );
+            this.showDialogfunction(this.t("At least one room must be added"), "#FF5252");
             return;
           }
         }
       }
 
       const totalSpaces = this.data.Spaces.map((Space) => Space.total_space);
-      const buildingSpace = this.data.Spaces.map(
-        (Space) => Space.building_space
-      );
+      const buildingSpace = this.data.Spaces.map((Space) => Space.building_space);
       const roomsForSpace = this.data.Spaces.map((Space) => {
         const rooms = Space.rooms;
         const buildingSpace = Space.building_space;
@@ -999,6 +936,7 @@ export default {
         const response = await adminApi.addFormsApartment({
           name: this.data.name,
           block_number: this.data.block_number,
+          type: this.data.type,
           images: this.data.images,
           total_space: totalSpaces,
           building_space: buildingSpace,

@@ -23,9 +23,7 @@
         <v-card>
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
-              <strong
-                >{{ t("Total area") }} <br />( {{ data.total_space }} )</strong
-              >
+              <strong>{{ t("Total area") }} <br />( {{ data.total_space }} )</strong>
             </h5>
             <img style="width: 70px; margin-block: 12px" :src="space" alt="" />
           </v-card-text>
@@ -40,11 +38,7 @@
                 ( {{ data.building_space }} )</strong
               >
             </h5>
-            <img
-              style="width: 70px; margin-block: 12px"
-              :src="spaceUtilization"
-              alt=""
-            />
+            <img style="width: 70px; margin-block: 12px" :src="spaceUtilization" alt="" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -53,15 +47,10 @@
           <v-card-text class="pb-0" style="display: grid; place-items: center">
             <h5>
               <strong
-                >{{ t("Architecture name") }} (
-                {{ data.apartment_building }} )</strong
+                >{{ t("Architecture name") }} ( {{ data.apartment_building }} )</strong
               >
             </h5>
-            <img
-              style="width: 70px; margin-block: 12px"
-              :src="skyscraper"
-              alt=""
-            />
+            <img style="width: 70px; margin-block: 12px" :src="skyscraper" alt="" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -75,17 +64,23 @@
           </v-card-text>
         </v-card>
       </v-col>
+      <v-col cols="12" md="4" style="padding: 10px">
+        <v-card>
+          <v-card-text class="pb-0" style="display: grid; place-items: center">
+            <h5>
+              <strong>{{ t("The type") }} ( {{ data.type }} )</strong>
+            </h5>
+            <img style="width: 70px; margin-block: 12px" :src="typee" alt="" />
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
     <br />
     <br />
     <VCard>
       <VCardTitle class="text-h5" style="display: grid; place-items: center">
         <strong
-          style="
-            color: rgb(145 85 253);
-            border-bottom: solid 2px;
-            padding-bottom: 9px;
-          "
+          style="color: rgb(145 85 253); border-bottom: solid 2px; padding-bottom: 9px"
           >{{ t("Model images") }}</strong
         >
       </VCardTitle>
@@ -110,11 +105,7 @@
     <VCard>
       <VCardTitle class="text-h5" style="display: grid; place-items: center">
         <strong
-          style="
-            color: rgb(145 85 253);
-            border-bottom: solid 2px;
-            padding-bottom: 9px;
-          "
+          style="color: rgb(145 85 253); border-bottom: solid 2px; padding-bottom: 9px"
           >{{ t("Details of model areas") }}</strong
         >
       </VCardTitle>
@@ -139,21 +130,14 @@
                 <h3>{{ t("Floor number") }} ( {{ floor }} )</h3>
                 <v-item-group
                   class="d-flex justify-sm-space-between px-6 pt-2 pb-6"
-                  style="
-                    flex-wrap: wrap;
-                    justify-content: flex-start !important;
-                  "
+                  style="flex-wrap: wrap; justify-content: flex-start !important"
                 >
                   <v-item v-for="(item, index) in houses" :key="index">
                     <VTooltip top>
                       <template v-slot:activator="{ props }">
                         <v-btn
                           style="margin: 5px"
-                          :style="
-                            item.status === 'تم البيع'
-                              ? 'color: white'
-                              : 'black'
-                          "
+                          :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
                           :height="40"
                           @click="goHouse(item)"
                           :color="
@@ -176,14 +160,12 @@
                         </v-btn>
                       </template>
                       <span>
-                        {{ t("Floor number") }} (
-                        {{ item.apartment_floor_number }} )
+                        {{ t("Floor number") }} ( {{ item.apartment_floor_number }} )
                         <br />
                         {{ t("Status") }} ( {{ item.status }} )
                         <br />
                         <span v-if="item.current_owner_name"
-                          >{{ t("Owner's name") }} (
-                          {{ item.current_owner_name }} )</span
+                          >{{ t("Owner's name") }} ( {{ item.current_owner_name }} )</span
                         >
                       </span>
                     </VTooltip>
@@ -259,6 +241,7 @@ import location from "@/assets/images/icons/location.png";
 import street from "@/assets/images/icons/street.png";
 import data_classification from "@/assets/images/icons/data_classification.png";
 import skyscraper from "@/assets/images/icons/skyscraper.png";
+import typee from "@/assets/images/icons/type.png";
 
 export default {
   setup() {
@@ -297,6 +280,7 @@ export default {
       data: [],
       loading: false,
       space,
+      typee,
       spaceUtilization,
       skyscraper,
       domain,

@@ -72,6 +72,7 @@ class adminApi {
   async addFormsApartment({
     name,
     block_number,
+    type,
     images,
     total_space,
     building_space,
@@ -82,6 +83,7 @@ class adminApi {
     const requestData = {
       name,
       block_number,
+      type,
       images,
       total_space,
       building_space,
