@@ -250,7 +250,7 @@
                             filled
                             solo
                             v-model="Space.tag.type"
-                            :label="t('Copying content from another area')"
+                            :label="t('The type')"
                             :items="tagsType"
                             return-object
                           ></v-select>
