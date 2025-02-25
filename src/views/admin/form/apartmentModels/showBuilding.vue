@@ -42,7 +42,6 @@
                 <VBtn
                   style="margin: 5px"
                   :height="40"
-                  :width="40"
                   :color="Building._id === activeBuilding ? 'primary' : ''"
                   :border="true"
                   v-bind="props"
@@ -59,7 +58,6 @@
                 <v-btn
                   style="margin: 5px"
                   :height="40"
-                  :width="40"
                   :border="true"
                   :color="Building._id === activeBuilding ? 'primary' : ''"
                   v-bind="props"
@@ -111,10 +109,7 @@
             :key="index"
             style="align-items: center"
           >
-            <v-col
-              cols="12"
-              md="2"
-              style="margin-right: 10px; text-align: center"
+            <v-col cols="12" md="2" style="margin-right: 10px; text-align: center"
               >{{ Floor.apartment_floor_number }}
               <v-icon class="mr-2" size="50" color="primary"
                 >mdi-arrow-left-bold-box</v-icon
@@ -134,9 +129,7 @@
                     <template v-slot:activator="{ props }">
                       <v-btn
                         style="margin: 5px"
-                        :style="
-                          item.status === 'تم البيع' ? 'color: white' : 'black'
-                        "
+                        :style="item.status === 'تم البيع' ? 'color: white' : 'black'"
                         :height="40"
                         @click="goHouse(item)"
                         :color="
@@ -160,8 +153,7 @@
                     </template>
                     <span
                       >{{ t("Status") }} : {{ item.status }} <br />
-                      {{ t("Owner's name") }}:
-                      {{ item.current_owner_name }}</span
+                      {{ t("Owner's name") }}: {{ item.current_owner_name }}</span
                     >
                   </VTooltip>
                 </v-item>
