@@ -1486,11 +1486,28 @@ export default {
   created() {
     window.addEventListener("resize", this.onResize);
     this.onResize();
-    var userDataString = JSON.parse(localStorage.getItem("results"));
-    if (userDataString.type !== "super_admin") {
-      this.userData = userDataString.privileges.actions;
+
+    // جلب البيانات من localStorage والتحقق من وجودها
+    var userDataString = localStorage.getItem("results");
+    if (userDataString) {
+      try {
+        var userData = JSON.parse(userDataString);
+
+        if (userData && userData.type) {
+          if (userData.type === "super_admin") {
+            this.userData = ["add", "edit", "remove"];
+          } else {
+            this.userData = userData.privileges?.actions || [];
+          }
+        } else {
+          this.userData = [];
+        }
+      } catch (error) {
+        console.error("خطأ في تحليل بيانات المستخدم:", error);
+        this.userData = [];
+      }
     } else {
-      this.userData = ["add", "edit", "remove"];
+      this.userData = [];
     }
   },
   beforeUnmount() {

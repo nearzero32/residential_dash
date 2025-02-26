@@ -27,7 +27,7 @@ export default [
     title: "Complexes",
     to: { name: "super-admin-show-complexes" },
     building_type: "منازل وشقق",
-    type: ["super_admin"],
+    type: ["super_admin", "super_admin_user"],
     icon: { icon: "mdi-office-building-outline" },
   },
   {

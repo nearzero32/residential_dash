@@ -385,6 +385,14 @@ export default {
     };
   },
   data() {
+    let userDataString = localStorage.getItem("results");
+    let userData = userDataString ? JSON.parse(userDataString) : null;
+    let actionsList = ["تعديل"];
+
+    // التحقق مما إذا كان المستخدم من نوع super_admin_user، ثم إزالة "تعديل"
+    if (userData?.type === "super_admin_user") {
+      actionsList = [];
+    }
     return {
       // table
       content_url: JSON.parse(localStorage.getItem("results")).content_url,
@@ -396,7 +404,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل"],
+        actions: actionsList,
         search: null,
         itemsPerPage: 5,
       },
@@ -473,7 +481,11 @@ export default {
       };
     },
     headers() {
-      return [
+      let userDataString = localStorage.getItem("results");
+      let userData = userDataString ? JSON.parse(userDataString) : null;
+      let isSuperAdminUser = userData?.type === "super_admin_user";
+
+      let headersList = [
         {
           title: "#",
           type: "strong",
@@ -511,25 +523,33 @@ export default {
           key: "telegram_chat_id",
         },
         {
-          title: "مبلغ تطبيق الموبايل",
-          type: "mobile_bill_price",
-          link: ``,
-          key: "mobile_bill_price",
-        },
-        {
           title: this.t("Building type"),
           type: "strong",
           link: ``,
           key: "building_type",
         },
-        {
-          title: this.t("Operations"),
-          key: "actions",
-          sortable: false,
-          type: "strong",
-          link: "",
-        },
       ];
+
+      // إذا لم يكن المستخدم "super_admin_user"، أضف العمليات والمبلغ
+      if (!isSuperAdminUser) {
+        headersList.push(
+          {
+            title: "مبلغ تطبيق الموبايل",
+            type: "mobile_bill_price",
+            link: ``,
+            key: "mobile_bill_price",
+          },
+          {
+            title: this.t("Operations"),
+            key: "actions",
+            sortable: false,
+            type: "strong",
+            link: "",
+          }
+        );
+      }
+
+      return headersList;
     },
     mobile_bill_price: {
       get() {

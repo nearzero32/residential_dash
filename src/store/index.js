@@ -101,6 +101,7 @@ const store = createStore({
       const redirectUser = (type, pages) => {
         const routes = {
           super_admin: "/super-admin-home",
+          super_admin_user: "/super-admin-show-complexes",
           admin: "/admin-index",
           investor: "/admin-index",
           investor_accountant: "/admin-index",
@@ -292,6 +293,10 @@ const store = createStore({
           commit("SET_AUTHENTICATED", true);
           saveUserData(response.data.results);
           redirectUser(type, pages);
+        } else if (type === "super_admin_user") {
+          commit("SET_AUTHENTICATED", true);
+          saveUserData(response.data.results);
+          redirectUser(type, pages);
         } else if (
           center_id &&
           center_id._id &&
@@ -336,6 +341,7 @@ const store = createStore({
 
         const routeMap = {
           super_admin: "/super-admin-home",
+          super_admin_user: "/super-admin-show-complexes",
           admin: "/admin-index",
           resident_manager: "/admin-index",
           investor: "/admin-index",

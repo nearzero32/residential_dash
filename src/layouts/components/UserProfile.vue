@@ -11,7 +11,7 @@ const r = JSON.parse(localStorage.getItem("results"));
 let logo = null;
 let name = null;
 let name2 = null;
-if (r.type === "super_admin") {
+if (r.type === "super_admin" || r.type === "super_admin_user") {
   logo = log;
   name = "Super Admin";
 } else {
