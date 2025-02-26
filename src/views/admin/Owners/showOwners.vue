@@ -1269,6 +1269,7 @@ export default {
           name: null,
           email: null,
           form_id: null,
+          form: null,
           house_id: null,
         },
       },
@@ -2195,9 +2196,11 @@ export default {
           this.CopyOwnerDialog.data.name = null;
           this.CopyOwnerDialog.data.email = null;
           this.CopyOwnerDialog.data.form_id = null;
+          this.CopyOwnerDialog.data.form = null;
           this.CopyOwnerDialog.data.house_id = null;
           this.CopyOwnerDialog.data.id = null;
           this.CopyOwnerDialog.saveLoading = false;
+          this.CopyOwnerDialog.HousesShow = false;
           await this.getCenter();
           this.CopyOwnerDialog.open = false;
           this.showDialogfunction(response.data.message, "primary");
