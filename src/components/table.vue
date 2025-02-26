@@ -545,6 +545,22 @@
               </template>
               <span>اعادة تفعيل</span>
             </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('نسخ')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#4caf50"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitCopyOwner(item.selectable)"
+                >
+                  mdi-account-reactivate
+                </VIcon>
+              </template>
+              <span>نسخ مالك</span>
+            </VTooltip>
             <VTooltip
               bottom
               v-if="
@@ -1183,6 +1199,22 @@
               </template>
               <span>طباعة</span>
             </VTooltip>
+            <VTooltip bottom v-if="table.actions.includes('نسخ')">
+              <template v-slot:activator="{ props }">
+                <VIcon
+                  style="margin-inline: 3px"
+                  color="#4caf50"
+                  class="ml-2"
+                  v-bind="props"
+                  size="20"
+                  v-on="on"
+                  @click="emitCopyOwner(item.selectable)"
+                >
+                  mdi-account-reactivate
+                </VIcon>
+              </template>
+              <span>نسخ مالك</span>
+            </VTooltip>
             <VTooltip
               bottom
               v-if="
@@ -1528,6 +1560,9 @@ export default {
     },
     empConsentIteme(item) {
       this.$emit("empConsentIteme", item);
+    },
+    emitCopyOwner(item) {
+      this.$emit("emitCopyOwner", item);
     },
     empFinishIteme(item) {
       this.$emit("empFinishIteme", item);

@@ -1307,6 +1307,19 @@ class adminApi {
     const response = await axiosInstance.post(`/owners`, requestData);
     return response;
   }
+  async addCopyOwner({ name, email, form_id, house_id, id }) {
+    const requestData = {
+      name,
+      email,
+      form_id,
+      house_id,
+    };
+    const response = await axiosInstance.put(
+      `/owners/copy/owner_id/${id}`,
+      requestData
+    );
+    return response;
+  }
   async getOneOwner(id) {
     const response = await axiosInstance.get(`/owners/owner_id/${id}`);
     return response;

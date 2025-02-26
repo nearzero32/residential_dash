@@ -97,9 +97,94 @@
           @emitDisable="emitDisable"
           @emitConfirmReceivedHouse="emitConfirmReceivedHouse"
           @emitPrintItems="printItem"
+          @emitCopyOwner="copyOwner"
         />
       </VCardText>
     </VCard>
+
+    <!-- CopyOwnerDialog -->
+    <VDialog v-model="CopyOwnerDialog.open" max-width="800px">
+      <VCard>
+        <VCardTitle>
+          <span class="headline">{{ t("Addition") }}</span>
+        </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VForm ref="form">
+              <VRow>
+                <VCol cols="12" md="6">
+                  <VTextField
+                    v-model="CopyOwnerDialog.data.name"
+                    :rules="Rules.name"
+                    :label="t(`Owner's name`)"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6" v-if="email_symbol !== null">
+                  <VTextField
+                    v-model="CopyOwnerDialog.data.email"
+                    :rules="Rules.account_email"
+                    dense
+                    :label="t('Email')"
+                    outlined
+                  >
+                    <template #prepend-inner>{{ email_symbol }}</template>
+                  </VTextField>
+                </VCol>
+                <VCol cols="12" md="6" v-else>
+                  <VTextField
+                    v-model="CopyOwnerDialog.data.email"
+                    :rules="Rules.email"
+                    :label="t(`Email`)"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="6">
+                  <VAutocomplete
+                    v-model="CopyOwnerDialog.data.form"
+                    :rules="Rules.form"
+                    :items="Forms"
+                    outlined
+                    :item-title="getItemText"
+                    item-value="_id"
+                    attach
+                    return-object
+                    @update:modelValue="getHousesCopyOwner"
+                    :label="t(`Form name`)"
+                  ></VAutocomplete>
+                </VCol>
+                <VCol cols="12" md="6" v-if="CopyOwnerDialog.HousesShow">
+                  <VAutocomplete
+                    v-model="CopyOwnerDialog.data.house_id"
+                    :rules="Rules.house_id"
+                    :items="filteredHousesCopy"
+                    outlined
+                    :item-title="formatHouseCopy"
+                    item-value="_id"
+                    attach
+                    :label="t(`The house`)"
+                  ></VAutocomplete>
+                </VCol>
+              </VRow>
+            </VForm>
+          </VContainer>
+        </VCardText>
+        <VCardActions class="ml-3">
+          <VSpacer />
+          <VBtn color="primary" text @click="CopyOwnerDialog.open = false">
+            {{ t("Cancel") }}
+          </VBtn>
+          <VBtn
+            color="primary"
+            :loading="CopyOwnerDialog.saveLoading"
+            @click="addCenterCopyOwner"
+          >
+            {{ t("Addition") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+    <!-- CopyOwnerDialog -->
 
     <!-- Add Class Dialog -->
     <VDialog v-model="addDialog.open" max-width="800px">
@@ -1121,7 +1206,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل", "ايقاف", "طباعة", "استلام الوحدة السكنية"],
+        actions: ["تعديل", "ايقاف", "طباعة", "استلام الوحدة السكنية", "نسخ"],
         search: null,
       },
       userData: [],
@@ -1167,6 +1252,27 @@ export default {
         passport_img: null,
       },
       // add
+      // CopyOwner
+      CopyOwnerDialog: {
+        open: false,
+        saveLoading: false,
+        visibleDeleteIcons: [],
+        Forms: [],
+        files: [],
+        BankAccounts: [],
+        Houses: [],
+        file: null,
+        building_type: null,
+        HousesShow: false,
+        data: {
+          id: null,
+          name: null,
+          email: null,
+          form_id: null,
+          house_id: null,
+        },
+      },
+      // CopyOwner
 
       // xlsx
       xlsxData: {
@@ -1229,7 +1335,6 @@ export default {
       // message
     };
   },
-
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
     if (userDataString.type !== "admin") {
@@ -1241,7 +1346,6 @@ export default {
     this.getBankAccounts();
     this.getForms();
   },
-
   watch: {
     "dialogEdit.editedItem.form_id": {
       handler(newVal) {
@@ -1253,7 +1357,6 @@ export default {
       immediate: true,
     },
   },
-
   computed: {
     Rules() {
       return {
@@ -1386,8 +1489,11 @@ export default {
     filteredHouses() {
       return this.Houses.filter((House) => House.status !== "تم البيع");
     },
-  },
 
+    filteredHousesCopy() {
+      return this.CopyOwnerDialog.Houses.filter((House) => House.status !== "تم البيع");
+    },
+  },
   methods: {
     // Get Data
     async getEmailSymbol() {
@@ -1395,6 +1501,23 @@ export default {
         const response = await adminApi.getEmailSymbol();
         this.email_symbol = response.data.results;
         this.addDialog.open = true;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$store.dispatch("submitLogout");
+        } else if (error.response && error.response.status === 500) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        } else if (error.response && error.response.data.error === true) {
+          this.showDialogfunction(error.response.data.message, "#FF5252");
+        }
+      } finally {
+        this.table.loading = false;
+      }
+    },
+    async getEmailSymbolCopy() {
+      try {
+        const response = await adminApi.getEmailSymbol();
+        this.email_symbol = response.data.results;
+        this.CopyOwnerDialog.open = true;
       } catch (error) {
         if (error.response && error.response.status === 401) {
           this.$store.dispatch("submitLogout");
@@ -1794,6 +1917,13 @@ export default {
         return `منزل ( ${item.name} ) الحالة  (${item.status})`;
       }
     },
+    formatHouseCopy(item) {
+      if (this.CopyOwnerDialog.building_type == "شقق") {
+        return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
+      } else if (this.CopyOwnerDialog.building_type == "منازل") {
+        return `منزل ( ${item.name} ) الحالة  (${item.status})`;
+      }
+    },
     async addCenter() {
       const { valid } = await this.$refs.form.validate();
 
@@ -1946,12 +2076,10 @@ export default {
       this.dialogDelete.deletedItem = { ...item };
       this.dialogDelete.open = true;
     },
-
     emitConfirmReceivedHouse(item) {
       this.dialogReceivedHouse.open = true;
       this.dialogReceivedHouse.receivedItem = { ...item };
     },
-
     async confirmReceivedHouse() {
       this.dialogReceivedHouse.loading = true;
 
@@ -1985,7 +2113,6 @@ export default {
         this.dialogReceivedHouse.open = false;
       }
     },
-
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       var is_disabled = null;
@@ -2034,6 +2161,62 @@ export default {
       window.open(routeData.href, "_blank");
     },
     // printItem
+
+    // copyOwner
+    copyOwner(item) {
+      console.log(item);
+      this.CopyOwnerDialog.data.id = item._id;
+      this.getEmailSymbolCopy();
+    },
+    getHousesCopyOwner() {
+      this.CopyOwnerDialog.data.form_id = this.CopyOwnerDialog.data.form._id;
+      this.CopyOwnerDialog.Houses = this.CopyOwnerDialog.data.form.houses;
+      this.CopyOwnerDialog.building_type = this.CopyOwnerDialog.data.form.building_type;
+      this.CopyOwnerDialog.HousesShow = true;
+    },
+    async addCenterCopyOwner() {
+      const { valid } = await this.$refs.form.validate();
+
+      if (valid) {
+        this.CopyOwnerDialog.saveLoading = true;
+        try {
+          const response = await adminApi.addCopyOwner({
+            name: this.CopyOwnerDialog.data.name,
+            email:
+              this.email_symbol !== null
+                ? this.CopyOwnerDialog.data.email + this.email_symbol
+                : this.CopyOwnerDialog.data.email,
+            form_id: this.CopyOwnerDialog.data.form_id,
+            house_id: this.CopyOwnerDialog.data.house_id,
+            id: this.CopyOwnerDialog.data.id,
+          });
+
+          this.CopyOwnerDialog.addBtnLoading = false;
+          this.CopyOwnerDialog.data.name = null;
+          this.CopyOwnerDialog.data.email = null;
+          this.CopyOwnerDialog.data.form_id = null;
+          this.CopyOwnerDialog.data.house_id = null;
+          this.CopyOwnerDialog.data.id = null;
+          this.CopyOwnerDialog.saveLoading = false;
+          await this.getCenter();
+          this.CopyOwnerDialog.open = false;
+          this.showDialogfunction(response.data.message, "primary");
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.$store.dispatch("submitLogout");
+          } else if (error.response && error.response.status === 500) {
+            this.CopyOwnerDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          } else if (error.response && error.response.data.error === true) {
+            this.CopyOwnerDialog.saveLoading = false;
+            this.showDialogfunction(error.response.data.message, "#FF5252");
+          }
+        } finally {
+          this.CopyOwnerDialog.saveLoading = false;
+        }
+      }
+    },
+    // copyOwner
 
     // message
     showDialogfunction(bodyText, color) {
