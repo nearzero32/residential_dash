@@ -1155,6 +1155,7 @@ import { useI18n } from "vue-i18n";
 import Table from "@/components/table.vue";
 import { getCurrentDateInString } from "@/constant/date";
 import * as XLSX from "xlsx";
+import rand_pass from "@/constant/rand_pass";
 
 export default {
   components: {
@@ -1501,6 +1502,7 @@ export default {
       try {
         const response = await adminApi.getEmailSymbol();
         this.email_symbol = response.data.results;
+        this.data.password_show = rand_pass();
         this.addDialog.open = true;
       } catch (error) {
         if (error.response && error.response.status === 401) {

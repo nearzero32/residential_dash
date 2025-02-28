@@ -1587,6 +1587,7 @@ import adminApi from "@/api/adminApi";
 import { useI18n } from "vue-i18n";
 import { VDataTable } from "vuetify/labs/VDataTable";
 import Table from "@/components/table.vue";
+import rand_pass from "@/constant/rand_pass";
 
 export default {
   components: {
@@ -1763,6 +1764,7 @@ export default {
     };
   },
   created() {
+    this.dataAddTenant.password_show = rand_pass();
     var userDataString = JSON.parse(localStorage.getItem("results"));
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
