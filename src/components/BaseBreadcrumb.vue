@@ -117,7 +117,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page-breadcrumb {
   margin: -24px -25px 27px -25px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
