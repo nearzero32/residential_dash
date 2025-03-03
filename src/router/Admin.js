@@ -14,6 +14,15 @@ export default [
         component: () => import("@/views/admin/Profile/showProfile.vue"),
       },
       // Apartments
+      // serviceContracts
+      {
+        path: "/admin-show-service-contracts",
+        name: "admin-show-service-contracts",
+        component: () =>
+          import("@/views/admin/serviceContracts/showserviceContracts.vue"),
+      },
+      // serviceContracts
+      // Apartments
       {
         path: "/admin-show-apartment-models",
         name: "admin-show-apartment-models",
@@ -636,4 +645,17 @@ export default [
         "@/views/admin/CustomerAttendanceForm/printCustomerAttendanceFormMarinaBaghdad.vue"
       ),
   },
+
+  // service-contracts
+  {
+    path: "/admin-print-service-contracts-alwud",
+    name: "admin-print-service-contracts-alwud",
+    component: () => import("@/views/admin/serviceContracts/print/alwedd.vue"),
+  },
+  {
+    path: "/admin-print-sales-contracts-alrawan",
+    name: "admin-print-sales-contracts-alrawan",
+    component: () => import("@/views/admin/serviceContracts/print/alrawan.vue"),
+  },
+  // service-contracts
 ];

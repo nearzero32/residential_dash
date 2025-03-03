@@ -121,6 +121,7 @@ const store = createStore({
           "all-tenants": "/admin-show-all-tenants",
           "owners-recipients": "/admin-show-owners-recipients",
           "owners-non-recipients": "/admin-show-owners-non-recipients",
+          "service-contracts": "/admin-show-service-contracts",
           visits: "/admin-show-owners-visits",
           "sells-employee": "/admin-show-sales-staff",
           "call-center": "/admin-show-customer-attendance-form",

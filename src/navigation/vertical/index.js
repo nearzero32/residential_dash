@@ -200,6 +200,18 @@ export default [
         name: "owners-non-recipients",
         to: "admin-show-owners-non-recipients",
       },
+      {
+        title: "Service Contracts",
+        type: [
+          "admin",
+          "investor",
+          "investor_accountant",
+          "resident_manager",
+          "assistance",
+        ],
+        name: "service-contracts",
+        to: "admin-show-service-contracts",
+      },
     ],
   },
   {

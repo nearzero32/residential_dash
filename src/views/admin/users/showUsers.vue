@@ -538,6 +538,10 @@ export default {
           text: this.t("Not received the residential unit"),
           value: "owners-non-recipients",
         },
+        {
+          text: this.t("Service Contracts"),
+          value: "service-contracts",
+        },
         { text: this.t("Owners' visits"), value: "visits" },
 
         { text: this.t("Sales"), value: "sales" },
