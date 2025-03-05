@@ -540,6 +540,12 @@ export default [
       import("@/views/admin/SalesContracts/print/PrintMarinaBaghdad.vue"),
   },
   {
+    path: "/admin-print-sales-contracts-alkholood",
+    name: "admin-print-sales-contracts-alkholood",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/PrintAlkholood.vue"),
+  },
+  {
     path: "/admin-print-sales-contracts-aljanain",
     name: "admin-print-sales-contracts-aljanain",
     component: () =>

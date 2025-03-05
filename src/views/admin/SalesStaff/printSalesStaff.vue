@@ -243,6 +243,43 @@
               </h4>
             </v-container>
           </div>
+          <div v-else-if="dataResidential.center_id._id == '67b5cd5be9db64e0451ea6c1'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="12"
+                md="312"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
+                  style="width: 10%"
+                  alt=""
+                />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: rgb(255 255 255);
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: rgb(213 174 97);
+                "
+              >
+                موظف مبيعات ( {{ data.name }} )
+              </h4>
+            </v-container>
+          </div>
           <div v-else-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'">
             <v-row
               style="
@@ -352,6 +389,53 @@
               />
             </v-col>
           </v-row>
+          <br />
+          <v-container>
+            <p
+              v-if="user.center_id._id == '67b5cd5be9db64e0451ea6c1'"
+              style="
+                text-align: center;
+                background: rgb(214 175 98);
+                color: #ffffff;
+                padding: 0px 20px;
+                border-radius: 10px;
+                margin-bottom: 0px;
+              "
+            >
+              في حال وجود اي مشكله بالتطبيق يمكن التواصل على الأرقام التاليه
+            </p>
+            <br />
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="4"
+                md="4"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+              >
+                <img src="@/assets/images/lamassu.png" style="width: 30px" alt="" />
+                <strong>شركة لاماسو </strong></v-col
+              >
+              <v-col
+                cols="4"
+                md="4"
+                style="padding: 10px; text-align: right; white-space: pre-wrap"
+                ><v-icon size="20"> mdi-phone </v-icon
+                ><strong>964 773 019 9178+</strong></v-col
+              >
+              <v-col
+                cols="4"
+                md="4"
+                style="padding: 10px; text-align: left; white-space: pre-wrap"
+                ><a href="https://lamassuae.com/">lamassuae.com</a></v-col
+              >
+            </v-row>
+          </v-container>
           <br />
         </v-container>
         <v-container>

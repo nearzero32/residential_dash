@@ -244,6 +244,43 @@
               </h4>
             </v-container>
           </div>
+          <div v-else-if="dataResidential.center_id._id == '67b5cd5be9db64e0451ea6c1'">
+            <v-row
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="12"
+                md="312"
+                style="padding: 10px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
+                  style="width: 10%"
+                  alt=""
+                />
+              </v-col>
+            </v-row>
+            <br />
+            <hr style="border-color: rgb(141 96 67)" />
+            <v-container>
+              <h4
+                style="
+                  text-align: center;
+                  color: rgb(255 255 255);
+                  padding: 7px 0px;
+                  border-radius: 10px;
+                  background: rgb(214 175 98);
+                "
+              >
+                المالك ( {{ data.name }} )
+              </h4>
+            </v-container>
+          </div>
           <div v-else-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'">
             <v-row
               style="
@@ -588,6 +625,85 @@
               نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم اليومية.
             </p>
           </v-col>
+          <v-col
+            cols="12"
+            md="12"
+            v-else-if="user.center_id._id == '67b5cd5be9db64e0451ea6c1'"
+          >
+            <hr style="width: 100%" />
+            <p style="margin-bottom: 0px">مرحبًا بسكان مجمع الخلود</p>
+            <p style="margin-bottom: 0px">
+              يمكنكم الآن تحميل تطبيق مجمع الخلود السكني وبدء استخدامه باتباع الخطوات
+              التالية:
+            </p>
+            <p
+              style="
+                text-align: center;
+                background: rgb(214 175 98);
+                color: #ffffff;
+                padding: 0px 20px;
+                border-radius: 10px;
+                margin-bottom: 0px;
+              "
+            >
+              لتحميل التطبيق:
+            </p>
+            <p style="margin-bottom: 0px">
+              - الرجاء تصوير رمز الاستجابة السريعة (QR) المرفق لتحميل التطبيق.
+            </p>
+            <div style="text-align: center; margin-block: 10px">
+              <img
+                style="width: 70px"
+                :src="dataResidential.content_url + dataResidential.center_id.qr"
+                alt=""
+              />
+            </div>
+
+            <p
+              style="
+                text-align: center;
+                background: rgb(214 175 98);
+                color: #ffffff;
+                padding: 0px 20px;
+                border-radius: 10px;
+                margin-bottom: 0px;
+              "
+            >
+              لتسجيل الدخول:
+            </p>
+            <p style="margin-bottom: 0px">1. بعد تحميل التطبيق وتثبيته، افتح التطبيق.</p>
+            <p style="margin-bottom: 0px">البريد الإلكتروني</p>
+            <p style="margin-bottom: 0px">كلمة المرور</p>
+            <p style="margin-bottom: 0px">
+              باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق مجمع الخلود السكني بسهولة
+              ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
+            </p>
+            <p style="margin-bottom: 0px">
+              - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل وحدة سكنية.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار والإعلانات.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر التطبيق.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير الشحن.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
+            </p>
+            <p style="margin-bottom: 0px">
+              - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات السكنية في
+              حال وجود أقساط.
+            </p>
+            <p style="margin-bottom: 0px">
+              نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم اليومية.
+            </p>
+          </v-col>
           <v-col cols="12" md="12" v-else>
             <p
               style="
@@ -667,6 +783,53 @@
             </p>
           </v-col>
         </v-row>
+        <br />
+        <v-container>
+          <p
+            v-if="user.center_id._id == '67b5cd5be9db64e0451ea6c1'"
+            style="
+              text-align: center;
+              background: rgb(214 175 98);
+              color: #ffffff;
+              padding: 0px 20px;
+              border-radius: 10px;
+              margin-bottom: 0px;
+            "
+          >
+            في حال وجود اي مشكله بالتطبيق يمكن التواصل على الأرقام التاليه
+          </p>
+          <br />
+          <v-row
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <v-col
+              cols="4"
+              md="4"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+            >
+              <img src="@/assets/images/lamassu.png" style="width: 30px" alt="" />
+              <strong>شركة لاماسو </strong></v-col
+            >
+            <v-col
+              cols="4"
+              md="4"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+              ><v-icon size="20"> mdi-phone </v-icon
+              ><strong>964 773 019 9178+</strong></v-col
+            >
+            <v-col
+              cols="4"
+              md="4"
+              style="padding: 10px; text-align: left; white-space: pre-wrap"
+              ><a href="https://lamassuae.com/">lamassuae.com</a></v-col
+            >
+          </v-row>
+        </v-container>
         <br />
         <v-container>
           <hr />

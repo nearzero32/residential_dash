@@ -289,6 +289,12 @@ export default {
           name: `admin-print-sales-contracts-lamassu`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "67b5cd5be9db64e0451ea6c1") {
+        localStorage.setItem("PrintAlkholood", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-alkholood`,
+        });
+        window.open(routeData.href, "_blank");
       }
     },
     // printItem
