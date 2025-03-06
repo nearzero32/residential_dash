@@ -37,7 +37,7 @@
               >
                 <img
                   :src="dataResidential.content_url + dataResidential.center_id.logo"
-                  style="width: 60px"
+                  style="width: 80px; margin: 13px 0px"
                   alt=""
                 />
               </v-col>
@@ -54,7 +54,7 @@
                 md="4"
                 style="padding: 0px; text-align: center; white-space: pre-wrap"
               >
-                <img :src="lamassu" style="width: 60px" alt="" />
+                <img :src="lamassu" style="width: 80px; margin: 13px 0px" alt="" />
               </v-col>
             </v-row>
           </div>
@@ -465,7 +465,7 @@ import numberWithComma from "@/constant/number";
 import logo1 from "@/assets/logo/41412d.png";
 import logo2 from "@/assets/logo/qaiwan-logo.png";
 import adminApi from "@/api/adminApi";
-import lamassu from "@/assets/images/lamassu.png";
+import lamassu from "@/assets/images/lamassu.jpg";
 import colors from "@/constant/color.js";
 
 export default {

@@ -813,9 +813,9 @@ export default {
 
     // printItem
     printItem(item) {
-      localStorage.setItem("PrintEmployees", JSON.stringify(item));
+      localStorage.setItem("PrintUser", JSON.stringify(item));
       let routeData = this.$router.resolve({
-        name: `admin-print-staff`,
+        name: `admin-print-user`,
       });
       window.open(routeData.href, "_blank");
     },

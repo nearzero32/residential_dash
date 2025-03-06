@@ -616,6 +616,11 @@ export default [
     component: () => import("@/views/admin/Staff/PrintEmployees.vue"),
   },
   {
+    path: "/admin-print-user",
+    name: "admin-print-user",
+    component: () => import("@/views/admin/Users/PrintUser.vue"),
+  },
+  {
     path: "/admin-print-owner",
     name: "admin-print-owner",
     component: () => import("@/views/admin/Owners/printOwner.vue"),

@@ -3,8 +3,8 @@
     <v-container id="pri">
       <v-card
         style="
-          display: flex;
           height: 100vh;
+          display: flex;
           flex-direction: column;
           justify-content: space-between;
         "
@@ -77,84 +77,40 @@
               background: ${color.background};
             `"
           >
-            أستماراة طلب موافقة
+            المستخدم {{ data.name }}
           </h4>
-          <div>
-            <strong>العدد :</strong>
-            <br />
-            <strong>التاريخ :</strong>
-            <br />
-            <br />
-            <table border="1" style="width: 100%; border-collapse: collapse">
-              <thead>
-                <tr>
-                  <th style="border: 1px solid black; padding: 8px">أسم الزبون</th>
-                  <th style="border: 1px solid black; padding: 8px">النوع</th>
-                  <th style="border: 1px solid black; padding: 8px">أسم النموذج</th>
-                  <th style="border: 1px solid black; padding: 8px">البلوك</th>
-                  <th style="border: 1px solid black; padding: 8px">التصنيف</th>
-                  <th style="border: 1px solid black; padding: 8px">رقم الشارع</th>
-                  <th style="border: 1px solid black; padding: 8px">رقم المنزل</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="border: 1px solid black; padding: 8px">
-                    {{ data.customer_name }}
-                  </td>
-                  <td style="border: 1px solid black; padding: 8px"></td>
-                  <td style="border: 1px solid black; padding: 8px">
-                    {{ data.form_name }}
-                  </td>
-                  <td style="border: 1px solid black; padding: 8px">
-                    {{ data.form_block_number }}
-                  </td>
-                  <td style="border: 1px solid black; padding: 8px">
-                    {{ data.form_category }}
-                  </td>
-                  <td style="border: 1px solid black; padding: 8px">
-                    {{ data.form_street_number }}
-                  </td>
-                  <td style="border: 1px solid black; padding: 8px">
-                    {{ data.house_name }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <br />
-            <br />
-            <strong>الطلب : </strong>
-            <br />
-            <div style="width: 100%; padding: 15px; border: solid 1px black">
-              <br />
-              <strong>{{ data.details }}</strong>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <div style="text-align: left">
-                <strong>توقيع مقدم الطلب</strong>
+          <br />
+          <v-row
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <v-col cols="6" md="6">
+              <div>
+                <p>أسم المستخدم : {{ data.name }}</p>
+                <br />
+                <p>رقم الهاتف : {{ data.phone }}</p>
+                <br />
+                <p>العنوان : {{ data.address }}</p>
+                <br />
+                <p>العنوان الوظيفي : {{ data.title_jop }}</p>
+                <br />
+                <p>الراتب: {{ data.salary }}</p>
               </div>
-              <br />
-            </div>
-            <br />
-            <br />
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                padding: 10px;
-              "
-            >
-              <div style="display: flex; flex-direction: column; align-items: flex-start">
-                <strong>أسم موظف المبيعات : </strong>
-                <strong>توقيع الأدارة : </strong>
-              </div>
-              <strong style="margin-left: 100px">موافقة المدير : </strong>
-            </div>
-          </div>
+            </v-col>
+            <v-col cols="6" md="6" style="text-align: center">
+              <p>يمكنك تحميل التطبيق</p>
+              <img
+                style="width: 120px"
+                :src="dataResidential.content_url + dataResidential.center_id.qr"
+                alt=""
+              />
+            </v-col>
+          </v-row>
+          <br />
         </v-container>
         <v-container>
           <hr />
@@ -167,36 +123,82 @@
             "
           >
             <v-col
+              cols="12"
+              md="12"
+              style="padding: 10px; text-align: right; white-space: pre-wrap"
+            >
+              <p
+                :style="`
+                  text-align: center;
+                  color: ${color.color};
+                  background: ${color.background};
+                  padding: 0px 20px;
+                  border-radius: 10px;
+                  margin-bottom: 0px;
+                `"
+              >
+                في حال وجود اي مشكله بالتطبيق يمكن التواصل على الأرقام التاليه
+              </p>
+            </v-col>
+            <v-col
               cols="6"
               md="6"
-              style="padding: 10px; text-align: right; white-space: pre-wrap"
-              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
-              ><v-icon size="20"> mdi-phone </v-icon>4646</v-col
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                direction: rtl;
+                padding: 10px;
+                white-space: pre-wrap;
+              "
+              ><strong>Lamassu <v-icon size="20"> mdi-phone </v-icon> : </strong
+              ><strong><a href="tel:07730199178">964 773 019 9178+</a></strong></v-col
             >
             <v-col
               cols="6"
               md="6"
-              style="padding: 10px; text-align: right; white-space: pre-wrap"
-              v-else
-              ><v-icon size="20"> mdi-phone </v-icon
-              >{{ dataResidential.center_id.phone }}</v-col
-            >
-            <v-col
-              cols="6"
-              md="6"
-              v-if="dataResidential.center_id._id == '65e818b420bce937fbf81fe4'"
               style="padding: 10px; text-align: left; white-space: pre-wrap"
+              ><strong><a href="https://lamassuae.com/">lamassuae.com</a></strong></v-col
             >
-              العراق – السماوة<br /><a href="mailto:info@nahdda.com"
-                >info@nahdda.com</a
+          </v-row>
+          <v-row
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <v-col
+              cols="6"
+              md="6"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                direction: rtl;
+                padding: 10px;
+                white-space: pre-wrap;
+              "
+              ><strong
+                >{{ color.nameEN }} <v-icon size="20"> mdi-phone </v-icon> : </strong
+              ><strong
+                ><a href="`tel:${ dataResidential.center_id.phone }`">{{
+                  dataResidential.center_id.phone
+                }}</a></strong
               ></v-col
             >
             <v-col
               cols="6"
               md="6"
-              v-else
               style="padding: 10px; text-align: left; white-space: pre-wrap"
-              >{{ dataResidential.center_id.address }}</v-col
+              ><strong
+                ><a href="https://lamassuae.com/">{{
+                  dataResidential.center_id.address
+                }}</a></strong
+              ></v-col
             >
           </v-row>
         </v-container>
@@ -206,6 +208,8 @@
 </template>
 
 <script>
+import lamassu from "@/assets/images/lamassu.jpg";
+import colors from "@/constant/color.js";
 import MarinaBaghdad from "@/assets/logo/mar.jpg";
 import loam from "@/assets/logo/Screenshot-2024-11-24-113024.png";
 import alfakher from "@/assets/logo/alfakher.jpg";
@@ -213,8 +217,6 @@ import qaiwan from "@/assets/logo/qaiwan-logo.png";
 import karambagdad from "@/assets/logo/q.png";
 import alrawan from "@/assets/images/icons/rr.jpg";
 import Nahdda from "@/assets/images/icons/logoPrint.png";
-import lamassu from "@/assets/images/lamassu.jpg";
-import colors from "@/constant/color.js";
 
 export default {
   data() {
@@ -234,7 +236,7 @@ export default {
     };
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("PrintApprovalRequestForm"));
+    this.data = JSON.parse(localStorage.getItem("PrintUser"));
     var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
     this.user = userDataString;

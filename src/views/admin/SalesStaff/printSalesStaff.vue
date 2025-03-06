@@ -44,7 +44,7 @@
               >
                 <img
                   :src="dataResidential.content_url + dataResidential.center_id.logo"
-                  style="width: 60px"
+                  style="width: 80px; margin: 13px 0px"
                   alt=""
                 />
               </v-col>
@@ -61,7 +61,7 @@
                 md="4"
                 style="padding: 0px; text-align: center; white-space: pre-wrap"
               >
-                <img :src="lamassu" style="width: 60px" alt="" />
+                <img :src="lamassu" style="width: 80px; margin: 13px 0px" alt="" />
               </v-col>
             </v-row>
           </div>
@@ -210,7 +210,7 @@
 </template>
 
 <script>
-import lamassu from "@/assets/images/lamassu.png";
+import lamassu from "@/assets/images/lamassu.jpg";
 import colors from "@/constant/color.js";
 
 export default {
