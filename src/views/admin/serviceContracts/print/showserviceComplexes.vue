@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container id="pri" v-if="loading == false">
+    <v-container id="pri">
       <v-card
         style="
           height: 100vh;
@@ -77,7 +77,7 @@
               background: ${color.background};
             `"
           >
-            المستأجر ( {{ data.name }} )
+            عقد خدمات
           </h4>
           <v-row
             style="
@@ -89,93 +89,15 @@
           >
             <v-col cols="12" md="12">
               <div>
-                <p style="margin-bottom: 0px">أسم المستأجر : {{ data.name }}</p>
-                <p style="margin-bottom: 0px">رقم الهاتف : {{ data.phone }}</p>
+                <h3>العدد:</h3>
+                <h3>التاريخ:</h3>
 
-                <p style="margin-bottom: 0px">البريد الألكتروني : {{ data.email }}</p>
-                <p style="margin-bottom: 0px">كلمة المرور : {{ data.password_show }}</p>
-
-                <p style="margin-bottom: 0px">
-                  كود الوحدة السكنية : {{ data.form_code }}
-                </p>
+                <h3 style="font-weight: 900; text-align: center">عقد خدمات</h3>
+                <br />
+                <h4 style="text-align: right">
+                  ينص العقد على مبلغ الخدمات الواجب على الطرف الثاني دفعها
+                </h4>
               </div>
-            </v-col>
-            <v-col cols="12" md="12">
-              <hr style="width: 100%" />
-              <p style="margin-bottom: 0px">مرحبًا بسكان {{ color.name }}</p>
-              <p style="margin-bottom: 0px">
-                يمكنكم الآن تحميل تطبيق {{ color.name }} وبدء استخدامه باتباع الخطوات
-                التالية:
-              </p>
-              <br />
-              <p
-                :style="`
-                  text-align: center;
-                  color: ${color.color};
-                  background: ${color.background};
-                  padding: 0px 20px;
-                  border-radius: 10px;
-                  margin-bottom: 0px;
-                `"
-              >
-                لتحميل التطبيق:
-              </p>
-              <p style="margin-bottom: 0px">
-                - الرجاء تصوير رمز الاستجابة السريعة (QR) المرفق لتحميل التطبيق.
-              </p>
-              <div style="text-align: center; margin-block: 10px">
-                <img
-                  style="width: 70px"
-                  :src="dataResidential.content_url + dataResidential.center_id.qr"
-                  alt=""
-                />
-              </div>
-              <p
-                :style="`
-                  text-align: center;
-                  color: ${color.color};
-                  background: ${color.background};
-                  padding: 0px 20px;
-                  border-radius: 10px;
-                  margin-bottom: 0px;
-                `"
-              >
-                لتسجيل الدخول:
-              </p>
-              <p style="margin-bottom: 0px">
-                1. بعد تحميل التطبيق وتثبيته، افتح التطبيق.
-              </p>
-              <p style="margin-bottom: 0px">البريد الإلكتروني</p>
-              <p style="margin-bottom: 0px">كلمة المرور</p>
-              <p style="margin-bottom: 0px">
-                باتباع هذه الخطوات، يمكنك البدء في استخدام تطبيق {{ color.name }} بسهولة
-                ويسر. يتمتع التطبيق بالعديد من المميزات، منها:
-              </p>
-              <p style="margin-bottom: 0px">
-                - *حساب خاص بكل وحدة سكنية:* يتيح لك التطبيق حسابًا شخصيًا لكل وحدة سكنية.
-              </p>
-              <p style="margin-bottom: 0px">
-                - *معرفة آخر الأخبار داخل المجمع:* متابعة أحدث الأخبار والإعلانات.
-              </p>
-              <p style="margin-bottom: 0px">
-                - *طلبات الصيانة:* تقديم طلبات صيانة للوحدة السكنية بسهولة.
-              </p>
-              <p style="margin-bottom: 0px">
-                - *شحن الخدمات:* شحن الخدمات مثل الغاز والكهرباء مباشرة عبر التطبيق.
-              </p>
-              <p style="margin-bottom: 0px">
-                - *استلام فواتير الخدمات:* عرض واستلام فواتير الخدمات وفواتير الشحن.
-              </p>
-              <p style="margin-bottom: 0px">
-                - *الدفع الإلكتروني:* دفع الفواتير الشهرية للخدمات إلكترونيًا.
-              </p>
-              <p style="margin-bottom: 0px">
-                - *إشعارات تذكيرية:* تلقي إشعارات تذكيرية بموعد الأقساط للوحدات السكنية في
-                حال وجود أقساط.
-              </p>
-              <p style="margin-bottom: 0px">
-                نأمل أن يسهم التطبيق في تحسين تجربتكم السكنية وتسهيل إدارة شؤونكم اليومية.
-              </p>
             </v-col>
           </v-row>
           <br />
@@ -276,7 +198,6 @@
 </template>
 
 <script>
-import adminApi from "@/api/adminApi";
 import lamassu from "@/assets/images/lamassu.png";
 import colors from "@/constant/color.js";
 
@@ -285,42 +206,24 @@ export default {
     return {
       lamassu,
       loading: true,
-      data: null,
+      data: JSON.parse(localStorage.getItem("PrintServiceContractsComplexes")),
       user: null,
       dataResidential: null,
       color: colors,
-      id: localStorage.getItem("PrintTenant"),
     };
   },
   created() {
     var userDataString = JSON.parse(localStorage.getItem("results"));
     this.dataResidential = userDataString;
     this.user = userDataString;
-    this.getCenter();
+  },
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+      this.printElement();
+    }, 500);
   },
   methods: {
-    async getCenter() {
-      try {
-        this.loading = true;
-
-        const response = await adminApi.getOneTenant(this.id);
-        this.data = response.data.results;
-        setTimeout(() => {
-          this.printElement();
-        }, 500);
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          this.$router.push("/login");
-        } else if (error.response && error.response.status === 500) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
-        } else if (error.response && error.response.data.error === true) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
-        }
-      } finally {
-        this.loading = false;
-      }
-    },
-
     printElement() {
       var printContent = document.getElementById("pri").innerHTML;
       var originalContent = document.body.innerHTML;

@@ -659,9 +659,15 @@ export default [
     component: () => import("@/views/admin/serviceContracts/print/alwedd.vue"),
   },
   {
-    path: "/admin-print-sales-contracts-alrawan",
-    name: "admin-print-sales-contracts-alrawan",
+    path: "/admin-print-service-contracts-alrawan",
+    name: "admin-print-service-contracts-alrawan",
     component: () => import("@/views/admin/serviceContracts/print/alrawan.vue"),
+  },
+  {
+    path: "/admin-print-service-contracts-complexes",
+    name: "admin-print-service-contracts-complexes",
+    component: () =>
+      import("@/views/admin/serviceContracts/print/showserviceComplexes.vue"),
   },
   // service-contracts
 ];

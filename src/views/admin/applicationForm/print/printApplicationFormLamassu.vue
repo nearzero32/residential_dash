@@ -2,36 +2,63 @@
   <div>
     <v-container id="pri" v-if="data !== null">
       <v-card>
-        <v-row
-          style="
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-          "
-        >
-          <!-- <v-col
-            cols="3"
-            md="3"
-            style="padding: 10px; text-align: center; white-space: pre-wrap"
-          >
-            <img :src="logo1" style="width: 60px" alt="" />
-          </v-col> -->
-          <v-col
-            cols="6"
-            md="6"
-            style="padding: 10px; text-align: center; white-space: pre-wrap"
-          >
-            <img
-              :src="dataResidential.content_url + dataResidential.center_id.logo"
-              style="width: 80px"
-              alt=""
-            />
-          </v-col>
-          <!-- <v-col cols="3" md="3" style="text-align: center">
-            <img :src="logo2" style="width: 60px" alt="" />
-          </v-col> -->
-        </v-row>
+        <v-card-title>
+          <div>
+            <v-row
+              v-if="color.imgTop !== null"
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="12"
+                md="12"
+                style="padding: 0px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="color.imgTop" style="width: 100%" alt="" />
+              </v-col>
+            </v-row>
+            <v-row
+              v-else
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+              "
+            >
+              <v-col
+                cols="4"
+                md="4"
+                style="padding: 0px; text-align: center; white-space: pre-wrap"
+              >
+                <img
+                  :src="dataResidential.content_url + dataResidential.center_id.logo"
+                  style="width: 60px"
+                  alt=""
+                />
+              </v-col>
+              <v-col
+                cols="4"
+                md="4"
+                style="padding: 0px; text-align: center; white-space: pre-wrap"
+              >
+                <h4>{{ color.name }}</h4>
+              </v-col>
+
+              <v-col
+                cols="4"
+                md="4"
+                style="padding: 0px; text-align: center; white-space: pre-wrap"
+              >
+                <img :src="lamassu" style="width: 60px" alt="" />
+              </v-col>
+            </v-row>
+          </div>
+        </v-card-title>
         <hr style="border-color: #163d68" />
         <v-container>
           <v-row
@@ -50,13 +77,13 @@
         </v-container>
         <v-container>
           <h4
-            style="
+            :style="`
               text-align: center;
-              background-color: #163d68;
-              color: white;
               padding: 7px 0px;
               border-radius: 10px;
-            "
+              color: ${color.color};
+              background: ${color.background};
+            `"
           >
             استمارة حجز وحدة سكنية في مجمع لاماسو السكني
           </h4>
@@ -216,13 +243,13 @@
         </v-container>
         <v-container>
           <h4
-            style="
+            :style="`
               text-align: center;
-              background-color: #163d68;
-              color: white;
               padding: 7px 0px;
               border-radius: 10px;
-            "
+              color: ${color.color};
+              background: ${color.background};
+            `"
           >
             تفاصيل الوحدة السكنية
           </h4>
@@ -359,13 +386,13 @@
         </v-container>
         <v-container>
           <h4
-            style="
+            :style="`
               text-align: center;
-              background-color: #163d68;
-              color: white;
               padding: 7px 0px;
               border-radius: 10px;
-            "
+              color: ${color.color};
+              background: ${color.background};
+            `"
           >
             أقرار وتعهد
           </h4>
@@ -438,12 +465,16 @@ import numberWithComma from "@/constant/number";
 import logo1 from "@/assets/logo/41412d.png";
 import logo2 from "@/assets/logo/qaiwan-logo.png";
 import adminApi from "@/api/adminApi";
+import lamassu from "@/assets/images/lamassu.png";
+import colors from "@/constant/color.js";
 
 export default {
   data() {
     return {
       logo1,
       logo2,
+      lamassu,
+      color: colors,
       id: JSON.parse(localStorage.getItem("printApplicationFormLamassu"))._id,
       data: null,
       user: null,

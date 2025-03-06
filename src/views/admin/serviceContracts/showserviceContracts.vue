@@ -385,7 +385,13 @@ export default {
       } else if (results.center_id._id === "66656b164cdec95cab679181") {
         localStorage.setItem("PrintServiceContractsAlrawan", JSON.stringify(item));
         let routeData = this.$router.resolve({
-          name: `admin-print-sales-contracts-alrawan`,
+          name: `admin-print-service-contracts-alrawan`,
+        });
+        window.open(routeData.href, "_blank");
+      } else {
+        localStorage.setItem("PrintServiceContractsComplexes", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-service-contracts-complexes`,
         });
         window.open(routeData.href, "_blank");
       }
