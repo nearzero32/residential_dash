@@ -103,6 +103,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -187,6 +188,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -267,6 +269,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -350,6 +353,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -427,6 +431,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -537,6 +542,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -582,6 +588,7 @@
           </v-container>
           <v-container style="padding: 20px 20px">
             <div style="text-align: center">
+              <hr />
               <img :src="bot" style="width: 100%" alt="" />
             </div>
           </v-container>
@@ -595,7 +602,7 @@
 import numberWithComma from "@/constant/number";
 import tafqeet from "@/constant/Tafqeet.js";
 import logo from "@/assets/logo/bru.png";
-import bot from "@/assets/bot.png";
+import bot from "@/assets/images/footerAlkh.png";
 
 export default {
   data() {
