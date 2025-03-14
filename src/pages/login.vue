@@ -24,6 +24,9 @@
           <div v-else-if="url == 'admin.baghdadmarina.com'">
             تسجيل الدخول الى مجمع مارينا
           </div>
+          <div v-else-if="url == 'admin.baghdad-residences.com'">
+            تسجيل الدخول الى مجمع بغداد رزدنس
+          </div>
           <div v-else-if="url == 'admin.loamrealestate.net'">
             تسجيل الدخول الى شركة لوم العقارية
           </div>

@@ -97,6 +97,8 @@ export default [
         ? "https://counting.alwedd.net/login"
         : currentPath === "admin.aljanain.com"
         ? "https://counting.aljanain.com/login"
+        : currentPath === "admin.baghdad-residences.com"
+        ? "https://counting.baghdad-residences.com/login"
         : currentPath === "admin.baghdadmarina.com"
         ? "https://counting.baghdadmarina.com/login"
         : "https://counting.myexperience.center/login",
