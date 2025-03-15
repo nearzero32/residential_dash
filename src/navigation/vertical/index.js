@@ -83,6 +83,8 @@ export default [
         ? "https://counting.alrawan.net/login"
         : currentPath === "admin.alkholood.net"
         ? "https://counting.alkholood.net/login"
+        : currentPath === "admin.shatalarab-city.com"
+        ? "https://counting.shatalarab-city.com/login"
         : currentPath === "admin.buruj-realstate.com"
         ? "https://counting.buruj-realstate.com/login"
         : currentPath === "admin.karambaghdad.com"

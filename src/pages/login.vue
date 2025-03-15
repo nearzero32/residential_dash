@@ -33,6 +33,9 @@
           <div v-else-if="url == 'admin.alkholood.net'">
             تسجيل الدخول الى مجمع الخلود السكني
           </div>
+          <div v-else-if="url == 'admin.shatalarab-city.com'">
+            تسجيل الدخول الى مدينة شط العرب
+          </div>
           <div v-else-if="url == 'admin.buruj-realstate.com'">
             تسجيل الدخول الى مجمع البروج السكني
           </div>

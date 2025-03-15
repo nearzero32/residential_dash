@@ -62,6 +62,7 @@ const store = createStore({
         "admin.baghdad-residences.com":
           "خطأ: الحساب غير صالح لمجمع بغداد رزدنس.",
         "admin.alkholood.net": "خطأ: الحساب غير صالح لمجمع الخلود.",
+        "admin.shatalarab-city.com": "خطأ: الحساب غير صالح لمجمع شط العرب.",
         "admin.buruj-realstate.com": "خطأ: الحساب غير صالح لمجمع البروج.",
       };
 
@@ -81,6 +82,7 @@ const store = createStore({
           "admin.baghdad-residences.com": "67cd5beafd9873028f999726",
           "admin.loamrealestate.net": "672981a677eecc001eb05f4a",
           "admin.alkholood.net": "67b5cd5be9db64e0451ea6c1",
+          "admin.shatalarab-city.com": "673ca1efc96f983369558fd4",
           "admin.buruj-realstate.com": "67b9a76da56dab25e4b2de01",
         };
 
