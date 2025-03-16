@@ -132,7 +132,7 @@
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="data.salary"
+                    v-model="salaryAmountFormatted"
                     :rules="Rules.salary"
                     :label="t('Salary')"
                     outlined
@@ -208,7 +208,7 @@
                 </VCol>
                 <VCol cols="12" md="6">
                   <VTextField
-                    v-model="dialogEdit.editedItem.salary"
+                    v-model="salaryAmountFormattedEdit"
                     :rules="Rules.salary"
                     :label="t('Salary')"
                     outlined
@@ -430,11 +430,36 @@ export default {
         salary: [
           (value) => {
             if (!value) return this.t("This field is required");
-            if (isNaN(value)) return this.t("Please enter a valid number");
             return true;
           },
         ],
       };
+    },
+    salaryAmountFormatted: {
+      get() {
+        if (this.data.salary === null) {
+          return "";
+        }
+        return this.data.salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      set(value) {
+        const numValue = value.replace(/,/g, "");
+        this.data.salary = numValue;
+      },
+    },
+    salaryAmountFormattedEdit: {
+      get() {
+        if (this.dialogEdit.editedItem.salary === null) {
+          return "";
+        }
+        return this.dialogEdit.editedItem.salary
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      set(value) {
+        const numValue = value.replace(/,/g, "");
+        this.dialogEdit.editedItem.salary = numValue;
+      },
     },
     headers() {
       return [
@@ -470,7 +495,7 @@ export default {
         },
         {
           title: this.t("Salary"),
-          type: "strong",
+          type: "salary",
           link: ``,
           key: "salary",
         },

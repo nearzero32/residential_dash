@@ -307,6 +307,9 @@
           <div v-else-if="header.type === 'total_paid_price'">
             {{ numberWithComma(item.selectable.total_paid_price) }}
           </div>
+          <div v-else-if="header.type === 'salary'">
+            {{ numberWithComma(item.selectable.salary) }}
+          </div>
           <div v-else-if="header.type === 'total_un_paid_price'">
             {{ numberWithComma(item.selectable.total_un_paid_price) }}
           </div>
@@ -317,7 +320,10 @@
             {{ item.selectable.service.name }}
           </div>
           <div v-else-if="item.selectable.service && header.key === 'service.price'">
-            {{ item.selectable.service.price }}
+            {{ numberWithComma(item.selectable.service.price) }}
+          </div>
+          <div v-else-if="header.key === 'price'" class="l">
+            {{ numberWithComma(item.selectable.price) }}
           </div>
           <div v-else-if="item.selectable.service && header.key === 'service.type'">
             {{ item.selectable.service.type }}
@@ -784,6 +790,9 @@
               </li>
             </ul>
           </div>
+          <div v-else-if="header.type === 'salary'" class="l">
+            {{ numberWithComma(item.selectable.salary) }}
+          </div>
           <div v-else-if="header.type === 'linkk'" class="l">
             <RouterLink
               :to="header.link"
@@ -1047,7 +1056,10 @@
             v-else-if="item.selectable.service && header.key === 'service.price'"
             class="l"
           >
-            {{ item.selectable.service.price }}
+            {{ numberWithComma(item.selectable.service.price) }}
+          </div>
+          <div v-else-if="header.key === 'price'" class="l">
+            {{ numberWithComma(item.selectable.price) }}
           </div>
           <div
             v-else-if="item.selectable.service && header.key === 'service.type'"

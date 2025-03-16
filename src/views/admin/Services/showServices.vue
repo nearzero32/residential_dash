@@ -38,10 +38,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -119,7 +116,7 @@
                 </VCol>
                 <VCol cols="12" md="4">
                   <VTextField
-                    v-model="data.price"
+                    v-model="salaryAmountFormatted"
                     :rules="Rules.price"
                     :label="t(`Service Amount`)"
                     outlined
@@ -155,9 +152,7 @@
                         v-if="data.image"
                         style="width: 130px"
                         :src="
-                          isBase64(data.image)
-                            ? data.image
-                            : content_url + data.image
+                          isBase64(data.image) ? data.image : content_url + data.image
                         "
                         alt=""
                         @click.stop
@@ -174,11 +169,7 @@
           <VBtn color="primary" text @click="addDialog.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="addDialog.saveLoading"
-            @click="addCenter"
-          >
+          <VBtn color="primary" :loading="addDialog.saveLoading" @click="addCenter">
             {{ t("Addition") }}
           </VBtn>
         </VCardActions>
@@ -206,7 +197,7 @@
                 </VCol>
                 <VCol cols="12" md="4">
                   <VTextField
-                    v-model="dialogEdit.editedItem.price"
+                    v-model="salaryAmountFormattedEdit"
                     :rules="Rules.price"
                     :label="t(`Service Amount`)"
                     outlined
@@ -271,11 +262,7 @@
           <VBtn color="primary" text @click="dialogEdit.open = false">
             {{ t("Cancel") }}
           </VBtn>
-          <VBtn
-            color="primary"
-            :loading="dialogEdit.loading"
-            @click="editItemConform"
-          >
+          <VBtn color="primary" :loading="dialogEdit.loading" @click="editItemConform">
             {{ t("Edit") }}
           </VBtn>
         </VCardActions>
@@ -440,9 +427,7 @@ export default {
       return {
         name: [(value) => !!value || this.t("This field is required")],
         price: [(value) => !!value || this.t("This field is required")],
-        is_available: [
-          (value) => value !== null || this.t("This field is required"),
-        ],
+        is_available: [(value) => value !== null || this.t("This field is required")],
         type: [(value) => !!value || this.t("This field is required")],
         image: [(value) => !!value || this.t("This field is required")],
       };
@@ -463,7 +448,7 @@ export default {
         },
         {
           title: this.t("Service Amount"),
-          type: "strong",
+          type: "price",
           link: ``,
           key: "price",
         },
@@ -505,6 +490,32 @@ export default {
         { text: this.t("Shipping"), value: "شحن" },
         { text: this.t("Maintenance"), value: "صيانة" },
       ];
+    },
+    salaryAmountFormatted: {
+      get() {
+        if (this.data.price === null) {
+          return "";
+        }
+        return this.data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      set(value) {
+        const numValue = value.replace(/,/g, "");
+        this.data.price = numValue;
+      },
+    },
+    salaryAmountFormattedEdit: {
+      get() {
+        if (this.dialogEdit.editedItem.price === null) {
+          return "";
+        }
+        return this.dialogEdit.editedItem.price
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      set(value) {
+        const numValue = value.replace(/,/g, "");
+        this.dialogEdit.editedItem.price = numValue;
+      },
     },
   },
   methods: {
@@ -695,9 +706,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeServices(
-          this.dialogDelete.deletedItem._id
-        );
+        const response = await adminApi.removeServices(this.dialogDelete.deletedItem._id);
         this.dialogDelete.loading = false;
         this.dialogDelete.open = false;
         this.getCenter();

@@ -295,6 +295,12 @@ export default {
           name: `admin-print-sales-contracts-alkholood`,
         });
         window.open(routeData.href, "_blank");
+      } else if (results.center_id._id === "673ca1efc96f983369558fd4") {
+        localStorage.setItem("PrintShatAlarabCity", JSON.stringify(item));
+        let routeData = this.$router.resolve({
+          name: `admin-print-sales-contracts-shat-alarab-city`,
+        });
+        window.open(routeData.href, "_blank");
       }
     },
     // printItem

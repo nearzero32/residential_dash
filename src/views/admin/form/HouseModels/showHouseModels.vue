@@ -28,10 +28,7 @@
 
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -64,10 +61,7 @@
     <!-- - showImg -->
     <VDialog v-model="showImg.open" max-width="800px" style="overflow: hidden">
       <VCard style="padding-top: 20px">
-        <VCardText
-          class="headline justify-center"
-          v-if="showImg.dataImg !== null"
-        >
+        <VCardText class="headline justify-center" v-if="showImg.dataImg !== null">
           <VCarousel>
             <VCarousel-item v-for="(img, i) in showImg.dataImg" :key="i">
               <img :src="content_url + img" style="width: 100%" />
@@ -76,9 +70,7 @@
         </VCardText>
         <VCard-actions>
           <VSpacer />
-          <VBtn color="primary" text @click="showImg.open = false">
-            إغلاق
-          </VBtn>
+          <VBtn color="primary" text @click="showImg.open = false"> إغلاق </VBtn>
         </VCard-actions>
       </VCard>
     </VDialog>
@@ -105,12 +97,7 @@
             <v-card
               shaped
               color="rgb(255 255 255)"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
+              style="height: 60px; display: grid; place-items: center; text-align: center"
             >
               عدد الوحدات السكنية الغير محجوزة ( {{ statusNotReserved }} )
             </v-card>
@@ -119,12 +106,7 @@
             <v-card
               shaped
               color="#d9d9d9"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
+              style="height: 60px; display: grid; place-items: center; text-align: center"
             >
               عدد الوحدات السكنية المحجوزة مبدئياً (
               {{ statusInitialReservation }} )
@@ -134,12 +116,7 @@
             <v-card
               shaped
               color="rgb(249 249 134)"
-              style="
-                height: 60px;
-                display: grid;
-                place-items: center;
-                text-align: center;
-              "
+              style="height: 60px; display: grid; place-items: center; text-align: center"
             >
               عدد الوحدات السكنية المحجوزة ( {{ statusBookedUp }} )
             </v-card>
@@ -263,7 +240,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["تعديل", "عرض"],
+        actions: ["تعديل"],
         search: null,
         itemsPerPage: 5,
       },
@@ -483,9 +460,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeComplain(
-          this.dialogDelete.deletedItem._id
-        );
+        const response = await adminApi.removeComplain(this.dialogDelete.deletedItem._id);
         this.dialogDelete.loading = false;
         this.dialogDelete.open = false;
         this.getCenter();
@@ -520,9 +495,7 @@ export default {
     // editItem
     editItem(item) {
       localStorage.setItem("editForm", JSON.stringify(item));
-      this.$router.push(
-        `/admin-edit-house-models/${encodeURIComponent(item._id)}`
-      );
+      this.$router.push(`/admin-edit-house-models/${encodeURIComponent(item._id)}`);
     },
     // editItem
 

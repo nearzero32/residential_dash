@@ -7,30 +7,9 @@
     ></BaseBreadcrumb>
     <br />
     <br />
-    <!-- <VCard class="mb-6">
-      <VCardTitle style="text-align: center">{{ t("Operations") }}</VCardTitle>
-      <VCardText>
-        <VRow style="justify-content: space-between">
-          <VCol cols="12" md="4">
-            <VAutocomplete
-              v-model="is_deleted"
-              :label="t('Data type')"
-              :items="itemss"
-              item-title="text"
-              item-value="value"
-              @update:modelValue="getCenter"
-            ></VAutocomplete>
-          </VCol>
-        </VRow>
-      </VCardText>
-    </VCard> -->
-
     <VCard>
       <VCardTitle>
-        <VRow
-          justify="space-between"
-          style="align-items: center; margin-bottom: 15px"
-        >
+        <VRow justify="space-between" style="align-items: center; margin-bottom: 15px">
           <VCol cols="12" sm="12" md="12">
             <VTextField
               v-model="table.search"
@@ -92,9 +71,7 @@
     <!-- Delete Dialog -->
     <VDialog v-model="dialogConfirmIteme.open" max-width="1000px">
       <VCard>
-        <VCardTitle class="headline justify-center">
-          الموافقة على الطلب
-        </VCardTitle>
+        <VCardTitle class="headline justify-center"> الموافقة على الطلب </VCardTitle>
         <VCardText>
           <VForm ref="form">
             <VRow>
@@ -112,11 +89,7 @@
         </VCardText>
         <VCardActions>
           <VSpacer />
-          <VBtn
-            color="blue darken-1"
-            text
-            @click="dialogConfirmIteme.open = false"
-          >
+          <VBtn color="blue darken-1" text @click="dialogConfirmIteme.open = false">
             {{ t("Cancel") }}
           </VBtn>
           <VBtn
@@ -160,11 +133,7 @@
         </VCardText>
         <VCardActions>
           <VSpacer />
-          <VBtn
-            color="blue darken-1"
-            text
-            @click="dialogRejectIteme.open = false"
-          >
+          <VBtn color="blue darken-1" text @click="dialogRejectIteme.open = false">
             {{ t("Cancel") }}
           </VBtn>
           <VBtn
@@ -200,11 +169,7 @@
         </VCardText>
         <VCardActions>
           <VSpacer />
-          <VBtn
-            color="blue darken-1"
-            text
-            @click="dialogFinishIteme.open = false"
-          >
+          <VBtn color="blue darken-1" text @click="dialogFinishIteme.open = false">
             {{ t("Cancel") }}
           </VBtn>
           <VBtn
@@ -377,7 +342,7 @@ export default {
         },
         {
           title: this.t("Service Amount"),
-          type: "strong",
+          type: "service.price",
           link: ``,
           key: "service.price",
         },

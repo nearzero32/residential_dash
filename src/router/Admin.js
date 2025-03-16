@@ -546,6 +546,12 @@ export default [
       import("@/views/admin/SalesContracts/print/PrintAlkholood.vue"),
   },
   {
+    path: "/admin-print-sales-contracts-shat-alarab-city",
+    name: "admin-print-sales-contracts-shat-alarab-city",
+    component: () =>
+      import("@/views/admin/SalesContracts/print/printShatAlarabCity.vue"),
+  },
+  {
     path: "/admin-print-sales-contracts-aljanain",
     name: "admin-print-sales-contracts-aljanain",
     component: () =>

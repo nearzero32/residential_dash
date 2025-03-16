@@ -163,6 +163,7 @@
                     item-value="_id"
                     attach
                     :label="t(`The house`)"
+                    :item-props="getItemProps"
                   ></VAutocomplete>
                 </VCol>
               </VRow>
@@ -344,6 +345,7 @@
                     item-value="_id"
                     attach
                     :label="t(`The house`)"
+                    :item-props="getItemProps"
                   ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="12">
@@ -745,6 +747,7 @@
                     item-value="_id"
                     attach
                     :label="t(`The house`)"
+                    :item-props="getItemProps"
                   ></VAutocomplete>
                 </VCol>
                 <VCol cols="12" md="12">
@@ -1920,6 +1923,19 @@ export default {
         return `منزل ( ${item.name} ) الحالة  (${item.status})`;
       }
     },
+    getItemProps(item) {
+      let color = "green";
+      let disabled = false;
+
+      if (item.status === "محجوز") {
+        color = "red";
+      } else if (item.status === "حجز مبدئي") {
+        color = "orange";
+        disabled = true;
+      }
+
+      return { class: `bg-${color}-lighten-3`, disabled };
+    },
     formatHouseCopy(item) {
       if (this.CopyOwnerDialog.building_type == "شقق") {
         return `الطابق  ( ${item.apartment_floor_number} ) شقة ( ${item.name} )  الحالة (${item.status})`;
@@ -2167,7 +2183,6 @@ export default {
 
     // copyOwner
     copyOwner(item) {
-      console.log(item);
       this.CopyOwnerDialog.data.id = item._id;
       this.getEmailSymbolCopy();
     },
