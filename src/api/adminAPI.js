@@ -455,6 +455,43 @@ class adminApi {
   }
   // Notifications
 
+  // TitleJobs
+  async getTitleJobs({ page, limit, search }) {
+    const response = await axiosInstance.get(
+      `/employees/title_jobs?page=${page}&limit=${limit}&search=${search}`
+    );
+    return response;
+  }
+  async getTitleJobsAll() {
+    const response = await axiosInstance.get(`/employees/title_jobs/all`);
+    return response;
+  }
+  async addTitleJobs({ name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.post(
+      `/employees/title_jobs`,
+      requestData
+    );
+    return response;
+  }
+  async editTitleJobs({ id, name }) {
+    const requestData = {
+      name,
+    };
+    const response = await axiosInstance.put(
+      `/employees/title_jobs/${id}`,
+      requestData
+    );
+    return response;
+  }
+  async removeTitleJobs(id) {
+    const response = await axiosInstance.delete(`/employees/title_jobs/${id}`);
+    return response;
+  }
+  // TitleJobs
+
   // bankAccounts
   async getBankAccounts({ page, limit, search, sortBy, is_disabled }) {
     const response = await axiosInstance.get(
@@ -960,18 +997,37 @@ class adminApi {
     );
     return response;
   }
-  async addEmployees({ name, phone, title_jop, salary, address }) {
+  async addEmployees({
+    name,
+    phone,
+    title_jop,
+    salary,
+    address,
+    card_number,
+    employee_start_work_date,
+  }) {
     const requestData = {
       name,
       phone,
       title_jop,
       salary,
       address,
+      card_number,
+      employee_start_work_date,
     };
     const response = await axiosInstance.post(`/employees`, requestData);
     return response;
   }
-  async editEmployees({ emp_id, name, phone, title_jop, salary, address }) {
+  async editEmployees({
+    emp_id,
+    name,
+    phone,
+    title_jop,
+    salary,
+    address,
+    card_number,
+    employee_start_work_date,
+  }) {
     const requestData = {
       emp_id,
       name,
@@ -979,6 +1035,8 @@ class adminApi {
       title_jop,
       salary,
       address,
+      card_number,
+      employee_start_work_date,
     };
     const response = await axiosInstance.put(`/employees`, requestData);
     return response;

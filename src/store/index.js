@@ -154,6 +154,7 @@ const store = createStore({
           "other-services-type": "/admin-show-other-services-type",
           "residential-units": "/admin-show-residential-units",
           guards: "/admin-show-guards",
+          "staff-title-jobs": "/admin-show-staff-title-jobs",
           employees: "/admin-show-staff",
           Users: "/admin-show-users",
           postings: "/admin-show-advertisements",

@@ -614,6 +614,20 @@ export default [
     icon: { icon: "mdi-shield-account" },
   },
   {
+    title: "Job Title",
+    name: "staff-title-jobs",
+    to: { name: "admin-show-staff-title-jobs" },
+    type: [
+      "admin",
+      "investor",
+      "investor_accountant",
+      "resident_manager",
+      "assistance",
+    ],
+    building_type: "منازل وشقق",
+    icon: { icon: "mdi-account-group" },
+  },
+  {
     title: "Staff",
     name: "employees",
     to: { name: "admin-show-staff" },

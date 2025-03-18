@@ -54,7 +54,6 @@
           @update:options="getCenter"
           @deleteItems="deleteItem"
           @editItems="editItem"
-          @emitPrintItems="printItem"
         />
       </VCardText>
     </VCard>
@@ -69,71 +68,13 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="12">
                   <VTextField
                     v-model="data.name"
                     :rules="Rules.name"
-                    :label="t('The name')"
+                    :label="t(`Job Title`)"
                     outlined
                   />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="data.phone"
-                    :rules="Rules.phone"
-                    :label="t('Phone number')"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="data.address"
-                    :rules="Rules.address"
-                    :label="t('Address')"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VAutocomplete
-                    v-model="data.title_jop"
-                    :rules="Rules.title_jop"
-                    :items="action"
-                    outlined
-                    item-title="name"
-                    item-value="name"
-                    attach
-                    :label="t('Job Title')"
-                  ></VAutocomplete>
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="data.salary"
-                    :rules="Rules.salary"
-                    :label="t('Salary')"
-                    outlined
-                    @keypress="isNumber($event)"
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="data.card_number"
-                    :rules="Rules.salary"
-                    label="رقم الحساب"
-                    outlined
-                    @keypress="isNumber($event)"
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VLabel>تاريخ المباشرة </VLabel>
-                  <VueDatePicker
-                    :format="format"
-                    v-model="data.employee_start_work_date"
-                    density="compact"
-                    label="تاريخ المباشرة"
-                    outlined
-                    required
-                    dense
-                  ></VueDatePicker>
                 </VCol>
               </VRow>
             </VForm>
@@ -162,71 +103,13 @@
           <VContainer>
             <VForm ref="form">
               <VRow>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="12">
                   <VTextField
                     v-model="dialogEdit.editedItem.name"
                     :rules="Rules.name"
-                    :label="t('The name')"
+                    :label="t(`Job Title`)"
                     outlined
                   />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.phone"
-                    :rules="Rules.phone"
-                    :label="t('Phone number')"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.address"
-                    :rules="Rules.address"
-                    :label="t('Address')"
-                    outlined
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VAutocomplete
-                    v-model="dialogEdit.editedItem.title_jop"
-                    :rules="Rules.title_jop"
-                    :items="action"
-                    outlined
-                    item-title="name"
-                    item-value="name"
-                    attach
-                    :label="t('Job Title')"
-                  ></VAutocomplete>
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.salary"
-                    :rules="Rules.salary"
-                    :label="t('Salary')"
-                    outlined
-                    @keypress="isNumber($event)"
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VTextField
-                    v-model="dialogEdit.editedItem.card_number"
-                    :rules="Rules.salary"
-                    label="رقم الحساب"
-                    outlined
-                    @keypress="isNumber($event)"
-                  />
-                </VCol>
-                <VCol cols="12" md="6">
-                  <VLabel>تاريخ المباشرة </VLabel>
-                  <VueDatePicker
-                    :format="format"
-                    v-model="dialogEdit.editedItem.employee_start_work_date"
-                    density="compact"
-                    label="تاريخ المباشرة"
-                    outlined
-                    required
-                    dense
-                  ></VueDatePicker>
                 </VCol>
               </VRow>
             </VForm>
@@ -299,19 +182,12 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const format = (date) => {
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
 
-      return `${day}/${month}/${year}`;
-    };
     return {
-      format,
       t,
       // nav
       page: {
-        title: "Staff",
+        title: "Job Title",
       },
       b: [
         {
@@ -320,7 +196,7 @@ export default {
           to: "/admin-index",
         },
         {
-          text: "Staff",
+          text: "Job Title",
           disabled: true,
         },
       ],
@@ -340,7 +216,7 @@ export default {
         loading: false,
         totalItems: 0,
         Data: [],
-        actions: ["حذف", "تعديل", "طباعة"],
+        actions: ["حذف", "تعديل"],
         search: null,
         itemsPerPage: 5,
       },
@@ -348,19 +224,12 @@ export default {
       // table
 
       // add
-      action: [],
       addDialog: {
         open: false,
         saveLoading: false,
       },
       data: {
         name: null,
-        title_jop: null,
-        phone: null,
-        salary: null,
-        address: null,
-        card_number: null,
-        employee_start_work_date: null,
       },
       // add
 
@@ -391,7 +260,6 @@ export default {
     };
   },
   created() {
-    this.getTitleJobsAll();
     var userDataString = JSON.parse(localStorage.getItem("results"));
     if (userDataString.type !== "admin") {
       this.userData = userDataString.privileges.actions;
@@ -403,22 +271,6 @@ export default {
     Rules() {
       return {
         name: [(value) => !!value || this.t("This field is required")],
-        title_jop: [(value) => !!value || this.t("This field is required")],
-        phone: [
-          (value) => {
-            if (!value) return this.t("This field is required");
-            if (value.length !== 11) return this.t("Phone number must be 11 digits");
-            return true;
-          },
-        ],
-        address: [(value) => !!value || this.t("This field is required")],
-        salary: [
-          (value) => {
-            if (!value) return this.t("This field is required");
-            if (isNaN(value)) return this.t("Please enter a valid number");
-            return true;
-          },
-        ],
       };
     },
     headers() {
@@ -430,46 +282,10 @@ export default {
           key: "num",
         },
         {
-          title: this.t("The name"),
+          title: this.t("Bank Name"),
           type: "strong",
           link: ``,
           key: "name",
-        },
-        {
-          title: this.t("Phone number"),
-          type: "strong",
-          link: ``,
-          key: "phone",
-        },
-        {
-          title: this.t("Job Title"),
-          type: "strong",
-          link: ``,
-          key: "title_jop",
-        },
-        {
-          title: this.t("Salary"),
-          type: "strong",
-          link: ``,
-          key: "salary",
-        },
-        {
-          title: this.t("Address"),
-          type: "strong",
-          link: ``,
-          key: "address",
-        },
-        {
-          title: this.t("رقم الحساب"),
-          type: "strong",
-          link: ``,
-          key: "card_number",
-        },
-        {
-          title: this.t("تاريخ المباشرة"),
-          type: "strong",
-          link: ``,
-          key: "employee_start_work_date",
         },
         {
           title: this.t("Operations"),
@@ -481,7 +297,6 @@ export default {
       ];
     },
   },
-
   methods: {
     // Get Data
     async getCenter(newOptions) {
@@ -490,19 +305,6 @@ export default {
           this.tableOptions = { ...newOptions };
         }
       }
-
-      const key =
-        this.tableOptions.sortBy && this.tableOptions.sortBy.length > 0
-          ? this.tableOptions.sortBy[0]
-          : "createdAt";
-      const order =
-        this.tableOptions.sortDesc && this.tableOptions.sortDesc.length > 0
-          ? this.tableOptions.sortDesc[0]
-            ? "desc"
-            : "asc"
-          : "desc";
-
-      const sortByJSON = JSON.stringify({ key, order });
 
       this.table.loading = true;
       let { page, itemsPerPage } = this.tableOptions;
@@ -515,11 +317,10 @@ export default {
       }
 
       try {
-        const response = await adminApi.getEmployees({
+        const response = await adminApi.getTitleJobs({
           page,
           limit: itemsPerPage,
           search: this.table.search,
-          sortBy: sortByJSON,
         });
         this.table.Data = response.data.results.data;
         this.table.totalItems = response.data.results.count;
@@ -538,20 +339,6 @@ export default {
         this.table.loading = false;
       }
     },
-    async getTitleJobsAll() {
-      try {
-        const response = await adminApi.getTitleJobsAll();
-        this.action = response.data.results;
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          this.$store.dispatch("submitLogout");
-        } else if (error.response && error.response.status === 500) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
-        } else if (error.response && error.response.data.error === true) {
-          this.showDialogfunction(error.response.data.message, "#FF5252");
-        }
-      }
-    },
     // Get Data
 
     // Add Data
@@ -560,30 +347,16 @@ export default {
 
       if (valid) {
         this.addDialog.saveLoading = true;
-
         try {
-          const response = await adminApi.addEmployees({
+          const response = await adminApi.addTitleJobs({
             name: this.data.name,
-            title_jop: this.data.title_jop,
-            salary: this.data.salary,
-            phone: this.data.phone,
-            address: this.data.address,
-            card_number: this.data.card_number,
-            employee_start_work_date: this.format(this.data.employee_start_work_date),
           });
 
           this.addDialog.saveLoading = false;
           await this.getCenter();
           this.addDialog.open = false;
           this.showDialogfunction(response.data.message, "primary");
-
           this.data.name = null;
-          this.data.phone = null;
-          this.data.title_jop = null;
-          this.data.address = null;
-          this.data.salary = null;
-          this.data.card_number = null;
-          this.data.employee_start_work_date = null;
         } catch (error) {
           if (error.response && error.response.status === 401) {
             this.$store.dispatch("submitLogout");
@@ -613,17 +386,9 @@ export default {
         this.dialogEdit.loading = true;
 
         try {
-          const response = await adminApi.editEmployees({
-            emp_id: this.dialogEdit.editedItem._id,
+          const response = await adminApi.editTitleJobs({
+            id: this.dialogEdit.editedItem._id,
             name: this.dialogEdit.editedItem.name,
-            title_jop: this.dialogEdit.editedItem.title_jop,
-            salary: this.dialogEdit.editedItem.salary,
-            phone: this.dialogEdit.editedItem.phone,
-            address: this.dialogEdit.editedItem.address,
-            card_number: this.dialogEdit.editedItem.card_number,
-            employee_start_work_date: this.format(
-              this.dialogEdit.editedItem.employee_start_work_date
-            ),
           });
 
           this.dialogEdit.open = false;
@@ -657,7 +422,7 @@ export default {
     async deleteItemConfirm() {
       this.dialogDelete.loading = true;
       try {
-        const response = await adminApi.removeEmployees(
+        const response = await adminApi.removeTitleJobs(
           this.dialogDelete.deletedItem._id
         );
         this.dialogDelete.loading = false;
@@ -684,24 +449,6 @@ export default {
       }
     },
     // deleteItem
-
-    // printItem
-    printItem(item) {
-      localStorage.setItem("PrintEmployees", JSON.stringify(item));
-      let routeData = this.$router.resolve({
-        name: `admin-print-staff`,
-      });
-      window.open(routeData.href, "_blank");
-    },
-    // printItem
-
-    isNumber(evt) {
-      const keysAllowed = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-      const keyPressed = evt.key;
-      if (!keysAllowed.includes(keyPressed)) {
-        evt.preventDefault();
-      }
-    },
 
     // message
     showDialogfunction(bodyText, color) {

@@ -294,6 +294,12 @@ export default [
 
       // Staff
       {
+        path: "/admin-show-staff-title-jobs",
+        name: "admin-show-staff-title-jobs",
+        component: () =>
+          import("@/views/admin/Staff/StaffTitleJobs/showTitleJobs.vue"),
+      },
+      {
         path: "/admin-show-staff",
         name: "admin-show-staff",
         component: () => import("@/views/admin/Staff/showStaff.vue"),

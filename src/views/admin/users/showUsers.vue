@@ -599,6 +599,7 @@ export default {
         { text: this.t("Residential Units"), value: "residential-units" },
 
         { text: this.t("Guards"), value: "guards" },
+        { text: this.t("Job Title"), value: "staff-title-jobs" },
         { text: this.t("Staff"), value: "employees" },
         { text: this.t("Users"), value: "Users" },
         { text: this.t("Advertisements"), value: "postings" },
