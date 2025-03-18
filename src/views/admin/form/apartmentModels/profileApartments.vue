@@ -164,9 +164,12 @@
                         <br />
                         {{ t("Status") }} ( {{ item.status }} )
                         <br />
-                        <span v-if="item.current_owner_name"
-                          >{{ t("Owner's name") }} ( {{ item.current_owner_name }} )</span
-                        >
+                        <span>
+                          {{ t("Owner's name") }}: {{ item.current_owner_name }} <br />
+                          <span v-if="item.status !== 'تم البيع'"
+                            >الحجز باسم : {{ item.current_reserver_name }}</span
+                          >
+                        </span>
                       </span>
                     </VTooltip>
                   </v-item>

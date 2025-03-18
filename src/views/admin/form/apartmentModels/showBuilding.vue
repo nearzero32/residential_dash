@@ -153,8 +153,11 @@
                     </template>
                     <span
                       >{{ t("Status") }} : {{ item.status }} <br />
-                      {{ t("Owner's name") }}: {{ item.current_owner_name }}</span
-                    >
+                      {{ t("Owner's name") }}: {{ item.current_owner_name }} <br />
+                      <span v-if="item.status !== 'تم البيع'"
+                        >الحجز باسم : {{ item.current_reserver_name }}</span
+                      >
+                    </span>
                   </VTooltip>
                 </v-item>
               </v-item-group>
