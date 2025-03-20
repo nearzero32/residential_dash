@@ -78,8 +78,8 @@
             </li>
           </ul>
         </strong>
-        <strong v-if="data.previous_owners && data.previous_owners.length > 0"
-          >{{ t("Previous owners") }} :
+        <h3 v-if="data.previous_owners && data.previous_owners.length > 0">
+          {{ t("Previous owners") }} :
           <br />
           <br />
           <ul style="list-style-type: disclosure-closed; margin-right: 65px">
@@ -97,7 +97,7 @@
               </div>
             </li>
           </ul>
-        </strong>
+        </h3>
         <strong v-if="data.current_owner && data.current_owner.date !== null"
           >{{ t("Purchase date") }} : {{ data.current_owner.date }}</strong
         >
