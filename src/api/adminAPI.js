@@ -1481,6 +1481,8 @@ class adminApi {
     location_img_front,
     location_img_back,
     passport_img,
+    id_number,
+    address,
   }) {
     const requestData = {
       owner_id,
@@ -1497,6 +1499,8 @@ class adminApi {
       location_img_front,
       location_img_back,
       passport_img,
+      id_number,
+      address,
     };
     const response = await axiosInstance.post(
       `/owners/another_owners`,
@@ -1622,6 +1626,8 @@ class adminApi {
     location_img_front,
     location_img_back,
     passport_img,
+    address,
+    id_number,
   }) {
     const requestData = {
       owner_id,
@@ -1638,6 +1644,8 @@ class adminApi {
       location_img_front,
       location_img_back,
       passport_img,
+      address,
+      id_number,
     };
     const response = await axiosInstance.put(
       `/owners/another_owners/${id}`,

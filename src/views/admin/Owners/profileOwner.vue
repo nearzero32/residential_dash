@@ -697,7 +697,7 @@
     <!-- Add Tenant Class Dialog -->
 
     <!-- Add Class Dialog -->
-    <VDialog v-model="addDialog.open" max-width="800px">
+    <VDialog v-model="addDialog.open" max-width="800px" persistent>
       <VCard>
         <VCardTitle>
           <span class="headline">{{ t("Addition") }}</span>
@@ -719,6 +719,14 @@
                     v-model="dataAdd.phone"
                     :rules="Rules.phone"
                     :label="t(`Owner's phone number`)"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="4">
+                  <VTextField
+                    v-model="dataAdd.address"
+                    :rules="Rules.name"
+                    :label="t(`Address`)"
                     outlined
                   />
                 </VCol>
@@ -954,7 +962,7 @@
     <!-- Add Class Dialog -->
 
     <!-- Edit Class Dialog -->
-    <VDialog v-model="dialogEdit.open" max-width="800px" max-height="100%">
+    <VDialog v-model="dialogEdit.open" max-width="800px" max-height="100%" persistent>
       <VCard>
         <VCardTitle>
           <span class="headline">{{ t("Edit") }}</span>
@@ -976,6 +984,14 @@
                     v-model="dialogEdit.editedItem.phone"
                     :rules="Rules.phone"
                     :label="t(`Owner's phone number`)"
+                    outlined
+                  />
+                </VCol>
+                <VCol cols="12" md="4">
+                  <VTextField
+                    v-model="dialogEdit.editedItem.address"
+                    :rules="Rules.name"
+                    :label="t(`Address`)"
                     outlined
                   />
                 </VCol>
@@ -2388,11 +2404,13 @@ export default {
             name: this.dataAdd.name,
             phone: this.dataAdd.phone,
             id_place_of_issue: this.dataAdd.id_place_of_issue,
-            id_issue_date: this.format(this.dataAdd.id_issue_date),
+            id_issue_date: this.dataAdd.id_issue_date
+              ? this.format(this.dataAdd.id_issue_date)
+              : null,
             residence_card_number: this.dataAdd.residence_card_number,
-            residence_card_issue_date: this.format(
-              this.dataAdd.residence_card_issue_date
-            ),
+            residence_card_issue_date: this.dataAdd.residence_card_issue_date
+              ? this.format(this.dataAdd.residence_card_issue_date)
+              : null,
             residence_card_place_of_issue: this.dataAdd.residence_card_place_of_issue,
             owner_title_jop: this.dataAdd.owner_title_jop,
             id_img_front: this.dataAdd.id_img_front,
@@ -2400,10 +2418,14 @@ export default {
             location_img_front: this.dataAdd.location_img_front,
             location_img_back: this.dataAdd.location_img_back,
             passport_img: this.dataAdd.passport_img,
+            id_number: this.dataAdd.id_number,
+            address: this.dataAdd.address,
           });
 
           this.addBtnLoading = false;
           this.dataAdd.name = null;
+          this.dataAdd.id_number = null;
+          this.dataAdd.address = null;
           this.dataAdd.phone = null;
           this.dataAdd.id_img_front = null;
           this.dataAdd.id_img_back = null;
@@ -2459,11 +2481,13 @@ export default {
             form_id: this.data.form_id,
             id_number: this.dataAddTenant.id_number,
             id_place_of_issue: this.dataAddTenant.id_place_of_issue,
-            id_issue_date: this.format(this.dataAddTenant.id_issue_date),
+            id_issue_date: this.dataAddTenant.id_issue_date
+              ? this.format(this.dataAddTenant.id_issue_date)
+              : null,
             residence_card_number: this.dataAddTenant.residence_card_number,
-            residence_card_issue_date: this.format(
-              this.dataAddTenant.residence_card_issue_date
-            ),
+            residence_card_issue_date: this.dataAddTenant.residence_card_issue_date
+              ? this.format(this.dataAddTenant.residence_card_issue_date)
+              : null,
             residence_card_place_of_issue: this.dataAddTenant
               .residence_card_place_of_issue,
             owner_title_jop: this.dataAddTenant.owner_title_jop,
@@ -2541,11 +2565,14 @@ export default {
             name: this.dialogEdit.editedItem.name,
             phone: this.dialogEdit.editedItem.phone,
             id_place_of_issue: this.dialogEdit.editedItem.id_place_of_issue,
-            id_issue_date: this.format(this.dialogEdit.editedItem.id_issue_date),
+            id_issue_date: this.dialogEdit.editedItem.id_issue_date
+              ? this.format(this.dialogEdit.editedItem.id_issue_date)
+              : null,
             residence_card_number: this.dialogEdit.editedItem.residence_card_number,
-            residence_card_issue_date: this.format(
-              this.dialogEdit.editedItem.residence_card_issue_date
-            ),
+            residence_card_issue_date: this.dialogEdit.editedItem
+              .residence_card_issue_date
+              ? this.format(this.dialogEdit.editedItem.residence_card_issue_date)
+              : null,
             residence_card_place_of_issue: this.dialogEdit.editedItem
               .residence_card_place_of_issue,
             owner_title_jop: this.dialogEdit.editedItem.owner_title_jop,
@@ -2554,6 +2581,8 @@ export default {
             location_img_front: this.dialogEdit.editedItem.location_img_front,
             location_img_back: this.dialogEdit.editedItem.location_img_back,
             passport_img: this.dialogEdit.editedItem.passport_img,
+            address: this.dialogEdit.editedItem.address,
+            id_number: this.dialogEdit.editedItem.id_number,
           });
 
           this.dialogEdit.open = false;
@@ -2631,12 +2660,15 @@ export default {
             bank_id: this.dialogEditTenants.editedItem.bank_id,
             address: this.dialogEditTenants.editedItem.address,
             id_place_of_issue: this.dialogEditTenants.editedItem.id_place_of_issue,
-            id_issue_date: this.format(this.dialogEditTenants.editedItem.id_issue_date),
+            id_issue_date: this.dialogEditTenants.editedItem.id_issue_date
+              ? this.format(this.dialogEditTenants.editedItem.id_issue_date)
+              : null,
             residence_card_number: this.dialogEditTenants.editedItem
               .residence_card_number,
-            residence_card_issue_date: this.format(
-              this.dialogEditTenants.editedItem.residence_card_issue_date
-            ),
+            residence_card_issue_date: this.dialogEditTenants.editedItem
+              .residence_card_issue_date
+              ? this.format(this.dialogEditTenants.editedItem.residence_card_issue_date)
+              : null,
             residence_card_place_of_issue: this.dialogEditTenants.editedItem
               .residence_card_place_of_issue,
             owner_title_jop: this.dialogEditTenants.editedItem.owner_title_jop,
