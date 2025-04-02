@@ -26,7 +26,7 @@
         </ul>
       </div>
     </v-col>
-    <v-col cols="12" sm="6" class="pa-0 ramadan-container" style="margin-top: 15px">
+    <!-- <v-col cols="12" sm="6" class="pa-0 ramadan-container" style="margin-top: 15px">
       <h3 class="ramadan-text">
         🌙 تتمنى لكم <strong>شركة لماسو</strong> رمضان كريم! 🕌✨
       </h3>
@@ -58,7 +58,7 @@
           class="lantern right-lantern"
         />
       </div>
-    </v-col>
+    </v-col> -->
   </v-row>
 </template>
 
